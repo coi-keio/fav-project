@@ -1,2 +1,1 @@
 # fav-project
-Fab project
