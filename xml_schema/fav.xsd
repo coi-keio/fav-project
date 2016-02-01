@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="Fav">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="Lattice"/>
+        <xsd:element ref="Palette"/>
+        <xsd:element ref="Structure"/>
+      </xsd:sequence>
+      <xsd:attribute name="version" type="xsd:string"/ use="optional">
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Lattice">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Lattice_Dim" type="xsd:double" />
+        <xsd:element name="X_Dim_Adj" type="xsd:double" />
+        <xsd:element name="Y_Dim_Adj" type="xsd:double" />
+        <xsd:element name="Z_Dim_Adj" type="xsd:double" />
+        <xsd:element name="X_Origin" type="xsd:double" minOccurs="0"/>
+        <xsd:element name="Y_Origin" type="xsd:double" minOccurs="0"/>
+        <xsd:element name="Z_Origin" type="xsd:double" minOccurs="0"/>
+        <xsd:element name="X_Voxels" type="xsd:nonNegativeInteger" />
+        <xsd:element name="Y_Voxels" type="xsd:nonNegativeInteger" />
+        <xsd:element name="Z_Voxels" type="xsd:nonNegativeInteger" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Palette" minOccurs="0">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="Material"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Material" minOccurs="0" maxOccurs="unbounded">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="MatType" type="xsd:nonNegativeInteger"/>
+        <xsd:element name="Name" type="xsd:string"/>
+        <xsd:element ref="Mechanical"/>
+      </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Mechanical">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="MatModel" type="xsd:nonNegativeInteger"/>
+        <xsd:element name="Elastic_Mod" type="xsd:double"/>
+        <xsd:element name="Plastic_Mod" type="xsd:double"/>
+        <xsd:element name="Yield_Stress" type="xsd:double"/>
+        <xsd:element name="FailModel" type="xsd:double"/>
+        <xsd:element name="FailModel" type="xsd:double"/>
+        <xsd:element name="Fail_Strain" type="xsd:double"/>
+        <xsd:element name="Density" type="xsd:double"/>
+        <xsd:element name="Poissons_Ratio" type="xsd:double"/>
+        <xsd:element name="CTE" type="xsd:double"/>
+        <xsd:element name="MaterialTempPhase" type="xsd:double"/>
+        <xsd:element name="uStatic" type="xsd:double"/>
+        <xsd:element name="uDynamic" type="xsd:double"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Structure">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="Voxel_Data" />
+        <xsd:element ref="Link_Data" />
+        <xsd:element ref="Color_Data" />
+      </xsd:sequence>
+      <xsd:attribute name="Compression" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Voxel_Data">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Layer" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Color_Data" minOccurs="0">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Layer" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="Sample_Per_Voxel" type="xsd:nonNegativeInteger"/ use="required">
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Link_Data" minOccurs="0">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Layer" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="Neighbours" type="xsd:string"/ use="required">
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
