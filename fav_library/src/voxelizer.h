@@ -20,7 +20,6 @@
 class Voxelizer
 {
 private:
-    int get_index(int x, int y, int z);
     float* getAABB(float* vertices, int num_vertices);
     float* getTriAABB(float vertices[3][3]);
     float* getTargetIndexInAABB(float* aabb, float* start_position, float* voxel_size);
@@ -39,8 +38,9 @@ public:
 	Voxelizer();
 	~Voxelizer();
     int* voxelize(float* vertices, int num_vertices, float num_voxel[3], bool is_fill_inside = false);
-    
-    unsigned int voxel_num[3];
+    int getIndex(int x, int y, int z);
+
+    int voxel_num[3];
     float voxel_origin[3];
     float voxel_size[3];
     int* voxel_data;

@@ -31,10 +31,11 @@ int* Voxelizer::voxelize(float* vertices, int num_vertices, float* unit_vox, boo
     // Set parameters.
     for(int i=0; i<3; ++i){
         voxel_size[i] = unit_vox[i];
-        voxel_num[i] = ceil(aabb_length[i] / voxel_size[i])+2;
-        voxel_origin[i] = -voxel_size[i]*voxel_num[i]*0.5f - voxel_size[i]*0.5f;
+        voxel_num[i] = ceil(aabb_length[i] / voxel_size[i])+1;
+        voxel_origin[i] = p_aabb[i];//-voxel_size[i]*voxel_num[i]*0.5f - voxel_size[i]*0.5f;
     }
-    voxel_data = new int[voxel_num[0]*voxel_num[1]*voxel_num[2]];
+
+    voxel_data = new int[voxel_num[0]*voxel_num[1]*voxel_num[2]]{0};
     collision_detection* c_detector = new collision_detection;
     
     for(unsigned int i=0; i<num_vertices*3; i=i+9){
@@ -64,8 +65,16 @@ int* Voxelizer::voxelize(float* vertices, int num_vertices, float* unit_vox, boo
                         voxel_origin[2] + (z * voxel_size[2])
                     };
                     
-                    if(c_detector->is_collision(position, voxel_size, t_vertices)){
-                        voxel_data[get_index(x,y,z)] = Collision_Cell;
+                    //for robust collision test
+                    float c_voxel_size[3] =
+                    {
+                        voxel_size[0] + voxel_size[0]*0.00001f,
+                        voxel_size[1] + voxel_size[1]*0.00001f,
+                        voxel_size[2] + voxel_size[2]*0.00001f
+                    };
+                    
+                    if(c_detector->is_collision(position, c_voxel_size, t_vertices)){
+                        voxel_data[getIndex(x,y,z)] = Collision_Cell;
                     }
                 }
             }
@@ -79,7 +88,7 @@ int* Voxelizer::voxelize(float* vertices, int num_vertices, float* unit_vox, boo
     return voxel_data;
 }
 
-int Voxelizer::get_index(int x, int y, int z){
+int Voxelizer::getIndex(int x, int y, int z){
     
     return (voxel_num[0]*voxel_num[1]*z) + (voxel_num[0]*y) + x;
     
@@ -94,7 +103,7 @@ void Voxelizer::fillInside(){
         for(int y=0; y<voxel_num[1]; y++){
             for(int x=0; x<voxel_num[0]; x++){
                 
-                int index = get_index(x,y,z);
+                int index = getIndex(x,y,z);
                 if( voxel_data[index] == Empty_Cell ){
                     if(x-1 < 0 || y-1 < 0 || z-1 < 0 || x+1 == voxel_num[0] || y+1 == voxel_num[1] || z+1 == voxel_num[2]){
                         voxel_data[index] = Processing_Cell;
@@ -115,15 +124,15 @@ void Voxelizer::fillInside(){
             for(int y=0; y<voxel_num[1]; y++){
                 for(int x=0; x<voxel_num[0]; x++){
                     
-                    if( voxel_data[get_index(x,y,z)] == Processing_Cell ){
-                        if(x+1 < voxel_num[0] && (voxel_data[get_index(x+1,y,z)] == Pre_Process_Cell)){ voxel_data[get_index(x+1,y,z)] = Processing_Cell; }
-                        if(y+1 < voxel_num[1] && (voxel_data[get_index(x,y+1,z)] == Pre_Process_Cell)){ voxel_data[get_index(x,y+1,z)] = Processing_Cell; }
-                        if(z+1 < voxel_num[2] && (voxel_data[get_index(x,y,z+1)] == Pre_Process_Cell)){ voxel_data[get_index(x,y,z+1)] = Processing_Cell; }
-                        if(x-1 >= 0            && (voxel_data[get_index(x-1,y,z)] == Pre_Process_Cell)){ voxel_data[get_index(x-1,y,z)] = Processing_Cell; }
-                        if(y-1 >= 0            && (voxel_data[get_index(x,y-1,z)] == Pre_Process_Cell)){ voxel_data[get_index(x,y-1,z)] = Processing_Cell; }
-                        if(z-1 >= 0            && (voxel_data[get_index(x,y,z-1)] == Pre_Process_Cell)){ voxel_data[get_index(x,y,z-1)] = Processing_Cell; }
+                    if( voxel_data[getIndex(x,y,z)] == Processing_Cell ){
+                        if(x+1 < voxel_num[0] && (voxel_data[getIndex(x+1,y,z)] == Pre_Process_Cell)){ voxel_data[getIndex(x+1,y,z)] = Processing_Cell; }
+                        if(y+1 < voxel_num[1] && (voxel_data[getIndex(x,y+1,z)] == Pre_Process_Cell)){ voxel_data[getIndex(x,y+1,z)] = Processing_Cell; }
+                        if(z+1 < voxel_num[2] && (voxel_data[getIndex(x,y,z+1)] == Pre_Process_Cell)){ voxel_data[getIndex(x,y,z+1)] = Processing_Cell; }
+                        if(x-1 >= 0            && (voxel_data[getIndex(x-1,y,z)] == Pre_Process_Cell)){ voxel_data[getIndex(x-1,y,z)] = Processing_Cell; }
+                        if(y-1 >= 0            && (voxel_data[getIndex(x,y-1,z)] == Pre_Process_Cell)){ voxel_data[getIndex(x,y-1,z)] = Processing_Cell; }
+                        if(z-1 >= 0            && (voxel_data[getIndex(x,y,z-1)] == Pre_Process_Cell)){ voxel_data[getIndex(x,y,z-1)] = Processing_Cell; }
                         
-                        voxel_data[get_index(x,y,z)] = Processed_Cell;
+                        voxel_data[getIndex(x,y,z)] = Processed_Cell;
                         num_processed_cell += 1;
                     }
                 }
@@ -186,10 +195,10 @@ float* Voxelizer::getTargetIndexInAABB(float* tri_aabb, float start_position[3],
     
     float* indices = new float[6];
     for(int i=0; i<3; i++){
-        indices[i] = floor((tri_aabb[i]-voxel_origin[i])/unit_voxel[i]) - 1;
+        indices[i] = floor((tri_aabb[i]-start_position[i])/unit_voxel[i]) - 1;
         if(indices[i] < 0 ) indices[i] = 0;
         
-        indices[i+3] = ceil((tri_aabb[i+3]-voxel_origin[i])/unit_voxel[i]) + 1;
+        indices[i+3] = ceil((tri_aabb[i+3]-start_position[i])/unit_voxel[i]) + 1;
         if(indices[i+3] > voxel_num[i]) indices[i+3] = voxel_num[i];
     }
     return indices;

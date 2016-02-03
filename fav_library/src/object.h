@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include <vector>
+#define _USE_MATH_DEFINES
+#include <math.h>
 //#include "mesh_data.h"
 
 //struct Vector3f
@@ -42,6 +44,8 @@ class Voxel
 private:
     
 public:
+    Voxel(){};
+    ~Voxel(){};
     unsigned int state;
     unsigned int id_material;
     float position[3];
@@ -55,6 +59,8 @@ private:
     
     
 public:
+    VoxelData(){};
+    ~VoxelData(){delete data; data=nullptr;};
     void scale(float magni);
     void rotateX(float angle);
     void rotateY(float angle);
@@ -74,10 +80,18 @@ struct Box
     float max_length;
 };
 
+struct BoundingBox
+{
+    float position[3];
+    float length[3];
+    float max_length;
+};
+
 class MeshData
 {
 private:
     
+    float* getCenter();
     
 public:
 	MeshData(){};
@@ -86,6 +100,7 @@ public:
         delete normals;
         delete faces;
     };
+    
     void fillHole();
     void scale(float magni);
     void rotateX(float angle);
@@ -93,13 +108,15 @@ public:
     void rotateZ(float angle);
     void translate(float* destination);
     void translateToOrigin();
+    void setAABB();
     
     float *vertices;
     float *normals;
     unsigned int *faces;
     unsigned int number_of_vertices;
     unsigned int number_of_faces;
-    float* center_position;
+    float origin[3];
+    BoundingBox bounding_box;
 };
 
 class Object
@@ -109,6 +126,11 @@ private:
     
     
 public:
+    Object(){};
+    ~Object(){
+        delete mesh; mesh = nullptr;
+        delete voxel; voxel = nullptr;
+    }
     void deleteMesh();
     void deleteVoxel();
     

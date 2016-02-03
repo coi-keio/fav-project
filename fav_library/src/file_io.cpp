@@ -52,7 +52,7 @@ FileIO::MeshEntry::MeshEntry(aiMesh *a_mesh) {
 }
 
 FileIO::MeshEntry::~MeshEntry(){
-    delete mesh;
+//    delete mesh;
 }
 
 MeshData* FileIO::MeshEntry::getMeshData(){
@@ -73,7 +73,7 @@ FileIO::~FileIO()
 MeshData* FileIO::importSTL(const char *filepath){
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(filepath,
-                                             aiProcess_JoinIdenticalVertices    |
+                                             //aiProcess_JoinIdenticalVertices    |
                                              aiProcess_CalcTangentSpace         |
                                              aiProcess_Triangulate              |
                                              aiProcess_SplitLargeMeshes         |

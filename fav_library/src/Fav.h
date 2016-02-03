@@ -30,8 +30,10 @@ public:
     bool exportFAV();
     bool exportFAV(std::vector<Object*> objects);
     
-    bool voxelize(Object* object, float* voxel_size);
-    bool deleteObject(Object* object);
+    bool voxelize(Object* object, float voxel_size[3]);
+    bool voxelize(Object* object, int voxel_num[3]);
+
+    void deleteObject(Object* object);
     int  getNumberOfObject();
     
     std::vector<Object*> objects;
