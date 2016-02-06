@@ -3,36 +3,44 @@
   <xsd:element name="Fav">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element ref="Lattice"/>
         <xsd:element ref="Palette"/>
-        <xsd:element ref="Structure"/>
+        <xsd:element ref="Object"/>
       </xsd:sequence>
       <xsd:attribute name="version" type="xsd:string"/ use="optional">
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="Lattice">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="Lattice_Dim" type="xsd:double" />
-        <xsd:element name="X_Dim_Adj" type="xsd:double" />
-        <xsd:element name="Y_Dim_Adj" type="xsd:double" />
-        <xsd:element name="Z_Dim_Adj" type="xsd:double" />
-        <xsd:element name="X_Origin" type="xsd:double" minOccurs="0"/>
-        <xsd:element name="Y_Origin" type="xsd:double" minOccurs="0"/>
-        <xsd:element name="Z_Origin" type="xsd:double" minOccurs="0"/>
-        <xsd:element name="X_Voxels" type="xsd:nonNegativeInteger" />
-        <xsd:element name="Y_Voxels" type="xsd:nonNegativeInteger" />
-        <xsd:element name="Z_Voxels" type="xsd:nonNegativeInteger" />
-      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="Palette" minOccurs="0">
     <xsd:complexType>
       <xsd:sequence>
+        <xsd:element ref="Voxel_Info"/>
+        <xsd:element ref="Geometry"/>
         <xsd:element ref="Material"/>
+        <xsd:element ref="Set"/>
       </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Voxel_Info" minOccurs="0" maxOccurs="unbounded">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Geometry_ID" type="xsd:nonNegativeInteger"/>
+        <xsd:element name="Material_ID" type="xsd:nonNegativeInteger"/>
+        <xsd:element name="Set_ID" maxOccurs="unbounded" type="xsd:nonNegativeInteger"/>
+        </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Geometry" minOccurs="0" maxOccurs="unbounded">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Base_Shape" type="xsd:string"/>
+        <xsd:element name="X_Length" type="xsd:nonNegativeInteger"/>
+        <xsd:element name="Y_Length" type="xsd:nonNegativeInteger"/>
+        <xsd:element name="Z_Length" type="xsd:nonNegativeInteger"/>
+      </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -67,40 +75,67 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="Object" minOccurs="0" maxOccurs="unbounded">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name" type="xsd:string"/>
+        <xsd:element ref="Lattice" />
+        <xsd:element ref="Structure" />
+      </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Lattice">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="X_Origin" type="xsd:double" minOccurs="0"/>
+        <xsd:element name="Y_Origin" type="xsd:double" minOccurs="0"/>
+        <xsd:element name="Z_Origin" type="xsd:double" minOccurs="0"/>
+        <xsd:element name="X_Voxels" type="xsd:nonNegativeInteger" />
+        <xsd:element name="Y_Voxels" type="xsd:nonNegativeInteger" />
+        <xsd:element name="Z_Voxels" type="xsd:nonNegativeInteger" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="Structure">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element ref="Voxel_Data" />
-        <xsd:element ref="Link_Data" />
-        <xsd:element ref="Color_Data" />
-      </xsd:sequence>
-      <xsd:attribute name="Compression" type="xsd:string"/>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="Voxel_Data">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="Layer" maxOccurs="unbounded"/>
+        <xsd:element ref="Voxel_Map" />
+        <xsd:element ref="Color_Map" />
+        <xsd:element ref="Link_Map" />
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="Color_Data" minOccurs="0">
+  <xsd:element name="Voxel_Map">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="Layer" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:attribute name="Sample_Per_Voxel" type="xsd:nonNegativeInteger"/ use="required">
+      <xsd:attribute name="Compression" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="Link_Data" minOccurs="0">
+  <xsd:element name="Color_Map" minOccurs="0">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Layer" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="Sample_Per_Voxel" type="xsd:nonNegativeInteger"/ use="required">
+      <xsd:attribute name="Compression" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Link_Map" minOccurs="0">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="Layer" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:attribute name="Neighbours" type="xsd:string"/ use="required">
+      <xsd:attribute name="Compression" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 </xsd:schema>
