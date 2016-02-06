@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     char* filepath = "/Users/atsmsmr/Downloads/bunny-ascii.stl";
     
     float voxel_size[3] = {1.2,2.02,2.02};
-    int resolution[3] = {100,100,100};
+    int resolution[3] = {30,30,30};
     
     FabAbleVoxel fav;
     if(fav.importSTL(filepath)){

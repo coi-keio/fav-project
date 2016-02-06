@@ -108,6 +108,14 @@ void Viewer::keyboad(unsigned char key,  int x, int y) {
     }else if(key=='f'){
         is_fastmode = !is_fastmode;
         display();
+    }else if(key=='s'){
+//        float size = fav->objects[0]->voxel->voxel_num[0] * fav->objects[0]->voxel->voxel_size[0];
+//        float new_size = size + fav->objects[0]->voxel->voxel_size[0];
+        fav->objects[0]->voxel->scale(2);
+        zoom *= 2;
+    }else if(key=='d'){
+        fav->objects[0]->voxel->scale(0.5);
+        zoom *= 0.5;
     }
     
 }

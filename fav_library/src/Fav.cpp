@@ -103,6 +103,8 @@ bool FabAbleVoxel::voxelize(Object *object, int voxel_num[3]){
         object->voxel->data[i].state = voxelizer->voxel_data[i];
     }
     
+    object->voxel->setPosition();
+    
     delete voxelizer; voxelizer=nullptr;
     return 0;
 }

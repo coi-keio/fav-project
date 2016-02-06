@@ -56,17 +56,24 @@ class VoxelData
 {
     
 private:
-    
+
     
 public:
     VoxelData(){};
     ~VoxelData(){delete data; data=nullptr;};
     void scale(float magni);
+    void expand(float magni);
+    void reduct(float magni);
+
     void rotateX(float angle);
     void rotateY(float angle);
     void rotateZ(float angle);
     void translate(float* destination);
     
+    int getNeighbors(int x, int y, int z);
+    int getIndex(int x, int y, int z);
+    void setPosition();
+
     unsigned int voxel_num[3];
     float voxel_size[3];
     float voxel_origin[3];

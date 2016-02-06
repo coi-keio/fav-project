@@ -27,7 +27,9 @@ int* Voxelizer::voxelize(float* vertices, int num_vertices, float* unit_vox, boo
         float(fabs(p_aabb[2] - p_aabb[5]))
     };
     delete p_aabb;
-    
+
+//    float max_aabb = std::max({aabb_length[0],aabb_length[1],aabb_length[2]});
+
     // Set parameters.
     for(int i=0; i<3; ++i){
         voxel_size[i] = unit_vox[i];

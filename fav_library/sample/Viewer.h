@@ -39,7 +39,7 @@ private:
     float g_angle;
     int g_prevX;
     
-    int zoom = -100;
+    int zoom = -200;
     int slice = 0;
     bool is_voxel = false;
     bool is_mesh = true;
