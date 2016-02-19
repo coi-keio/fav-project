@@ -6,7 +6,6 @@
 //  Copyright (c) 2016年 atsmsmr. All rights reserved.
 //
 #include <iostream>
-#include <glut.h>
 #include "../src/Fav.h"
 #include "../src/file_io.h"
 #include "../src/voxelizer.h"

@@ -89,12 +89,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;FAVPROJECTWIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external;C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external\x86;C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\lib64\assimp.lib;C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external\glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\lib32\assimp.lib;C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external\x86\glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
