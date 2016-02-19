@@ -9,7 +9,19 @@
 #ifndef __Voxelizer__file_io__
 #define __Voxelizer__file_io__
 
-#include <OpenGL/gl.h>
+
+
+#ifdef __APPLE__
+#include <OpenGL/gl.h> //OS x libs
+#include <OpenGL/glu.h>
+#include <GLUT/glut.h>
+#else
+#include <stdlib.h>
+#include  <glut.h>
+#include  <GL/gl.h>
+#include  <GL/glu.h>
+#endif
+
 #include <iostream>
 #include <map>
 #include <vector>

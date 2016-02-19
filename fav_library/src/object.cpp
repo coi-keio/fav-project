@@ -5,7 +5,7 @@
 //  Created by atsmsmr on 2016/01/30.
 //  Copyright (c) 2016年 atsmsmr. All rights reserved.
 //
-
+#include <algorithm>
 #include "object.h"
 
 void VoxelData::setPosition(){

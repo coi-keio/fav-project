@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 Atsushi Masumori. All rights reserved.
 //
 
+#include <algorithm>
+
 #include "voxelizer.h"
 
 Voxelizer::Voxelizer(){
@@ -26,16 +28,23 @@ int* Voxelizer::voxelize(float* vertices, int num_vertices, float* unit_vox, boo
         float(fabs(p_aabb[1] - p_aabb[4])),
         float(fabs(p_aabb[2] - p_aabb[5]))
     };
-    delete p_aabb;
+    //delete p_aabb;
 
 //    float max_aabb = std::max({aabb_length[0],aabb_length[1],aabb_length[2]});
 
-    // Set parameters.
-    for(int i=0; i<3; ++i){
-        voxel_size[i] = unit_vox[i];
-        voxel_num[i] = ceil(aabb_length[i] / voxel_size[i])+1;
-        voxel_origin[i] = p_aabb[i];//-voxel_size[i]*voxel_num[i]*0.5f - voxel_size[i]*0.5f;
-    }
+	try
+	{
+		// Set parameters.
+		for (int i = 0; i < 3; ++i) {
+			voxel_size[i] = unit_vox[i];
+			voxel_num[i] = ceil(aabb_length[i] / voxel_size[i]) + 1;
+			voxel_origin[i] = p_aabb[i];//-voxel_size[i]*voxel_num[i]*0.5f - voxel_size[i]*0.5f;
+		}
+	}
+	catch (...) 
+	{
+	
+	}
 
     voxel_data = new int[voxel_num[0]*voxel_num[1]*voxel_num[2]]{0};
     collision_detection* c_detector = new collision_detection;

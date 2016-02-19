@@ -6,7 +6,7 @@
 //  Copyright (c) 2016年 atsmsmr. All rights reserved.
 //
 #include <iostream>
-//#include <GLUT/glut.h>
+#include <glut.h>
 #include "../src/Fav.h"
 #include "../src/file_io.h"
 #include "../src/voxelizer.h"
@@ -24,7 +24,7 @@ bool is_path = false;
 int main(int argc, char **argv)
 {
     
-    char* filepath = "/Users/atsmsmr/Downloads/bunny-ascii.stl";
+    char* filepath = "C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavProject.Win\\x64\\Debug\\bunny-ascii.stl";
     
     float voxel_size[3] = {1.2,2.02,2.02};
     int resolution[3] = {30,30,30};

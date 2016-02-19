@@ -9,10 +9,19 @@
 #ifndef __fav_library__Viewer__
 #define __fav_library__Viewer__
 
+#ifdef __APPLE__
+#include <OpenGL/gl.h> //OS x libs
+#include <OpenGL/glu.h>
 #include <GLUT/glut.h>
-#include <OpenGL/gl.h>
+#else
+#include <stdlib.h>
+#include  <glut.h>
+#include  <GL/gl.h>
+#include  <GL/glu.h>
+#endif
+
 #include <iostream>
-#include "Fav.h"
+#include "../src/Fav.h"
 
 class Viewer{
     

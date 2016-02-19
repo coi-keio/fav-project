@@ -9,6 +9,10 @@
 #ifndef __Voxelizer__voxelize__
 #define __Voxelizer__voxelize__
 
+//#include <stdlib.h>
+//#define NOMINMAX
+//#include <windows.h>
+
 #include<iostream>
 #include<fstream>
 #include <vector>
