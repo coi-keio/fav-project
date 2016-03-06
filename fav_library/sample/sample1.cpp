@@ -23,7 +23,7 @@ bool is_path = false;
 int main(int argc, char **argv)
 {
     
-    char* filepath = "C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavProject.Win\\x64\\Debug\\bunny-ascii.stl";
+    char* filepath = "data/bunny.stl";
     
     float voxel_size[3] = {1.2,2.02,2.02};
     int resolution[3] = {30,30,30};
