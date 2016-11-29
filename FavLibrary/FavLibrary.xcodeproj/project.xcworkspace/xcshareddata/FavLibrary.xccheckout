@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>05FACB82-3608-4D1E-84CF-A53EDD9866B9</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</key>
+		<string>https://bitbucket.org/atsmsmr/favlibrary.git</string>
+	</dict>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</key>
+		<string>FavLibrary/</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/atsmsmr/favlibrary.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FavLibrary</string>
+		</dict>
+	</array>
+</dict>
+</plist>
