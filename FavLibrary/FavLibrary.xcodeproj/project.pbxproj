@@ -13,6 +13,7 @@
 		51668CAF1DD8BFF000B7C0DC /* Metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51668CAD1DD8BFF000B7C0DC /* Metadata.cpp */; };
 		51668CB21DD8C07200B7C0DC /* Palette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51668CB01DD8C07200B7C0DC /* Palette.cpp */; };
 		51BD82C61DE66D2600723216 /* Fav.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51BD82C51DE66D2600723216 /* Fav.cpp */; };
+		51F665C41DF14375000566D8 /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51F665C21DF14375000566D8 /* Structure.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,8 @@
 		51668CB01DD8C07200B7C0DC /* Palette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Palette.cpp; sourceTree = "<group>"; };
 		51668CB11DD8C07200B7C0DC /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		51BD82C51DE66D2600723216 /* Fav.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Fav.cpp; sourceTree = "<group>"; };
+		51F665C21DF14375000566D8 /* Structure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Structure.cpp; sourceTree = "<group>"; };
+		51F665C31DF14375000566D8 /* Structure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Structure.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +86,8 @@
 				51668CAE1DD8BFF000B7C0DC /* Metadata.h */,
 				51668CB01DD8C07200B7C0DC /* Palette.cpp */,
 				51668CB11DD8C07200B7C0DC /* Palette.h */,
+				51F665C21DF14375000566D8 /* Structure.cpp */,
+				51F665C31DF14375000566D8 /* Structure.h */,
 			);
 			path = FavLibrary;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				511DE2DE1D8A7C3E0036CA14 /* Object.cpp in Sources */,
 				51668CAC1DD8BFDB00B7C0DC /* Voxel.cpp in Sources */,
 				51BD82C61DE66D2600723216 /* Fav.cpp in Sources */,
+				51F665C41DF14375000566D8 /* Structure.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
