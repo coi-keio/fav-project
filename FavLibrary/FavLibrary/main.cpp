@@ -23,18 +23,22 @@ int main(int argc, const char * argv[]) {
     
     DEV::Structure* test_str = new DEV::Structure(4, DEV::ColorMode::RGB);
     test_str->setVoxel(1,2,3, 250);
-    test_str->setColor(1,2,3, DEV::Color(100,100,100));
-    std::cout << (int) test_str->getColor(1,2,3)->r << std::endl;
+    test_str->setColor(1,2,3, DEV::ColorRGB(100,100,100));
+//    test_str->getColor(1,2,3);
+//    int test_ = test_str->getColor(1,2,3).r;
+
+    delete test_str;
+//    std::cout << "color:" <<  (unsigned int) test_ << std::endl;
 
 //    unsigned char* temp = test_str->getVoxelMap();
 //    unsigned char* temp2 = test_str->getVoxelMap();
 
 //    delete test_str;
 //    test_str = nullptr;
-    std::cout << test_str->getVoxel(1,2,3) << std::endl;
-    delete test_str;
-    test_str = nullptr;
 //    std::cout << test_str->getVoxel(1,2,3) << std::endl;
+//    delete test_str;
+    test_str = nullptr;
+    std::cout << (unsigned int)((unsigned char)257) << std::endl;
 
 //
 //    free(ip);
