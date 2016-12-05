@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5112B17B1DF58CCE00E69AEF /* FavReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5112B1791DF58CCE00E69AEF /* FavReader.cpp */; };
 		511DE2D21D8A7A460036CA14 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511DE2D11D8A7A460036CA14 /* main.cpp */; };
 		511DE2DE1D8A7C3E0036CA14 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511DE2DC1D8A7C3E0036CA14 /* Object.cpp */; };
 		51668CAC1DD8BFDB00B7C0DC /* Voxel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51668CAA1DD8BFDB00B7C0DC /* Voxel.cpp */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5112B1791DF58CCE00E69AEF /* FavReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FavReader.cpp; sourceTree = "<group>"; };
+		5112B17A1DF58CCE00E69AEF /* FavReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavReader.h; sourceTree = "<group>"; };
 		511DE2CE1D8A7A460036CA14 /* FavLibrary */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FavLibrary; sourceTree = BUILT_PRODUCTS_DIR; };
 		511DE2D11D8A7A460036CA14 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		511DE2D91D8A7A6A0036CA14 /* Fav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fav.h; sourceTree = "<group>"; };
@@ -93,6 +96,8 @@
 				51F665C31DF14375000566D8 /* Structure.h */,
 				51CD98FF1DF5755E00E22BA4 /* FavWriter.cpp */,
 				51CD99001DF5755E00E22BA4 /* FavWriter.h */,
+				5112B1791DF58CCE00E69AEF /* FavReader.cpp */,
+				5112B17A1DF58CCE00E69AEF /* FavReader.h */,
 			);
 			path = FavLibrary;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				51668CAC1DD8BFDB00B7C0DC /* Voxel.cpp in Sources */,
 				51BD82C61DE66D2600723216 /* Fav.cpp in Sources */,
 				51F665C41DF14375000566D8 /* Structure.cpp in Sources */,
+				5112B17B1DF58CCE00E69AEF /* FavReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

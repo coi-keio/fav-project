@@ -8,6 +8,7 @@
 
 #include "Fav.h"
 #include "FavWriter.h"
+#include "FavReader.h"
 
 Fav::Fav(){
 
