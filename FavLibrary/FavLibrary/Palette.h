@@ -90,7 +90,7 @@ class Material{
     
 public:
     Material(){ has_material_name = false; has_product_info = false; has_iso_standard = false; has_meta_data = false; };
-    
+    Material(int index_, std::string name_){ index = index_; name = name_; };
     class ProductInfo{
     public:
         ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_)
@@ -132,7 +132,9 @@ public:
     bool hasIsoStandard(){ return has_iso_standard; };
     bool hasMetadata(){ return has_meta_data; };
     int getNumProductInfo(){ return int(product_info.size()); };
-    
+    int getNumIsoStandard(){ return int(iso_standard.size()); };
+    int getNumMaterialName(){ return int(material_name.size()); };
+
     void addMaterialName(std::string material_name_){ material_name.push_back(material_name_); has_material_name = true; };
     void addProductInfo(std::string manufacturer_, std::string product_name_, std::string url_){
         product_info.push_back(new ProductInfo(manufacturer_, product_name_, url_));
@@ -147,6 +149,8 @@ public:
     IsoStandard* getIsoStandard(int index_){ return iso_standard[index_]; };
     void setMetadata(Metadata metadata_){ metadata = &metadata_; has_meta_data = true; };
 
+    int getId(){ return index; };
+    std::string getName(){ return name; };
 private:
     int index;
     std::string name;
@@ -172,7 +176,9 @@ public:
     Material* getMaterial(int index_){ return material[index_]; };
     int getNumberOfGeometries(){ return number_of_geometries; };
     int getNumberOfMaterials(){ return number_of_materials; };
-    
+    void setNumberOfGeometries(int number_of_geometries_){ number_of_geometries = number_of_geometries_; };
+    void setNumberOfMaterials(int number_of_materials_){ number_of_materials = number_of_materials_; };
+
 private:
     int number_of_geometries;
     int number_of_materials;

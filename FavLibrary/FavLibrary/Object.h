@@ -203,7 +203,7 @@ public:
     Object(int index_, std::string name_){ index = index_; name = name_; };
     
     int getId();
-    int getName();
+    std::string getName();
     void setId();
     void setName();
     bool hasMetadata();

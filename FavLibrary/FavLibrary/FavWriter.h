@@ -42,20 +42,26 @@ public:
     FavWriter(Fav* fav_){ fav = fav_; };
     
     bool write(const char* file_path);
-    void writeMetadata(DOMDocument *doc, DOMElement	*fav_elem, DOMElement *metadata_elem);
-    void writeXML(xercesc::DOMDocument* pmyDOMDocument, const char *filePath);
+    void writeMetadata(DOMElement *parent_elem);
+    void writePalette(DOMElement *parent_elem);
+    void writeVoxel(DOMElement *parent_elem);
+    void writeObject(DOMElement *parent_elem);
+    void writeGrid(DOMElement* parent_elem, Grid* p_grid);
+    void writeStructure(DOMElement* parent_elem, Structure* p_str);
+    void writeXML(const char *filePath);
     
     Fav* fav;
 
 private:
-//    Metadata testdata;
-//    void writeMetaData();
-    void writePalette();
-    void writeVoxel();
-    void writeObject();
-    void writeGrid();
-    void writeStructure();
+
+    void appendCDATA(DOMElement* parent_elem, const char* child_elem_name, const char* text);
+    void appendCDATA(DOMElement* parent_elem, const char* child_elem_name, std::string text);
+    void appendText(DOMElement* parent_elem, const char* child_elem_name, const char* text);
+    void appendText(DOMElement* parent_elem, const char* child_elem_name, std::string text);
+    void setAttribute(DOMElement *elem, const char* attr_name, const char* attr_value);
+    void setAttribute(DOMElement *elem, const char* attr_name, std::string attr_value);
     
+    DOMDocument *doc;
 };
 
 //#endif /* defined(__FavLibrary__FavWriter__) */

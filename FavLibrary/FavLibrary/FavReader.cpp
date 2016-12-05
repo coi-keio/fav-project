@@ -179,14 +179,18 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         
         fav->palette.addGeometry(current_geometry);
     }
-    
+    fav->palette.setNumberOfGeometries(number_of_geometry);
     
     // load materials
     DOMNodeList* material_list = getElements(dynamic_cast<DOMElement*>(palette_list_->item(0)), "material");
     int number_of_material = int(material_list->getLength());
     
     for(int i=0; i<number_of_material; ++i){
-        Material* current_material = new Material();
+        //load attributes
+        int index = std::stoi(getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"));
+        std::string name = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name");
+        Material* current_material = new Material(index, name);
+
         
         // debug required for multiple material_name case
         DOMNodeList* material_name_list = getElements(dynamic_cast<DOMElement*>(material_list->item(i)), "material_name");
@@ -221,6 +225,9 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         
         fav->palette.addMaterial(current_material);
     }
+    
+    fav->palette.setNumberOfMaterials(number_of_material);
+
 }
 
 void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_){
