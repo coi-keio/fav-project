@@ -75,7 +75,7 @@ void DEV::Structure::initVoxelMap(){
 void DEV::Structure::initColorMap(){
     
     if(color_mode == ColorMode::RGB) color_map = new unsigned char[number_of_voxels*3];
-    else if(color_mode == ColorMode::RGBA) color_map = new unsigned char[number_of_voxels*4];
+    else if(color_mode == ColorMode::RGBA) {color_map = new unsigned char[number_of_voxels*3]; alpha_map = new unsigned char[number_of_voxels];}
     else if(color_mode == ColorMode::CMYK) color_map = new unsigned char[number_of_voxels*4];
     else if(color_mode == ColorMode::GrayScale) color_map = new unsigned char[number_of_voxels];
     else if(color_mode == ColorMode::GrayScale16) color_map_16bit = new unsigned short[number_of_voxels];
@@ -144,7 +144,7 @@ void DEV::Structure::setColor(int x_, int y_, int z_, class ColorGrayScale color
     if(color_mode != DEV::ColorMode::GrayScale){
         std::cerr << "The input color is not compatible with current Color-Mode" << std::endl;
     }else{
-        color_map[index]   = color_.y;
+        color_map[index]   = color_.k;
     }
 };
 
@@ -153,39 +153,30 @@ void DEV::Structure::setColor(int x_, int y_, int z_, class ColorGrayScale16 col
     if(color_mode != DEV::ColorMode::GrayScale16){
         std::cerr << "The input color is not compatible with current Color-Mode" << std::endl;
     }else{
-        color_map[index]   = color_.y;
+        color_map[index]   = color_.k;
     }
 };
 
 
-auto DEV::Structure::getColor(int x_, int y_, int z_){
+DEV::ColorRGB DEV::Structure::getColorRGB(int x_, int y_, int z_){
     int index = getIndex(x_, y_, z_);
-    
-//    switch(color_mode){
-//        case DEV::ColorMode::RGB:
-    return 1;
-//    *new class ColorRGB(color_map[index*3], color_map[index*3+1], color_map[index*3+2]);
-//            break;
-//        case DEV::ColorMode::RGBA:
-//            return new class ColorRGBA(color_map[index*4], color_map[index*4+1], color_map[index*4+2], color_map[index*4+3]);
-//            break;
-//        case DEV::ColorMode::CMYK:
-//            return new class ColorRGBA(color_map[index*4], color_map[index*4+1], color_map[index*4+2], color_map[index*4+3]);
-//            break;
-//        case DEV::ColorMode::GrayScale:
-//            return new class ColorGrayScale(color_map[index]);
-//            break;
-//        case DEV::ColorMode::GrayScale16:
-//            return new class ColorGrayScale16(color_map_16bit[index]);
-//            break;
-//        default:
-//            std::cerr << "Please set ColorMode." << std::endl;
-//            return new class Color;
-//            break;
-//    }
-    
-//    return ColorRGB(color_map[index], 0, 0);
+    return ColorRGB(color_map[index*3], color_map[index*3+1], color_map[index*3+2]);
 };
+
+DEV::ColorRGBA DEV::Structure::getColorRGBA(int x_, int y_, int z_){
+    int index = getIndex(x_, y_, z_);
+    return ColorRGBA(color_map[index*4], color_map[index*4+1], color_map[index*4+2], color_map[index*4+3]);
+};
+
+DEV::ColorCMYK DEV::Structure::getColorCMYK(int x_, int y_, int z_){
+    int index = getIndex(x_, y_, z_);
+    return ColorCMYK(color_map[index*4], color_map[index*4+1], color_map[index*4+2], color_map[index*4+3]);
+};
+
+//DEV::ColorGrayScale DEV::Structure::getColorGrayScale(int x_, int y_, int z_){
+//    int index = getIndex(x_, y_, z_);
+//    return ColorGrayScale(color_map[index]);
+//};
 
 int DEV::Structure::getIndex(int x_, int y_, int z_){
     
