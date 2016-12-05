@@ -422,12 +422,6 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
     }
 }
 
-bool FavWriter::write(const char* file_path){
-    
-    
-    return 1;
-}
-
 
 Fav::Fav(){
 
@@ -448,9 +442,9 @@ bool Fav::read(const char* file_path){
 
 bool Fav::write(const char* file_path){
     
-    fav_writer = new FavWriter(this);
-    fav_writer->write(file_path);
-    delete fav_writer;
+//    fav_writer = new FavWriter(this);
+//    fav_writer->write(file_path);
+//    delete fav_writer;
     
     return 1;
 }

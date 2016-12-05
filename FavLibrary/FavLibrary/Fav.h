@@ -21,11 +21,13 @@
 #include "Palette.h"
 #include "Voxel.h"
 #include "Object.h"
+#include "FavWriter.h"
 
 using namespace xercesc;
 
 class Fav;
 class FavReader;
+class FavWriter;
 
 class FavReader{
 public:
@@ -51,16 +53,6 @@ private:
     void readGrid();
     void readStructure();
     
-    Fav* fav;
-};
-
-class FavWriter{
-public:
-    FavWriter(Fav* fav_){ fav = fav_; };
-    bool write(const char* file_path);
-    void writeXML(xercesc::DOMDocument* pmyDOMDocument, const char *filePath);
-    
-private:
     Fav* fav;
 };
 
