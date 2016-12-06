@@ -14,7 +14,7 @@
 #include <vector>
 #include <iostream>
 
-#include "Object.h"
+class Grid;
 
 namespace DEV {
     
@@ -22,13 +22,25 @@ namespace DEV {
         
     };
     
-    enum ColorMode{
+    enum class BitPerVoxel{
+        FourBit,
+        EightBit,
+        SixteenBit,
+    };
+    
+    enum class ColorMode{
         None,
         GrayScale,
         GrayScale16,
         RGB,
         RGBA,
         CMYK,
+    };
+    
+    enum class Compression{
+        None,
+        Zlib,
+        Base64,
     };
     
     template<typename tVoxelMapType>
@@ -120,20 +132,25 @@ namespace DEV {
     
     class Structure{
     public:
-        Structure();
+        Structure(Grid* grid_);
         Structure(int bit_per_voxel_);
         Structure(int bit_per_voxel_, ColorMode color_mode_);
         ~Structure();
+        void setCompression(Compression compression_);
+        Compression getCompression();
         
         void initVoxelMap();
-        void setBitPerVoxel(int bit_per_voxel_);
+        void setBitPerVoxel(int bit_per_voxel_){ bit_per_voxel = bit_per_voxel_; };
+        void setVoxel(int index_, int value_);
         void setVoxel(Point p_, int value_);
         void setVoxel(int x_, int y_, int z_, int value_);
         int getBitPerVoxel(){ return bit_per_voxel; };
+        int getVoxel(int index_){ return voxel_map->getVoxel(index_); };
         int getVoxel(Point p_);
         int getVoxel(int x_, int y_, int z_);
         
         void initColorMap();
+        void initColorMap(ColorMode color_mode_);
         void setColorMode(ColorMode color_mode_);
         void setColor(Point p_, class ColorRGB color_);
         void setColor(Point p_, class ColorRGBA color_);
@@ -154,8 +171,8 @@ namespace DEV {
         void setColorRGB(int x_, int y_, int z_, int r_, int g_, int b_);
         void setColorRGBA(int x_, int y_, int z_, int r_, int g_, int b_, int a_);
         void setColorCMYK(int x_, int y_, int z_, int c_, int m_, int cy_, int k_);
-        void setColortGrayScale(int x_, int y_, int z_, int k);
-        void setColortGrayScale16(int x_, int y_, int z_, int k);
+        void setColorGrayScale(int x_, int y_, int z_, int k);
+        void setColorGrayScale16(int x_, int y_, int z_, int k);
         void setColorAlpha(int x_, int y_, int z_, int a_);
 
         int getColorRed(Point p_);
@@ -168,7 +185,7 @@ namespace DEV {
         int getColorGrayScale(Point p_);
         int getColorGrayScale16(Point p_);
         int getColorAlpha(Point p_);
-        int getColorRed(int x_, int y_, int z_);
+        int getColorRed(int x_, int y_, int z_){ return color_map[getIndex(x_, y_, z_)]; };
         int getColorGreen(int x_, int y_, int z_);
         int getColorBlue(int x_, int y_, int z_);
         int getColorCyan(int x_, int y_, int z_);
@@ -181,8 +198,12 @@ namespace DEV {
 
         ColorMode getColorMode(){ return color_mode; };
         ColorRGB getColorRGB(int x_, int y_, int z_);
-        ColorRGBA getColorRGBA(int x_, int y_, int z_);
         ColorCMYK getColorCMYK(int x_, int y_, int z_);
+        
+        int getDimensionX();
+        int getDimensionY();
+        int getDimensionZ();
+
 //        ColorGrayScale getColorGrayScale(int x_, int y_, int z_);
 //        ColorGrayScale16 getColorGrayScale16(int x_, int y_, int z_);
 
@@ -192,7 +213,8 @@ namespace DEV {
 //        unsigned int getLink(int x1_, int y1_, int z1_, int x2_, int y2_, int z2_);
 //        int getNeighbors(){ return neighbours; };
         
-        
+        Grid* grid;
+
     private:
         void changeColorMapToRGB(){
             if(color_mode == ColorMode::RGB){
@@ -208,9 +230,9 @@ namespace DEV {
 
         int getIndex(int x, int y, int z); //returns the index of the array from xyz indices
         
-        Grid* grid;
         int bit_per_voxel;
         ColorMode color_mode;
+        Compression compression;
         int number_of_voxels;
         
         VoxelMap<unsigned char>* voxel_map; //default voxel map

@@ -28,6 +28,7 @@
 #include "Palette.h"
 #include "Voxel.h"
 #include "Object.h"
+#include "Structure.h"
 
 using namespace xercesc;
 

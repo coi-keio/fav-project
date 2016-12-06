@@ -11,6 +11,10 @@
 #include <string>
 #include "Metadata.h"
 
+namespace DEV {
+    class Structure;
+}
+
 class Vector3D{
 public:
     Vector3D(){ x = 0.0; y = 0.0; z = 0.0; };
@@ -218,6 +222,7 @@ public:
     
     Grid* grid;
     Structure* structure;
+    DEV::Structure* structure_new;
     Metadata* metadata;
     
 private:

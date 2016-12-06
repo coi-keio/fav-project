@@ -4,6 +4,6 @@
 *.sdf
 *.filters
 build/
-*/*.xcodeproj/*
+*/*.xcodeproj
 */!*.xcodeproj/project.pbxproj
 */!*.xcworkspace/contents.xcworkspacedata

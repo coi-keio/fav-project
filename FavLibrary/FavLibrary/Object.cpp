@@ -7,6 +7,7 @@
 //
 
 #include "Object.h"
+#include "Structure.h"
 
 
 Structure::Structure(int dim_x_, int dim_y_, int dim_z_){

@@ -309,12 +309,14 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
         
         
         // load Structure
-        Structure* structure = new Structure(current_object->grid->dimension.getX(),current_object->grid->dimension.getY(),current_object->grid->dimension.getZ());
+        DEV::Structure* structure = new DEV::Structure(current_object->grid);
         
         // load voxel_map
         DOMElement* vmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "voxel_map")->item(0) );
         std::string compression   = getAttribute(vmap_elem, "compression");
         std::string bit_per_voxel = getAttribute(vmap_elem, "bit_per_voxel");
+        
+        structure->setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
         
         if(compression == "none"){
             
@@ -323,10 +325,20 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             structure->initVoxelMap();
             
             for(int j=0; j<number_of_layers; ++j){
-                
-                if(bit_per_voxel == "8"){
-                    std::string layer_data = getNodeValueString( vmap_layers->item(j)->getFirstChild() );
-                    std::string data_in;
+
+                std::string layer_data = getNodeValueString( vmap_layers->item(j)->getFirstChild() );
+                std::string data_in;
+
+                if(bit_per_voxel == "4"){ // need debug.
+                    data_in.resize(layer_data.size());
+                    for(int k=0; k<(int)layer_data.size(); k++){
+                        int dec;
+                        char hex[2] = {layer_data[k], layer_data[k+1]};
+                        sscanf(hex, "%01x", &dec);
+                        data_in[k] = dec; //if compressed using this scheme
+                    }
+                    
+                }else if(bit_per_voxel == "8"){
                     data_in.resize(layer_data.size()/2);
                     int cur = 0;
                     for(int k=0; k<(int)layer_data.size(); k=k+2){
@@ -337,96 +349,128 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                         cur++;
                         std::cout << dec << std::endl;
                     }
-                    
-                    int dim_x = current_object->grid->dimension.getX();
-                    int dim_y = current_object->grid->dimension.getY();
-                    int layer_size = dim_x * dim_y;
-                    
-                    if (data_in.size() != layer_size){
-                        // error here
+                }else if(bit_per_voxel == "16"){
+                    data_in.resize(layer_data.size()/4);
+                    int cur = 0;
+                    for(int k=0; k<(int)layer_data.size(); k=k+4){
+                        int dec;
+                        char hex[4] = {layer_data[k], layer_data[k+1], layer_data[k+2], layer_data[k+3]};
+                        sscanf(hex, "%04x", &dec);
+                        data_in[cur] = dec; //if compressed using this scheme
+                        cur++;
+                        std::cout << dec << std::endl;
                     }
+                }
+                
+                int dim_x = current_object->grid->dimension.getX();
+                int dim_y = current_object->grid->dimension.getY();
+                int layer_size = dim_x * dim_y;
+                
+                if (data_in.size() != layer_size){
+                    // error here
+                }
+                
+                for(int k=0; k<layer_size; k++){
                     
-                    for(int k=0; k<layer_size; k++){
-                        
-                        int index = layer_size*j + k;
-                        structure->setVoxel(index, (int)data_in[k]);
-                        
-                    }
+                    int index = layer_size*j + k;
+                    structure->setVoxel(index, (int)data_in[k]);
+                    std::cout << "index = " << index << std::endl;
+                    std::cout << "value = " << structure->getVoxel(index) << std::endl;
+                    
                 }
             }
         }
         
-        // load color_map
-        DOMElement* cmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "color_map")->item(0) );
-        compression = getAttribute(cmap_elem, "compression");
-        std::string color_mode = getAttribute(cmap_elem, "color_mode");
+//        // load color_map
+//        DOMElement* cmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "color_map")->item(0) );
+//        compression = getAttribute(cmap_elem, "compression");
+//        std::string color_mode_str = getAttribute(cmap_elem, "color_mode");
+//        DEV::ColorMode color_mode;
+//        
+//        if(color_mode_str == "RGB"){
+//            color_mode = DEV::ColorMode::RGB;
+//            
+//        }else if(color_mode_str == "RGBA"){
+//            color_mode = DEV::ColorMode::RGBA;
+//            
+//        }else if(color_mode_str == "CMYK"){
+//            color_mode = DEV::ColorMode::CMYK;
+//            
+//        }else if(color_mode_str == "GrayScale"){
+//            color_mode = DEV::ColorMode::GrayScale;
+//            
+//        }else if(color_mode_str == "GrayScale16"){
+//            color_mode = DEV::ColorMode::GrayScale16;
+//            
+//        }
+//        
+//        if(compression == "none"){
+//            
+//            DOMNodeList* cmap_layers = getElements(cmap_elem, "layer");
+//            int number_of_layers = int(cmap_layers->getLength());
+//            
+//            if(number_of_layers > 0){
+//                structure->initColorMap(color_mode);
+//            }
+//            
+//            if(color_mode == DEV::ColorMode::RGB){
+//                
+//                int* layer_r;
+//                int* layer_g;
+//                int* layer_b;
+//                
+//                for(int j=0; j<number_of_layers; ++j){
+//                    
+//                    std::string layer_data = getNodeValueString( cmap_layers->item(j)->getFirstChild() );
+//                    std::string data_in;
+//                    std::cout << layer_data << std::endl;
+//                    
+//                    layer_r = new int[layer_data.size()/(2*3)]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
+//                    layer_g = new int[layer_data.size()/(2*3)];
+//                    layer_b = new int[layer_data.size()/(2*3)];
+//                    
+//                    for (int i=0; i<(int)layer_data.size(); i=i+6){
+//                        int r_value, g_value, b_value;
+//                        char r[2] = {layer_data[i],  layer_data[i+1]};
+//                        char g[2] = {layer_data[i+2],layer_data[i+3]};
+//                        char b[2] = {layer_data[i+4],layer_data[i+5]};
+//                        sscanf(r, "%02x", &r_value);
+//                        sscanf(g, "%02x", &g_value);
+//                        sscanf(b, "%02x", &b_value);
+//                        layer_r[i/6] = r_value; //if compressed using this scheme
+//                        layer_g[i/6] = g_value; //if compressed using this scheme
+//                        layer_b[i/6] = b_value; //if compressed using this scheme
+//                    }
+//                    
+//                    
+//                    int dim_x = current_object->grid->dimension.getX();
+//                    int dim_y = current_object->grid->dimension.getY();
+//                    int current_color = 0;
+//                    
+//                    for(int y=0; y<dim_y; y++){
+//                        for(int x=0; x<dim_x; x++){
+//                            
+////                            int index = structure->getIndex(x,y,j);
+//                            if(structure->getVoxel(x,y,j) != 0){
+//                                structure->setColorRGB(x,y,j, layer_r[current_color], layer_g[current_color], layer_b[current_color]);
+//                                std::cout << layer_r[current_color] << " -- " << structure->getColorRed(x,y,j) << std::endl;
+//                                current_color++;
+//                            }else{
+//                                structure->setColorRGB(x,y,j, 0, 0, 0);
+//                            }
+//                            
+//                        }
+//                    }
+//                }
+//                
+//            }
+//        }
         
-        if(compression == "none"){
-            
-            DOMNodeList* cmap_layers = getElements(cmap_elem, "layer");
-            int number_of_layers = int(cmap_layers->getLength());
-            
-            if(number_of_layers > 0){
-                structure->initColorMap(color_mode);
-            }
-            
-            if(color_mode == "RGB"){
-                
-                int* layer_r;
-                int* layer_g;
-                int* layer_b;
-                
-                for(int j=0; j<number_of_layers; ++j){
-                    
-                    std::string layer_data = getNodeValueString( cmap_layers->item(j)->getFirstChild() );
-                    std::string data_in;
-                    std::cout << layer_data << std::endl;
-                    
-                    layer_r = new int[layer_data.size()/(2*3)]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
-                    layer_g = new int[layer_data.size()/(2*3)];
-                    layer_b = new int[layer_data.size()/(2*3)];
-                    
-                    for (int i=0; i<(int)layer_data.size(); i=i+6){
-                        int r_value, g_value, b_value;
-                        char r[2] = {layer_data[i],  layer_data[i+1]};
-                        char g[2] = {layer_data[i+2],layer_data[i+3]};
-                        char b[2] = {layer_data[i+4],layer_data[i+5]};
-                        sscanf(r, "%02x", &r_value);
-                        sscanf(g, "%02x", &g_value);
-                        sscanf(b, "%02x", &b_value);
-                        layer_r[i/6] = r_value; //if compressed using this scheme
-                        layer_g[i/6] = g_value; //if compressed using this scheme
-                        layer_b[i/6] = b_value; //if compressed using this scheme
-                    }
-                    
-                    
-                    int dim_x = current_object->grid->dimension.getX();
-                    int dim_y = current_object->grid->dimension.getY();
-                    int current_color = 0;
-                    
-                    for(int y=0; y<dim_y; y++){
-                        for(int x=0; x<dim_x; x++){
-                            
-                            int index = structure->getIndex(x,y,j);
-                            if(structure->getVoxel(index) != 0){
-                                structure->setColor(index, layer_r[current_color], layer_g[current_color], layer_b[current_color]);
-                                std::cout << layer_r[current_color] << " -- " << structure->getColorR(index) << std::endl;
-                                current_color++;
-                            }else{
-                                structure->setColor(index, 0, 0, 0);
-                            }
-                            
-                        }
-                    }
-                }
-                
-            }
-        }
-        
-        current_object->structure = structure;
+        current_object->structure_new = structure;
         
         // other compression mode is under development
         
         fav->object.push_back(current_object);
+        std::cout << "kore" << structure->getVoxel(3) << std::endl;
     }
 }

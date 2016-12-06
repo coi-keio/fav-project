@@ -27,10 +27,10 @@ bool Fav::read(const char* file_path){
     return 1;
 }
 
-bool Fav::write(const char* file_path){
+bool Fav::write(const char* file_path, const char* version_){
     
     fav_writer = new FavWriter(this);
-    fav_writer->write(file_path);
+    fav_writer->write(file_path, version_);
     delete fav_writer;
     
     return 1;
