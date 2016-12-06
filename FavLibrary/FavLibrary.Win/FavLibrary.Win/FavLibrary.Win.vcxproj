@@ -18,10 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\FavLibrary\Fav.cpp" />
+    <ClCompile Include="..\..\FavLibrary\main.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Metadata.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Object.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Palette.cpp" />
+    <ClCompile Include="..\..\FavLibrary\tinyxml2.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Voxel.cpp" />
+    <ClCompile Include="..\..\FavLibrary\xmltest.cpp" />
+    <ClCompile Include="..\..\FavLibrary\XML_Rip.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\FavLibrary\Fav.h" />
+    <ClInclude Include="..\..\FavLibrary\Metadata.h" />
+    <ClInclude Include="..\..\FavLibrary\Object.h" />
+    <ClInclude Include="..\..\FavLibrary\Palette.h" />
+    <ClInclude Include="..\..\FavLibrary\tinyxml2.h" />
+    <ClInclude Include="..\..\FavLibrary\Voxel.h" />
+    <ClInclude Include="..\..\FavLibrary\XML_Rip.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{687E5F3D-7A52-4117-BD7C-C34A5093A04C}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>FavProjectWin</RootNamespace>
+    <ProjectGuid>{D55F9C52-8D98-4911-9448-DCCF7563AE4B}</ProjectGuid>
+    <RootNamespace>FavLibraryWin</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -29,27 +48,27 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -69,64 +88,38 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\fx28613\Desktop\Sources\fav-project\FavLibrary\FavLibrary.Win\xerces-c-3.1.1-x86_64-windows-vc-10.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\fx28613\Desktop\Sources\fav-project\FavLibrary\FavLibrary.Win\xerces-c-3.1.1-x86_64-windows-vc-10.0\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;FAVPROJECTWIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external\x86;C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\lib32\assimp.lib;C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external\x86\glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;FAVPROJECTWIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external\x64;C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\fx28613\Desktop\Sources\fav-project\FavLibrary\FavLibrary.Win\xerces-c-3.1.1-x86_64-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Users\fx28613\Desktop\Sources\fav-project\FavProject.Win\external\x64\glut32.lib;C:\Users\fx28613\Desktop\Sources\C++Libraries\assimp-3.1.1-win-binaries\lib64\assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)FavLibrary.Win\External\xerces-c_3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\FavLibrary.Win\External;C:\Users\fx28613\Desktop\Sources\fav-project\FavLibrary\FavLibrary.Win\xerces-c-3.1.1-x86_64-windows-vc-10.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;FAVPROJECTWIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -134,36 +127,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;FAVPROJECTWIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\fav_library\sample\sample1.cpp" />
-    <ClCompile Include="..\fav_library\sample\Viewer.cpp" />
-    <ClCompile Include="..\fav_library\src\Fav.cpp" />
-    <ClCompile Include="..\fav_library\src\file_io.cpp" />
-    <ClCompile Include="..\fav_library\src\object.cpp" />
-    <ClCompile Include="..\fav_library\src\voxelizer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\fav_library\sample\Viewer.h" />
-    <ClInclude Include="..\fav_library\src\Fav.h" />
-    <ClInclude Include="..\fav_library\src\file_io.h" />
-    <ClInclude Include="..\fav_library\src\object.h" />
-    <ClInclude Include="..\fav_library\src\voxelizer.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

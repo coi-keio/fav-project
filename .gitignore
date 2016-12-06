@@ -3,3 +3,8 @@
 *.opensdf
 *.sdf
 *.filters
+FavLibrary/FavLibrary.Win/xerces-c-3.1.4/
+FavLibrary/FavLibrary.Win/xerces-c-3.1.1-x86_64-windows-vc-10.0/
+FavLibrary/FavLibrary.Win/xercesc/
+*.db
+*.opendb
