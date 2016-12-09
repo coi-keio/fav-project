@@ -20,23 +20,34 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\FavLibrary\Fav.cpp" />
-    <ClCompile Include="..\..\FavLibrary\main.cpp" />
+    <ClCompile Include="..\..\FavLibrary\FavReader.cpp" />
+    <ClCompile Include="..\..\FavLibrary\FavWriter.cpp" />
     <ClCompile Include="..\..\FavLibrary\Metadata.cpp" />
     <ClCompile Include="..\..\FavLibrary\Object.cpp" />
     <ClCompile Include="..\..\FavLibrary\Palette.cpp" />
-    <ClCompile Include="..\..\FavLibrary\tinyxml2.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Structure.cpp" />
     <ClCompile Include="..\..\FavLibrary\Voxel.cpp" />
-    <ClCompile Include="..\..\FavLibrary\xmltest.cpp" />
-    <ClCompile Include="..\..\FavLibrary\XML_Rip.cpp" />
+    <ClCompile Include="ColorBase.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="ObjectProperties.cpp" />
+    <ClCompile Include="Point3D.cpp" />
+    <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\FavLibrary\Fav.h" />
+    <ClInclude Include="..\..\FavLibrary\FavReader.h" />
+    <ClInclude Include="..\..\FavLibrary\FavWriter.h" />
     <ClInclude Include="..\..\FavLibrary\Metadata.h" />
     <ClInclude Include="..\..\FavLibrary\Object.h" />
     <ClInclude Include="..\..\FavLibrary\Palette.h" />
-    <ClInclude Include="..\..\FavLibrary\tinyxml2.h" />
+    <ClInclude Include="..\..\FavLibrary\Structure.h" />
     <ClInclude Include="..\..\FavLibrary\Voxel.h" />
-    <ClInclude Include="..\..\FavLibrary\XML_Rip.h" />
+    <ClInclude Include="..\..\FavLibrary\Color.h" />
+    <ClInclude Include="..\..\FavLibrary\Geometry.h" />
+    <ClInclude Include="..\..\FavLibrary\Material.h" />
+    <ClInclude Include="..\..\FavLibrary\Point3D.h" />
+    <ClInclude Include="..\..\FavLibrary\Vector3D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D55F9C52-8D98-4911-9448-DCCF7563AE4B}</ProjectGuid>
@@ -60,7 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">

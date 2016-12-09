@@ -1,0 +1,67 @@
+//
+//  FavWriter.h
+//  FavLibrary
+//
+//  Created by atsmsmr on 2016/12/05.
+//  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
+//
+
+//#ifndef __FavLibrary__FavWriter__
+//#define __FavLibrary__FavWriter__
+#pragma once
+
+#include <stdio.h>
+#include <string>
+#include <stdlib.h>
+#include <iostream>
+
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/dom/DOMText.hpp>
+#include <xercesc/parsers/AbstractDOMParser.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/framework/LocalFileFormatTarget.hpp>
+
+
+#include "Metadata.h"
+#include "Palette.h"
+#include "Voxel.h"
+#include "Object.h"
+
+class Fav;
+//class Metadata;
+//class Palette;
+//class Object;
+
+using namespace xercesc;
+
+class FavWriter{
+public:
+    FavWriter(Fav* fav_){ fav = fav_; };
+    
+    bool write(const char* file_path);
+    void writeMetadata(DOMElement *parent_elem);
+    void writePalette(DOMElement *parent_elem);
+    void writeVoxel(DOMElement *parent_elem);
+    void writeObject(DOMElement *parent_elem);
+    void writeGrid(DOMElement* parent_elem, Grid* p_grid);
+    void writeStructure(DOMElement* parent_elem, Structure* p_str);
+    void writeXML(const char *filePath);
+    
+    Fav* fav;
+
+private:
+
+    void appendCDATA(DOMElement* parent_elem, const char* child_elem_name, const char* text);
+    void appendCDATA(DOMElement* parent_elem, const char* child_elem_name, std::string text);
+    void appendText(DOMElement* parent_elem, const char* child_elem_name, const char* text);
+    void appendText(DOMElement* parent_elem, const char* child_elem_name, std::string text);
+    void setAttribute(DOMElement *elem, const char* attr_name, const char* attr_value);
+    void setAttribute(DOMElement *elem, const char* attr_name, std::string attr_value);
+    
+    DOMDocument *doc;
+};
+
+//#endif /* defined(__FavLibrary__FavWriter__) */

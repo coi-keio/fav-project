@@ -6,31 +6,35 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>05FACB82-3608-4D1E-84CF-A53EDD9866B9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FavLibrary</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</key>
-		<string>https://bitbucket.org/atsmsmr/favlibrary.git</string>
+		<key>1AA38E10FB664A462A245828433EEB2ED854521C</key>
+		<string>https://github.com/coi-keio/fav-project.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FavLibrary/FavLibrary.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</key>
-		<string>FavLibrary/</string>
+		<key>1AA38E10FB664A462A245828433EEB2ED854521C</key>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://bitbucket.org/atsmsmr/favlibrary.git</string>
+	<string>https://github.com/coi-keio/fav-project.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</string>
+	<string>1AA38E10FB664A462A245828433EEB2ED854521C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B2931386FD14AD0F46C89B25AFEB85B908CFBB0F</string>
+			<string>1AA38E10FB664A462A245828433EEB2ED854521C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>FavLibrary</string>
+			<string>fav-project</string>
 		</dict>
 	</array>
 </dict>

@@ -11,21 +11,21 @@
 #include <string>
 #include "Metadata.h"
 
-class Vector3D{
+class Vector3Da {
 public:
-    Vector3D(){ x = 0.0; y = 0.0; z = 0.0; };
-    float getX(){ return x; };
-    float getY(){ return y; };
-    float getZ(){ return z; };
-    void set(int x_, int y_, int z_){ x=x_; y=y_; z=z_;};
-    void setX(int x_){ x = x_; };
-    void setY(int y_){ y = y_; };
-    void setZ(int z_){ z = z_; };
-    
+	Vector3D() { x = 0.0; y = 0.0; z = 0.0; };
+	float getX() { return x; };
+	float getY() { return y; };
+	float getZ() { return z; };
+	void set(int x_, int y_, int z_) { x = x_; y = y_; z = z_; };
+	void setX(int x_) { x = x_; };
+	void setY(int y_) { y = y_; };
+	void setZ(int z_) { z = z_; };
+
 private:
-    double x;
-    double y;
-    double z;
+	double x;
+	double y;
+	double z;
 };
 
 class Color{
@@ -203,7 +203,7 @@ public:
     Object(int index_, std::string name_){ index = index_; name = name_; };
     
     int getId();
-    int getName();
+    std::string getName();
     void setId();
     void setName();
     bool hasMetadata();
