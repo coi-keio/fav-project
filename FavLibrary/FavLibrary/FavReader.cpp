@@ -14,6 +14,13 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 
+
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/Base64.hpp>
+
 using namespace xercesc;
 
 
@@ -318,17 +325,17 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
         
         structure->setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
         
-        if(compression == "none"){
+        DOMNodeList* vmap_layers = getElements(vmap_elem, "layer");
+        int number_of_layers = int(vmap_layers->getLength());
+        structure->initVoxelMap();
+        
+        for(int j=0; j<number_of_layers; ++j){
             
-            DOMNodeList* vmap_layers = getElements(vmap_elem, "layer");
-            int number_of_layers = int(vmap_layers->getLength());
-            structure->initVoxelMap();
+            std::string layer_data = getNodeValueString( vmap_layers->item(j)->getFirstChild() );
+            std::string data_in;
             
-            for(int j=0; j<number_of_layers; ++j){
-
-                std::string layer_data = getNodeValueString( vmap_layers->item(j)->getFirstChild() );
-                std::string data_in;
-
+            if(compression == "none"){
+                
                 if(bit_per_voxel == "4"){ // need debug.
                     data_in.resize(layer_data.size());
                     for(int k=0; k<(int)layer_data.size(); k++){
@@ -362,22 +369,35 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                     }
                 }
                 
-                int dim_x = current_object->grid->dimension.getX();
-                int dim_y = current_object->grid->dimension.getY();
-                int layer_size = dim_x * dim_y;
                 
-                if (data_in.size() != layer_size){
-                    // error here
+            }else if(compression == "base64"){
+                
+                XMLSize_t size = current_object->grid->dimension.getX()*current_object->grid->dimension.getY();
+                data_in.resize(size);
+                std::string input_str = getNodeValueString(vmap_layers->item(j)->getFirstChild());
+                XMLByte* data_decoded = xercesc::Base64::decode( reinterpret_cast<const XMLByte*>(input_str.c_str()), &size);
+                
+                for(int d=0; d<size; d++){
+                    data_in[d] = (unsigned int)data_decoded[d];
                 }
                 
-                for(int k=0; k<layer_size; k++){
-                    
-                    int index = layer_size*j + k;
-                    structure->setVoxel(index, (int)data_in[k]);
-                    std::cout << "index = " << index << std::endl;
-                    std::cout << "value = " << structure->getVoxel(index) << std::endl;
-                    
-                }
+            }
+            
+            int dim_x = current_object->grid->dimension.getX();
+            int dim_y = current_object->grid->dimension.getY();
+            int layer_size = dim_x * dim_y;
+            
+            if (data_in.size() != layer_size){
+                // error here
+            }
+            
+            for(int k=0; k<layer_size; k++){
+                
+                int index = layer_size*j + k;
+                structure->setVoxel(index, (int)data_in[k]);
+                std::cout << "index = " << index << std::endl;
+                std::cout << "value = " << structure->getVoxel(index) << std::endl;
+                
             }
         }
         
