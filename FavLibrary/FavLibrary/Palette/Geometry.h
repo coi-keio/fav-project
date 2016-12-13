@@ -4,46 +4,48 @@
 #include <map>
 #include <list>
 #include <vector>
-#include "Point3D.h"
+#include "../Primitive/Point3D.h"
+#include "../Primitive/FavPrimitive.h"
 
-class Geometry {
 
+class Geometry : public FavPrimitive
+{
 public:
 	Geometry() { identifier = ++counter; };
 
 	Geometry(std::string name_) {
 		Geometry();
-		this->name = name_;
+		name = name_;
 	};
 
 	Geometry(std::string name_, GeometryShape shape_, Point3D scale_)
 	{
 		Geometry(name_);
-		this->shape = shape_;
-		this->scale.set(scale_);
+		shape = shape_;
+		scale.set(scale_);
 	};
 
 	Geometry(std::string name_, GeometryShape shape_, float scale_x_, float scale_y_, float scale_z_)
 	{
 		Geometry(name_);
-		this->shape = shape_;
-		this->scale.set(scale_x_, scale_y_, scale_z_);
+		shape = shape_;
+		scale.set(scale_x_, scale_y_, scale_z_);
 	};
 
 	Geometry(std::string name_, std::string user_defined_shape_, Point3D scale_)
 	{
 		Geometry(name_);
-		this->shape = user_defined;
-		this->userDefinedShape = user_defined_shape_;
-		this->scale.set(scale_);
+		shape = user_defined;
+		userDefinedShape = user_defined_shape_;
+		scale.set(scale_);
 	};
 
 	Geometry(std::string name_, std::string user_defined_shape_, float scale_x_, float scale_y_, float scale_z_)
 	{
 		Geometry(name_);
-		this->shape = user_defined;
-		this->userDefinedShape = user_defined_shape_;
-		this->scale.set(scale_x_, scale_y_, scale_z_);
+		shape = user_defined;
+		userDefinedShape = user_defined_shape_;
+		scale.set(scale_x_, scale_y_, scale_z_);
 	};
 
 	GeometryShape getShape() { return shape; };
@@ -63,13 +65,7 @@ public:
 
 	void setScale(double x_, double y_, double z_) { this->scale.set(x_, y_, z_); };
 
-	int getId() { return identifier; };
-
 private:
-	static int counter;
-	int identifier;
-
-	std::string name;
 	std::string userDefinedShape;
 
 	GeometryShape shape = cube;

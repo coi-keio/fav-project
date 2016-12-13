@@ -25,7 +25,7 @@ public:
     Fav();
     ~Fav();
     bool read(const char* file_path);
-    bool write(const char* file_path);
+    bool write(const char* file_path, const char* version_);
     
     Metadata* metadata;
     Palette palette;

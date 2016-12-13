@@ -5,14 +5,14 @@
 #include <map>
 #include <list>
 #include <vector>
-#include "Metadata.h"
+#include "../Metadata.h"
+#include "../Primitive/FavPrimitive.h"
 
-class Material
+class Material : public FavPrimitive
 {
 public:
 	Material() { identifier = ++counter; };
 	std::list<MaterialSpec*> materials;
-	Metadata* metadata;
 
 	bool hasMaterials() { return getNumMaterials() > 0; };
 	bool hasMetadata() { return metadata != nullptr; };
@@ -36,11 +36,8 @@ public:
 
 	//void setMetadata(Metadata metadata_) { metadata = &metadata_; has_meta_data = true; };
 
-	int getId() { return identifier; };
-	
 private:
-	static int counter;
-	int identifier;
+	Metadata* metadata;
 };
 
 enum MaterialType {

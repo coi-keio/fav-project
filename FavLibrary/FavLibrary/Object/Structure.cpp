@@ -7,6 +7,8 @@
 //
 
 #include "Structure.h"
+#include "Object.h"
+
 using namespace DEV;
 
 template <typename tVoxelMapType>
@@ -33,6 +35,10 @@ tVoxelMapType DEV::VoxelMap<tVoxelMapType>::getVoxel(int index_){
     return data[index_];
 }
 
+DEV::Structure::Structure(Grida* grid_){
+    grid = grid_;
+    number_of_voxels = grid->dimension.getX() * grid->dimension.getY() * grid->dimension.getZ();
+}
 
 DEV::Structure::Structure(int bit_per_voxel_){
     
@@ -72,6 +78,11 @@ void DEV::Structure::initVoxelMap(){
 
 }
 
+void DEV::Structure::initColorMap(ColorMode color_mode_){
+    color_mode = color_mode_;
+    initColorMap();
+}
+
 void DEV::Structure::initColorMap(){
     
     if(color_mode == ColorMode::RGB) color_map = new unsigned char[number_of_voxels*3];
@@ -82,6 +93,9 @@ void DEV::Structure::initColorMap(){
 
 }
 
+void DEV::Structure::setVoxel(int index_, int value_){
+    voxel_map->setVoxel(index_, value_);
+};
 
 void DEV::Structure::setVoxel(Point p_, int value_){};
 void DEV::Structure::setVoxel(int x_, int y_, int z_, int value_){
@@ -98,7 +112,9 @@ int DEV::Structure::getVoxel(int x_, int y_, int z_){
     
     int index = getIndex(x_, y_, z_);
     int value;
-    if(bit_per_voxel == 4 || bit_per_voxel == 8) value = voxel_map->getVoxel(index);
+    if(bit_per_voxel == 4 || bit_per_voxel == 8) {
+        value = voxel_map->getVoxel(index);
+    }
     else if(bit_per_voxel == 16) value = voxel_map_16bit->getVoxel(index);
     
     return (int)value;
@@ -163,10 +179,10 @@ DEV::ColorRGB DEV::Structure::getColorRGB(int x_, int y_, int z_){
     return ColorRGB(color_map[index*3], color_map[index*3+1], color_map[index*3+2]);
 };
 
-DEV::ColorRGBA DEV::Structure::getColorRGBA(int x_, int y_, int z_){
-    int index = getIndex(x_, y_, z_);
-    return ColorRGBA(color_map[index*4], color_map[index*4+1], color_map[index*4+2], color_map[index*4+3]);
-};
+//DEV::ColorRGBA DEV::Structure::getColorRGBA(int x_, int y_, int z_){
+//    int index = getIndex(x_, y_, z_);
+//    return ColorRGBA(color_map[index*4], color_map[index*4+1], color_map[index*4+2], color_map[index*4+3]);
+//};
 
 DEV::ColorCMYK DEV::Structure::getColorCMYK(int x_, int y_, int z_){
     int index = getIndex(x_, y_, z_);
@@ -179,7 +195,7 @@ DEV::ColorCMYK DEV::Structure::getColorCMYK(int x_, int y_, int z_){
 //};
 
 int DEV::Structure::getIndex(int x_, int y_, int z_){
-    
-    return 0;
+    int ret = x_ + grid->dimension.getX() * y_ + grid->dimension.getX() * grid->dimension.getY() * z_;
+    return ret;
 //    return x_ + grid->dimension.getX() * y_ + grid->dimension.getX() * grid->dimension.getY() * z_;
 }

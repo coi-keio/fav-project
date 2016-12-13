@@ -29,6 +29,7 @@
 #include "Palette.h"
 #include "Voxel.h"
 #include "Object.h"
+#include "Structure.h"
 
 class Fav;
 //class Metadata;
@@ -40,17 +41,7 @@ using namespace xercesc;
 class FavWriter{
 public:
     FavWriter(Fav* fav_){ fav = fav_; };
-    
-    bool write(const char* file_path);
-    void writeMetadata(DOMElement *parent_elem);
-    void writePalette(DOMElement *parent_elem);
-    void writeVoxel(DOMElement *parent_elem);
-    void writeObject(DOMElement *parent_elem);
-    void writeGrid(DOMElement* parent_elem, Grid* p_grid);
-    void writeStructure(DOMElement* parent_elem, Structure* p_str);
-    void writeXML(const char *filePath);
-    
-    Fav* fav;
+    bool write(const char* file_path, const char* version);
 
 private:
 
@@ -61,6 +52,15 @@ private:
     void setAttribute(DOMElement *elem, const char* attr_name, const char* attr_value);
     void setAttribute(DOMElement *elem, const char* attr_name, std::string attr_value);
     
+    void writeMetadata(DOMElement *parent_elem);
+    void writePalette(DOMElement *parent_elem);
+    void writeVoxel(DOMElement *parent_elem);
+    void writeObject(DOMElement *parent_elem);
+    void writeGrida(DOMElement* parent_elem, Grida* p_grid);
+    void writeStructure(DOMElement* parent_elem, DEV::Structure* p_str);
+    void writeXML(const char *filePath);
+    
+    Fav* fav;
     DOMDocument *doc;
 };
 

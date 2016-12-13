@@ -28,6 +28,7 @@
 #include "Palette.h"
 #include "Voxel.h"
 #include "Object.h"
+#include "Structure.h"
 
 using namespace xercesc;
 
@@ -54,7 +55,7 @@ private:
     void readVoxel(DOMNodeList* voxel_node_);
     void readObject(DOMNodeList* object_node_);
     
-    void readGrid();
+    void readGrida();
     void readStructure();
     
     Fav* fav;

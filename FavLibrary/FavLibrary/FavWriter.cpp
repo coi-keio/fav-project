@@ -13,6 +13,7 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/Base64.hpp>
 
 using namespace xercesc;
 
@@ -48,7 +49,7 @@ void FavWriter::setAttribute(DOMElement *elem, const char* attr_name, std::strin
     setAttribute(elem, attr_name, attr_value.c_str());
 };
 
-bool FavWriter::write(const char* file_path){
+bool FavWriter::write(const char* file_path, const char* version){
     XMLPlatformUtils::Initialize();
     
     //インスタンス作成.
@@ -57,11 +58,9 @@ bool FavWriter::write(const char* file_path){
     //ドキュメント生成( エレメントをModelに設定 ).
     doc 		= tpImpl->createDocument(0,XMLString::transcode("fav"),0);
     DOMElement	*fav_elem = doc->getDocumentElement();
-    setAttribute(fav_elem, "version", "1.0");
+    setAttribute(fav_elem, "version", version);
     
-    // Create elements
-    
-    // Add Elements to <Fav>
+    // Add Elements to fav
     writeMetadata(fav_elem);
     writePalette(fav_elem);
     writeVoxel(fav_elem);
@@ -195,36 +194,101 @@ void FavWriter::writeVoxel(DOMElement *parent_elem){
 
 };
 
-void FavWriter::writeGrid(DOMElement* parent_elem, Grid* grid){
+void FavWriter::writeGrida(DOMElement* parent_elem, Grida* grid){
 
 //    // waiting for grid class
-//    DOMElement *grid_elem = doc->createElement(XMLString::transcode("grid"));
-//    
-//    DOMElement *origin_elem = doc->createElement(XMLString::transcode("origin"));
-//    appendText(origin_elem, "x", std::to_string(grid->getOriginX()));
-//    appendText(origin_elem, "y", std::to_string(grid->getOriginY()));
-//    appendText(origin_elem, "z", std::to_string(grid->getOriginZ()));
-//    grid_elem->appendChild(origin_elem);
-//    
-//    DOMElement *unit_elem = doc->createElement(XMLString::transcode("unit"));
-//    appendText(unit_elem, "x", std::to_string(grid->getUnitX()));
-//    appendText(unit_elem, "y", std::to_string(grid->getUnitX()));
-//    appendText(unit_elem, "z", std::to_string(grid->getUnitX()));
-//    grid_elem->appendChild(unit_elem);
-//    
-//    DOMElement *dim_elem = doc->createElement(XMLString::transcode("dimension"));
-//    appendText(dim_elem, "x", std::to_string(grid->getDimensionX()));
-//    appendText(dim_elem, "y", std::to_string(grid->getDimensionY()));
-//    appendText(dim_elem, "z", std::to_string(grid->getDimensionZ()));
-//    grid_elem->appendChild(dim_elem);
-//    
-//    parent_elem->appendChild(grid_elem);
+    DOMElement *grid_elem = doc->createElement(XMLString::transcode("grid"));
+    
+    DOMElement *origin_elem = doc->createElement(XMLString::transcode("origin"));
+    appendText(origin_elem, "x", std::to_string(grid->origin.getX()));
+    appendText(origin_elem, "y", std::to_string(grid->origin.getY()));
+    appendText(origin_elem, "z", std::to_string(grid->origin.getZ()));
+    grid_elem->appendChild(origin_elem);
+    
+    DOMElement *unit_elem = doc->createElement(XMLString::transcode("unit"));
+    appendText(unit_elem, "x", std::to_string(grid->unit.getX()));
+    appendText(unit_elem, "y", std::to_string(grid->unit.getY()));
+    appendText(unit_elem, "z", std::to_string(grid->unit.getZ()));
+    grid_elem->appendChild(unit_elem);
+    
+    DOMElement *dim_elem = doc->createElement(XMLString::transcode("dimension"));
+    appendText(dim_elem, "x", std::to_string(grid->dimension.getX()));
+    appendText(dim_elem, "y", std::to_string(grid->dimension.getY()));
+    appendText(dim_elem, "z", std::to_string(grid->dimension.getZ()));
+    grid_elem->appendChild(dim_elem);
+    
+    parent_elem->appendChild(grid_elem);
     
 }
 
-void FavWriter::writeStructure(DOMElement* parent_elem, Structure* p_str){
- 
+void FavWriter::writeStructure(DOMElement* parent_elem, DEV::Structure* p_str){
+    // waiting for structure class
+    DOMElement *struct_elem = doc->createElement(XMLString::transcode("structure"));
+    
+    // voxel_map
+    // compression is under development
+    DOMElement *vmap_elem = doc->createElement(XMLString::transcode("voxel_map"));
+    //    setAttribute(vmap_elem, "compression", std::to_string( p_str->getCompression() ));
+    setAttribute(vmap_elem, "bit_per_voxel", std::to_string( p_str->getBitPerVoxel() ));
+    
+    const char* compression = "none";
+    std::string layer_data;
+    for(int z=0, size=p_str->grid->dimension.getZ(); z<size; ++z){
+        layer_data.clear();
+        for(int y=0, size=p_str->grid->dimension.getY(); y<size; ++y){
+            for(int x=0, size=p_str->grid->dimension.getX(); x<size; ++x){
+                int data = p_str->getVoxel(x,y,z);
+                
+                if(p_str->getBitPerVoxel() == 4){
+                    layer_data += std::to_string(data);
+                    
+                }else if(p_str->getBitPerVoxel() == 8){
+                    char buff[2];
+                    sprintf( buff, "%02x",  data);
+                    layer_data.push_back(buff[0]);
+                    layer_data.push_back(buff[1]);
+                    
+                }else if(p_str->getBitPerVoxel() == 16){
+                    char buff[4];
+                    sprintf( buff, "%04x",  data);
+                    layer_data.push_back(buff[0]);
+                    layer_data.push_back(buff[1]);
+                    layer_data.push_back(buff[2]);
+                    layer_data.push_back(buff[3]);
+                }
+            }
+        }
+        
+        if(compression == "base64"){ // there are bugs here.
+            std::string input_string = layer_data; // some wide string
+            // keep it in contiguous memory (the following string is not needed in C++0x)
+            std::vector<wchar_t> raw_str( input_string.begin(), input_string.end() );
+            
+            XMLSize_t len;
+            XMLByte* data_encoded = xercesc::Base64::encode( reinterpret_cast<const XMLByte*>(&raw_str[0]), raw_str.size()*sizeof(wchar_t), &len );
+            XMLCh* text_encoded = xercesc::XMLString::transcode( reinterpret_cast<char*>(data_encoded) );
+            
+            DOMCDATASection *text_elem = doc->createCDATASection(text_encoded);
+            vmap_elem->appendChild(text_elem);
+            
 
+        }else{
+            appendCDATA(vmap_elem, "layer", layer_data);
+        }
+        
+//        std::cout << layer_data << std::endl;
+    }
+    struct_elem->appendChild(vmap_elem);
+    parent_elem->appendChild(struct_elem);
+//
+//    // color_map
+//    DOMElement *cmap_elem = doc->createElement(XMLString::transcode("color_map"));
+//    setAttribute(cmap_elem, "color_mode", std::to_string( p_str->getColorMode() ));
+//    
+//    for(int i=0, size=p_str->grid->getDimensionZ(); size<i; ++i){
+//        appendCDATA(cmap_elem, "layer", layer_data);
+//    }
+//    parent_elem->appendChild(cmap_elem);
 }
 
 
@@ -235,8 +299,8 @@ void FavWriter::writeObject(DOMElement* parent_elem){
         DOMElement *obj_elem = doc->createElement(XMLString::transcode("object"));
 //        setAttribute(obj_elem, "id", std::to_string(tmp->getId()));
 //        setAttribute(obj_elem, "name", tmp->getName());
-        writeGrid(obj_elem, tmp->grid);
-//        writeStructure(obj_elem, tmp->getStructure());
+        writeGrida(obj_elem, tmp->grid);
+        writeStructure(obj_elem, tmp->structure_new);
         parent_elem->appendChild(obj_elem);
     }
 

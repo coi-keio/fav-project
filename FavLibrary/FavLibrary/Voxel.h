@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 #include "Metadata.h"
-#include "Object.h"
+#include "./Primitive/FavPrimitive.h"
 
 class GeometryInfo{
     
@@ -38,7 +38,7 @@ private:
     double ratio;
 };
 
-class Voxel{
+class Voxel : public FavPrimitive {
     
 public:
     Voxel(){ number_of_material_info = 0; has_meta_data = false; };

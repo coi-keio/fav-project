@@ -23,31 +23,34 @@
     <ClCompile Include="..\..\FavLibrary\FavReader.cpp" />
     <ClCompile Include="..\..\FavLibrary\FavWriter.cpp" />
     <ClCompile Include="..\..\FavLibrary\Metadata.cpp" />
-    <ClCompile Include="..\..\FavLibrary\Object.cpp" />
-    <ClCompile Include="..\..\FavLibrary\Palette.cpp" />
-    <ClCompile Include="..\..\FavLibrary\Structure.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Object\Object.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Palette\Palette.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Object\Structure.cpp" />
     <ClCompile Include="..\..\FavLibrary\Voxel.cpp" />
-    <ClCompile Include="ColorBase.cpp" />
-    <ClCompile Include="Geometry.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="ObjectProperties.cpp" />
-    <ClCompile Include="Point3D.cpp" />
-    <ClCompile Include="Vector3D.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Primitive\Color.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Palette\Geometry.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Palette\Material.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Primitive\Point3D.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Primitive\FavPrimitive.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Primitive\Vector3D.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Object\Grid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\FavLibrary\Fav.h" />
     <ClInclude Include="..\..\FavLibrary\FavReader.h" />
     <ClInclude Include="..\..\FavLibrary\FavWriter.h" />
     <ClInclude Include="..\..\FavLibrary\Metadata.h" />
-    <ClInclude Include="..\..\FavLibrary\Object.h" />
-    <ClInclude Include="..\..\FavLibrary\Palette.h" />
-    <ClInclude Include="..\..\FavLibrary\Structure.h" />
+    <ClInclude Include="..\..\FavLibrary\Object\Object.h" />
+    <ClInclude Include="..\..\FavLibrary\Palette\Palette.h" />
+    <ClInclude Include="..\..\FavLibrary\Object\Structure.h" />
     <ClInclude Include="..\..\FavLibrary\Voxel.h" />
-    <ClInclude Include="..\..\FavLibrary\Color.h" />
-    <ClInclude Include="..\..\FavLibrary\Geometry.h" />
-    <ClInclude Include="..\..\FavLibrary\Material.h" />
-    <ClInclude Include="..\..\FavLibrary\Point3D.h" />
-    <ClInclude Include="..\..\FavLibrary\Vector3D.h" />
+    <ClInclude Include="..\..\FavLibrary\Primitive\Color.h" />
+    <ClInclude Include="..\..\FavLibrary\Palette\Geometry.h" />
+    <ClInclude Include="..\..\FavLibrary\Palette\Material.h" />
+    <ClInclude Include="..\..\FavLibrary\Primitive\Point3D.h" />
+    <ClInclude Include="..\..\FavLibrary\Primitive\Vector3D.h" />
+    <ClInclude Include="..\..\FavLibrary\Primitive\FavPrimitive.h" />
+    <ClInclude Include="..\..\FavLibrary\Object\Grid.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D55F9C52-8D98-4911-9448-DCCF7563AE4B}</ProjectGuid>
