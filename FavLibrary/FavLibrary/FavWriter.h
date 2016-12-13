@@ -45,6 +45,7 @@ public:
 
 private:
 
+    void appendCDATA(DOMElement* parent_elem, const char* child_elem_name, XMLCh* text);
     void appendCDATA(DOMElement* parent_elem, const char* child_elem_name, const char* text);
     void appendCDATA(DOMElement* parent_elem, const char* child_elem_name, std::string text);
     void appendText(DOMElement* parent_elem, const char* child_elem_name, const char* text);
@@ -58,6 +59,8 @@ private:
     void writeObject(DOMElement *parent_elem);
     void writeGrida(DOMElement* parent_elem, Grida* p_grid);
     void writeStructure(DOMElement* parent_elem, DEV::Structure* p_str);
+    void writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str);
+    void writeColorMap(DOMElement* parent_elem, DEV::Structure* p_str);
     void writeXML(const char *filePath);
     
     Fav* fav;
