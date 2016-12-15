@@ -8,14 +8,13 @@
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
 
-class Material : public FavPrimitive
+class Material : public FavPrimitive, MetadataObject
 {
 public:
 	Material() { identifier = ++counter; };
 	std::list<MaterialSpec*> materials;
 
 	bool hasMaterials() { return getNumMaterials() > 0; };
-	bool hasMetadata() { return metadata != nullptr; };
 
 	int getNumMaterials() { return int(materials.size()); }
 	//std::map<int, MaterialSpec*> getMaterials() { return materials; }
@@ -34,10 +33,8 @@ public:
 	};
 	void addIsoStandard(IsoStandard* iso_standard_) { materials.push_back(iso_standard_); };
 
-	//void setMetadata(Metadata metadata_) { metadata = &metadata_; has_meta_data = true; };
 
 private:
-	Metadata* metadata;
 };
 
 enum MaterialType {
@@ -48,8 +45,8 @@ enum MaterialType {
 
 class MaterialSpec {
 public:
-	MaterialSpec();
-	~MaterialSpec();
+	MaterialSpec() {};
+	~MaterialSpec() {};
 
 	MaterialType materialTyep;
 };

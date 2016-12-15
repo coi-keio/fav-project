@@ -9,11 +9,12 @@
 #pragma once
 
 #include <string>
-#include "../Metadata.h"
 #include "Structure.h"
+#include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
 
-class Object : public FavPrimitive {
+class Object : public FavPrimitive, MetadataObject
+{
 
 public:
 	Object() { identifier = ++counter; };
@@ -22,8 +23,6 @@ public:
 		Object();
 		name = name_;
 	};
-
-	bool hasMetadata() { return metadata != nullptr; };
 
 	/// この辺はStructureのメソッド呼ぶだけのショートカット
 	//int* getVoxelMap();
@@ -35,7 +34,6 @@ public:
 	//void setLinkMap(int* link_map_);
 
 private:
-	Metadata* metadata;
 	Structure* structure;
 };
 

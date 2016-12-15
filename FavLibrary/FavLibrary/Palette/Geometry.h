@@ -85,5 +85,5 @@ class Scale : public Point3D
 public:
 	Scale() : Point3D() { }
 	Scale(double x, double y, double z) : Point3D(x, y, z) { }
-	~Scale();
+	~Scale() {};
 };
