@@ -55,7 +55,7 @@ private:
     void readVoxel(DOMNodeList* voxel_node_);
     void readObject(DOMNodeList* object_node_);
     
-    void readGrida();
+    void readGrid();
     void readStructure();
     
     Fav* fav;

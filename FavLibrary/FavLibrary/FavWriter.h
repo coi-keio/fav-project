@@ -57,7 +57,7 @@ private:
     void writePalette(DOMElement *parent_elem);
     void writeVoxel(DOMElement *parent_elem);
     void writeObject(DOMElement *parent_elem);
-    void writeGrida(DOMElement* parent_elem, Grida* p_grid);
+    void writeGrid(DOMElement* parent_elem, Grid* p_grid);
     void writeStructure(DOMElement* parent_elem, DEV::Structure* p_str);
     void writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str);
     void writeColorMap(DOMElement* parent_elem, DEV::Structure* p_str);

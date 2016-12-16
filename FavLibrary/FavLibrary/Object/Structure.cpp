@@ -35,7 +35,7 @@ tVoxelMapType DEV::VoxelMap<tVoxelMapType>::getVoxel(int index_){
     return data[index_];
 }
 
-DEV::Structure::Structure(Grida* grid_){
+DEV::Structure::Structure(Grid* grid_){
     grid = grid_;
     number_of_voxels = grid->dimension.getX() * grid->dimension.getY() * grid->dimension.getZ();
 }

@@ -283,7 +283,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
         Object* current_object = new Object(index, name);
         
         // load grid
-        current_object->grid = new Grida();
+        current_object->grid = new Grid();
         
         // load origin
         DOMNodeList* origin_node = getElements(object_elem, "origin");
@@ -379,7 +379,9 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                 
                 for(int d=0; d<size; d++){
                     data_in[d] = (unsigned int)data_decoded[d];
+                    std::cout << (unsigned int)data_decoded[d] << ",";
                 }
+                std::cout << std::endl;
                 
             }
             

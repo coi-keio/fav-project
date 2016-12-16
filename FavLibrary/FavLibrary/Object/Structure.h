@@ -14,6 +14,8 @@
 #include <vector>
 #include <iostream>
 
+class Grid;
+
 namespace DEV {
     
     class Point{
@@ -130,7 +132,7 @@ namespace DEV {
     
     class Structure{
     public:
-        Structure(Grida* grid_);
+        Structure(Grid* grid_);
         Structure(int bit_per_voxel_);
         Structure(int bit_per_voxel_, ColorMode color_mode_);
         ~Structure();
@@ -211,6 +213,8 @@ namespace DEV {
 //        unsigned int getLink(int x1_, int y1_, int z1_, int x2_, int y2_, int z2_);
 //        int getNeighbors(){ return neighbours; };
         
+        Grid* grid;
+
     private:
         void changeColorMapToRGB(){
             if(color_mode == ColorMode::RGB){

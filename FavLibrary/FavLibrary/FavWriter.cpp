@@ -201,7 +201,7 @@ void FavWriter::writeVoxel(DOMElement *parent_elem){
 
 };
 
-void FavWriter::writeGrida(DOMElement* parent_elem, Grida* grid){
+void FavWriter::writeGrid(DOMElement* parent_elem, Grid* grid){
 
 //    // waiting for grid class
     DOMElement *grid_elem = doc->createElement(XMLString::transcode("grid"));
@@ -309,9 +309,15 @@ void FavWriter::writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str){
             unsigned char data[size];
             BytesFromHexString(data, layer_data.c_str());
             
-            XMLSize_t len;
-            XMLByte* data_encoded = xercesc::Base64::encode( reinterpret_cast<const XMLByte*>(data), size, &len );
             
+            
+            XMLSize_t len;
+//            XMLByte* testt = reinterpret_cast<XMLByte*>("");
+            XMLByte* data_encoded = xercesc::Base64::encode( reinterpret_cast<const XMLByte*>(layer_data.c_str()), size, &len );
+//            XMLByte* data_decoded = xercesc::Base64::decode( data_encoded, &len );
+//            for(int dd=0; dd<size; dd++){
+//                std::cout << (int)data_decoded[dd] << ",";
+//            }
             // debug is needed? 何故かnew lineが入ってしまうのでここで除去している。
             std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
             deleteNewLine(input_str);
@@ -363,7 +369,7 @@ void FavWriter::writeObject(DOMElement* parent_elem){
         setAttribute(obj_elem, "id", "1");
 //        setAttribute(obj_elem, "id", std::to_string(tmp->getId()));
 //        setAttribute(obj_elem, "name", tmp->getName());
-        writeGrida(obj_elem, tmp->grid);
+        writeGrid(obj_elem, tmp->grid);
         writeStructure(obj_elem, tmp->structure_new);
         parent_elem->appendChild(obj_elem);
     }
