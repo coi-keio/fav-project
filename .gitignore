@@ -3,3 +3,5 @@
 *.opensdf
 *.sdf
 *.filters
+/FavLibrary/build
+
