@@ -34,6 +34,7 @@
     <ClCompile Include="..\..\FavLibrary\Primitive\FavPrimitive.cpp" />
     <ClCompile Include="..\..\FavLibrary\Primitive\Vector3D.cpp" />
     <ClCompile Include="..\..\FavLibrary\Object\Grid.cpp" />
+    <ClCompile Include="..\..\FavLibrary\Exception\FavException.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\FavLibrary\Fav.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="..\..\FavLibrary\Primitive\Vector3D.h" />
     <ClInclude Include="..\..\FavLibrary\Primitive\FavPrimitive.h" />
     <ClInclude Include="..\..\FavLibrary\Object\Grid.h" />
+    <ClInclude Include="..\..\FavLibrary\Exception\FavException.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D55F9C52-8D98-4911-9448-DCCF7563AE4B}</ProjectGuid>

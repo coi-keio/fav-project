@@ -24,4 +24,3 @@ protected:
 private:
 	bool is_removed = false;
 };
-
