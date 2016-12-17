@@ -21,15 +21,13 @@ public:
     MaterialSpec() {};
     ~MaterialSpec() {};
     
-    MaterialType materialTyep;
+    MaterialType materialType;
 };
 
 class MaterialName : public MaterialSpec {
 public:
-    const MaterialType materialTyep = MaterialType::material_name;
     
-    MaterialName(std::string name_) { name = name_; }
-    
+    MaterialName(std::string name_) { name = name_; materialType = MaterialType::material_name;}
     std::string getMaterialName() { return name; }
     void setMaterialName(std::string name_) { name = name_; }
     
@@ -39,10 +37,10 @@ private:
 
 class ProductInfo : public MaterialSpec {
 public:
-    MaterialType materialTyep = MaterialType::product_info;
     
     ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_)
     {
+        materialType = MaterialType::product_info;
         manufacturer = manufacturer_;
         product_name = product_name_;
         url = url_;
@@ -65,9 +63,8 @@ private:
 
 class IsoStandard : public MaterialSpec {
 public:
-    MaterialType materialTyep = MaterialType::iso_standard;
     
-    IsoStandard(std::string iso_id_, std::string iso_name_) { iso_id = iso_id_, iso_name = iso_name_; };
+    IsoStandard(std::string iso_id_, std::string iso_name_) { iso_id = iso_id_, iso_name = iso_name_; materialType = MaterialType::iso_standard; };
     
     std::string getIsoId() { return iso_id; };
     void setIsoId(std::string iso_id_) { iso_id = iso_id_; };

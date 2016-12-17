@@ -157,7 +157,7 @@ void FavWriter::writePalette(DOMElement *parent_elem){
 //        std::for_each(tmp.materials.begin(), tmp.materials.end(), [&](MaterialSpec material){
         for(auto material : tmp.materials){
 //            std::cout << "ddddddd   " << material->materialTyep << std::endl;
-            if(material->materialTyep == MaterialType::product_info){
+            if(material->materialType == MaterialType::product_info){
                 ProductInfo* p_info = dynamic_cast<ProductInfo*>(material);
                 DOMElement *pinfo_elem = doc->createElement(XMLString::transcode("product_info"));
                 appendCDATA(pinfo_elem, "manufacturer", p_info->getManufacturer());
@@ -165,7 +165,7 @@ void FavWriter::writePalette(DOMElement *parent_elem){
                 appendCDATA(pinfo_elem, "url", p_info->getUrl() );
                 mat_elem->appendChild(pinfo_elem);
             }
-            else if(material->materialTyep == MaterialType::iso_standard){
+            else if(material->materialType == MaterialType::iso_standard){
                 
                 DOMElement *iso_elem = doc->createElement(XMLString::transcode("iso_standard"));
                 IsoStandard* iso = dynamic_cast<IsoStandard*>(material);
@@ -174,13 +174,12 @@ void FavWriter::writePalette(DOMElement *parent_elem){
                 mat_elem->appendChild(iso_elem);
             }
             
-            std::cout << "---------" << material->materialTyep << std::endl;
-//            else if(material->materialTyep == MaterialType::material_name){
-//                DOMElement *name_elem = doc->createElement(XMLString::transcode("material_name"));
-//                MaterialName* material_name = dynamic_cast<MaterialName*>(material);
-//                appendCDATA(name_elem, "material_name", material_name->getMaterialName());
-//                mat_elem->appendChild(name_elem);
-//            }
+            else if(material->materialType == MaterialType::material_name){
+                DOMElement *name_elem = doc->createElement(XMLString::transcode("material_name"));
+                MaterialName* material_name = dynamic_cast<MaterialName*>(material);
+                appendCDATA(name_elem, "material_name", material_name->getMaterialName());
+                mat_elem->appendChild(name_elem);
+            }
         }
         palette_elem->appendChild(mat_elem);
     }
