@@ -8,7 +8,6 @@
 
 #include "FavWriter.h"
 #include "Fav.h"
-
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
@@ -90,9 +89,9 @@ void FavWriter::writeMetadata(DOMElement *parent_elem){
     
     DOMElement *metadata_elem = doc->createElement(XMLString::transcode("metadata"));
 
-    appendCDATA(metadata_elem, "title", fav->metadata->getTitle());
-    appendCDATA(metadata_elem, "author", fav->metadata->getAuthor());
-    appendCDATA(metadata_elem, "license", fav->metadata->getLicense());
+    appendCDATA(metadata_elem, "title", fav->getMetadataTitle());
+    appendCDATA(metadata_elem, "author", fav->getMetadataAuthor());
+    appendCDATA(metadata_elem, "license", fav->getMetadataLicense());
     
     // noteに関して追記
     parent_elem->appendChild( metadata_elem );
@@ -108,25 +107,31 @@ void FavWriter::writePalette(DOMElement *parent_elem){
     int number_of_geometries = fav->palette.getNumberOfGeometries();
 
     for(int i=0; i<number_of_geometries; ++i){
-        Geometry* tmp = fav->palette.getGeometry(i);
+        
+        Geometry tmp = fav->palette.getGeometryById(i);
         DOMElement *geo_elem = doc->createElement(XMLString::transcode("geometry"));
 
-        setAttribute(geo_elem, "id", std::to_string(tmp->getId()));
+        setAttribute(geo_elem, "id", std::to_string(tmp.getId()));
         
         // if(tmp->has_name){
-        setAttribute(geo_elem, "name", tmp->getName());
+        setAttribute(geo_elem, "name", tmp.getName());
 
-        if(tmp->getShape() == "user_defined"){
+        if(tmp.getShape() == GeometryShape::user_defined){
             // under development : add reference path
-            appendText(geo_elem, "shape", tmp->getShape());
-        }else{
-            appendText(geo_elem, "shape", tmp->getShape());
+            appendText(geo_elem, "shape", "user_defined");
+            
+        }else if(tmp.getShape() == GeometryShape::cube){
+            appendText(geo_elem, "shape", "cube");
+            
+        }else if(tmp.getShape() == GeometryShape::sphere){
+            appendText(geo_elem, "shape", "spehre");
+            
         }
         
         DOMElement *scale_elem = doc->createElement(XMLString::transcode("scale"));
-        appendText(scale_elem, "x", std::to_string(tmp->getScaleX()));
-        appendText(scale_elem, "y", std::to_string(tmp->getScaleY()));
-        appendText(scale_elem, "z", std::to_string(tmp->getScaleZ()));
+        appendText(scale_elem, "x", std::to_string(tmp.getScaleX()));
+        appendText(scale_elem, "y", std::to_string(tmp.getScaleY()));
+        appendText(scale_elem, "z", std::to_string(tmp.getScaleZ()));
         geo_elem->appendChild(scale_elem);
         
         palette_elem->appendChild(geo_elem);
@@ -137,40 +142,46 @@ void FavWriter::writePalette(DOMElement *parent_elem){
     int number_of_materials = fav->palette.getNumberOfMaterials();
     std::cout << number_of_materials << std::endl;
     
-    for(int i=0; i<number_of_materials; ++i){
-        
-        Material* tmp = fav->palette.getMaterial(i);
+    for(int i=0; i<2; ++i){
+        int index = i;
+        if(i==0) index = 1;
+        else if(i==1)index = 3;
+        Material tmp = fav->palette.getMaterialById(index);
         DOMElement *mat_elem = doc->createElement(XMLString::transcode("material"));
         
-        setAttribute(mat_elem, "id", std::to_string(tmp->getId()));
+        setAttribute(mat_elem, "id", std::to_string(tmp.getId()));
         // if(tmp->has_name){
-        setAttribute(mat_elem, "name", tmp->getName());
+        setAttribute(mat_elem, "name", tmp.getName());
         
         // 優先順位問題をmaterialクラスの構造で解決する必要がある
-        for(int i=0, size=tmp->getNumProductInfo(); i<size; ++i){
-            DOMElement *pinfo_elem = doc->createElement(XMLString::transcode("product_info"));
-            Material::ProductInfo* p_info = tmp->getProductInfo(i);
-            appendCDATA(pinfo_elem, "manufacturer", p_info->getManufacturer());
-            appendCDATA(pinfo_elem, "product_name", p_info->getProductName());
-            appendCDATA(pinfo_elem, "url", p_info->getUrl() );
-            mat_elem->appendChild(pinfo_elem);
+//        std::for_each(tmp.materials.begin(), tmp.materials.end(), [&](MaterialSpec material){
+        for(auto material : tmp.materials){
+//            std::cout << "ddddddd   " << material->materialTyep << std::endl;
+            if(material->materialTyep == MaterialType::product_info){
+                ProductInfo* p_info = dynamic_cast<ProductInfo*>(material);
+                DOMElement *pinfo_elem = doc->createElement(XMLString::transcode("product_info"));
+                appendCDATA(pinfo_elem, "manufacturer", p_info->getManufacturer());
+                appendCDATA(pinfo_elem, "product_name", p_info->getProductName());
+                appendCDATA(pinfo_elem, "url", p_info->getUrl() );
+                mat_elem->appendChild(pinfo_elem);
+            }
+            else if(material->materialTyep == MaterialType::iso_standard){
+                
+                DOMElement *iso_elem = doc->createElement(XMLString::transcode("iso_standard"));
+                IsoStandard* iso = dynamic_cast<IsoStandard*>(material);
+                appendCDATA(iso_elem, "iso_id", iso->getIsoId());
+                appendCDATA(iso_elem, "iso_name", iso->getIsoName());
+                mat_elem->appendChild(iso_elem);
+            }
+            
+            std::cout << "---------" << material->materialTyep << std::endl;
+//            else if(material->materialTyep == MaterialType::material_name){
+//                DOMElement *name_elem = doc->createElement(XMLString::transcode("material_name"));
+//                MaterialName* material_name = dynamic_cast<MaterialName*>(material);
+//                appendCDATA(name_elem, "material_name", material_name->getMaterialName());
+//                mat_elem->appendChild(name_elem);
+//            }
         }
-        
-        for(int i=0, size=tmp->getNumIsoStandard(); i<size; ++i){
-            DOMElement *iso_elem = doc->createElement(XMLString::transcode("iso_standard"));
-            Material::IsoStandard* iso = tmp->getIsoStandard(i);
-            appendCDATA(iso_elem, "iso_id", iso->getIsoId());
-            appendCDATA(iso_elem, "iso_name", iso->getIsoName());
-            mat_elem->appendChild(iso_elem);
-        }
-        
-//        for(int i=0, size=tmp->getNumMaterialName(); i<size; ++i){
-//            DOMElement *name_elem = doc->createElement(XMLString::transcode("material_name"));
-//            std::string material_name = tmp->getMaterialName(i);
-//            appendCDATA(name_elem, "material_name", material_name);
-//            mat_elem->appendChild(name_elem);
-//        }
-        
         palette_elem->appendChild(mat_elem);
     }
     
@@ -207,21 +218,21 @@ void FavWriter::writeGrid(DOMElement* parent_elem, Grid* grid){
     DOMElement *grid_elem = doc->createElement(XMLString::transcode("grid"));
     
     DOMElement *origin_elem = doc->createElement(XMLString::transcode("origin"));
-    appendText(origin_elem, "x", std::to_string(grid->origin.getX()));
-    appendText(origin_elem, "y", std::to_string(grid->origin.getY()));
-    appendText(origin_elem, "z", std::to_string(grid->origin.getZ()));
+    appendText(origin_elem, "x", std::to_string(grid->getOriginX()));
+    appendText(origin_elem, "y", std::to_string(grid->getOriginY()));
+    appendText(origin_elem, "z", std::to_string(grid->getOriginZ()));
     grid_elem->appendChild(origin_elem);
     
     DOMElement *unit_elem = doc->createElement(XMLString::transcode("unit"));
-    appendText(unit_elem, "x", std::to_string(grid->unit.getX()));
-    appendText(unit_elem, "y", std::to_string(grid->unit.getY()));
-    appendText(unit_elem, "z", std::to_string(grid->unit.getZ()));
+    appendText(unit_elem, "x", std::to_string(grid->getUnitX()));
+    appendText(unit_elem, "y", std::to_string(grid->getUnitY()));
+    appendText(unit_elem, "z", std::to_string(grid->getUnitZ()));
     grid_elem->appendChild(unit_elem);
     
     DOMElement *dim_elem = doc->createElement(XMLString::transcode("dimension"));
-    appendText(dim_elem, "x", std::to_string(grid->dimension.getX()));
-    appendText(dim_elem, "y", std::to_string(grid->dimension.getY()));
-    appendText(dim_elem, "z", std::to_string(grid->dimension.getZ()));
+    appendText(dim_elem, "x", std::to_string(grid->getDimensionX()));
+    appendText(dim_elem, "y", std::to_string(grid->getDimensionY()));
+    appendText(dim_elem, "z", std::to_string(grid->getDimensionZ()));
     grid_elem->appendChild(dim_elem);
     
     parent_elem->appendChild(grid_elem);
@@ -261,7 +272,7 @@ void deleteNewLine(std::string &targetStr)
     targetStr = std::move(destStr);
 }
 
-void FavWriter::writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str){
+void FavWriter::writeVoxelMap(DOMElement* parent_elem, Structure* p_str){
     
     // voxel_map
     // compression is under development
@@ -271,10 +282,10 @@ void FavWriter::writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str){
     setAttribute(vmap_elem, "bit_per_voxel", std::to_string( p_str->getBitPerVoxel() ));
     
     std::string layer_data;
-    for(int z=0, size=p_str->grid->dimension.getZ(); z<size; ++z){
+    for(int z=0, size=p_str->grid->getDimensionZ(); z<size; ++z){
         layer_data.clear();
-        for(int y=0, size=p_str->grid->dimension.getY(); y<size; ++y){
-            for(int x=0, size=p_str->grid->dimension.getX(); x<size; ++x){
+        for(int y=0, size=p_str->grid->getDimensionY(); y<size; ++y){
+            for(int x=0, size=p_str->grid->getDimensionX(); x<size; ++x){
                 int data = p_str->getVoxel(x,y,z);
                 
                 if(p_str->getBitPerVoxel() == 4){
@@ -305,7 +316,7 @@ void FavWriter::writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str){
             
         }else if(compression == "base64"){ // there are bugs here.
             
-            int size = p_str->grid->dimension.getX()*p_str->grid->dimension.getY();
+            int size = p_str->grid->getDimensionX()*p_str->grid->getDimensionY();
             unsigned char data[size];
             BytesFromHexString(data, layer_data.c_str());
             
@@ -336,7 +347,7 @@ void FavWriter::writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str){
     
 }
 
-void FavWriter::writeColorMap(DOMElement* parent_elem, DEV::Structure* p_str){
+void FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_str){
     
     //
     //    // color_map
@@ -350,7 +361,7 @@ void FavWriter::writeColorMap(DOMElement* parent_elem, DEV::Structure* p_str){
     
 }
 
-void FavWriter::writeStructure(DOMElement* parent_elem, DEV::Structure* p_str){
+void FavWriter::writeStructure(DOMElement* parent_elem, Structure* p_str){
     // waiting for structure class
     DOMElement *struct_elem = doc->createElement(XMLString::transcode("structure"));
 
@@ -363,14 +374,14 @@ void FavWriter::writeStructure(DOMElement* parent_elem, DEV::Structure* p_str){
 
 void FavWriter::writeObject(DOMElement* parent_elem){
     
-    for(int i=0, size=(int)fav->object.size(); i<size; ++i){
-        Object* tmp = fav->object[i];
+    for(int i=0, size=fav->getNumObjects(); i<size; ++i){
+        Object tmp = fav->getObject(i);
         DOMElement *obj_elem = doc->createElement(XMLString::transcode("object"));
         setAttribute(obj_elem, "id", "1");
 //        setAttribute(obj_elem, "id", std::to_string(tmp->getId()));
 //        setAttribute(obj_elem, "name", tmp->getName());
-        writeGrid(obj_elem, tmp->grid);
-        writeStructure(obj_elem, tmp->structure_new);
+        writeGrid(obj_elem, tmp.grid);
+        writeStructure(obj_elem, tmp.structure);
         parent_elem->appendChild(obj_elem);
     }
 

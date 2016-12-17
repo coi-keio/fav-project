@@ -30,11 +30,9 @@
 #include "Voxel.h"
 #include "Object.h"
 #include "Structure.h"
+#include "Geometry.h"
 
 class Fav;
-//class Metadata;
-//class Palette;
-//class Object;
 
 using namespace xercesc;
 
@@ -58,9 +56,9 @@ private:
     void writeVoxel(DOMElement *parent_elem);
     void writeObject(DOMElement *parent_elem);
     void writeGrid(DOMElement* parent_elem, Grid* p_grid);
-    void writeStructure(DOMElement* parent_elem, DEV::Structure* p_str);
-    void writeVoxelMap(DOMElement* parent_elem, DEV::Structure* p_str);
-    void writeColorMap(DOMElement* parent_elem, DEV::Structure* p_str);
+    void writeStructure(DOMElement* parent_elem, Structure* p_str);
+    void writeVoxelMap(DOMElement* parent_elem, Structure* p_str);
+    void writeColorMap(DOMElement* parent_elem, Structure* p_str);
     void writeXML(const char *filePath);
     
     Fav* fav;

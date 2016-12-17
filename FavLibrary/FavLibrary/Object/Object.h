@@ -10,6 +10,7 @@
 
 #include <string>
 #include "Structure.h"
+#include "Grid.h"
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
 
@@ -23,6 +24,8 @@ public:
 		Object();
 		name = name_;
 	};
+    
+    void setStructure(Structure* structure_new_){ structure = structure_new_; };
 
 	/// この辺はStructureのメソッド呼ぶだけのショートカット
 	//int* getVoxelMap();
@@ -32,9 +35,12 @@ public:
 	//void setVoxelMap(int* voxel_map_); //grid infoと合わないデータが来た場合はエラーを返す。
 	//void setColorMap(int* color_map_);
 	//void setLinkMap(int* link_map_);
-
+    
+    Grid* grid;
+    Structure* structure;
 private:
-	Structure* structure;
+    static unsigned int counter;
+
 };
 
 /// Structureの実態はStructure.cpp/.h で定義されているから，ここは消していい遺産？

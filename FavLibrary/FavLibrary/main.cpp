@@ -24,6 +24,11 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 
+unsigned int Material::counter;
+unsigned int Object::counter;
+unsigned int Geometry::counter;
+unsigned int Voxel::counter;
+
 
 int main(int argc, const char * argv[]) {
     

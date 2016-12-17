@@ -18,6 +18,40 @@
 #include "./Primitive/Color.h"
 
 
+class VoxelInfo {
+public:
+    VoxelInfo() {};
+    VoxelInfo(unsigned int id_) { identifier = id_; };
+    ~VoxelInfo() {};
+    
+    unsigned int getId() { return identifier; };
+    void setId(unsigned int id_) { identifier = id_; };
+    
+private:
+    unsigned int identifier;
+};
+
+class GeometryInfo : public VoxelInfo {
+public:
+    GeometryInfo() : VoxelInfo() {};
+    GeometryInfo(unsigned int id_) : VoxelInfo(id_) {};
+    ~GeometryInfo() {};
+};
+
+class MaterialInfo : public VoxelInfo {
+public:
+    MaterialInfo() : VoxelInfo() {};
+    MaterialInfo(unsigned int id_) : VoxelInfo(id_) { };
+    MaterialInfo(unsigned int id_, double ratio_) : VoxelInfo(id_) { ratio = ratio_; };
+    ~MaterialInfo() {};
+    
+    double getRatio() { return ratio; };
+    void setRatio(double ratio_) { ratio = ratio_; };
+    
+private:
+    double ratio = 1.0;
+};
+
 class Voxel : public FavPrimitive, MetadataObject
 {    
 public:
@@ -34,8 +68,8 @@ public:
 	std::vector<MaterialInfo> getMaterialInfo()
 	{
 		std::vector<MaterialInfo> res;
-		std::for_each(material_info.begin(), material_info.end(),
-			[&](const std::pair<const MaterialInfo, MaterialInfo>& ref) { res.push_back(ref.second); });
+//		std::for_each(material_info.begin(), material_info.end(),
+//			[&](const std::pair<const MaterialInfo, MaterialInfo>& ref) { res.push_back(ref.second); });
 		return res;
 	};
 	MaterialInfo getMaterialInfo(unsigned int id_) { return *material_info[id_]; };
@@ -65,40 +99,9 @@ private:
     std::map<unsigned int, MaterialInfo*> material_info;
     ColorRGBA display;
 	std::string application_note;
+    
+    static unsigned int counter;
 };
 
-class VoxelInfo {
-public:
-	VoxelInfo() {};
-	VoxelInfo(unsigned int id_) { identifier = id_; };
-	~VoxelInfo() {};
-
-	unsigned int getId() { return identifier; };
-	void setId(unsigned int id_) { identifier = id_; };
-
-private:
-	unsigned int identifier;
-};
-
-class GeometryInfo : public VoxelInfo {
-public:
-	GeometryInfo() : VoxelInfo() {};
-	GeometryInfo(unsigned int id_) : VoxelInfo(id_) {};
-	~GeometryInfo() {};
-};
-
-class MaterialInfo : public VoxelInfo {
-public:
-	MaterialInfo() : VoxelInfo() {};
-	MaterialInfo(unsigned int id_) : VoxelInfo(id_) { };
-	MaterialInfo(unsigned int id_, double ratio_) : VoxelInfo(id_) { ratio = ratio_; };
-	~MaterialInfo() {};
-
-	double getRatio() { return ratio; };
-	void setRatio(double ratio_) { ratio = ratio_; };
-
-private:
-	double ratio = 1.0;
-};
 
 #endif /* defined(__FavLibrary__Voxel__) */

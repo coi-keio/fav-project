@@ -150,10 +150,9 @@ void FavReader::readMetaData(xercesc_3_1::DOMNodeList *metadata_node_){
         DOMNode *parent_node = dynamic_cast<DOMElement*>(current_metadata)->getParentNode();
         
         if(XMLString::transcode(parent_node->getNodeName()) == std::string("fav")){
-            fav->metadata = new Metadata();
-            fav->metadata->setTitle  ( getElementString(dynamic_cast<DOMElement*>(current_metadata), "title") );
-            fav->metadata->setAuthor ( getElementString(dynamic_cast<DOMElement*>(current_metadata), "author") );
-            fav->metadata->setLicense( getElementString(dynamic_cast<DOMElement*>(current_metadata), "license") );
+            fav->setMetadataTitle  ( getElementString(dynamic_cast<DOMElement*>(current_metadata), "title") );
+            fav->setMetadataAuthor ( getElementString(dynamic_cast<DOMElement*>(current_metadata), "author") );
+            fav->setMetadataLicense( getElementString(dynamic_cast<DOMElement*>(current_metadata), "license") );
         }
         
     }
@@ -171,22 +170,22 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         //load attributes
         int index = std::stoi(getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"));
         std::string name = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name");
-        Geometry* current_geometry = new Geometry(index, name);
+        Geometry current_geometry = Geometry(name);
         
         std::string shape = getElementString(dynamic_cast<DOMElement*>(geometry_list->item(i)), "shape");
-        current_geometry->setShape(shape);
+        current_geometry.setShape(GeometryShape::cube);// needs fix
         
         DOMNodeList* scale_node = getElements(dynamic_cast<DOMElement*>(geometry_list->item(i)), "scale");
         if(scale_node->getLength() > 0){
             double x = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "x");
             double y = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "y");
             double z = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "z");
-            current_geometry->setScale(x,y,z);
+            current_geometry.setScale(x,y,z);
         }
         
         fav->palette.addGeometry(current_geometry);
     }
-    fav->palette.setNumberOfGeometries(number_of_geometry);
+//    fav->palette.setNumberOfGeometries(number_of_geometry);
     
     // load materials
     DOMNodeList* material_list = getElements(dynamic_cast<DOMElement*>(palette_list_->item(0)), "material");
@@ -196,7 +195,7 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         //load attributes
         int index = std::stoi(getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"));
         std::string name = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name");
-        Material* current_material = new Material(index, name);
+        Material current_material = Material();
 
         
         // debug required for multiple material_name case
@@ -204,7 +203,7 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         int number_of_material_name = int(material_name_list->getLength());
         if(number_of_material_name > 0){
             std::string name = getElementString(dynamic_cast<DOMElement*>(material_list->item(i)), "material_name");
-            current_material->addMaterialName(name);
+            current_material.addMaterialName(name);
         }
         
         // load product_info
@@ -216,7 +215,7 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
             std::string product_name = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "product_name");
             std::string url          = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "url");
             
-            current_material->addProductInfo(manufacturer, product_name, url);
+            current_material.addProductInfo(manufacturer, product_name, url);
         }
         
         // load iso_standard
@@ -227,13 +226,17 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
             std::string iso_id = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_id");
             std::string iso_name = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_name");
             
-            current_material->addIsoStandard(iso_id, iso_name);
+            current_material.addIsoStandard(iso_id, iso_name);
         }
         
         fav->palette.addMaterial(current_material);
     }
-    
-    fav->palette.setNumberOfMaterials(number_of_material);
+    Material tmp0 = fav->palette.getMaterialById(0);
+    Material tmp1 = fav->palette.getMaterialById(1);
+    Material tmp2 = fav->palette.getMaterialById(2);
+    Material tmp3 = fav->palette.getMaterialById(3);
+
+//    fav->palette.setNumberOfMaterials(number_of_material);
 
 }
 
@@ -246,13 +249,13 @@ void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_){
         //load attributes
         int index = std::stoi(getAttribute(voxel_elem, "id"));
         std::string name = getAttribute(voxel_elem, "name");
-        Voxel* current_voxel = new Voxel(index, name);
+        Voxel current_voxel = Voxel(name);
         
         //load geometry_info
         DOMNodeList* geoinfo_node = getElements(voxel_elem, "geometry_info");
         DOMElement*  geoinfo_elem = dynamic_cast<DOMElement*>(geoinfo_node->item(0));
         int geometry_id = getElementInt(geoinfo_elem, "id");
-        current_voxel->setGeometryInfo(geometry_id);
+        current_voxel.setGeometryInfo(geometry_id);
         
         //load material_info
         DOMNodeList* matinfo_node = getElements(voxel_elem, "material_info");
@@ -261,10 +264,10 @@ void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_){
             DOMElement* matinfo_elem = dynamic_cast<DOMElement*>(matinfo_node->item(j));
             int material_id       = getElementInt(matinfo_elem, "id");
             double material_ratio = getElementDouble(matinfo_elem, "ratio");
-            current_voxel->addMaterialInfo(material_id, material_ratio);
+            current_voxel.addMaterialInfo(material_id, material_ratio);
         }
         
-        fav->voxel.push_back(current_voxel);
+        fav->addVoxel(current_voxel);
     }
     
     
@@ -280,10 +283,10 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
         //load attributes
         int index = std::stoi(getAttribute(object_elem, "id"));
         std::string name = getAttribute(object_elem, "name");
-        Object* current_object = new Object(index, name);
+        Object current_object = Object(name);
         
         // load grid
-        current_object->grid = new Grid();
+        current_object.grid = new Grid();
         
         // load origin
         DOMNodeList* origin_node = getElements(object_elem, "origin");
@@ -291,7 +294,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             int x = getElementInt(dynamic_cast<DOMElement*>(origin_node->item(0)), "x");
             int y = getElementInt(dynamic_cast<DOMElement*>(origin_node->item(0)), "y");
             int z = getElementInt(dynamic_cast<DOMElement*>(origin_node->item(0)), "z");
-            current_object->grid->origin.set(x, y, z);
+            current_object.grid->setOrigin(x, y, z);
         }
         
         // load unit
@@ -300,7 +303,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             int x = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "x");
             int y = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "y");
             int z = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "z");
-            current_object->grid->unit.set(x, y, z);
+            current_object.grid->setUnit(x, y, z);
         }
         
         // load dimension
@@ -309,25 +312,25 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             int x = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "x");
             int y = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "y");
             int z = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "z");
-            current_object->grid->dimension.set(x, y, z);
+            current_object.grid->setDimension(x, y, z);
         }else{
             // error message is here. dimension is required.
         }
         
         
         // load Structure
-        DEV::Structure* structure = new DEV::Structure(current_object->grid);
+        Structure structure = Structure(current_object.grid);
         
         // load voxel_map
         DOMElement* vmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "voxel_map")->item(0) );
         std::string compression   = getAttribute(vmap_elem, "compression");
         std::string bit_per_voxel = getAttribute(vmap_elem, "bit_per_voxel");
         
-        structure->setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
+        structure.setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
         
         DOMNodeList* vmap_layers = getElements(vmap_elem, "layer");
         int number_of_layers = int(vmap_layers->getLength());
-        structure->initVoxelMap();
+        structure.initVoxelMap();
         
         for(int j=0; j<number_of_layers; ++j){
             
@@ -372,7 +375,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                 
             }else if(compression == "base64"){
                 
-                XMLSize_t size = current_object->grid->dimension.getX()*current_object->grid->dimension.getY();
+                XMLSize_t size = current_object.grid->getDimensionX() * current_object.grid->getDimensionY();
                 data_in.resize(size);
                 std::string input_str = getNodeValueString(vmap_layers->item(j)->getFirstChild());
                 XMLByte* data_decoded = xercesc::Base64::decode( reinterpret_cast<const XMLByte*>(input_str.c_str()), &size);
@@ -385,8 +388,8 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                 
             }
             
-            int dim_x = current_object->grid->dimension.getX();
-            int dim_y = current_object->grid->dimension.getY();
+            int dim_x = current_object.grid->getDimensionX();
+            int dim_y = current_object.grid->getDimensionY();
             int layer_size = dim_x * dim_y;
             
             if (data_in.size() != layer_size){
@@ -396,9 +399,9 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             for(int k=0; k<layer_size; k++){
                 
                 int index = layer_size*j + k;
-                structure->setVoxel(index, (int)data_in[k]);
+                structure.setVoxel(index, (int)data_in[k]);
                 std::cout << "index = " << index << std::endl;
-                std::cout << "value = " << structure->getVoxel(index) << std::endl;
+                std::cout << "value = " << structure.getVoxel(index) << std::endl;
                 
             }
         }
@@ -488,11 +491,11 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
 //            }
 //        }
         
-        current_object->structure_new = structure;
+        current_object.setStructure(&structure);
         
         // other compression mode is under development
         
-        fav->object.push_back(current_object);
-        std::cout << "kore" << structure->getVoxel(3) << std::endl;
+        fav->addObject(current_object);
+        std::cout << "kore" << structure.getVoxel(3) << std::endl;
     }
 }

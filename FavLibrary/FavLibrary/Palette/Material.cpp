@@ -2,9 +2,9 @@
 
 
 
-Material::Material()
-{
-}
+//Material::Material()
+//{
+//}
 
 
 Material::~Material()

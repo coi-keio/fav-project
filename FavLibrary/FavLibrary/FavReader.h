@@ -23,7 +23,6 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
-
 #include "Metadata.h"
 #include "Palette.h"
 #include "Voxel.h"

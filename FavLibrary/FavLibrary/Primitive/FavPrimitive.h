@@ -17,7 +17,6 @@ public:
 	void setName(std::string name_) { name = name_; };
 
 protected:
-	static unsigned int counter;
 	unsigned int identifier;
 	std::string name;
 

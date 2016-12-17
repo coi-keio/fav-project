@@ -2,6 +2,7 @@
 
 enum ColorMode
 {
+    None,
 	Grayscale,
 	Grayscale16,
 	RGB,

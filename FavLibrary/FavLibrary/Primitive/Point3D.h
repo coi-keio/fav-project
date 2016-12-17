@@ -2,7 +2,7 @@
 class Point3D
 {
 public:
-	Point3D() { };
+	Point3D();
 	Point3D(double x, double y, double z)
 	{
 		this->x = x;
@@ -29,5 +29,5 @@ public:
 protected:
 	double x = 0.0;
 	double y = 0.0;
-	double z = .0;
+	double z = 0.0;
 };

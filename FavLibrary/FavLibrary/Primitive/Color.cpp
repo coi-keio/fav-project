@@ -1,5 +1,4 @@
-#include "ColorBase.h"
-
+#include "Color.h"
 
 
 ColorBase::ColorBase()
