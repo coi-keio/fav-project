@@ -108,7 +108,7 @@ void FavWriter::writePalette(DOMElement *parent_elem){
 
     for(int i=0; i<number_of_geometries; ++i){
         
-        Geometry tmp = fav->palette.getGeometryById(i);
+        Geometry tmp = fav->palette.getGeometryById(i+1);
         DOMElement *geo_elem = doc->createElement(XMLString::transcode("geometry"));
 
         setAttribute(geo_elem, "id", std::to_string(tmp.getId()));
@@ -142,10 +142,10 @@ void FavWriter::writePalette(DOMElement *parent_elem){
     int number_of_materials = fav->palette.getNumberOfMaterials();
     std::cout << number_of_materials << std::endl;
     
-    for(int i=0; i<2; ++i){
-        int index = i;
-        if(i==0) index = 1;
-        else if(i==1)index = 3;
+    for(int i=0; i<number_of_materials; ++i){
+        int index = i+1;
+//        if(i==0) index = 1;
+//        else if(i==1)index = 3;
         Material tmp = fav->palette.getMaterialById(index);
         DOMElement *mat_elem = doc->createElement(XMLString::transcode("material"));
         
@@ -154,9 +154,7 @@ void FavWriter::writePalette(DOMElement *parent_elem){
         setAttribute(mat_elem, "name", tmp.getName());
         
         // 優先順位問題をmaterialクラスの構造で解決する必要がある
-//        std::for_each(tmp.materials.begin(), tmp.materials.end(), [&](MaterialSpec material){
         for(auto material : tmp.materials){
-//            std::cout << "ddddddd   " << material->materialTyep << std::endl;
             if(material->materialType == MaterialType::product_info){
                 ProductInfo* p_info = dynamic_cast<ProductInfo*>(material);
                 DOMElement *pinfo_elem = doc->createElement(XMLString::transcode("product_info"));
@@ -189,25 +187,28 @@ void FavWriter::writePalette(DOMElement *parent_elem){
 
 void FavWriter::writeVoxel(DOMElement *parent_elem){
     
-//    under development Voxelクラスが出来てから
-//    DOMElement *voxel_elem = doc->createElement(XMLString::transcode("voxel"));
-//
-//    for(int i=0, size = (int)fav->voxel.size(); i<size; ++i){
-//        DOMElement *vox_elem = doc->createElement(XMLString::transcode("voxel"));
-//        Voxel* tmp = fav->voxel[i];
-//        setAttribute(vox_elem, "id", std::to_string(tmp->getId()));
-//        setAttribute(vox_elem, "name", tmp->getName());
-//        DOMElement *geo_elem = doc->createElement(XMLString::transcode("geometry_info"));
-//        appendText(geo_elem, "id", tmp->getGeometryInfo()->getId());
-//        vox_elem->appendChild(geo_elem);
-//        
-//        for(int j=0, size = tmp->getNumMaterialInfo(); j<size; ++j){
-//            
-//        }
-//        voxel_elem->appendChild(vox_elem);
-//    }
-//    
-//    parent_elem->appendChild( voxel_elem );
+    DOMElement *voxel_elem = doc->createElement(XMLString::transcode("voxel"));
+
+    for(int i=0, size = (int)fav->getNumVoxels(); i<size; ++i){
+        DOMElement *vox_elem = doc->createElement(XMLString::transcode("voxel"));
+        Voxel tmp = fav->getVoxel(i+1);
+        setAttribute(vox_elem, "id", std::to_string(tmp.getId()));
+        setAttribute(vox_elem, "name", tmp.getName());
+        DOMElement *geo_elem = doc->createElement(XMLString::transcode("geometry_info"));
+        appendText(geo_elem, "id", std::to_string(tmp.getGeometryInfo()));
+        vox_elem->appendChild(geo_elem);
+        
+        
+        for(int j=0, size = tmp.getNumMaterialInfo(); j<size; ++j){
+            DOMElement *matinfo_elem = doc->createElement(XMLString::transcode("material_info"));
+            appendText(matinfo_elem, "id", std::to_string(tmp.getMaterialInfo(j).getId()));
+            appendText(matinfo_elem, "ratio", std::to_string(tmp.getMaterialInfo(j).getRatio()));
+            vox_elem->appendChild(matinfo_elem);
+        }
+        voxel_elem->appendChild(vox_elem);
+    }
+    
+    parent_elem->appendChild( voxel_elem );
 
 };
 
@@ -323,7 +324,7 @@ void FavWriter::writeVoxelMap(DOMElement* parent_elem, Structure* p_str){
             
             XMLSize_t len;
 //            XMLByte* testt = reinterpret_cast<XMLByte*>("");
-            XMLByte* data_encoded = xercesc::Base64::encode( reinterpret_cast<const XMLByte*>(layer_data.c_str()), size, &len );
+            XMLByte* data_encoded = xercesc::Base64::encode( reinterpret_cast<const XMLByte*>(data), size, &len );
 //            XMLByte* data_decoded = xercesc::Base64::decode( data_encoded, &len );
 //            for(int dd=0; dd<size; dd++){
 //                std::cout << (int)data_decoded[dd] << ",";

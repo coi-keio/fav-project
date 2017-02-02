@@ -80,7 +80,8 @@ private:
 class Material : public FavPrimitive, MetadataObject
 {
 public:
-    Material() { identifier = ++counter; std::cout << "counter = " << counter << std::endl;};
+    Material() { init(); };
+    Material(std::string name_) { name = name_; init(); };
     ~Material();
 	std::list<MaterialSpec*> materials;
 
@@ -105,6 +106,7 @@ public:
 
 
 private:
+    void init(){ identifier = ++counter; };
     static unsigned int counter;
 };
 

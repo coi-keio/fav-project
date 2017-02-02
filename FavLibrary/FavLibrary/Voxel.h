@@ -58,8 +58,8 @@ public:
 	Voxel() { identifier = ++counter; };
     Voxel(std::string name_) 
 	{
-		Voxel();
-		name = name_; 
+        identifier = ++counter;
+        name = name_;
 	};
 
 	void setGeometryInfo(unsigned int id_){ geometry_info.setId(id_); };
@@ -73,11 +73,11 @@ public:
 		return res;
 	};
 	MaterialInfo getMaterialInfo(unsigned int id_) { return *material_info[id_]; };
-	void addMaterialInfo(unsigned int id_, double ratio_) { material_info[id_] = new MaterialInfo(ratio_); };
+	void addMaterialInfo(unsigned int id_, double ratio_) { material_info.push_back(new MaterialInfo(id_, ratio_)); };
 	void unpdateMaterialInfo(unsigned int id_, double ratio_) { material_info[id_]->setRatio(ratio_); };
-	void removeMaterialInfo(unsigned int id_) { material_info.erase(id_); }
-	bool existsMaterialInfo(unsigned int id_) { return material_info.count(id_) > 0; }
-    
+	void removeMaterialInfo(unsigned int id_) { material_info.erase(material_info.begin() + id_); }
+	bool existsMaterialInfo(unsigned int id_) { return material_info.size() > 0; }
+    int getNumMaterialInfo(){ return (int)material_info.size(); };
 	ColorRGBA getDisplay() { return display; };
 	void setDisplay(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_) { display.setColorRBGA(r_, g_, b_, a_); };
 	void setDisplay(ColorRGBA color_) { display.setColorRBGA(color_.getR(), color_.getG(), color_.getB(), color_.getA()); };
@@ -96,7 +96,7 @@ public:
 
 private:
     GeometryInfo geometry_info;
-    std::map<unsigned int, MaterialInfo*> material_info;
+    std::vector<MaterialInfo*> material_info;
     ColorRGBA display;
 	std::string application_note;
     

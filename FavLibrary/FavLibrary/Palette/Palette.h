@@ -51,6 +51,8 @@ public:
 		geometries[id_].remove();
 	}
 
+    
+    
 	Material getMaterialById(unsigned int id_)
 	{
         Material res;// = nullptr;
@@ -82,6 +84,8 @@ public:
 private:
 	std::map<unsigned int, Geometry> geometries;
 	std::map<unsigned int, Material> materials;
+    std::vector<unsigned int> geometry_id_list;
+    std::vector<unsigned int> material_id_list;
 
 	std::map<std::string, std::vector<Geometry>> geometriesName;
 	std::map<std::string, std::vector<Material>> materialsName;

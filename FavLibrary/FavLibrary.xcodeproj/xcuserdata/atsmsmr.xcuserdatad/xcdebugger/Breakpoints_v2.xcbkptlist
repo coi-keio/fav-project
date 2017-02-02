@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "384"
-            endingLineNumber = "384"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "404"
-            endingLineNumber = "404"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
             <Locations>
@@ -184,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -216,11 +216,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -232,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -248,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "492"
-            endingLineNumber = "492"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -264,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
             <Locations>
@@ -326,11 +326,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -354,15 +354,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavWriter.cpp"
-            timestampString = "503660179.036585"
+            timestampString = "503664398.81866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "FavWriter::writePalette(DOMElement *parent_elem)"
             landmarkType = "5">
          </BreakpointContent>
@@ -370,15 +370,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavWriter.cpp"
-            timestampString = "503660179.036585"
+            timestampString = "503664398.81866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "FavWriter::writePalette(DOMElement *parent_elem)"
             landmarkType = "5">
          </BreakpointContent>
@@ -406,11 +406,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503657233.430954"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -422,11 +422,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503657248.060633"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -438,11 +438,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503657334.48784"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -454,39 +454,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503657397.03547"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FavLibrary/FavWriter.cpp"
-            timestampString = "503660179.036585"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
-            landmarkName = "FavWriter::writePalette(DOMElement *parent_elem)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503658149.541014"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "213"
@@ -502,11 +470,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503659708.38276"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -518,11 +486,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503659749.092163"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -534,11 +502,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503659766.394419"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -550,11 +518,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503659797.670689"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -566,7 +534,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660001.876561"
+            timestampString = "503667439.820004"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavReader.cpp"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
@@ -612,11 +596,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660029.233433"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
             <Locations>
@@ -784,11 +768,107 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660001.876561"
+            timestampString = "503667439.820004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavWriter.cpp"
+            timestampString = "503674485.543423"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
+            landmarkName = "FavWriter::writeObject(DOMElement* parent_elem)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavWriter.cpp"
+            timestampString = "503674485.543423"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
+            landmarkName = "FavWriter::writeVoxelMap(DOMElement* parent_elem, Structure* p_str)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavWriter.cpp"
+            timestampString = "503674485.543423"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "FavWriter::writeVoxelMap(DOMElement* parent_elem, Structure* p_str)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavReader.cpp"
+            timestampString = "503675133.770811"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "493"
+            endingLineNumber = "493"
+            landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavReader.cpp"
+            timestampString = "503667009.938254"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavReader.cpp"
+            timestampString = "503667439.820004"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
             landmarkType = "5">
             <Locations>
@@ -799,12 +879,12 @@
                   symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
                   moduleName = "FavLibrary"
                   urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.212116"
+                  timestampString = "503670939.837344"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "573">
+                  startingLineNumber = "188"
+                  endingLineNumber = "188"
+                  offsetFromSymbolStart = "2000">
                </Location>
                <Location
                   shouldBeEnabled = "No"
@@ -813,138 +893,12 @@
                   symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
                   moduleName = "FavLibrary"
                   urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.212365"
+                  timestampString = "503670939.837504"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "2047">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.21256"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "2657">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.212753"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "3307">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.212937"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "3349">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.213126"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "3950">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.213317"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "4530">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.213505"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "5155">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.213702"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "5449">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.213889"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "5626">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FavReader::readPalette(xercesc_3_1::DOMNodeList*)"
-                  moduleName = "FavLibrary"
-                  urlString = "file:///Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/FavReader.cpp"
-                  timestampString = "503659901.214078"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "5648">
+                  startingLineNumber = "188"
+                  endingLineNumber = "188"
+                  offsetFromSymbolStart = "2012">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -952,16 +906,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503659962.021167"
+            timestampString = "503675133.770811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -971,13 +925,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "503660001.876561"
+            filePath = "FavLibrary/FavWriter.cpp"
+            timestampString = "503674814.69984"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
-            landmarkName = "FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_)"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "FavWriter::writeVoxel(DOMElement *parent_elem)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavWriter.cpp"
+            timestampString = "503674816.787651"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "FavWriter::writeVoxel(DOMElement *parent_elem)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

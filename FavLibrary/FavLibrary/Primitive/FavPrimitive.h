@@ -12,7 +12,7 @@ public:
 	void remove() { this->is_removed = true; }
 
 	unsigned int getId() { return identifier; };
-
+    void setId(unsigned int id_){ identifier = id_; };
 	std::string getName() { return name; };
 	void setName(std::string name_) { name = name_; };
 

@@ -171,6 +171,7 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         int index = std::stoi(getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"));
         std::string name = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name");
         Geometry current_geometry = Geometry(name);
+        current_geometry.setId(index);
         
         std::string shape = getElementString(dynamic_cast<DOMElement*>(geometry_list->item(i)), "shape");
         current_geometry.setShape(GeometryShape::cube);// needs fix
@@ -195,8 +196,8 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         //load attributes
         int index = std::stoi(getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"));
         std::string name = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name");
-        Material current_material = Material();
-
+        Material current_material = Material(name);
+        current_material.setId(index);
         
         // debug required for multiple material_name case
         DOMNodeList* material_name_list = getElements(dynamic_cast<DOMElement*>(material_list->item(i)), "material_name");
@@ -231,10 +232,6 @@ void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_){
         
         fav->palette.addMaterial(current_material);
     }
-    Material tmp0 = fav->palette.getMaterialById(0);
-    Material tmp1 = fav->palette.getMaterialById(1);
-    Material tmp2 = fav->palette.getMaterialById(2);
-    Material tmp3 = fav->palette.getMaterialById(3);
 
 //    fav->palette.setNumberOfMaterials(number_of_material);
 
@@ -249,13 +246,14 @@ void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_){
         //load attributes
         int index = std::stoi(getAttribute(voxel_elem, "id"));
         std::string name = getAttribute(voxel_elem, "name");
-        Voxel current_voxel = Voxel(name);
+        Voxel* current_voxel = new Voxel(name);
+        current_voxel->setId(index);
         
         //load geometry_info
         DOMNodeList* geoinfo_node = getElements(voxel_elem, "geometry_info");
         DOMElement*  geoinfo_elem = dynamic_cast<DOMElement*>(geoinfo_node->item(0));
         int geometry_id = getElementInt(geoinfo_elem, "id");
-        current_voxel.setGeometryInfo(geometry_id);
+        current_voxel->setGeometryInfo(geometry_id);
         
         //load material_info
         DOMNodeList* matinfo_node = getElements(voxel_elem, "material_info");
@@ -264,7 +262,7 @@ void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_){
             DOMElement* matinfo_elem = dynamic_cast<DOMElement*>(matinfo_node->item(j));
             int material_id       = getElementInt(matinfo_elem, "id");
             double material_ratio = getElementDouble(matinfo_elem, "ratio");
-            current_voxel.addMaterialInfo(material_id, material_ratio);
+            current_voxel->addMaterialInfo(material_id, material_ratio);
         }
         
         fav->addVoxel(current_voxel);
@@ -283,10 +281,10 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
         //load attributes
         int index = std::stoi(getAttribute(object_elem, "id"));
         std::string name = getAttribute(object_elem, "name");
-        Object current_object = Object(name);
+        Object* current_object = new Object(name);
         
         // load grid
-        current_object.grid = new Grid();
+        current_object->grid = new Grid();
         
         // load origin
         DOMNodeList* origin_node = getElements(object_elem, "origin");
@@ -294,7 +292,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             int x = getElementInt(dynamic_cast<DOMElement*>(origin_node->item(0)), "x");
             int y = getElementInt(dynamic_cast<DOMElement*>(origin_node->item(0)), "y");
             int z = getElementInt(dynamic_cast<DOMElement*>(origin_node->item(0)), "z");
-            current_object.grid->setOrigin(x, y, z);
+            current_object->grid->setOrigin(x, y, z);
         }
         
         // load unit
@@ -303,7 +301,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             int x = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "x");
             int y = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "y");
             int z = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "z");
-            current_object.grid->setUnit(x, y, z);
+            current_object->grid->setUnit(x, y, z);
         }
         
         // load dimension
@@ -312,25 +310,25 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             int x = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "x");
             int y = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "y");
             int z = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "z");
-            current_object.grid->setDimension(x, y, z);
+            current_object->grid->setDimension(x, y, z);
         }else{
             // error message is here. dimension is required.
         }
         
         
         // load Structure
-        Structure structure = Structure(current_object.grid);
+        Structure* structure = new Structure(current_object->grid);
         
         // load voxel_map
         DOMElement* vmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "voxel_map")->item(0) );
         std::string compression   = getAttribute(vmap_elem, "compression");
         std::string bit_per_voxel = getAttribute(vmap_elem, "bit_per_voxel");
         
-        structure.setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
+        structure->setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
         
         DOMNodeList* vmap_layers = getElements(vmap_elem, "layer");
         int number_of_layers = int(vmap_layers->getLength());
-        structure.initVoxelMap();
+        structure->initVoxelMap();
         
         for(int j=0; j<number_of_layers; ++j){
             
@@ -375,7 +373,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                 
             }else if(compression == "base64"){
                 
-                XMLSize_t size = current_object.grid->getDimensionX() * current_object.grid->getDimensionY();
+                XMLSize_t size = current_object->grid->getDimensionX() * current_object->grid->getDimensionY();
                 data_in.resize(size);
                 std::string input_str = getNodeValueString(vmap_layers->item(j)->getFirstChild());
                 XMLByte* data_decoded = xercesc::Base64::decode( reinterpret_cast<const XMLByte*>(input_str.c_str()), &size);
@@ -388,8 +386,8 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                 
             }
             
-            int dim_x = current_object.grid->getDimensionX();
-            int dim_y = current_object.grid->getDimensionY();
+            int dim_x = current_object->grid->getDimensionX();
+            int dim_y = current_object->grid->getDimensionY();
             int layer_size = dim_x * dim_y;
             
             if (data_in.size() != layer_size){
@@ -399,9 +397,9 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
             for(int k=0; k<layer_size; k++){
                 
                 int index = layer_size*j + k;
-                structure.setVoxel(index, (int)data_in[k]);
+                structure->setVoxel(index, (int)data_in[k]);
                 std::cout << "index = " << index << std::endl;
-                std::cout << "value = " << structure.getVoxel(index) << std::endl;
+                std::cout << "value = " << structure->getVoxel(index) << std::endl;
                 
             }
         }
@@ -491,11 +489,11 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
 //            }
 //        }
         
-        current_object.setStructure(&structure);
+        current_object->setStructure(structure);
         
         // other compression mode is under development
         
         fav->addObject(current_object);
-        std::cout << "kore" << structure.getVoxel(3) << std::endl;
+        std::cout << "kore" << structure->getVoxel(3) << std::endl;
     }
 }

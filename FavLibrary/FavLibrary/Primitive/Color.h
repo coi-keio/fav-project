@@ -22,7 +22,7 @@ public:
 class ColorRGB : public ColorBase
 {
 public:
-	const ColorMode colorMode = RGB;
+	ColorMode colorMode = RGB;//ここconstにするとcompile errorが出てた。要確認
 
 	unsigned char getR() { return this->r; }
 	void setR(unsigned char r) { this->r = r; }
@@ -49,7 +49,7 @@ private:
 class ColorRGBA : public ColorRGB
 {
 public:
-	const ColorMode colorMode = RGBA;
+	ColorMode colorMode = RGBA;
 
 	unsigned char getA() { return this->a; }
 	void setA(unsigned char a) { this->a = a; }
@@ -67,7 +67,7 @@ private:
 class ColorGrayscale : public ColorBase
 {
 public:
-	const ColorMode colorMode = Grayscale;
+	ColorMode colorMode = Grayscale;
 
 	unsigned char getGray() { return this->gray; }
 	void setGray(unsigned char gray) { this->gray = gray; }
@@ -79,7 +79,7 @@ private:
 class ColorGrayscale16 : public ColorGrayscale
 {
 public:
-	const ColorMode colorMode = Grayscale16;
+	ColorMode colorMode = Grayscale16;
 
 	unsigned short getGray() { return this->gray; }
 	void setGray(unsigned short gray) { this->gray = gray; }
@@ -91,7 +91,7 @@ private:
 class ColorCMYK : public ColorBase
 {
 public:
-	const ColorMode colorMode = CMYK;
+	ColorMode colorMode = CMYK;
 
 	unsigned char getC() { return this->c; }
 	void setC(unsigned char c) { this->c = c; }

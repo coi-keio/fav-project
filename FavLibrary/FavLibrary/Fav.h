@@ -41,12 +41,12 @@ public:
 	Voxel getVoxel(unsigned int id_)
 	{
         Voxel res;// = nullptr;
-//		if (voxels.count(id_) > 0 && !voxels[id_]->isRemoved())
-//			res = *voxels[id_];
+		if (voxels.count(id_) > 0 && !voxels[id_]->isRemoved())
+            res = *voxels[id_];
 
 		return res;
 	};
-	void addVoxel(Voxel voxel_) { voxels[voxel_.getId()] = &voxel_; };
+	void addVoxel(Voxel* voxel_) { voxels[voxel_->getId()] = voxel_; };
 	void removeVoxel(unsigned int id_) { voxels[id_]->remove(); }
 	bool existsVoxel(unsigned int id_) { return voxels.count(id_) > 0 && !voxels[id_]->isRemoved(); }
 
@@ -65,12 +65,13 @@ public:
 
 		return res;
 	};
-	void addObject(Object object_) { objects[object_.getId()] = &object_; };
+	void addObject(Object* object_) { objects[object_->getId()] = object_; };
 	void removeObject(unsigned int id_) { objects[id_]->remove(); }
 //	bool existsObject(unsigned int id_) { return objects.count(id_) > 0 && !objects[id_]->isRemoved; }
     
     int getNumObjects(){return (int)objects.size(); };
-    
+    int getNumVoxels(){return (int)voxels.size(); };
+
     Palette palette;
 
 private:
