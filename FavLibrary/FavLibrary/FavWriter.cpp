@@ -244,7 +244,7 @@ void str2bin(const unsigned char *str, unsigned char *hex, int len)
     int i=0;
     for (i=0; i<(len>>1); i++) {
         unsigned int tmp;
-        sscanf((const char*)str+(i<<1),"%2x",&tmp);
+        sscanf_s((const char*)str+(i<<1),"%2x",&tmp);
         hex[i] = (unsigned char)tmp & 0xff;
     }
 }
@@ -254,7 +254,7 @@ void BytesFromHexString(unsigned char *data, const char *string) {
     int len = (int)strlen(string);
     for (int i=0; i<len; i+=2) {
         unsigned int x;
-        sscanf((char *)(string + i), "%02x", &x);
+		sscanf_s((char *)(string + i), "%02x", &x);
         data[i/2] = x;
     }
 }
@@ -293,13 +293,13 @@ void FavWriter::writeVoxelMap(DOMElement* parent_elem, Structure* p_str){
                     
                 }else if(p_str->getBitPerVoxel() == 8){
                     char buff[2];
-                    sprintf( buff, "%02x",  data);
+                    sprintf_s( buff, "%02x",  data);
                     layer_data.push_back(buff[0]);
                     layer_data.push_back(buff[1]);
                     
                 }else if(p_str->getBitPerVoxel() == 16){
                     char buff[4];
-                    sprintf( buff, "%04x",  data);
+					sprintf_s( buff, "%04x",  data);
                     layer_data.push_back(buff[0]);
                     layer_data.push_back(buff[1]);
                     layer_data.push_back(buff[2]);
@@ -317,7 +317,7 @@ void FavWriter::writeVoxelMap(DOMElement* parent_elem, Structure* p_str){
         }else if(compression == "base64"){ // there are bugs here.
             
             int size = p_str->grid->getDimensionX()*p_str->grid->getDimensionY();
-            unsigned char data[size];
+            unsigned char* data = new unsigned char[size];
             BytesFromHexString(data, layer_data.c_str());
             
             

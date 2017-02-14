@@ -20,47 +20,47 @@
 
 class VoxelInfo {
 public:
-    VoxelInfo() {};
-    VoxelInfo(unsigned int id_) { identifier = id_; };
-    ~VoxelInfo() {};
-    
-    unsigned int getId() { return identifier; };
-    void setId(unsigned int id_) { identifier = id_; };
-    
+	VoxelInfo() {};
+	VoxelInfo(unsigned int id_) { identifier = id_; };
+	~VoxelInfo() {};
+
+	unsigned int getId() { return identifier; };
+	void setId(unsigned int id_) { identifier = id_; };
+
 private:
-    unsigned int identifier;
+	unsigned int identifier;
 };
 
 class GeometryInfo : public VoxelInfo {
 public:
-    GeometryInfo() : VoxelInfo() {};
-    GeometryInfo(unsigned int id_) : VoxelInfo(id_) {};
-    ~GeometryInfo() {};
+	GeometryInfo() : VoxelInfo() {};
+	GeometryInfo(unsigned int id_) : VoxelInfo(id_) {};
+	~GeometryInfo() {};
 };
 
 class MaterialInfo : public VoxelInfo {
 public:
-    MaterialInfo() : VoxelInfo() {};
-    MaterialInfo(unsigned int id_) : VoxelInfo(id_) { };
-    MaterialInfo(unsigned int id_, double ratio_) : VoxelInfo(id_) { ratio = ratio_; };
-    ~MaterialInfo() {};
-    
-    double getRatio() { return ratio; };
-    void setRatio(double ratio_) { ratio = ratio_; };
-    
+	MaterialInfo() : VoxelInfo() {};
+	MaterialInfo(unsigned int id_) : VoxelInfo(id_) { };
+	MaterialInfo(unsigned int id_, double ratio_) : VoxelInfo(id_) { ratio = ratio_; };
+	~MaterialInfo() {};
+
+	double getRatio() { return ratio; };
+	void setRatio(double ratio_) { ratio = ratio_; };
+
 private:
-    double ratio = 1.0;
+	double ratio = 1.0;
 };
+
 
 class Voxel : public FavPrimitive, MetadataObject
 {    
 public:
-	Voxel() { identifier = ++counter; };
-    Voxel(std::string name_) 
-	{
-        identifier = ++counter;
-        name = name_;
-	};
+	Voxel() {};
+	Voxel(unsigned int id_) : FavPrimitive(id_) {};
+	Voxel(std::string name_) : FavPrimitive(name_) {};
+    Voxel(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
+	~Voxel() {};
 
 	void setGeometryInfo(unsigned int id_){ geometry_info.setId(id_); };
 	unsigned int getGeometryInfo() { return geometry_info.getId(); }
@@ -99,9 +99,8 @@ private:
     std::vector<MaterialInfo*> material_info;
     ColorRGBA display;
 	std::string application_note;
-    
-    static unsigned int counter;
 };
+
 
 
 #endif /* defined(__FavLibrary__Voxel__) */

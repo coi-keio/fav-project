@@ -24,13 +24,12 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
-
 #include "Metadata.h"
-#include "Palette.h"
 #include "Voxel.h"
-#include "Object.h"
-#include "Structure.h"
-#include "Geometry.h"
+#include "./Palette/Palette.h"
+#include "./Palette/Geometry.h"
+#include "./Object/Object.h"
+#include "./Object/Structure.h"
 
 class Fav;
 

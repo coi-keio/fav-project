@@ -7,61 +7,30 @@
 #include "../Primitive/Point3D.h"
 #include "../Primitive/FavPrimitive.h"
 
+
 enum GeometryShape
 {
-    cube,
-    sphere,
-    user_defined,
+	cube,
+	sphere,
+	user_defined,
 };
 
 class Scale : public Point3D
 {
 public:
-    Scale() : Point3D() { }
-    Scale(double x, double y, double z) : Point3D(x, y, z) { }
-    ~Scale() {};
+	Scale() : Point3D() { }
+	Scale(double x, double y, double z) : Point3D(x, y, z) { }
+	~Scale() {};
 };
+
 
 class Geometry : public FavPrimitive
 {
 public:
-	Geometry() { identifier = ++counter; };
-
-	Geometry(std::string name_) {
-		Geometry();
-		name = name_;
-	};
-
-	Geometry(std::string name_, GeometryShape shape_, Point3D scale_)
-	{
-		name = name_;
-		shape = shape_;
-		scale.set(scale_);
-	};
-
-	Geometry(std::string name_, GeometryShape shape_, float scale_x_, float scale_y_, float scale_z_)
-	{
-		name = name_;
-		shape = shape_;
-		scale.set(scale_x_, scale_y_, scale_z_);
-	};
-
-	Geometry(std::string name_, std::string user_defined_shape_, Point3D scale_)
-	{
-		name = name_;
-		shape = user_defined;
-		userDefinedShape = user_defined_shape_;
-		scale.set(scale_);
-	};
-
-	Geometry(std::string name_, std::string user_defined_shape_, float scale_x_, float scale_y_, float scale_z_)
-	{
-		name = name_;
-		shape = user_defined;
-		userDefinedShape = user_defined_shape_;
-		scale.set(scale_x_, scale_y_, scale_z_);
-	};
-    
+	Geometry() {};
+	Geometry(unsigned int id_) : FavPrimitive(id_) {};
+	Geometry(std::string name_) : FavPrimitive(name_) {};
+	Geometry(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
     ~Geometry(){};
 
 	GeometryShape getShape() { return shape; };
@@ -87,8 +56,7 @@ private:
 	GeometryShape shape = cube;
 
 	Scale scale;
-    
-    static unsigned int counter;
-
 };
+
+
 

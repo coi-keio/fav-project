@@ -246,8 +246,7 @@ void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_){
         //load attributes
         int index = std::stoi(getAttribute(voxel_elem, "id"));
         std::string name = getAttribute(voxel_elem, "name");
-        Voxel* current_voxel = new Voxel(name);
-        current_voxel->setId(index);
+        Voxel* current_voxel = new Voxel(index, name);
         
         //load geometry_info
         DOMNodeList* geoinfo_node = getElements(voxel_elem, "geometry_info");
@@ -342,7 +341,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                     for(int k=0; k<(int)layer_data.size(); k++){
                         int dec;
                         char hex[2] = {layer_data[k], layer_data[k+1]};
-                        sscanf(hex, "%01x", &dec);
+						sscanf_s(hex, "%01x", &dec);
                         data_in[k] = dec; //if compressed using this scheme
                     }
                     
@@ -352,7 +351,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                     for(int k=0; k<(int)layer_data.size(); k=k+2){
                         int dec;
                         char hex[2] = {layer_data[k], layer_data[k+1]};
-                        sscanf(hex, "%02x", &dec);
+						sscanf_s(hex, "%02x", &dec);
                         data_in[cur] = dec; //if compressed using this scheme
                         cur++;
                         std::cout << dec << std::endl;
@@ -363,7 +362,7 @@ void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_){
                     for(int k=0; k<(int)layer_data.size(); k=k+4){
                         int dec;
                         char hex[4] = {layer_data[k], layer_data[k+1], layer_data[k+2], layer_data[k+3]};
-                        sscanf(hex, "%04x", &dec);
+						sscanf_s(hex, "%04x", &dec);
                         data_in[cur] = dec; //if compressed using this scheme
                         cur++;
                         std::cout << dec << std::endl;

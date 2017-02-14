@@ -24,10 +24,10 @@
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
 #include "Metadata.h"
-#include "Palette.h"
 #include "Voxel.h"
-#include "Object.h"
-#include "Structure.h"
+#include "./Palette/Palette.h"
+#include "./Object/Object.h"
+#include "./Object/Structure.h"
 
 using namespace xercesc;
 
