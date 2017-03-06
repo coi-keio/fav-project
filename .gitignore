@@ -13,3 +13,5 @@ build/
 */*.xcodeproj
 */!*.xcodeproj/project.pbxproj
 */!*.xcworkspace/contents.xcworkspacedata
+FavLibrary/FavLibrary.Win/ipch/
+*.rej

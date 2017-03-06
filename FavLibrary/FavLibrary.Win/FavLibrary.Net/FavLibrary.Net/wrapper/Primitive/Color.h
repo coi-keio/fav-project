@@ -1,32 +1,27 @@
 #pragma once
 
-#include "../FavSettings.h"
+#include "../../FavLibrary/Primitive/Color.h"
+using namespace System;
+using ColorBase_c = FavLibrary::ColorBase;
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	enum ColorMode
-	{
-		None,
-		Grayscale,
-		Grayscale16,
-		RGB,
-		RGBA,
-		CMYK,
-	};
-
-	DllExport class ColorBase
+	public ref class ColorBase
 	{
 	public:
 		ColorBase();
 		~ColorBase();
-
-		ColorMode colorMode;
+		!ColorBase();
+	private:
+		ColorBase_c* ColorBase_c;
 	};
 
-	DllExport class ColorRGB : public ColorBase
+	public ref class ColorRGB : public ColorBase
 	{
 	public:
-		ColorMode colorMode = RGB;//ここconstにするとcompile errorが出てた。要確認
+		ColorRGB();
+		~ColorRGB();
+		!ColorRGB();
 
 		unsigned char getR();
 		void setR(unsigned char r);
@@ -40,15 +35,15 @@ namespace FavLibrary
 		void setColorRBG(unsigned char r, unsigned char g, unsigned char b);
 
 	private:
-		unsigned char r;
-		unsigned char g;
-		unsigned char b;
+		FavLibrary::ColorRGB* ColorRGB_c;
 	};
 
-	DllExport class ColorRGBA : public ColorRGB
+	public ref class ColorRGBA : public ColorRGB
 	{
 	public:
-		ColorMode colorMode = RGBA;
+		ColorRGBA();
+		~ColorRGBA();
+		!ColorRGBA();
 
 		unsigned char getA();
 		void setA(unsigned char a);
@@ -56,37 +51,43 @@ namespace FavLibrary
 		void setColorRBGA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
 	private:
-		unsigned char a;
+		FavLibrary::ColorRGBA* ColorRGBA_c;
 	};
 
-	DllExport class ColorGrayscale : public ColorBase
+	public ref  class ColorGrayscale : public ColorBase
 	{
 	public:
-		ColorMode colorMode = Grayscale;
+		ColorGrayscale();
+		~ColorGrayscale();
+		!ColorGrayscale();
 
 		unsigned char getGray();
 		void setGray(unsigned char gray);
 
 	private:
-		unsigned char gray;
+		FavLibrary::ColorGrayscale* ColorGrayscale_c;
 	};
 
-	DllExport class ColorGrayscale16 : public ColorGrayscale
+	public ref  class ColorGrayscale16 : public ColorGrayscale
 	{
 	public:
-		ColorMode colorMode = Grayscale16;
+		ColorGrayscale16();
+		~ColorGrayscale16();
+		!ColorGrayscale16();
 
 		unsigned short getGray();
 		void setGray(unsigned short gray);
 
 	private:
-		unsigned short gray;
+		FavLibrary::ColorGrayscale16* ColorGrayscale16_c;
 	};
 
-	DllExport class ColorCMYK : public ColorBase
+	public ref  class ColorCMYK : public ColorBase
 	{
 	public:
-		ColorMode colorMode = CMYK;
+		ColorCMYK();
+		~ColorCMYK();
+		!ColorCMYK();
 
 		unsigned char getC();
 		void setC(unsigned char c);
@@ -103,10 +104,7 @@ namespace FavLibrary
 		void setColorCMYK(unsigned char c, unsigned char m, unsigned char y, unsigned char k);
 
 	private:
-		unsigned char c;
-		unsigned char m;
-		unsigned char y;
-		unsigned char k;
+		FavLibrary::ColorCMYK* ColorCMYK_c;
 	};
 
 }
