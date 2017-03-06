@@ -13,18 +13,16 @@
 #include <map>
 #include <algorithm>
 
-#include "Voxel.h"
-#include "Metadata.h"
+#include "FavSettings.h"
 #include "./Palette/Palette.h"
 #include "./Object/Object.h"
-#include "FavSettings.h"
-
-class FavReader;
-class FavWriter;
+#include "FavReader.h"
+#include "FavWriter.h"
+#include "Voxel.h"
+#include "Metadata.h"
 
 namespace FavLibrary
 {
-
 	class Fav : public MetadataObject
 	{
 	public:

@@ -23,6 +23,7 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
+#include "Fav.h"
 #include "Metadata.h"
 #include "Voxel.h"
 #include "./Palette/Palette.h"
@@ -33,9 +34,8 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-	class Fav;
-
-	class FavReader {
+	class FavReader 
+	{
 	public:
 		FavReader(Fav* fav_) { fav = fav_; };
 		bool read(const char* file_path);

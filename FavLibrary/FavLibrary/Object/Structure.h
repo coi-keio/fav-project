@@ -15,8 +15,7 @@
 #include <iostream>
 #include "../Primitive/Point3D.h"
 #include "../Primitive/Color.h"
-
-class Grid;
+#include "Grid.h"
 
 namespace FavLibrary
 {

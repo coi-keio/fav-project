@@ -11,7 +11,6 @@
 
 namespace FavLibrary
 {
-
 	enum MaterialType {
 		material_name = 0,
 		product_info = 1,
