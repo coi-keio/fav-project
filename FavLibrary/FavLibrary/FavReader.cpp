@@ -345,7 +345,7 @@ namespace FavLibrary
 						for (int k = 0; k < (int)layer_data.size(); k++) {
 							int dec;
 							char hex[2] = { layer_data[k], layer_data[k + 1] };
-							sscanf_s(hex, "%01x", &dec);
+							sscanf(hex, "%01x", &dec);
 							data_in[k] = dec; //if compressed using this scheme
 						}
 
@@ -356,7 +356,7 @@ namespace FavLibrary
 						for (int k = 0; k < (int)layer_data.size(); k = k + 2) {
 							int dec;
 							char hex[2] = { layer_data[k], layer_data[k + 1] };
-							sscanf_s(hex, "%02x", &dec);
+							sscanf(hex, "%02x", &dec);
 							data_in[cur] = dec; //if compressed using this scheme
 							cur++;
 							std::cout << dec << std::endl;
@@ -368,7 +368,7 @@ namespace FavLibrary
 						for (int k = 0; k < (int)layer_data.size(); k = k + 4) {
 							int dec;
 							char hex[4] = { layer_data[k], layer_data[k + 1], layer_data[k + 2], layer_data[k + 3] };
-							sscanf_s(hex, "%04x", &dec);
+							sscanf(hex, "%04x", &dec);
 							data_in[cur] = dec; //if compressed using this scheme
 							cur++;
 							std::cout << dec << std::endl;

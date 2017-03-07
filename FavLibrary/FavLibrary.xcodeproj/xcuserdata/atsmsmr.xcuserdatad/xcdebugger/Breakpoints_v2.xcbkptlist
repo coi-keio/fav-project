@@ -346,9 +346,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "getMaterialById(unsigned int id_)"
-            landmarkType = "5">
+            endingLineNumber = "56">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -789,7 +787,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "378"
             endingLineNumber = "378"
-            landmarkName = "FavWriter::writeObject(DOMElement* parent_elem)"
+            landmarkName = "FavWriter::writeStructure(DOMElement* parent_elem, Structure* p_str)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -906,7 +904,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"

@@ -249,7 +249,7 @@ namespace FavLibrary
 		int i = 0;
 		for (i = 0; i < (len >> 1); i++) {
 			unsigned int tmp;
-			sscanf_s((const char*)str + (i << 1), "%2x", &tmp);
+			sscanf((const char*)str + (i << 1), "%2x", &tmp);
 			hex[i] = (unsigned char)tmp & 0xff;
 		}
 	}
@@ -259,7 +259,7 @@ namespace FavLibrary
 		int len = (int)strlen(string);
 		for (int i = 0; i < len; i += 2) {
 			unsigned int x;
-			sscanf_s((char *)(string + i), "%02x", &x);
+			sscanf((char *)(string + i), "%02x", &x);
 			data[i / 2] = x;
 		}
 	}
@@ -299,14 +299,14 @@ namespace FavLibrary
 					}
 					else if (p_str->getBitPerVoxel() == 8) {
 						char buff[2];
-						sprintf_s(buff, "%02x", data);
+						sprintf(buff, "%02x", data);
 						layer_data.push_back(buff[0]);
 						layer_data.push_back(buff[1]);
 
 					}
 					else if (p_str->getBitPerVoxel() == 16) {
 						char buff[4];
-						sprintf_s(buff, "%04x", data);
+						sprintf(buff, "%04x", data);
 						layer_data.push_back(buff[0]);
 						layer_data.push_back(buff[1]);
 						layer_data.push_back(buff[2]);
