@@ -405,7 +405,7 @@ namespace FavLibrary
 					int index = layer_size*j + k;
 					structure->setVoxel(index, (int)data_in[k]);
 					std::cout << "index = " << index << std::endl;
-					std::cout << "value = " << structure->getVoxel(index) << std::endl;
+//					std::cout << "value = " << structure->getVoxel(index) << std::endl;
 
 				}
 			}
@@ -500,7 +500,7 @@ namespace FavLibrary
 			// other compression mode is under development
 
 			fav->addObject(current_object);
-			std::cout << "kore" << structure->getVoxel(3) << std::endl;
+//			std::cout << "kore" << structure->getVoxel(3) << std::endl;
 		}
 	}
 
