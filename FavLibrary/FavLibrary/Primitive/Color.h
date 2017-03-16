@@ -1,10 +1,9 @@
 #pragma once
-
 #include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	enum class DllInterface ColorMode
+	RefEnum ColorMode
 	{
 		None,
 		Grayscale,
@@ -14,18 +13,27 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	class DllInterface ColorBase
+	RefClass DllInterface ColorBase
 	{
 	public:
 		ColorBase();
 		~ColorBase();
 
 		ColorMode colorMode;
+
+	private:
+
+#ifdef DotNet
+		ColorBase^ pColorBase;
+#endif
 	};
 
-	class DllInterface ColorRGB : public ColorBase
+	RefClass DllInterface ColorRGB : public ColorBase
 	{
 	public:
+		ColorRGB();
+		~ColorRGB();
+
 		ColorMode colorMode = ColorMode::RGB;//ここconstにするとcompile errorが出てた。要確認
 
 		unsigned char getR();
@@ -43,11 +51,18 @@ namespace FavLibrary
 		unsigned char r;
 		unsigned char g;
 		unsigned char b;
+
+#ifdef DotNet
+		ColorRGB^ pColorRGB;
+#endif
 	};
 
-	class DllInterface ColorRGBA : public ColorRGB
+	RefClass DllInterface ColorRGBA : public ColorRGB
 	{
 	public:
+		ColorRGBA();
+		~ColorRGBA();
+
 		ColorMode colorMode = ColorMode::RGBA;
 
 		unsigned char getA();
@@ -57,11 +72,18 @@ namespace FavLibrary
 
 	private:
 		unsigned char a;
+
+#ifdef DotNet
+		ColorRGBA^ pColorRGBA;
+#endif
 	};
 
-	class DllInterface ColorGrayscale : public ColorBase
+	RefClass DllInterface ColorGrayscale : public ColorBase
 	{
 	public:
+		ColorGrayscale();
+		~ColorGrayscale();
+
 		ColorMode colorMode = ColorMode::Grayscale;
 
 		unsigned char getGray();
@@ -69,11 +91,18 @@ namespace FavLibrary
 
 	private:
 		unsigned char gray;
+
+#ifdef DotNet
+		ColorGrayscale^ pColorGrayscale;
+#endif
 	};
 
-	class DllInterface ColorGrayscale16 : public ColorGrayscale
+	RefClass DllInterface ColorGrayscale16 : public ColorGrayscale
 	{
 	public:
+		ColorGrayscale16();
+		~ColorGrayscale16();
+
 		ColorMode colorMode = ColorMode::Grayscale16;
 
 		unsigned short getGray();
@@ -81,11 +110,18 @@ namespace FavLibrary
 
 	private:
 		unsigned short gray;
+
+#ifdef DotNet
+		ColorGrayscale16^ pColorGrayscale16;
+#endif
 	};
 
-	class DllInterface ColorCMYK : public ColorBase
+	RefClass DllInterface ColorCMYK : public ColorBase
 	{
 	public:
+		ColorCMYK();
+		~ColorCMYK();
+
 		ColorMode colorMode = ColorMode::CMYK;
 
 		unsigned char getC();
@@ -107,6 +143,10 @@ namespace FavLibrary
 		unsigned char m;
 		unsigned char y;
 		unsigned char k;
+
+#ifdef DotNet
+		ColorCMYK^ pColorCMYK;
+#endif
 	};
 
 }

@@ -11,22 +11,22 @@
 namespace FavLibrary
 {
 
-	class DllInterface Unit : public Point3D
+	RefClass DllInterface Unit : public Point3D
 	{
 
 	};
 
-	class DllInterface Dimension : public Point3D
+	RefClass DllInterface Dimension : public Point3D
 	{
 
 	};
 
-	class DllInterface Origin : public Point3D
+	RefClass DllInterface Origin : public Point3D
 	{
 
 	};
 
-	class DllInterface Grid
+	RefClass DllInterface Grid
 	{
 	public:
 		Unit getUnit();
@@ -63,6 +63,8 @@ namespace FavLibrary
 		Unit unit;
 		Dimension dimension;
 		Origin origin;
+
+		Grid* pGrid;
 	};
 
 }

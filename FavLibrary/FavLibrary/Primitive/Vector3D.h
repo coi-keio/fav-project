@@ -7,14 +7,16 @@
 namespace FavLibrary
 {
 
-	class DllInterface Vector3D :
-		public Point3D
+	RefClass DllInterface Vector3D : public Point3D
 	{
 	public:
 		Vector3D();
 		~Vector3D();
 
 		double getLength();
+
+	private:
+		Vector3D* pVector3D;
 	};
 
 }

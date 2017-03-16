@@ -3,7 +3,7 @@
 
 namespace FavLibrary
 {
-	class DllInterface Point3D
+	RefClass DllInterface Point3D
 	{
 	public:
 		Point3D();

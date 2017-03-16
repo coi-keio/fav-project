@@ -18,7 +18,7 @@
 namespace FavLibrary
 {
 
-	class DllInterface Object : public FavPrimitive, MetadataObject
+	RefClass DllInterface Object : public FavPrimitive, MetadataObject
 	{
 	public:
 		Object();
@@ -41,7 +41,9 @@ namespace FavLibrary
 
 		Grid* grid;
 		Structure* structure;
+
 	private:
+		Object* pObject;
 
 	};
 

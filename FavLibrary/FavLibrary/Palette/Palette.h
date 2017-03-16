@@ -20,7 +20,7 @@
 namespace FavLibrary
 {
 
-	class DllInterface Palette {
+	RefClass DllInterface Palette {
 
 	public:
 		Palette();
@@ -49,6 +49,8 @@ namespace FavLibrary
 
 		unsigned int number_of_materials;
 		unsigned int number_of_geometries;
+
+		Palette* pPalette;
 	};
 }
 #endif /* defined(__FavLibrary__Palette__) */

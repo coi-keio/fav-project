@@ -21,20 +21,20 @@
 namespace FavLibrary
 {
 
-	enum class DllInterface BitPerVoxel {
+	enum RefClass DllInterface BitPerVoxel {
 		FourBit,
 		EightBit,
 		SixteenBit,
 	};
 
-	enum class DllInterface Compression {
+	enum RefClass DllInterface Compression {
 		None,
 		Zlib,
 		Base64,
 	};
 
 	template<typename tVoxelMapType>
-	class DllInterface VoxelMap {
+	RefClass DllInterface VoxelMap {
 
 	public:
 		VoxelMap(int size);
@@ -47,7 +47,7 @@ namespace FavLibrary
 		tVoxelMapType* data;
 	};
 
-	class DllInterface Structure {
+	RefClass DllInterface Structure {
 	public:
 		Structure(Grid* grid_);
 		Structure(int bit_per_voxel_);
@@ -69,16 +69,16 @@ namespace FavLibrary
 		void initColorMap();
 		void initColorMap(ColorMode color_mode_);
 		void setColorMode(ColorMode color_mode_);
-		void setColor(Point3D p_, class ColorRGB color_);
-		void setColor(Point3D p_, class ColorRGBA color_);
-		void setColor(Point3D p_, class ColorCMYK color_);
-		void setColor(Point3D p_, class ColorGrayScale color_);
-		void setColor(Point3D p_, class ColorGrayScale16 color_);
-		void setColor(int x_, int y_, int z_, class ColorRGB color_);
-		void setColor(int x_, int y_, int z_, class ColorRGBA color_);
-		void setColor(int x_, int y_, int z_, class ColorCMYK color_);
-		void setColor(int x_, int y_, int z_, class ColorGrayscale color_);
-		void setColor(int x_, int y_, int z_, class ColorGrayscale16 color_);
+		void setColor(Point3D p_, RefClass ColorRGB color_);
+		void setColor(Point3D p_, RefClass ColorRGBA color_);
+		void setColor(Point3D p_, RefClass ColorCMYK color_);
+		void setColor(Point3D p_, RefClass ColorGrayScale color_);
+		void setColor(Point3D p_, RefClass ColorGrayScale16 color_);
+		void setColor(int x_, int y_, int z_, RefClass ColorRGB color_);
+		void setColor(int x_, int y_, int z_, RefClass ColorRGBA color_);
+		void setColor(int x_, int y_, int z_, RefClass ColorCMYK color_);
+		void setColor(int x_, int y_, int z_, RefClass ColorGrayscale color_);
+		void setColor(int x_, int y_, int z_, RefClass ColorGrayscale16 color_);
 		void setColorRGB(Point3D p_, int r_, int g_, int b_);
 		void setColorRGBA(Point3D p_, int r_, int g_, int b_, int a_);
 		void setColorCMYK(Point3D p_, int c_, int m_, int cy_, int k_);

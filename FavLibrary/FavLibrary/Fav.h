@@ -23,7 +23,7 @@
 
 namespace FavLibrary
 {
-	class DllInterface Fav : public MetadataObject
+	RefClass DllInterface Fav : public MetadataObject
 	{
 	public:
 		Fav();
@@ -55,6 +55,7 @@ namespace FavLibrary
 		FavReader* fav_reader;
 		FavWriter* fav_writer;
 
+		Fav* pFav;
 	};
 
 }

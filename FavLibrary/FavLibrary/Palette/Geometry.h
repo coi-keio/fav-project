@@ -10,23 +10,26 @@
 
 namespace FavLibrary
 {
-	enum class DllInterface GeometryShape
+	enum RefClass DllInterface GeometryShape
 	{
 		cube,
 		sphere,
 		user_defined,
 	};
 
-	class DllInterface Scale : public Point3D
+	RefClass DllInterface Scale : public Point3D
 	{
 	public:
 		Scale();
 		Scale(double x, double y, double z);
 		~Scale();
+
+	private:
+		Scale* pScale;
 	};
 
 
-	class DllInterface Geometry : public FavPrimitive
+	RefClass DllInterface Geometry : public FavPrimitive
 	{
 	public:
 		Geometry();
@@ -54,10 +57,10 @@ namespace FavLibrary
 
 	private:
 		std::string userDefinedShape;
-
 		GeometryShape shape = GeometryShape::cube;
-
 		Scale scale;
+
+		Geometry* pGeometry;
 	};
 
 

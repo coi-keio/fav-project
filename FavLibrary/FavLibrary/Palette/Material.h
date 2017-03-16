@@ -12,13 +12,13 @@
 
 namespace FavLibrary
 {
-	enum class DllInterface MaterialType {
+	enum RefClass DllInterface MaterialType {
 		material_name = 0,
 		product_info = 1,
 		iso_standard = 2,
 	};
 
-	class DllInterface MaterialSpec {
+	RefClass DllInterface MaterialSpec {
 	public:
 		virtual void dammy() {};
 		MaterialSpec();
@@ -27,7 +27,7 @@ namespace FavLibrary
 		MaterialType materialType;
 	};
 
-	class DllInterface MaterialName : public MaterialSpec {
+	RefClass DllInterface MaterialName : public MaterialSpec {
 	public:
 
 		MaterialName(std::string name_);
@@ -38,7 +38,7 @@ namespace FavLibrary
 		std::string name;
 	};
 
-	class DllInterface ProductInfo : public MaterialSpec {
+	RefClass DllInterface ProductInfo : public MaterialSpec {
 	public:
 
 		ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
@@ -58,7 +58,7 @@ namespace FavLibrary
 		std::string url;
 	};
 
-	class DllInterface IsoStandard : public MaterialSpec {
+	RefClass DllInterface IsoStandard : public MaterialSpec {
 	public:
 
 		IsoStandard(std::string iso_id_, std::string iso_name_);
@@ -73,7 +73,7 @@ namespace FavLibrary
 		std::string iso_name;
 	};
 
-	class DllInterface Material : public FavPrimitive, MetadataObject
+	RefClass DllInterface Material : public FavPrimitive, MetadataObject
 	{
 	public:
 		Material();

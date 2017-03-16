@@ -16,7 +16,7 @@
 
 namespace FavLibrary
 {
-	class DllInterface Metadata {
+	RefClass DllInterface Metadata {
 
 	public:
 		Metadata();
@@ -45,7 +45,7 @@ namespace FavLibrary
 		std::string note;
 	};
 
-	class DllInterface MetadataObject
+	RefClass DllInterface MetadataObject
 	{
 	public:
 		Metadata getMetadata();

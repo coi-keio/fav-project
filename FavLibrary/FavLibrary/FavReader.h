@@ -36,9 +36,9 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-    class Fav;
+    RefClass Fav;
 
-	class DllInterface FavReader
+	RefClass DllInterface FavReader
 	{
 	public:
 		FavReader(Fav* fav_) { fav = fav_; };

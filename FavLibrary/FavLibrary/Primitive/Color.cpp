@@ -5,6 +5,9 @@ namespace FavLibrary
 	ColorBase::ColorBase() {}
 	ColorBase::~ColorBase() {}
 
+
+	ColorRGB::ColorRGB() {}
+	ColorRGB::~ColorRGB() {}
 	unsigned char ColorRGB::getR() { return this->r; }
 	void ColorRGB::setR(unsigned char r) { this->r = r; }
 
@@ -21,6 +24,9 @@ namespace FavLibrary
 		this->b = b;
 	}
 
+
+	ColorRGBA::ColorRGBA() {}
+	ColorRGBA::~ColorRGBA() {}
 	unsigned char ColorRGBA::getA() { return this->a; }
 	void ColorRGBA::setA(unsigned char a) { this->a = a; }
 
@@ -30,12 +36,21 @@ namespace FavLibrary
 		this->a = a;
 	}
 
+
+	ColorGrayscale::ColorGrayscale() {}
+	ColorGrayscale::~ColorGrayscale() {}
 	unsigned char ColorGrayscale::getGray() { return this->gray; }
 	void ColorGrayscale::setGray(unsigned char gray) { this->gray = gray; }
 
+
+	ColorGrayscale16::ColorGrayscale16() {}
+	ColorGrayscale16::~ColorGrayscale16() {}
 	unsigned short ColorGrayscale16::getGray() { return this->gray; }
 	void ColorGrayscale16::setGray(unsigned short gray) { this->gray = gray; }
 
+
+	ColorCMYK::ColorCMYK() {}
+	ColorCMYK::~ColorCMYK() {}
 	unsigned char ColorCMYK::getC() { return this->c; }
 	void ColorCMYK::setC(unsigned char c) { this->c = c; }
 

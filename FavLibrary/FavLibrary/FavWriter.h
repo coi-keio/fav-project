@@ -37,9 +37,9 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-    class Fav;
+    RefClass Fav;
 
-	class DllInterface FavWriter {
+	RefClass DllInterface FavWriter {
 	public:
 		FavWriter(Fav* fav_) { fav = fav_; };
 		bool write(const char* file_path, const char* version);

@@ -4,9 +4,13 @@
 
 using namespace System;
 
-namespace FavLibraryDotNet {
+namespace FavLibrary {
 
 	public ref class FavLibrary
+	{
+	};
+
+	public ref class AAA
 	{
 	};
 }
