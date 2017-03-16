@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	class FavPrimitive
+	class DllInterface FavPrimitive
 	{
 	public:
 		FavPrimitive(unsigned int id_);

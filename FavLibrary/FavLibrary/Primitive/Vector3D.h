@@ -2,11 +2,12 @@
 
 #include <math.h>
 #include "Point3D.h"
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
 
-	class Vector3D :
+	class DllInterface Vector3D :
 		public Point3D
 	{
 	public:

@@ -16,10 +16,11 @@
 #include "Metadata.h"
 #include "./Primitive/FavPrimitive.h"
 #include "./Primitive/Color.h"
+#include "FavSettings.h"
 
 namespace FavLibrary
 {
-	class VoxelInfo {
+	class DllInterface VoxelInfo {
 	public:
 		VoxelInfo();
 		VoxelInfo(unsigned int id_);
@@ -32,14 +33,14 @@ namespace FavLibrary
 		unsigned int identifier;
 	};
 
-	class GeometryInfo : public VoxelInfo {
+	class DllInterface GeometryInfo : public VoxelInfo {
 	public:
 		GeometryInfo();
 		GeometryInfo(unsigned int id_);
 		~GeometryInfo();
 	};
 
-	class MaterialInfo : public VoxelInfo {
+	class DllInterface MaterialInfo : public VoxelInfo {
 	public:
 		MaterialInfo();
 		MaterialInfo(unsigned int id_);
@@ -54,7 +55,7 @@ namespace FavLibrary
 	};
 
 
-	class Voxel : public FavPrimitive, MetadataObject
+	class DllInterface Voxel : public FavPrimitive, MetadataObject
 	{
 	public:
 		Voxel();

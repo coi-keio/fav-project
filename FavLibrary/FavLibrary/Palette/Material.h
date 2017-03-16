@@ -8,16 +8,17 @@
 #include <vector>
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	enum MaterialType {
+	enum class DllInterface MaterialType {
 		material_name = 0,
 		product_info = 1,
 		iso_standard = 2,
 	};
 
-	class MaterialSpec {
+	class DllInterface MaterialSpec {
 	public:
 		virtual void dammy() {};
 		MaterialSpec();
@@ -26,7 +27,7 @@ namespace FavLibrary
 		MaterialType materialType;
 	};
 
-	class MaterialName : public MaterialSpec {
+	class DllInterface MaterialName : public MaterialSpec {
 	public:
 
 		MaterialName(std::string name_);
@@ -37,7 +38,7 @@ namespace FavLibrary
 		std::string name;
 	};
 
-	class ProductInfo : public MaterialSpec {
+	class DllInterface ProductInfo : public MaterialSpec {
 	public:
 
 		ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
@@ -57,7 +58,7 @@ namespace FavLibrary
 		std::string url;
 	};
 
-	class IsoStandard : public MaterialSpec {
+	class DllInterface IsoStandard : public MaterialSpec {
 	public:
 
 		IsoStandard(std::string iso_id_, std::string iso_name_);
@@ -72,7 +73,7 @@ namespace FavLibrary
 		std::string iso_name;
 	};
 
-	class Material : public FavPrimitive, MetadataObject
+	class DllInterface Material : public FavPrimitive, MetadataObject
 	{
 	public:
 		Material();

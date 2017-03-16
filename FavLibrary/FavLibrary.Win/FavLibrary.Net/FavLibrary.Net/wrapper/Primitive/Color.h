@@ -13,7 +13,6 @@ namespace FavLibraryDotNet
 		~ColorBase();
 		!ColorBase();
 	private:
-		ColorBase_c* ColorBase_c;
 	};
 
 	public ref class ColorRGB : public ColorBase

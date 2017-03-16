@@ -6,26 +6,27 @@
 #include <list>
 #include <vector>
 #include "../Primitive/Point3D.h"
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
 
-	class Unit : public Point3D
+	class DllInterface Unit : public Point3D
 	{
 
 	};
 
-	class Dimension : public Point3D
+	class DllInterface Dimension : public Point3D
 	{
 
 	};
 
-	class Origin : public Point3D
+	class DllInterface Origin : public Point3D
 	{
 
 	};
 
-	class Grid
+	class DllInterface Grid
 	{
 	public:
 		Unit getUnit();

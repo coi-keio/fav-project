@@ -9,6 +9,7 @@
 //#ifndef __FavLibrary__FavWriter__
 //#define __FavLibrary__FavWriter__
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <string>
@@ -24,6 +25,7 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
+#include "FavSettings.h"
 #include "Metadata.h"
 #include "Voxel.h"
 #include "./Palette/Palette.h"
@@ -33,12 +35,11 @@
 
 using namespace xercesc;
 
-
 namespace FavLibrary
 {
     class Fav;
 
-	class FavWriter {
+	class DllInterface FavWriter {
 	public:
 		FavWriter(Fav* fav_) { fav = fav_; };
 		bool write(const char* file_path, const char* version);

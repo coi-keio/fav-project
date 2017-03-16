@@ -1,6 +1,6 @@
-#include "Color.h"
+#include "../../../../../FavLibrary/Primitive/Color.h"
 
-namespace FavLibraryDotNet
+namespace FavLibrary
 {
 	ColorBase::ColorBase() { ColorBase_c = new FavLibrary::ColorBase(); }
 	ColorBase::~ColorBase() { this->!ColorBase(); }

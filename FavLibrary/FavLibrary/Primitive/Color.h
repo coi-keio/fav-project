@@ -4,7 +4,7 @@
 
 namespace FavLibrary
 {
-	enum ColorMode
+	enum class DllInterface ColorMode
 	{
 		None,
 		Grayscale,
@@ -14,7 +14,7 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	DllExport class ColorBase
+	class DllInterface ColorBase
 	{
 	public:
 		ColorBase();
@@ -23,10 +23,10 @@ namespace FavLibrary
 		ColorMode colorMode;
 	};
 
-	DllExport class ColorRGB : public ColorBase
+	class DllInterface ColorRGB : public ColorBase
 	{
 	public:
-		ColorMode colorMode = RGB;//ここconstにするとcompile errorが出てた。要確認
+		ColorMode colorMode = ColorMode::RGB;//ここconstにするとcompile errorが出てた。要確認
 
 		unsigned char getR();
 		void setR(unsigned char r);
@@ -45,10 +45,10 @@ namespace FavLibrary
 		unsigned char b;
 	};
 
-	DllExport class ColorRGBA : public ColorRGB
+	class DllInterface ColorRGBA : public ColorRGB
 	{
 	public:
-		ColorMode colorMode = RGBA;
+		ColorMode colorMode = ColorMode::RGBA;
 
 		unsigned char getA();
 		void setA(unsigned char a);
@@ -59,10 +59,10 @@ namespace FavLibrary
 		unsigned char a;
 	};
 
-	DllExport class ColorGrayscale : public ColorBase
+	class DllInterface ColorGrayscale : public ColorBase
 	{
 	public:
-		ColorMode colorMode = Grayscale;
+		ColorMode colorMode = ColorMode::Grayscale;
 
 		unsigned char getGray();
 		void setGray(unsigned char gray);
@@ -71,10 +71,10 @@ namespace FavLibrary
 		unsigned char gray;
 	};
 
-	DllExport class ColorGrayscale16 : public ColorGrayscale
+	class DllInterface ColorGrayscale16 : public ColorGrayscale
 	{
 	public:
-		ColorMode colorMode = Grayscale16;
+		ColorMode colorMode = ColorMode::Grayscale16;
 
 		unsigned short getGray();
 		void setGray(unsigned short gray);
@@ -83,10 +83,10 @@ namespace FavLibrary
 		unsigned short gray;
 	};
 
-	DllExport class ColorCMYK : public ColorBase
+	class DllInterface ColorCMYK : public ColorBase
 	{
 	public:
-		ColorMode colorMode = CMYK;
+		ColorMode colorMode = ColorMode::CMYK;
 
 		unsigned char getC();
 		void setC(unsigned char c);

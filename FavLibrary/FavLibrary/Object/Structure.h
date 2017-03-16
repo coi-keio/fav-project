@@ -16,24 +16,25 @@
 #include "../Primitive/Point3D.h"
 #include "../Primitive/Color.h"
 #include "Grid.h"
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
 
-	enum class BitPerVoxel {
+	enum class DllInterface BitPerVoxel {
 		FourBit,
 		EightBit,
 		SixteenBit,
 	};
 
-	enum class Compression {
+	enum class DllInterface Compression {
 		None,
 		Zlib,
 		Base64,
 	};
 
 	template<typename tVoxelMapType>
-	class VoxelMap {
+	class DllInterface VoxelMap {
 
 	public:
 		VoxelMap(int size);
@@ -46,7 +47,7 @@ namespace FavLibrary
 		tVoxelMapType* data;
 	};
 
-	class Structure {
+	class DllInterface Structure {
 	public:
 		Structure(Grid* grid_);
 		Structure(int bit_per_voxel_);

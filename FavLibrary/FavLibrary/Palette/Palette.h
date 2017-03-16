@@ -15,11 +15,12 @@
 #include <map>
 #include "Geometry.h"
 #include "Material.h"
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
 
-	class Palette {
+	class DllInterface Palette {
 
 	public:
 		Palette();

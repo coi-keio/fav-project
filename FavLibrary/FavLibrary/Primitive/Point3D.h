@@ -1,8 +1,9 @@
 #pragma once
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	class Point3D
+	class DllInterface Point3D
 	{
 	public:
 		Point3D();

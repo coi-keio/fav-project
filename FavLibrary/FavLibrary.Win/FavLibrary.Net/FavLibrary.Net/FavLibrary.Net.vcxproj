@@ -139,23 +139,6 @@
     <ClInclude Include="FavLibrary.Net.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="wrapper\Exception\FavException.h" />
-    <ClInclude Include="wrapper\Fav.h" />
-    <ClInclude Include="wrapper\FavReader.h" />
-    <ClInclude Include="wrapper\FavSettings.h" />
-    <ClInclude Include="wrapper\FavWriter.h" />
-    <ClInclude Include="wrapper\Metadata.h" />
-    <ClInclude Include="wrapper\Object\Grid.h" />
-    <ClInclude Include="wrapper\Object\Object.h" />
-    <ClInclude Include="wrapper\Object\Structure.h" />
-    <ClInclude Include="wrapper\Palette\Geometry.h" />
-    <ClInclude Include="wrapper\Palette\Material.h" />
-    <ClInclude Include="wrapper\Palette\Palette.h" />
-    <ClInclude Include="wrapper\Primitive\Color.h" />
-    <ClInclude Include="wrapper\Primitive\FavPrimitive.h" />
-    <ClInclude Include="wrapper\Primitive\Point3D.h" />
-    <ClInclude Include="wrapper\Primitive\Vector3D.h" />
-    <ClInclude Include="wrapper\Voxel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
@@ -166,23 +149,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="wrapper\Exception\FavException.cpp" />
-    <ClCompile Include="wrapper\Fav.cpp" />
-    <ClCompile Include="wrapper\FavReader.cpp" />
-    <ClCompile Include="wrapper\FavWriter.cpp" />
-    <ClCompile Include="wrapper\main.cpp" />
-    <ClCompile Include="wrapper\Metadata.cpp" />
-    <ClCompile Include="wrapper\Object\Grid.cpp" />
-    <ClCompile Include="wrapper\Object\Object.cpp" />
-    <ClCompile Include="wrapper\Object\Structure.cpp" />
-    <ClCompile Include="wrapper\Palette\Geometry.cpp" />
-    <ClCompile Include="wrapper\Palette\Material.cpp" />
-    <ClCompile Include="wrapper\Palette\Palette.cpp" />
     <ClCompile Include="wrapper\Primitive\Color.cpp" />
-    <ClCompile Include="wrapper\Primitive\FavPrimitive.cpp" />
-    <ClCompile Include="wrapper\Primitive\Point3D.cpp" />
-    <ClCompile Include="wrapper\Primitive\Vector3D.cpp" />
-    <ClCompile Include="wrapper\Voxel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

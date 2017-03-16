@@ -6,17 +6,18 @@
 #include <vector>
 #include "../Primitive/Point3D.h"
 #include "../Primitive/FavPrimitive.h"
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	enum GeometryShape
+	enum class DllInterface GeometryShape
 	{
 		cube,
 		sphere,
 		user_defined,
 	};
 
-	class Scale : public Point3D
+	class DllInterface Scale : public Point3D
 	{
 	public:
 		Scale();
@@ -25,7 +26,7 @@ namespace FavLibrary
 	};
 
 
-	class Geometry : public FavPrimitive
+	class DllInterface Geometry : public FavPrimitive
 	{
 	public:
 		Geometry();
@@ -54,7 +55,7 @@ namespace FavLibrary
 	private:
 		std::string userDefinedShape;
 
-		GeometryShape shape = cube;
+		GeometryShape shape = GeometryShape::cube;
 
 		Scale scale;
 	};

@@ -1,5 +1,5 @@
 #ifdef FavLibraryExport
-#define DllExport extern "C" __declspec(dllexport) 
+#define DllInterface __declspec(dllexport) 
 #else
-#define DllExport __declspec(dllimport) 
+#define DllInterface __declspec(dllimport) 
 #endif 

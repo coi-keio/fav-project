@@ -9,6 +9,8 @@
 #ifndef __FavLibrary__FavReader__
 #define __FavLibrary__FavReader__
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <string>
 #include <stdlib.h>
@@ -23,6 +25,7 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
+#include "FavSettings.h"
 #include "Metadata.h"
 #include "Voxel.h"
 #include "./Palette/Palette.h"
@@ -31,12 +34,11 @@
 
 using namespace xercesc;
 
-
 namespace FavLibrary
 {
     class Fav;
 
-	class FavReader 
+	class DllInterface FavReader
 	{
 	public:
 		FavReader(Fav* fav_) { fav = fav_; };

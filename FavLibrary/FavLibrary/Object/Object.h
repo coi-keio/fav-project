@@ -13,11 +13,12 @@
 #include "Grid.h"
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
 
-	class Object : public FavPrimitive, MetadataObject
+	class DllInterface Object : public FavPrimitive, MetadataObject
 	{
 	public:
 		Object();
