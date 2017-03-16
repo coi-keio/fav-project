@@ -6,8 +6,7 @@
 
 namespace FavLibrary
 {
-
-	RefClass DllInterface Vector3D : public Point3D
+	RefClass Vector3D : public Point3D
 	{
 	public:
 		Vector3D();

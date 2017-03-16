@@ -13,7 +13,7 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	RefClass DllInterface ColorBase
+	RefClass ColorBase
 	{
 	public:
 		ColorBase();
@@ -28,7 +28,7 @@ namespace FavLibrary
 #endif
 	};
 
-	RefClass DllInterface ColorRGB : public ColorBase
+	RefClass ColorRGB : public ColorBase
 	{
 	public:
 		ColorRGB();
@@ -57,7 +57,7 @@ namespace FavLibrary
 #endif
 	};
 
-	RefClass DllInterface ColorRGBA : public ColorRGB
+	RefClass ColorRGBA : public ColorRGB
 	{
 	public:
 		ColorRGBA();
@@ -78,7 +78,7 @@ namespace FavLibrary
 #endif
 	};
 
-	RefClass DllInterface ColorGrayscale : public ColorBase
+	RefClass ColorGrayscale : public ColorBase
 	{
 	public:
 		ColorGrayscale();
@@ -97,7 +97,7 @@ namespace FavLibrary
 #endif
 	};
 
-	RefClass DllInterface ColorGrayscale16 : public ColorGrayscale
+	RefClass ColorGrayscale16 : public ColorGrayscale
 	{
 	public:
 		ColorGrayscale16();
@@ -116,7 +116,7 @@ namespace FavLibrary
 #endif
 	};
 
-	RefClass DllInterface ColorCMYK : public ColorBase
+	RefClass ColorCMYK : public ColorBase
 	{
 	public:
 		ColorCMYK();

@@ -7,7 +7,7 @@
 
 namespace FavLibrary
 {
-	enum RefClass DllInterface FavExceptionCode
+	enum RefClass FavExceptionCode
 	{
 		Undefined,
 		// ïâÇÃêîÇÕéwíËÇ≈Ç´Ç‹ÇπÇÒÅD
@@ -15,7 +15,7 @@ namespace FavLibrary
 
 	};
 
-	RefClass DllInterface FavException : public std::exception
+	RefClass FavException : public std::exception
 	{
 	protected:
 		std::exception innerException;
@@ -23,7 +23,7 @@ namespace FavLibrary
 		FavExceptionCode code;
 	};
 
-	RefClass DllInterface FavInvalidArgumentException : public FavException, std::invalid_argument
+	RefClass FavInvalidArgumentException : public FavException, std::invalid_argument
 	{
 	public:
 	};

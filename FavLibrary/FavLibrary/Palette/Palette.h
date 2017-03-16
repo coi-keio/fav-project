@@ -20,7 +20,7 @@
 namespace FavLibrary
 {
 
-	RefClass DllInterface Palette {
+	RefClass Palette {
 
 	public:
 		Palette();

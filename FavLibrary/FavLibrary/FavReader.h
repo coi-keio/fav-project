@@ -38,7 +38,7 @@ namespace FavLibrary
 {
     RefClass Fav;
 
-	RefClass DllInterface FavReader
+	RefClass FavReader
 	{
 	public:
 		FavReader(Fav* fav_) { fav = fav_; };

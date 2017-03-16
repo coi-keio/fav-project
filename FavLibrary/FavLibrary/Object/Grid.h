@@ -11,22 +11,22 @@
 namespace FavLibrary
 {
 
-	RefClass DllInterface Unit : public Point3D
+	RefClass Unit : public Point3D
 	{
 
 	};
 
-	RefClass DllInterface Dimension : public Point3D
+	RefClass Dimension : public Point3D
 	{
 
 	};
 
-	RefClass DllInterface Origin : public Point3D
+	RefClass Origin : public Point3D
 	{
 
 	};
 
-	RefClass DllInterface Grid
+	RefClass Grid
 	{
 	public:
 		Unit getUnit();

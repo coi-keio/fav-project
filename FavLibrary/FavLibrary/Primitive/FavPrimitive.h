@@ -5,7 +5,7 @@
 
 namespace FavLibrary
 {
-	RefClass DllInterface FavPrimitive
+	RefClass FavPrimitive
 	{
 	public:
 		FavPrimitive(unsigned int id_);

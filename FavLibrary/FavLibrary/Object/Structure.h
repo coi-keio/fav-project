@@ -21,20 +21,20 @@
 namespace FavLibrary
 {
 
-	enum RefClass DllInterface BitPerVoxel {
+	enum RefClass BitPerVoxel {
 		FourBit,
 		EightBit,
 		SixteenBit,
 	};
 
-	enum RefClass DllInterface Compression {
+	enum RefClass Compression {
 		None,
 		Zlib,
 		Base64,
 	};
 
 	template<typename tVoxelMapType>
-	RefClass DllInterface VoxelMap {
+	RefClass VoxelMap {
 
 	public:
 		VoxelMap(int size);
@@ -47,7 +47,7 @@ namespace FavLibrary
 		tVoxelMapType* data;
 	};
 
-	RefClass DllInterface Structure {
+	RefClass Structure {
 	public:
 		Structure(Grid* grid_);
 		Structure(int bit_per_voxel_);

@@ -23,7 +23,7 @@
 
 namespace FavLibrary
 {
-	RefClass DllInterface Fav : public MetadataObject
+	RefClass Fav : public MetadataObject
 	{
 	public:
 		Fav();

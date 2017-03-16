@@ -2,17 +2,17 @@
 
 #define RefEnum public enum class
 #define RefClass public ref class
-#define DllInterface 
+//#define 
 
 #else ////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define RefEnum enum class
-#define RefClass class
+#define RefEnum enum class __declspec(dllexport) 
+#define RefClass class __declspec(dllexport) 
 
-#ifdef FavLibraryExport
-#define DllInterface __declspec(dllexport) 
-#else
-#define DllInterface __declspec(dllimport) 
-#endif 
+//#ifdef FavLibraryExport
+//#define __declspec(dllexport) 
+//#else
+//#define __declspec(dllimport) 
+//#endif 
 
 #endif  //////////////////////////////////////////////////////////////////////////////////////////////

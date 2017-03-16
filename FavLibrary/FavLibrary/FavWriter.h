@@ -39,7 +39,7 @@ namespace FavLibrary
 {
     RefClass Fav;
 
-	RefClass DllInterface FavWriter {
+	RefClass FavWriter {
 	public:
 		FavWriter(Fav* fav_) { fav = fav_; };
 		bool write(const char* file_path, const char* version);

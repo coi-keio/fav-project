@@ -18,7 +18,7 @@
 namespace FavLibrary
 {
 
-	RefClass DllInterface Object : public FavPrimitive, MetadataObject
+	RefClass Object : public FavPrimitive, MetadataObject
 	{
 	public:
 		Object();

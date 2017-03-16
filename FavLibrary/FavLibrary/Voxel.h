@@ -20,7 +20,7 @@
 
 namespace FavLibrary
 {
-	RefClass DllInterface VoxelInfo {
+	RefClass VoxelInfo {
 	public:
 		VoxelInfo();
 		VoxelInfo(unsigned int id_);
@@ -33,14 +33,14 @@ namespace FavLibrary
 		unsigned int identifier;
 	};
 
-	RefClass DllInterface GeometryInfo : public VoxelInfo {
+	RefClass GeometryInfo : public VoxelInfo {
 	public:
 		GeometryInfo();
 		GeometryInfo(unsigned int id_);
 		~GeometryInfo();
 	};
 
-	RefClass DllInterface MaterialInfo : public VoxelInfo {
+	RefClass MaterialInfo : public VoxelInfo {
 	public:
 		MaterialInfo();
 		MaterialInfo(unsigned int id_);
@@ -55,7 +55,7 @@ namespace FavLibrary
 	};
 
 
-	RefClass DllInterface Voxel : public FavPrimitive, MetadataObject
+	RefClass Voxel : public FavPrimitive, MetadataObject
 	{
 	public:
 		Voxel();

@@ -10,14 +10,14 @@
 
 namespace FavLibrary
 {
-	enum RefClass DllInterface GeometryShape
+	enum RefClass GeometryShape
 	{
 		cube,
 		sphere,
 		user_defined,
 	};
 
-	RefClass DllInterface Scale : public Point3D
+	RefClass Scale : public Point3D
 	{
 	public:
 		Scale();
@@ -29,7 +29,7 @@ namespace FavLibrary
 	};
 
 
-	RefClass DllInterface Geometry : public FavPrimitive
+	RefClass Geometry : public FavPrimitive
 	{
 	public:
 		Geometry();
