@@ -41,25 +41,24 @@ namespace FavLibrary
 	RefClass FavReader
 	{
 	public:
-		FavReader(Fav* fav_) { fav = fav_; };
+		FavReader(Fav* fav_);
 		bool read(const char* file_path);
 
 	private:
-		DOMNodeList* getElements(DOMElement* elem, const char *tagName);
-		std::string getNodeValueString(DOMNode* node_);
-		int getNodeValueInt(DOMNode* node_);
-		double getNodeValueDouble(DOMNode* node_);
-
-		std::string getAttribute(DOMElement* element_, const char *tagName);
-		int getElementInt(DOMElement* elem, const char *tagName);
-		double getElementDouble(DOMElement* elem, const char *tagName);
-		std::string getElementString(DOMElement* elem, const char *tagName);
+        
+        int          getNodeValueInt   (DOMNode* node_);
+        double       getNodeValueDouble(DOMNode* node_);
+		std::string  getNodeValueString(DOMNode* node_);
+		int          getElementInt     (DOMElement* elem, const char *tagName);
+		double       getElementDouble  (DOMElement* elem, const char *tagName);
+		std::string  getElementString  (DOMElement* elem, const char *tagName);
+        DOMNodeList* getElements       (DOMElement* elem, const char *tagName);
+        std::string  getAttribute      (DOMElement* elem, const char *tagName);
 
 		void readMetaData(DOMNodeList* metadata_node_);
-		void readPalette(DOMNodeList* palette_node_);
-		void readVoxel(DOMNodeList* voxel_node_);
-		void readObject(DOMNodeList* object_node_);
-
+		void readPalette (DOMNodeList* palette_node_);
+		void readVoxel   (DOMNodeList* voxel_node_);
+		void readObject  (DOMNodeList* object_node_);
 		void readGrid();
 		void readStructure();
 

@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
     FavLibrary::Fav fav_test;
     fav_test.read("/Users/atsmsmr/Downloads/FAVSample_v1_(1).fav");
 //    fav_test.read("/Users/atsmsmr/Downloads/testomato200_base64.xml");
-    fav_test.write("/Users/atsmsmr/Downloads/testomato200.xml", "1.0");
+    fav_test.write("/Users/atsmsmr/Downloads/testomato200.xml");
 
     return 0;
 }

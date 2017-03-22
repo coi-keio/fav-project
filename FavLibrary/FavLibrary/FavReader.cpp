@@ -25,6 +25,44 @@ using namespace xercesc;
 namespace FavLibrary
 {
 
+    FavReader::FavReader(Fav* fav_) {
+        fav = fav_;
+    };
+    
+    bool FavReader::read(const char* file_path) {
+        
+        // TODO: write later
+        // エラー処理
+        // Xerces-C++を初期化する
+        try {
+            XMLPlatformUtils::Initialize();
+        }
+        catch (...) {
+            //        std::cout << "Xerces-C++の初期化に失敗しました。" << std::endl;
+            return 1;
+        }
+        
+        XercesDOMParser *parser = new XercesDOMParser;
+        parser->parse(file_path);
+        
+        DOMDocument *doc  = parser->getDocument();
+        DOMElement  *root = doc->getDocumentElement();
+        
+        DOMNodeList* metadata_list = getElements(root, "metadata");
+        DOMNodeList* palette_list  = getElements(root, "palette" );
+        DOMNodeList* voxel_list    = getElements(root, "voxel"   );
+        DOMNodeList* object_list   = getElements(root, "object"  );
+        
+        readMetaData(metadata_list);
+        readPalette (palette_list);
+        readVoxel   (voxel_list);
+        readObject  (object_list);
+        
+        XMLPlatformUtils::Terminate();
+        
+        return 1;
+    }
+
     // FIXME: revise later
     // この関数は、各タグの読み込み関数の内部で仕様するように変更する
 	void FavReader::readMetaData(xercesc_3_1::DOMNodeList *metadata_node_) {
@@ -407,40 +445,6 @@ namespace FavLibrary
 			fav->addObject(current_object);
 		}
 	}
-    
-    bool FavReader::read(const char* file_path) {
-        
-        // TODO: write later
-        // エラー処理
-        // Xerces-C++を初期化する
-        try {
-            XMLPlatformUtils::Initialize();
-        }
-        catch (...) {
-            //        std::cout << "Xerces-C++の初期化に失敗しました。" << std::endl;
-            return 1;
-        }
-        
-        XercesDOMParser *parser = new XercesDOMParser;
-        parser->parse(file_path);
-        
-        DOMDocument *doc  = parser->getDocument();
-        DOMElement  *root = doc->getDocumentElement();
-        
-        DOMNodeList* metadata_list = getElements(root, "metadata");
-        DOMNodeList* palette_list  = getElements(root, "palette" );
-        DOMNodeList* voxel_list    = getElements(root, "voxel"   );
-        DOMNodeList* object_list   = getElements(root, "object"  );
-        
-        readMetaData(metadata_list);
-        readPalette (palette_list);
-        readVoxel   (voxel_list);
-        readObject  (object_list);
-        
-        XMLPlatformUtils::Terminate();
-        
-        return 1;
-    }
     
     DOMNodeList* FavReader::getElements(DOMElement* element_, const char *tag_name_)
     {
