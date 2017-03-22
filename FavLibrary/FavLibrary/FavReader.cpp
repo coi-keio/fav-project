@@ -14,7 +14,6 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 
-
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
@@ -26,137 +25,29 @@ using namespace xercesc;
 namespace FavLibrary
 {
 
-	bool FavReader::read(const char* file_path) {
-
-		// Xerces-C++を初期化する
-		try {
-			XMLPlatformUtils::Initialize();
-		}
-		catch (...) {
-			//        std::cout << "Xerces-C++の初期化に失敗しました。" << std::endl;
-			return 1;
-		}
-
-		XercesDOMParser *parser = new XercesDOMParser;
-		parser->parse(file_path);
-
-		DOMDocument *doc = parser->getDocument();
-		DOMElement *root = doc->getDocumentElement();
-
-		DOMNodeList* metadata_list = getElements(root, "metadata");
-		readMetaData(metadata_list);
-
-		DOMNodeList* palette_list = getElements(root, "palette");
-		readPalette(palette_list);
-
-		DOMNodeList* voxel_list = getElements(root, "voxel");
-		readVoxel(voxel_list);
-
-		DOMNodeList* object_list = getElements(root, "object");
-		readObject(object_list);
-
-		XMLPlatformUtils::Terminate();
-
-		return 1;
-	}
-
-	DOMNodeList* FavReader::getElements(DOMElement* element_, const char *tag_name_)
-	{
-		char* tag_name = (char *)tag_name_;
-		XMLCh* attributeName = XMLString::transcode(tag_name);
-		DOMNodeList* node_list = element_->getElementsByTagName(attributeName);
-		XMLString::release(&attributeName);
-
-		return node_list;
-	}
-
-	std::string FavReader::getAttribute(DOMElement* element_, const char *tag_name_)
-	{
-		char* tag_name = (char *)tag_name_;
-		XMLCh* attributeName = XMLString::transcode(tag_name);
-		const XMLCh* attribute_value = element_->getAttribute(attributeName);
-		char* attribute_value_str = XMLString::transcode(attribute_value);
-		std::string ret = std::string(attribute_value_str);
-		XMLString::release(&attribute_value_str);
-
-		return ret;
-	}
-
-	int FavReader::getNodeValueInt(DOMNode* node_)
-	{
-		const XMLCh* node_value = node_->getNodeValue();
-		char* node_value_str = XMLString::transcode(node_value);
-		int ret = atoi(node_value_str);
-		XMLString::release(&node_value_str);
-		return ret;
-	}
-
-	double FavReader::getNodeValueDouble(DOMNode* node_)
-	{
-		const XMLCh* node_value = node_->getNodeValue();
-		char* node_value_str = XMLString::transcode(node_value);
-		double ret = atof(node_value_str);
-		XMLString::release(&node_value_str);
-		return ret;
-	}
-
-	std::string FavReader::getNodeValueString(DOMNode* node_)
-	{
-		const XMLCh* node_value = node_->getNodeValue();
-		char* node_value_str = XMLString::transcode(node_value);
-		std::string ret = std::string(node_value_str);
-		XMLString::release(&node_value_str);
-		return ret;
-	}
-
-	int FavReader::getElementInt(DOMElement* elem, const char *tag_name_)
-	{
-		char* tag_name = (char *)tag_name_;
-		DOMNodeList* node_list = getElements(elem, tag_name);
-		const XMLCh* node_value = ((node_list->item(0))->getFirstChild())->getNodeValue();
-		char* node_value_str = XMLString::transcode(node_value);
-		int ret = atoi(node_value_str);
-		XMLString::release(&node_value_str);
-		return ret;
-	}
-
-	double FavReader::getElementDouble(DOMElement* elem, const char *tag_name_)
-	{
-		char* tag_name = (char *)tag_name_;
-		DOMNodeList* node_list = getElements(elem, tag_name);
-		const XMLCh* node_value = ((node_list->item(0))->getFirstChild())->getNodeValue();
-		char* node_value_str = XMLString::transcode(node_value);
-		double ret = atof(node_value_str);
-		XMLString::release(&node_value_str);
-		return ret;
-	}
-
-	std::string FavReader::getElementString(DOMElement* elem, const char *tag_name_)
-	{
-		char* tag_name = (char *)tag_name_;
-		DOMNodeList* node_list = getElements(elem, tag_name);
-		const XMLCh* node_value = ((node_list->item(0))->getFirstChild())->getNodeValue();
-		char* node_value_str = XMLString::transcode(node_value);
-		std::string ret = std::string(node_value_str);
-		XMLString::release(&node_value_str);
-		return ret;
-	}
-
-
+    // FIXME: revise later
+    // この関数は、各タグの読み込み関数の内部で仕様するように変更する
 	void FavReader::readMetaData(xercesc_3_1::DOMNodeList *metadata_node_) {
 
 		int number_of_metadata = int(metadata_node_->getLength());
 
-		for (int i = 0; i < number_of_metadata; ++i) {
+		for (int i=0; i<number_of_metadata; ++i) {
 
 			DOMNode *current_metadata = metadata_node_->item(i);
 			DOMNode *parent_node = dynamic_cast<DOMElement*>(current_metadata)->getParentNode();
 
 			if (XMLString::transcode(parent_node->getNodeName()) == std::string("fav")) {
-				fav->setMetadataTitle(getElementString(dynamic_cast<DOMElement*>(current_metadata), "title"));
-				fav->setMetadataAuthor(getElementString(dynamic_cast<DOMElement*>(current_metadata), "author"));
+                // TODO: check detail
+                // metadataのid はCDATAにしなくていいのか
+                fav->setMetadataId     (getElementString(dynamic_cast<DOMElement*>(current_metadata), "id"   ));
+				fav->setMetadataTitle  (getElementString(dynamic_cast<DOMElement*>(current_metadata), "title"));
+				fav->setMetadataAuthor (getElementString(dynamic_cast<DOMElement*>(current_metadata), "author"));
 				fav->setMetadataLicense(getElementString(dynamic_cast<DOMElement*>(current_metadata), "license"));
-			}
+            
+            }else{
+                //TODO: write later
+                // fav以外の階層でのmetadataの読み込み
+            }
 
 		}
 
@@ -164,44 +55,49 @@ namespace FavLibrary
 
 	void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_) {
 
-		// Load geometries
+		// load geometries
 		DOMNodeList* geometry_list = getElements(dynamic_cast<DOMElement*>(palette_list_->item(0)), "geometry");
 		int number_of_geometry = int(geometry_list->getLength());
 
-		for (int i = 0; i < number_of_geometry; ++i) {
+		for (int i=0; i<number_of_geometry; ++i) {
 
-			//load attributes
-			int index = std::stoi(getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"));
-			std::string name = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name");
-			Geometry current_geometry = Geometry(name);
-			current_geometry.setId(index);
+			std::string  id          =     getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"   );
+			std::string  name        =     getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name" );
+            std::string  shape       = getElementString(dynamic_cast<DOMElement*>(geometry_list->item(i)), "shape");
+            DOMNodeList* scale_node  =      getElements(dynamic_cast<DOMElement*>(geometry_list->item(i)), "scale");
+            
+            Geometry current_geometry = Geometry(std::stoi(id), name);
+            
+            // FIXME: revise later
+            // ここは、条件分岐で、cube,やuserdefinedなどで処理
+			current_geometry.setShape(GeometryShape::cube);
+            
 
-			std::string shape = getElementString(dynamic_cast<DOMElement*>(geometry_list->item(i)), "shape");
-			current_geometry.setShape(GeometryShape::cube);// needs fix
-
-			DOMNodeList* scale_node = getElements(dynamic_cast<DOMElement*>(geometry_list->item(i)), "scale");
 			if (scale_node->getLength() > 0) {
 				double x = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "x");
 				double y = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "y");
 				double z = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "z");
 				current_geometry.setScale(x, y, z);
 			}
-
+            
+            //TODO: check later
+            // ここはポインタ渡しじゃなくて良いんだっけ？一応、大丈夫そうだけど、バグが生じないか確認。
 			fav->palette.addGeometry(current_geometry);
 		}
-		//    fav->palette.setNumberOfGeometries(number_of_geometry);
 
-			// load materials
+        // load materials
 		DOMNodeList* material_list = getElements(dynamic_cast<DOMElement*>(palette_list_->item(0)), "material");
 		int number_of_material = int(material_list->getLength());
 
 		for (int i = 0; i < number_of_material; ++i) {
 			//load attributes
-			int index = std::stoi(getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"));
+			
+            std::string id   = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "id"  );
 			std::string name = getAttribute(dynamic_cast<DOMElement*>(geometry_list->item(i)), "name");
-			Material current_material = Material(name);
-			current_material.setId(index);
-
+            
+			Material current_material = Material(std::stoi(id), name);
+            
+            // FIXME: revise later
 			// debug required for multiple material_name case
 			DOMNodeList* material_name_list = getElements(dynamic_cast<DOMElement*>(material_list->item(i)), "material_name");
 			int number_of_material_name = int(material_name_list->getLength());
@@ -213,12 +109,13 @@ namespace FavLibrary
 			// load product_info
 			DOMNodeList* product_info_list = getElements(dynamic_cast<DOMElement*>(material_list->item(i)), "product_info");
 			int number_of_product_info = int(product_info_list->getLength());
-
+            
+            // FIXME: reveise later
+            // 情報がかけている場合の処理
 			for (int j = 0; j < number_of_product_info; ++j) {
 				std::string manufacturer = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "manufacturer");
 				std::string product_name = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "product_name");
-				std::string url = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "url");
-
+				std::string url          = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "url");
 				current_material.addProductInfo(manufacturer, product_name, url);
 			}
 
@@ -226,18 +123,16 @@ namespace FavLibrary
 			DOMNodeList* iso_standard_list = getElements(dynamic_cast<DOMElement*>(material_list->item(i)), "iso_standard");
 			int number_of_iso_standard = int(iso_standard_list->getLength());
 
+            // FIXME: reveise later
+            // 情報がかけている場合の処理
 			for (int j = 0; j < number_of_iso_standard; ++j) {
-				std::string iso_id = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_id");
+				std::string iso_id   = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_id");
 				std::string iso_name = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_name");
-
 				current_material.addIsoStandard(iso_id, iso_name);
 			}
 
 			fav->palette.addMaterial(current_material);
 		}
-
-		//    fav->palette.setNumberOfMaterials(number_of_material);
-
 	}
 
 	void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_) {
@@ -245,28 +140,31 @@ namespace FavLibrary
 		int number_of_voxels = int(voxel_list_->getLength());
 		for (int i = 0; i < number_of_voxels; ++i) {
 
-			DOMElement* voxel_elem = dynamic_cast<DOMElement*>(voxel_list_->item(i));
-			//load attributes
-			int index = std::stoi(getAttribute(voxel_elem, "id"));
-			std::string name = getAttribute(voxel_elem, "name");
-			Voxel* current_voxel = new Voxel(index, name);
+			DOMElement* voxel = dynamic_cast<DOMElement*>(voxel_list_->item(i));
+			
+            //load attributes
+            // FIXME: revise late
+            // idは必須なので、無かった場合のエラー処理と整数かどうかのチェック(他のタグに関しても、、)
+			std::string id   = getAttribute(voxel, "id"  );
+			std::string name = getAttribute(voxel, "name");
+			Voxel* current_voxel = new Voxel(std::stoi(id), name);
 
 			//load geometry_info
-			DOMNodeList* geoinfo_node = getElements(voxel_elem, "geometry_info");
-			DOMElement*  geoinfo_elem = dynamic_cast<DOMElement*>(geoinfo_node->item(0));
-			int geometry_id = getElementInt(geoinfo_elem, "id");
+			DOMNodeList* geoinfo_node   = getElements(voxel, "geometry_info");
+			DOMElement*  geoinfo_element = dynamic_cast<DOMElement*>(geoinfo_node->item(0));
+			int geometry_id = getElementInt(geoinfo_element, "id");
 			current_voxel->setGeometryInfo(geometry_id);
 
 			//load material_info
-			DOMNodeList* matinfo_node = getElements(voxel_elem, "material_info");
+			DOMNodeList* matinfo_node = getElements(voxel, "material_info");
 			int number_of_matinfo = int(matinfo_node->getLength());
-			for (int j = 0; j < number_of_matinfo; ++j) {
-				DOMElement* matinfo_elem = dynamic_cast<DOMElement*>(matinfo_node->item(j));
-				int material_id = getElementInt(matinfo_elem, "id");
-				double material_ratio = getElementDouble(matinfo_elem, "ratio");
+			
+            for (int j = 0; j < number_of_matinfo; ++j) {
+				DOMElement* matinfo_element = dynamic_cast<DOMElement*>(matinfo_node->item(j));
+				int    material_id    = getElementInt   (matinfo_element, "id");
+				double material_ratio = getElementDouble(matinfo_element, "ratio");
 				current_voxel->addMaterialInfo(material_id, material_ratio);
 			}
-
 			fav->addVoxel(current_voxel);
 		}
 
@@ -276,13 +174,16 @@ namespace FavLibrary
 	void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_) {
 
 		int number_of_object = int(object_node_->getLength());
-		for (int i = 0; i < number_of_object; ++i) {
+		for (int i=0; i<number_of_object; ++i) {
 
 			DOMElement* object_elem = dynamic_cast<DOMElement*>(object_node_->item(i));
 
 			//load attributes
-			int index = std::stoi(getAttribute(object_elem, "id"));
+			std::string id   = getAttribute(object_elem, "id"  );
 			std::string name = getAttribute(object_elem, "name");
+            //FIXME: revise later
+            // idを引数にして生成すると、write()の際にorigin.getX()でメモリのアクセスエラーが出る。
+            // それに加えて、サンプルデータの書き出し後Originの値が変わってしまっている。
 			Object* current_object = new Object(name);
 
 			// load grid
@@ -315,16 +216,18 @@ namespace FavLibrary
 				current_object->grid->setDimension(x, y, z);
 			}
 			else {
-				// error message is here. dimension is required.
+				//TODO: write later
+                // 必須項目のエラー処理
 			}
 
-
 			// load Structure
+            // TODO: check later
+            // こっちはポインタ渡しで上の方は違うので、どちらかに統一する
 			Structure* structure = new Structure(current_object->grid);
 
 			// load voxel_map
 			DOMElement* vmap_elem = dynamic_cast<DOMElement*>(getElements(object_elem, "voxel_map")->item(0));
-			std::string compression = getAttribute(vmap_elem, "compression");
+			std::string compression   = getAttribute(vmap_elem, "compression");
 			std::string bit_per_voxel = getAttribute(vmap_elem, "bit_per_voxel");
 
 			structure->setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
@@ -375,9 +278,9 @@ namespace FavLibrary
 						}
 					}
 
-
-				}
-				else if (compression == "base64") {
+                // TODO: write later
+                // other compression mode is under development
+                } else if (compression == "base64") {
 
 					XMLSize_t size = current_object->grid->getDimensionX() * current_object->grid->getDimensionY();
 					data_in.resize(size);
@@ -389,7 +292,6 @@ namespace FavLibrary
 						std::cout << (unsigned int)data_decoded[d] << ",";
 					}
 					std::cout << std::endl;
-
 				}
 
 				int dim_x = current_object->grid->getDimensionX();
@@ -397,19 +299,24 @@ namespace FavLibrary
 				int layer_size = dim_x * dim_y;
 
 				if (data_in.size() != layer_size) {
-					// error here
-				}
-
-				for (int k = 0; k < layer_size; k++) {
-
-					int index = layer_size*j + k;
-					structure->setVoxel(index, (int)data_in[k]);
-					std::cout << "index = " << index << std::endl;
-//					std::cout << "value = " << structure->getVoxel(index) << std::endl;
-
-				}
+					// TODO: write later
+                    // エラー処理
+                }else{
+                    
+                    for (int k = 0; k < layer_size; k++) {
+                        
+                        int index = layer_size*j + k;
+                        structure->setVoxel(index, (int)data_in[k]);
+                        std::cout << "index = " << index << std::endl;
+                        std::cout << "value = " << structure->getVoxel(index) << std::endl;
+                        
+                    }
+                }
 			}
 
+            // TODO: write later
+            // ボクセルの方を書いてからそれに準じて書く
+            //
 			//        // load color_map
 			//        DOMElement* cmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "color_map")->item(0) );
 			//        compression = getAttribute(cmap_elem, "compression");
@@ -497,12 +404,123 @@ namespace FavLibrary
 
 			current_object->setStructure(structure);
 
-			// other compression mode is under development
-
 			fav->addObject(current_object);
-//			std::cout << "kore" << structure->getVoxel(3) << std::endl;
 		}
 	}
-
-
+    
+    bool FavReader::read(const char* file_path) {
+        
+        // TODO: write later
+        // エラー処理
+        // Xerces-C++を初期化する
+        try {
+            XMLPlatformUtils::Initialize();
+        }
+        catch (...) {
+            //        std::cout << "Xerces-C++の初期化に失敗しました。" << std::endl;
+            return 1;
+        }
+        
+        XercesDOMParser *parser = new XercesDOMParser;
+        parser->parse(file_path);
+        
+        DOMDocument *doc  = parser->getDocument();
+        DOMElement  *root = doc->getDocumentElement();
+        
+        DOMNodeList* metadata_list = getElements(root, "metadata");
+        DOMNodeList* palette_list  = getElements(root, "palette" );
+        DOMNodeList* voxel_list    = getElements(root, "voxel"   );
+        DOMNodeList* object_list   = getElements(root, "object"  );
+        
+        readMetaData(metadata_list);
+        readPalette (palette_list);
+        readVoxel   (voxel_list);
+        readObject  (object_list);
+        
+        XMLPlatformUtils::Terminate();
+        
+        return 1;
+    }
+    
+    DOMNodeList* FavReader::getElements(DOMElement* element_, const char *tag_name_)
+    {
+        char* tag_name = (char *)tag_name_;
+        XMLCh* attributeName = XMLString::transcode(tag_name);
+        DOMNodeList* node_list = element_->getElementsByTagName(attributeName);
+        XMLString::release(&attributeName);
+        
+        return node_list;
+    }
+    
+    std::string FavReader::getAttribute(DOMElement* element_, const char *tag_name_)
+    {
+        char* tag_name = (char *)tag_name_;
+        XMLCh* attributeName = XMLString::transcode(tag_name);
+        const XMLCh* attribute_value = element_->getAttribute(attributeName);
+        char* attribute_value_str = XMLString::transcode(attribute_value);
+        std::string ret = std::string(attribute_value_str);
+        XMLString::release(&attribute_value_str);
+        
+        return ret;
+    }
+    
+    int FavReader::getNodeValueInt(DOMNode* node_)
+    {
+        const XMLCh* node_value = node_->getNodeValue();
+        char* node_value_str = XMLString::transcode(node_value);
+        int ret = atoi(node_value_str);
+        XMLString::release(&node_value_str);
+        return ret;
+    }
+    
+    double FavReader::getNodeValueDouble(DOMNode* node_)
+    {
+        const XMLCh* node_value = node_->getNodeValue();
+        char* node_value_str = XMLString::transcode(node_value);
+        double ret = atof(node_value_str);
+        XMLString::release(&node_value_str);
+        return ret;
+    }
+    
+    std::string FavReader::getNodeValueString(DOMNode* node_)
+    {
+        const XMLCh* node_value = node_->getNodeValue();
+        char* node_value_str = XMLString::transcode(node_value);
+        std::string ret = std::string(node_value_str);
+        XMLString::release(&node_value_str);
+        return ret;
+    }
+    
+    int FavReader::getElementInt(DOMElement* elem, const char *tag_name_)
+    {
+        char* tag_name = (char *)tag_name_;
+        DOMNodeList* node_list = getElements(elem, tag_name);
+        const XMLCh* node_value = ((node_list->item(0))->getFirstChild())->getNodeValue();
+        char* node_value_str = XMLString::transcode(node_value);
+        int ret = atoi(node_value_str);
+        XMLString::release(&node_value_str);
+        return ret;
+    }
+    
+    double FavReader::getElementDouble(DOMElement* elem, const char *tag_name_)
+    {
+        char* tag_name = (char *)tag_name_;
+        DOMNodeList* node_list = getElements(elem, tag_name);
+        const XMLCh* node_value = ((node_list->item(0))->getFirstChild())->getNodeValue();
+        char* node_value_str = XMLString::transcode(node_value);
+        double ret = atof(node_value_str);
+        XMLString::release(&node_value_str);
+        return ret;
+    }
+    
+    std::string FavReader::getElementString(DOMElement* elem, const char *tag_name_)
+    {
+        char* tag_name = (char *)tag_name_;
+        DOMNodeList* node_list = getElements(elem, tag_name);
+        const XMLCh* node_value = ((node_list->item(0))->getFirstChild())->getNodeValue();
+        char* node_value_str = XMLString::transcode(node_value);
+        std::string ret = std::string(node_value_str);
+        XMLString::release(&node_value_str);
+        return ret;
+    }
 }
