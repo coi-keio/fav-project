@@ -5,7 +5,7 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) FavPrimitive
+	RefClass FavPrimitive
 	{
 	public:
 		FavPrimitive(unsigned int id_);
@@ -25,7 +25,7 @@ namespace FavLibrary
 		~FavPrimitive();
 
 		unsigned int identifier;
-		std::string name;
+		sString name;
 
 	private:
 

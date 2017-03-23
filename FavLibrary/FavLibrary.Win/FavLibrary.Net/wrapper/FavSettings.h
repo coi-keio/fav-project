@@ -1,0 +1,22 @@
+#ifdef DotNet ////////////////////////////////////////////////////////////////////////////////////////
+
+#define RefEnum public enum class
+#define RefClass public ref class
+#define PrmClass ref class
+#define sString System::String
+//#define 
+
+#else ////////////////////////////////////////////////////////////////////////////////////////////////
+
+#define RefEnum enum class __declspec(dllexport) 
+#define RefClass class __declspec(dllexport) 
+#define PrmClass class
+#define sString std::string
+
+//#ifdef FavLibraryExport
+//#define __declspec(dllexport) 
+//#else
+//#define __declspec(dllimport) 
+//#endif 
+
+#endif  //////////////////////////////////////////////////////////////////////////////////////////////

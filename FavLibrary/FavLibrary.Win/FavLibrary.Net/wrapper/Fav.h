@@ -23,13 +23,12 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Fav : public MetadataObject
+	RefClass Fav : public MetadataObject
 	{
 	public:
 		Fav();
 		~Fav();
 		bool read(const char* file_path);
-        bool write(const char* file_path);
 		bool write(const char* file_path, const char* version_);
 
 		std::vector<Voxel> getVoxels();
@@ -56,7 +55,9 @@ namespace FavLibrary
 		FavReader* fav_reader;
 		FavWriter* fav_writer;
 
-		Fav* pFav;
+#ifdef DotNet
+		Fav^ pFav;
+#endif
 	};
 
 }

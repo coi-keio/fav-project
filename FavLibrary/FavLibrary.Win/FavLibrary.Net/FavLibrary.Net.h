@@ -4,7 +4,7 @@
 
 using namespace System;
 
-namespace FavLibrary {
+namespace FavLibraryDotNet {
 
 	public ref class FavLibrary
 	{

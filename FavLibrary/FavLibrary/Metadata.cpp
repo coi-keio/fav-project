@@ -5,14 +5,14 @@
 //  Created by atsmsmr on 2016/11/14.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
-
+#pragma once
 #include "MetaData.h"
 
 
 namespace FavLibrary
 {
 	Metadata::Metadata() {};
-	Metadata::Metadata(int identifier_, std::string title_, std::string author_, std::string license_)
+	Metadata::Metadata(std::string identifier_, std::string title_, std::string author_, std::string license_)
 	{
 		identifier = identifier_;
 		title = title_;

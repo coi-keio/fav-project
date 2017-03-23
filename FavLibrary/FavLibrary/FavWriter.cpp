@@ -232,6 +232,10 @@ namespace FavLibrary
                 compression = "zlib";
 
                 break;
+
+			default:
+				compression = "none";
+				break;
         }
         
 		DOMElement *vmap_elem = doc->createElement(XMLString::transcode("voxel_map"));

@@ -17,18 +17,25 @@
 
 namespace FavLibrary
 {
-
-	class __declspec(dllexport) Object : public FavPrimitive, MetadataObject
+	RefClass Object
+#ifdef DotNet
+		: public FavPrimitive
+#else
+		: public FavPrimitive, MetadataObject
+#endif
 	{
 	public:
 		Object();
 		Object(unsigned int id_);
 		Object(std::string name_);
 		Object(unsigned int id_, std::string name_);
-
 		~Object();
 
+#ifdef DotNet
+		void setStructure(Structure structure_new_);
+#else
 		void setStructure(Structure* structure_new_);
+#endif
 
 		/// この辺はStructureのメソッド呼ぶだけのショートカット
 		//int* getVoxelMap();
@@ -39,12 +46,16 @@ namespace FavLibrary
 		//void setColorMap(int* color_map_);
 		//void setLinkMap(int* link_map_);
 
+#ifndef DotNet
 		Grid* grid;
 		Structure* structure;
+#endif
 
 	private:
-		Object* pObject;
 
+#ifdef DotNet
+		Object^ pObject;
+#endif
 	};
 
 }

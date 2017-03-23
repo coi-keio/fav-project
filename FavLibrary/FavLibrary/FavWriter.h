@@ -37,11 +37,11 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-    RefClass Fav;
+    class __declspec(dllexport) Fav;
     
-    RefClass FavWriter {
+    class __declspec(dllexport) FavWriter {
         
-        enum RefClass CompressionMode
+        enum class __declspec(dllexport) CompressionMode
         {
             none,
             base64,

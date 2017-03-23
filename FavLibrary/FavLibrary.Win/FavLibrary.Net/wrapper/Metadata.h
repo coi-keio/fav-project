@@ -6,10 +6,8 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-//#ifndef __FavLibrary__MetaData__
-//#define __FavLibrary__MetaData__
-
-#pragma once
+#ifndef __FavLibrary__MetaData__
+#define __FavLibrary__MetaData__
 
 #include <stdio.h>
 #include <string>
@@ -18,11 +16,12 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Metadata {
+	RefClass Metadata {
 
 	public:
 		Metadata();
-		Metadata(std::string identifier_, std::string title_, std::string author_, std::string license_);
+		~Metadata();
+		Metadata(int identifier_, std::string title_, std::string author_, std::string license_);
 
 		std::string getId();
 		void setId(std::string identifier_);
@@ -40,14 +39,14 @@ namespace FavLibrary
 		void setNote(std::string note_);
 
 	private:
-		std::string identifier;
-		std::string title;
-		std::string author;
-		std::string license;
-		std::string note;
+		sString identifier;
+		sString title;
+		sString author;
+		sString license;
+		sString note;
 	};
 
-	class __declspec(dllexport) MetadataObject
+	RefClass MetadataObject
 	{
 	public:
 		Metadata getMetadata();
@@ -73,4 +72,4 @@ namespace FavLibrary
 	};
 
 }
-//#endif /* defined(__FavLibrary__MetaData__) */
+#endif /* defined(__FavLibrary__MetaData__) */

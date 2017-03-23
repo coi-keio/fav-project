@@ -10,14 +10,14 @@
 
 namespace FavLibrary
 {
-	enum class __declspec(dllexport) GeometryShape
+	RefEnum GeometryShape
 	{
 		cube,
 		sphere,
 		user_defined,
 	};
 
-	class __declspec(dllexport) Scale : public Point3D
+	RefClass Scale : public Point3D
 	{
 	public:
 		Scale();
@@ -25,11 +25,13 @@ namespace FavLibrary
 		~Scale();
 
 	private:
-		Scale* pScale;
+#ifdef DotNet
+		Scale^ pScale;
+#endif
 	};
 
 
-	class __declspec(dllexport) Geometry : public FavPrimitive
+	RefClass Geometry : public FavPrimitive
 	{
 	public:
 		Geometry();
@@ -56,11 +58,15 @@ namespace FavLibrary
 		void setScale(double x_, double y_, double z_);
 
 	private:
-		std::string userDefinedShape;
 		GeometryShape shape = GeometryShape::cube;
 		Scale scale;
 
-		Geometry* pGeometry;
+#ifdef DotNet
+		Geometry^ pGeometry;
+#else
+		std::string userDefinedShape;
+#endif
+
 	};
 
 

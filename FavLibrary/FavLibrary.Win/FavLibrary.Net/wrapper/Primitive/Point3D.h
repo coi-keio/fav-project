@@ -3,7 +3,7 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Point3D
+	RefClass Point3D
 	{
 	public:
 		Point3D();

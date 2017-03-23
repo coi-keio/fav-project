@@ -11,24 +11,27 @@
 namespace FavLibrary
 {
 
-	class __declspec(dllexport) Unit : public Point3D
+	RefClass Unit : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Dimension : public Point3D
+	RefClass Dimension : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Origin : public Point3D
+	RefClass Origin : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Grid
+	RefClass Grid
 	{
 	public:
+		Grid();
+		~Grid();
+
 		Unit getUnit();
 		void setUnit(Point3D p);
 		void setUnit(double x, double y, double z);
@@ -64,7 +67,9 @@ namespace FavLibrary
 		Dimension dimension;
 		Origin origin;
 
-		Grid* pGrid;
+#ifdef DotNet
+		Grid^ pGrid;
+#endif
 	};
 
 }

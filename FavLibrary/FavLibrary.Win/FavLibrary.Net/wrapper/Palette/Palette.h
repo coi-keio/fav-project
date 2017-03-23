@@ -20,10 +20,11 @@
 namespace FavLibrary
 {
 
-	class __declspec(dllexport) Palette {
+	RefClass Palette {
 
 	public:
 		Palette();
+		~Palette();
 
 		Geometry getGeometryById(unsigned int id_);
 		//	std::vector<Geometry> getGeometriesByName(std::string name_);
@@ -50,7 +51,10 @@ namespace FavLibrary
 		unsigned int number_of_materials;
 		unsigned int number_of_geometries;
 
-		Palette* pPalette;
+#ifdef DotNet
+		Palette^ pPalette;
+#endif
+
 	};
 }
 #endif /* defined(__FavLibrary__Palette__) */

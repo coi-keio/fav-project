@@ -21,23 +21,24 @@
 namespace FavLibrary
 {
 
-	enum class __declspec(dllexport) BitPerVoxel {
+	RefEnum BitPerVoxel {
 		FourBit,
 		EightBit,
 		SixteenBit,
 	};
 
-	enum class __declspec(dllexport) Compression {
+	RefEnum Compression {
 		None,
 		Zlib,
 		Base64,
 	};
 
 	template<typename tVoxelMapType>
-	class __declspec(dllexport) VoxelMap {
+	RefClass VoxelMap {
 
 	public:
 		VoxelMap(int size);
+
 		void init();
 		void setVoxel(int index_, int value_);
 		tVoxelMapType getVoxel(int index_);
@@ -47,7 +48,7 @@ namespace FavLibrary
 		tVoxelMapType* data;
 	};
 
-	class __declspec(dllexport) Structure {
+	RefClass Structure {
 	public:
 		Structure(Grid* grid_);
 		Structure(int bit_per_voxel_);
@@ -69,16 +70,16 @@ namespace FavLibrary
 		void initColorMap();
 		void initColorMap(ColorMode color_mode_);
 		void setColorMode(ColorMode color_mode_);
-		void setColor(Point3D p_, class __declspec(dllexport) ColorRGB color_);
-		void setColor(Point3D p_, class __declspec(dllexport) ColorRGBA color_);
-		void setColor(Point3D p_, class __declspec(dllexport) ColorCMYK color_);
-		void setColor(Point3D p_, class __declspec(dllexport) ColorGrayScale color_);
-		void setColor(Point3D p_, class __declspec(dllexport) ColorGrayScale16 color_);
-		void setColor(int x_, int y_, int z_, class __declspec(dllexport) ColorRGB color_);
-		void setColor(int x_, int y_, int z_, class __declspec(dllexport) ColorRGBA color_);
-		void setColor(int x_, int y_, int z_, class __declspec(dllexport) ColorCMYK color_);
-		void setColor(int x_, int y_, int z_, class __declspec(dllexport) ColorGrayscale color_);
-		void setColor(int x_, int y_, int z_, class __declspec(dllexport) ColorGrayscale16 color_);
+		void setColor(Point3D p_, PrmClass ColorRGB color_);
+		void setColor(Point3D p_, PrmClass ColorRGBA color_);
+		void setColor(Point3D p_, PrmClass ColorCMYK color_);
+		void setColor(Point3D p_, PrmClass ColorGrayScale color_);
+		void setColor(Point3D p_, PrmClass ColorGrayScale16 color_);
+		void setColor(int x_, int y_, int z_, PrmClass ColorRGB color_);
+		void setColor(int x_, int y_, int z_, PrmClass ColorRGBA color_);
+		void setColor(int x_, int y_, int z_, PrmClass ColorCMYK color_);
+		void setColor(int x_, int y_, int z_, PrmClass ColorGrayscale color_);
+		void setColor(int x_, int y_, int z_, PrmClass ColorGrayscale16 color_);
 		void setColorRGB(Point3D p_, int r_, int g_, int b_);
 		void setColorRGBA(Point3D p_, int r_, int g_, int b_, int a_);
 		void setColorCMYK(Point3D p_, int c_, int m_, int cy_, int k_);
@@ -153,15 +154,21 @@ namespace FavLibrary
 		Compression compression;
 		int number_of_voxels;
 
+#ifndef DotNet
 		VoxelMap<unsigned char>* voxel_map; //default voxel map
 		VoxelMap<unsigned short>* voxel_map_16bit;// for 16bit voxel map
 		unsigned char* alpha_map;
 		unsigned char* color_map;
 		unsigned short* color_map_16bit;
+#endif
 
 		//        // Link map is under development
 		//        float* link_map;
 		//        int neighbours;
+
+#ifdef DotNet
+		Structure^ pStructure;
+#endif
 	};
 
 }

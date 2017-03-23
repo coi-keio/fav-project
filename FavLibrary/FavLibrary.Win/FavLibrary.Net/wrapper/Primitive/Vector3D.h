@@ -6,7 +6,7 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Vector3D : public Point3D
+	RefClass Vector3D : public Point3D
 	{
 	public:
 		Vector3D();
@@ -15,7 +15,9 @@ namespace FavLibrary
 		double getLength();
 
 	private:
-		Vector3D* pVector3D;
+#ifdef DotNet
+		Vector3D^ pVector3D;
+#endif
 	};
 
 }

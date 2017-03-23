@@ -20,7 +20,7 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) VoxelInfo {
+	RefClass VoxelInfo {
 	public:
 		VoxelInfo();
 		VoxelInfo(unsigned int id_);
@@ -33,14 +33,14 @@ namespace FavLibrary
 		unsigned int identifier;
 	};
 
-	class __declspec(dllexport) GeometryInfo : public VoxelInfo {
+	RefClass GeometryInfo : public VoxelInfo {
 	public:
 		GeometryInfo();
 		GeometryInfo(unsigned int id_);
 		~GeometryInfo();
 	};
 
-	class __declspec(dllexport) MaterialInfo : public VoxelInfo {
+	RefClass MaterialInfo : public VoxelInfo {
 	public:
 		MaterialInfo();
 		MaterialInfo(unsigned int id_);
@@ -55,7 +55,7 @@ namespace FavLibrary
 	};
 
 
-	class __declspec(dllexport) Voxel : public FavPrimitive, MetadataObject
+	RefClass Voxel : public FavPrimitive
 	{
 	public:
 		Voxel();
@@ -96,7 +96,9 @@ namespace FavLibrary
 		ColorRGBA display;
 		std::string application_note;
 
-		Voxel* pVoxel;
+#ifdef DotNet
+		Voxel^ pVoxel;
+#endif
 	};
 
 

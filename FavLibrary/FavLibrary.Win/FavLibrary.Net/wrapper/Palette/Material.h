@@ -12,13 +12,13 @@
 
 namespace FavLibrary
 {
-	enum class __declspec(dllexport) MaterialType {
+	RefEnum MaterialType {
 		material_name = 0,
 		product_info = 1,
 		iso_standard = 2,
 	};
 
-	class __declspec(dllexport) MaterialSpec {
+	RefClass MaterialSpec {
 	public:
 		virtual void dammy() {};
 		MaterialSpec();
@@ -27,10 +27,11 @@ namespace FavLibrary
 		MaterialType materialType;
 	};
 
-	class __declspec(dllexport) MaterialName : public MaterialSpec {
+	RefClass MaterialName : public MaterialSpec {
 	public:
-
 		MaterialName(std::string name_);
+		~MaterialName();
+
 		std::string getMaterialName();
 		void setMaterialName(std::string name_);
 
@@ -38,10 +39,10 @@ namespace FavLibrary
 		std::string name;
 	};
 
-	class __declspec(dllexport) ProductInfo : public MaterialSpec {
+	RefClass ProductInfo : public MaterialSpec {
 	public:
-
 		ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
+		~ProductInfo();
 
 		std::string getManufacturer();
 		void setManufacturer(std::string manufacturer_);
@@ -58,10 +59,11 @@ namespace FavLibrary
 		std::string url;
 	};
 
-	class __declspec(dllexport) IsoStandard : public MaterialSpec {
+	RefClass IsoStandard : public MaterialSpec {
 	public:
-
 		IsoStandard(std::string iso_id_, std::string iso_name_);
+		~IsoStandard();
+
 		std::string getIsoId();
 		void setIsoId(std::string iso_id_);
 
@@ -73,7 +75,12 @@ namespace FavLibrary
 		std::string iso_name;
 	};
 
-	class __declspec(dllexport) Material : public FavPrimitive, MetadataObject
+	RefClass Material
+#ifdef DotNet
+		: public FavPrimitive
+#else
+		: public FavPrimitive, MetadataObject
+#endif
 	{
 	public:
 		Material();
@@ -98,6 +105,9 @@ namespace FavLibrary
 
 		void addIsoStandard(std::string iso_id_, std::string iso_name_);
 		void addIsoStandard(IsoStandard* iso_standard_);
+
+		Metadata getMetadata();
+		void setMetadata(Metadata metadata_);
 
 	private:
 	};
