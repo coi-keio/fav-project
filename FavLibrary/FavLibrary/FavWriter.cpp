@@ -58,9 +58,8 @@ namespace FavLibrary
 		appendCDATA(metadata_elem, "title",   fav->getMetadataTitle());
 		appendCDATA(metadata_elem, "author",  fav->getMetadataAuthor());
 		appendCDATA(metadata_elem, "license", fav->getMetadataLicense());
-        // FIXME: revise later
-        // ノートが存在しなかった場合の処理 (上記は必須項目)
-        appendCDATA(metadata_elem, "note",    fav->getMetadataNote());
+        if(fav->getMetadataNote()!="")
+            appendCDATA(metadata_elem, "note",    fav->getMetadataNote());
 
         parent_elem->appendChild(metadata_elem);
 	}

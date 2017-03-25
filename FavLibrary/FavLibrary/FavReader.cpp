@@ -27,20 +27,53 @@ namespace FavLibrary
 
     FavReader::FavReader(Fav* fav_) {
         fav = fav_;
+        xsd_path = "file:///Users/atsmsmr/Documents/Developer/fav-project/xml_schema/fav.xsd";
     };
+    
+
+    bool FavReader::validation(const char* file_path)
+    {
+        ParserErrorHandler parserErrorHandler;
+        
+        XercesDOMParser domParser;
+        
+        if (domParser.loadGrammar(xsd_path.c_str(), Grammar::SchemaGrammarType) == NULL)
+        {
+            fprintf(stderr, "couldn't load schema\n");
+            return 0;
+        }
+        
+        domParser.setErrorHandler(&parserErrorHandler);
+        domParser.setValidationScheme(XercesDOMParser::Val_Auto);
+        domParser.setDoNamespaces(true);
+        domParser.setDoSchema(true);
+        domParser.setValidationSchemaFullChecking(true);
+//        domParser.setValidationConstraintFatal(true);
+        domParser.setExternalNoNamespaceSchemaLocation(xsd_path.c_str());
+        domParser.parse(file_path);
+        
+        if (domParser.getErrorCount() == 0)
+            printf("XML file validated against the schema successfully\n");
+        else
+            printf("XML file doesn't conform to the schema\n");
+        
+        return 1;
+    }
     
     bool FavReader::read(const char* file_path) {
         
         // TODO: write later
         // エラー処理
-        // Xerces-C++を初期化する
+        // Xerces-C++を初期化、検証する
         try {
             XMLPlatformUtils::Initialize();
         }
         catch (...) {
             //        std::cout << "Xerces-C++の初期化に失敗しました。" << std::endl;
-            return 1;
+            return 0;
         }
+        
+        validation(file_path);
         
         XercesDOMParser *parser = new XercesDOMParser;
         parser->parse(file_path);
@@ -81,6 +114,11 @@ namespace FavLibrary
 				fav->setMetadataTitle  (getElementString(dynamic_cast<DOMElement*>(current_metadata), "title"));
 				fav->setMetadataAuthor (getElementString(dynamic_cast<DOMElement*>(current_metadata), "author"));
 				fav->setMetadataLicense(getElementString(dynamic_cast<DOMElement*>(current_metadata), "license"));
+                
+                if(getElements(dynamic_cast<DOMElement*>(current_metadata), "note")->getLength() > 0){
+                    fav->setMetadataNote(getElementString(dynamic_cast<DOMElement*>(current_metadata), "note"));
+                };
+
             
             }else{
                 //TODO: write later

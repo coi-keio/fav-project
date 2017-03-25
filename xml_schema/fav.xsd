@@ -3,7 +3,7 @@
 
   <xsd:element name="fav">
     <xsd:complexType>
-      <xsd:choice maxOccurs="unbounded">
+      <xsd:choice minOccurs="1" maxOccurs="unbounded">
           <xsd:element ref="metadata"/>
           <xsd:element ref="palette"/>
           <xsd:element ref="voxel"/>

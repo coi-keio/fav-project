@@ -25,6 +25,14 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
+
+
+#include <xercesc/framework/LocalFileInputSource.hpp>
+#include <xercesc/sax/ErrorHandler.hpp>
+#include <xercesc/sax/SAXParseException.hpp>
+#include <xercesc/validators/common/Grammar.hpp>
+
+
 #include "FavSettings.h"
 #include "Metadata.h"
 #include "Voxel.h"
@@ -40,11 +48,44 @@ namespace FavLibrary
 
 	RefClass FavReader
 	{
+        class ParserErrorHandler : public ErrorHandler
+        {
+        private:
+            void reportParseException(const SAXParseException& ex)
+            {
+                char* msg = XMLString::transcode(ex.getMessage());
+                fprintf(stderr, "at line %llu column %llu, %s\n", ex.getLineNumber(), ex.getColumnNumber(), msg);
+                XMLString::release(&msg);
+            }
+            
+        public:
+            void warning(const SAXParseException& ex)
+            {
+                reportParseException(ex);
+            }
+            
+            void error(const SAXParseException& ex)
+            {
+                reportParseException(ex);
+            }
+            
+            void fatalError(const SAXParseException& ex)
+            {
+                reportParseException(ex);
+            }
+            
+            void resetErrors()
+            {
+            }
+        };
+        
 	public:
 		FavReader(Fav* fav_);
 		bool read(const char* file_path);
 
 	private:
+        
+        bool validation(const char* file_path);
         
         int          getNodeValueInt   (DOMNode* node_);
         double       getNodeValueDouble(DOMNode* node_);
@@ -61,6 +102,8 @@ namespace FavLibrary
 		void readObject  (DOMNodeList* object_node_);
 		void readGrid();
 		void readStructure();
+        
+        std::string xsd_path;
 
 		Fav* fav;
 	};
