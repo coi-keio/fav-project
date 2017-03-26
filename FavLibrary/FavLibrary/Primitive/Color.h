@@ -21,7 +21,7 @@ namespace FavLibrary
 
 		ColorMode colorMode;
 
-	private:
+	protected:
 
 #ifdef DotNet
 		ColorBase^ pColorBase;
@@ -32,6 +32,7 @@ namespace FavLibrary
 	{
 	public:
 		ColorRGB();
+        ColorRGB(unsigned char r_, unsigned char g_, unsigned char b_){r = r_; g = g_; b = b_;};
 		~ColorRGB();
 
 		ColorMode colorMode = ColorMode::RGB;//ここconstにするとcompile errorが出てた。要確認
@@ -47,7 +48,7 @@ namespace FavLibrary
 
 		void setColorRBG(unsigned char r, unsigned char g, unsigned char b);
 
-	private:
+	protected:
 		unsigned char r;
 		unsigned char g;
 		unsigned char b;
@@ -61,6 +62,7 @@ namespace FavLibrary
 	{
 	public:
 		ColorRGBA();
+        ColorRGBA(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_){r = r_; g = g_; b = b_; a=a_;};
 		~ColorRGBA();
 
 		ColorMode colorMode = ColorMode::RGBA;
@@ -89,7 +91,7 @@ namespace FavLibrary
 		unsigned char getGray();
 		void setGray(unsigned char gray);
 
-	private:
+	protected:
 		unsigned char gray;
 
 #ifdef DotNet
