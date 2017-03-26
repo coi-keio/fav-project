@@ -18,7 +18,7 @@
 namespace FavLibrary
 {
 
-	RefClass Object : public FavPrimitive, MetadataObject
+	RefClass Object : public FavPrimitive, public MetadataObject
 	{
 	public:
 		Object();

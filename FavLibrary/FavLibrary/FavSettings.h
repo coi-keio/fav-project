@@ -16,3 +16,14 @@
 //#endif 
 
 #endif  //////////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+namespace FavLibrary
+{
+    enum CompressionMode
+    {
+        none,
+        base64,
+        zlib
+    };
+}

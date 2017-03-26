@@ -70,6 +70,7 @@
 		51C95DD61E03797400888ED6 /* Vector3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3D.h; sourceTree = "<group>"; };
 		51CD98FF1DF5755E00E22BA4 /* FavWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FavWriter.cpp; sourceTree = "<group>"; };
 		51CD99001DF5755E00E22BA4 /* FavWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavWriter.h; sourceTree = "<group>"; };
+		51EC90621E87C878004C4795 /* FavSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavSettings.h; path = FavLibrary/FavSettings.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 		511DE2D01D8A7A460036CA14 /* FavLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				51EC90621E87C878004C4795 /* FavSettings.h */,
 				51C95DCE1E03797400888ED6 /* Primitive */,
 				51C95DC41E03796A00888ED6 /* Palette */,
 				51C95DBA1E03795C00888ED6 /* Object */,

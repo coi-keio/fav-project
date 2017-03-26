@@ -25,6 +25,7 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
+
 #include "FavSettings.h"
 #include "Metadata.h"
 #include "Voxel.h"
@@ -41,17 +42,11 @@ namespace FavLibrary
     
     RefClass FavWriter {
         
-        enum RefClass CompressionMode
-        {
-            none,
-            base64,
-            zlib
-        };
-        
     public:
         
         FavWriter(Fav* fav_);
         bool write(const char* file_path);
+        bool write(const char* file_path, CompressionMode compression_mode_);
         bool write(const char* file_path, const char* version);
         
     private:
@@ -69,9 +64,15 @@ namespace FavLibrary
         void writeVoxel    (DOMElement* parent_elem);
         void writeObject   (DOMElement* parent_elem);
         void writeGrid     (DOMElement* parent_elem, Grid* p_grid);
-        void writeStructure(DOMElement* parent_elem, Structure* p_str);
-        void writeVoxelMap (DOMElement* parent_elem, Structure* p_str);
-        void writeColorMap (DOMElement* parent_elem, Structure* p_str);
+        void writeStructure(DOMElement* parent_elem, Structure* p_structure);
+        void writeVoxelMap (DOMElement* parent_elem, Structure* p_structure);
+        void writeColorMap (DOMElement* parent_elem, Structure* p_structure);
+        void writeColorMapRGB (DOMElement *cmap_elem, Structure* p_structure);
+        void writeColorMapRGBA(DOMElement *cmap_elem, Structure* p_structure);
+        void writeColorMapCMYK(DOMElement *cmap_elem, Structure* p_structure);
+        void writeColorMapGrayScale  (DOMElement *cmap_elem, Structure* p_structure);
+        void writeColorMapGrayScale16(DOMElement *cmap_elem, Structure* p_structure);
+
         void writeXML      (const char* filePath);
         
         void str2bin(const unsigned char *str, unsigned char *hex, int len);
@@ -80,6 +81,7 @@ namespace FavLibrary
         
         Fav* fav;
         DOMDocument *doc;
+        CompressionMode compression_mode;
     };
     
 }

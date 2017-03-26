@@ -11,7 +11,6 @@
 #include "Grid.h"
 
 //TODO: implement changeColorMap*()
-
 namespace FavLibrary
 {
 	template <typename tVoxelMapType>
@@ -195,6 +194,7 @@ namespace FavLibrary
 	};
     
     void Structure::setColor(int x_, int y_, int z_, int gray_){
+        
         if (color_mode == ColorMode::Grayscale){
             
             if(gray_<=256){

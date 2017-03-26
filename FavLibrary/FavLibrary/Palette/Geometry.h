@@ -15,6 +15,7 @@ namespace FavLibrary
 		cube,
 		sphere,
 		user_defined,
+        none,
 	};
 
 	RefClass Scale : public Point3D
@@ -38,28 +39,34 @@ namespace FavLibrary
 		Geometry(unsigned int id_, std::string name_);
 		~Geometry();
 
-		GeometryShape getShape();
+        GeometryShape getShape();
 		void setShape(GeometryShape shape_);
-
+        
+        void setName(std::string name_);
 		std::string getName();
-		void setName(std::string name_);
-
+        
 		double getScaleX();
-		void setScaleX(double x_);
-
 		double getScaleY();
+        double getScaleZ();
+        void setScaleX(double x_);
 		void setScaleY(double y_);
-
-		double getScaleZ();
-		void setScaleZ(double z_);
-
-		void setScale(double x_, double y_, double z_);
+        void setScaleZ(double z_);
+        void setScale(double x_, double y_, double z_);
+        
+        std::string getReference();
+        void setReference(std::string reference_);
+        
+        bool hasShape(){return has_shape;};
+        bool hasScale(){return has_scale;};
 
 	private:
-		std::string userDefinedShape;
-		GeometryShape shape = GeometryShape::cube;
+		std::string reference;
+        GeometryShape shape = GeometryShape::none;
 		Scale scale;
-
+        
+        bool has_shape = false;
+        bool has_scale = false;
+        
 		Geometry* pGeometry;
 	};
 
