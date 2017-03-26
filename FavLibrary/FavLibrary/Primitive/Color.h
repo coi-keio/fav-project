@@ -122,6 +122,7 @@ namespace FavLibrary
 	{
 	public:
 		ColorCMYK();
+        ColorCMYK(unsigned char c_, unsigned char m_, unsigned char y_, unsigned char k_){c = c_; m = m_; y = y_; k = k_;};
 		~ColorCMYK();
 
 		ColorMode colorMode = ColorMode::CMYK;
