@@ -37,9 +37,9 @@
   <xsd:element name="geometry">
     <xsd:complexType>
       <xsd:all>
-        <xsd:element name="shape"     type="xsd:string" maxOccurs="1"/>
+        <xsd:element name="shape"     type="xsd:string" minOccurs="0" maxOccurs="1"/>
         <xsd:element name="reference" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-        <xsd:element  ref="scale"                       maxOccurs="1"/>
+        <xsd:element  ref="scale"                       minOccurs="0" maxOccurs="1"/>
       </xsd:all>
       <xsd:attribute name="id"   type="xsd:positiveInteger" use="required"/>
       <xsd:attribute name="name" type="xsd:string"/>
