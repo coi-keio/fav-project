@@ -1,115 +1,112 @@
 #pragma once
 
-#include <stdio.h>
-#include <iostream>
-#include <string>
-#include <map>
-#include <list>
-#include <vector>
-#include "../Metadata.h"
-#include "../Primitive/FavPrimitive.h"
-#include "../FavSettings.h"
+#include "../../FavLibrary/Palette/Material.h"
+#include "./wrapper/Metadata.h"
+#include "./wrapper/Primitive/FavPrimitive.h"
 
-namespace FavLibrary
+using namespace System::Collections::Generic;
+
+namespace FavLibraryDotNet
 {
-	RefEnum MaterialType {
+	public enum class MaterialType {
 		material_name = 0,
 		product_info = 1,
 		iso_standard = 2,
 	};
 
-	RefClass MaterialSpec {
+	public ref class MaterialSpec abstract
+	{
 	public:
-		virtual void dammy() {};
-		MaterialSpec();
-		~MaterialSpec();
+		virtual property FavLibraryDotNet::MaterialType MaterialType
+		{
+			FavLibraryDotNet::MaterialType get() = 0;
+		}
 
-		MaterialType materialType;
+	protected:
+		FavLibrary::MaterialSpec* pMaterialSpec;
 	};
 
-	RefClass MaterialName : public MaterialSpec {
+	public ref class MaterialName : public MaterialSpec {
 	public:
-		MaterialName(std::string name_);
+		MaterialName(System::String^ name);
 		~MaterialName();
 
-		std::string getMaterialName();
-		void setMaterialName(std::string name_);
+		property System::String^ Name { System::String^ get(); void set(System::String^ value); }
+		virtual property FavLibraryDotNet::MaterialType MaterialType
+		{
+			FavLibraryDotNet::MaterialType get() override;
+		}
 
 	private:
-		std::string name;
+		FavLibrary::MaterialName* pMaterialName;
 	};
 
-	RefClass ProductInfo : public MaterialSpec {
+	public ref class ProductInfo : public MaterialSpec {
 	public:
-		ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
+		ProductInfo();
+		ProductInfo(System::String^ manufacturer, System::String^ product_name, System::String^ url);
 		~ProductInfo();
 
-		std::string getManufacturer();
-		void setManufacturer(std::string manufacturer_);
+		property System::String^ Manufacturer { System::String^ get(); void set(System::String^ value); }
+		property System::String^ Url { System::String^ get(); void set(System::String^ value); }
+		property System::String^ ProductName { System::String^ get(); void set(System::String^ value); }
 
-		std::string getUrl();
-		void setUrl(std::string url_);
-
-		std::string getProductName();
-		void setProductName(std::string product_name_);
-
+		virtual property FavLibraryDotNet::MaterialType MaterialType
+		{
+			FavLibraryDotNet::MaterialType get() override;
+		}
 	private:
-		std::string manufacturer;
-		std::string product_name;
-		std::string url;
+		FavLibrary::ProductInfo* pProductInfo;
 	};
 
-	RefClass IsoStandard : public MaterialSpec {
+	public ref class IsoStandard : public MaterialSpec {
 	public:
-		IsoStandard(std::string iso_id_, std::string iso_name_);
+		IsoStandard();
+		IsoStandard(System::String^ iso_id_, System::String^ iso_name_);
 		~IsoStandard();
 
-		std::string getIsoId();
-		void setIsoId(std::string iso_id_);
+		property System::String^ IsoID { System::String^ get(); void set(System::String^ value); }
+		property System::String^ IsoName { System::String^ get(); void set(System::String^ value); }
 
-		std::string getIsoName();
-		void setIsoName(std::string iso_name_);
-
+		virtual property FavLibraryDotNet::MaterialType MaterialType
+		{
+			FavLibraryDotNet::MaterialType get() override;
+		}
 	private:
-		std::string iso_id;
-		std::string iso_name;
+		FavLibrary::IsoStandard* pIsoStandard;
+
 	};
 
-	RefClass Material
-#ifdef DotNet
-		: public FavPrimitive
-#else
-		: public FavPrimitive, MetadataObject
-#endif
+	public ref class Material : public IFavPrimitive
 	{
 	public:
 		Material();
 		Material(unsigned int id_);
-		Material(std::string name_);
-		Material(unsigned int id_, std::string name_);
+		Material(System::String^ name_);
+		Material(unsigned int id_, System::String^ name_);
 		~Material();
 
-		std::list<MaterialSpec*> materials;
+		property bool HasMaterials { bool get(); }
+		property int NumMaterials { int get(); }
 
-		bool hasMaterials();
+		//void addMaterialName(MaterialName material_name);
+		//void addProductInfo(ProductInfo product_info);
+		//void addIsoStandard(IsoStandard iso_standard);
 
-		int getNumMaterials();
-		//std::map<int, MaterialSpec*> getMaterials();
-		//std::vector<MaterialSpec*> getMaterials();
+		//property FavLibraryDotNet::Metadata^ Metadata { FavLibraryDotNet::Metadata^ get(); void set(FavLibraryDotNet::Metadata^ value); }
 
-		void addMaterialName(std::string material_name_);
-		void addMaterialName(MaterialName* material_name_);
+		/// Impliment IFavPrimitive  -----------------------------------------------------------------------------------------
+		virtual property bool IsRemoved { bool get(); }
+		virtual void Remove();
 
-		void addProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
-		void addProductInfo(ProductInfo* product_info_);
-
-		void addIsoStandard(std::string iso_id_, std::string iso_name_);
-		void addIsoStandard(IsoStandard* iso_standard_);
-
-		Metadata getMetadata();
-		void setMetadata(Metadata metadata_);
+		virtual property unsigned int ID { unsigned int get(); void set(unsigned int value); }
+		virtual property System::String^ Name { System::String^ get(); void set(System::String^ value); }
+		/// ------------------------------------------------------------------------------------------------------------------
 
 	private:
+		FavLibrary::Material* pMaterial;
+
+		FavLibraryDotNet::Metadata^ _metadata;
 	};
 
 

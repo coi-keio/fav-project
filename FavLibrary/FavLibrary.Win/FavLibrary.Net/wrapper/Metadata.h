@@ -1,75 +1,36 @@
-//
-//  MetaData.h
-//  FavLibrary
-//
-//  Created by atsmsmr on 2016/11/14.
-//  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
-//
+#pragma once
 
-#ifndef __FavLibrary__MetaData__
-#define __FavLibrary__MetaData__
+#include "../../FavLibrary/Metadata.h"
 
-#include <stdio.h>
-#include <string>
-#include <vector>
-#include "FavSettings.h"
-
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	RefClass Metadata {
+	interface class IMetadata {
+
+	public:
+		property System::String^ ID { System::String^ get(); void set(System::String^ value); }
+		property System::String^ Title { System::String^ get(); void set(System::String^ value); }
+		property System::String^ Author { System::String^ get(); void set(System::String^ value); }
+		property System::String^ License { System::String^ get(); void set(System::String^ value); }
+		property System::String^ Note { System::String^ get(); void set(System::String^ value); }
+	};
+
+	public ref class Metadata /*: public IMetadata*/ {
 
 	public:
 		Metadata();
+		//Metadata(System::String^ identifier_, System::String^ title_, System::String^ author_, System::String^ license_);
 		~Metadata();
-		Metadata(int identifier_, std::string title_, std::string author_, std::string license_);
 
-		std::string getId();
-		void setId(std::string identifier_);
+		//virtual property System::String^ ID { System::String^ get(); void set(System::String^ value); }
+		//virtual property System::String^ Title { System::String^ get(); void set(System::String^ value); }
+		//virtual property System::String^ Author { System::String^ get(); void set(System::String^ value); }
+		//virtual property System::String^ License { System::String^ get(); void set(System::String^ value); }
+		//virtual property System::String^ Note { System::String^ get(); void set(System::String^ value); }
 
-		std::string getTitle();
-		void setTitle(std::string title_);
+	//internal:
+	//	Metadata(FavLibrary::Metadata* metadata);
 
-		std::string getAuthor();
-		void setAuthor(std::string author_);
-
-		std::string getLicense();
-		void setLicense(std::string license_);
-
-		std::string getNote();
-		void setNote(std::string note_);
-
-	private:
-		sString identifier;
-		sString title;
-		sString author;
-		sString license;
-		sString note;
+	//private:
+	//	FavLibrary::Metadata* pMetadata;
 	};
-
-	RefClass MetadataObject
-	{
-	public:
-		Metadata getMetadata();
-		void setMetadata(Metadata metadata_);
-
-		std::string getMetadataId();
-		void setMetadataId(std::string id_);
-
-		std::string getMetadataAuthor();
-		void setMetadataAuthor(std::string author_);
-
-		std::string getMetadataTitle();
-		void setMetadataTitle(std::string title_);
-
-		std::string getMetadataLicense();
-		void setMetadataLicense(std::string license_);
-
-		std::string getMetadataNote();
-		void setMetadataNote(std::string note_);
-
-	private:
-		Metadata metadata;
-	};
-
 }
-#endif /* defined(__FavLibrary__MetaData__) */

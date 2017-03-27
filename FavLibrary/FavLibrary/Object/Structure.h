@@ -5,9 +5,7 @@
 //  Created by atsmsmr on 2016/12/02.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
-
-#ifndef __FavLibrary__Structure__
-#define __FavLibrary__Structure__
+#pragma once
 
 #include <stdio.h>
 #include <string>
@@ -16,7 +14,7 @@
 #include "../Primitive/Point3D.h"
 #include "../Primitive/Color.h"
 #include "Grid.h"
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {
@@ -165,4 +163,3 @@ namespace FavLibrary
 	};
 
 }
-#endif /* defined(__FavLibrary__Structure__) */

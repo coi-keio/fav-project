@@ -1,8 +1,6 @@
 #pragma once
-//#include "../../FavLibrary/Metadata.h"
-//#include "../../FavLibrary/Primitive/FavPrimitive.h"
+
 #include "../../FavLibrary/Primitive/Color.h"
-//#include "../../FavLibrary/FavSettings.h"
 
 using namespace FavLibrary;
 
@@ -18,123 +16,99 @@ namespace FavLibraryDotNet
 		CMYK,
 	};
 
-	public ref class ColorBase
+	interface class IColor
 	{
 	public:
-		ColorBase::ColorBase() { pColorBase = new FavLibrary::ColorBase(); }
-		ColorBase::~ColorBase() { delete pColorBase; }
-
-		ColorMode colorMode;
-
-		FavLibrary::Metadata GetMetadata() { return pColorBase->getMetadata(); }
-
-	private:
-		FavLibrary::ColorBase* pColorBase;
+		property FavLibraryDotNet::ColorMode ColorMode { FavLibraryDotNet::ColorMode get(); }
 	};
 
-	//public ref class ColorRGB : public ColorBase
-	//{
-	//public:
-	//	ColorRGB();
-	//	~ColorRGB();
+	public ref class ColorRGB : public IColor
+	{
+	public:
+		ColorRGB();
+		ColorRGB(unsigned char r, unsigned char g, unsigned char b);
+		~ColorRGB();
 
-	//	ColorMode colorMode = ColorMode::RGB;//ここconstにするとcompile errorが出てた。要確認
+		void setColorRBG(ColorRGB color);
+		void setColorRBG(unsigned char r, unsigned char g, unsigned char b);
 
-	//	void setColorRBG(unsigned char r, unsigned char g, unsigned char b);
+		property unsigned char R { unsigned char get(); void set(unsigned char value); }
+		property unsigned char G { unsigned char get(); void set(unsigned char value); }
+		property unsigned char B { unsigned char get(); void set(unsigned char value); }
 
-	//	//Metadata GetMetadata();
-	//	//void SetMetadata(Metadata metadata);
+		virtual property FavLibraryDotNet::ColorMode ColorMode { FavLibraryDotNet::ColorMode get(); }
 
-	//	property unsigned char R { unsigned char get(); void set(unsigned char value); }
-	//	property unsigned char G { unsigned char get(); void set(unsigned char value); }
-	//	property unsigned char B { unsigned char get(); void set(unsigned char value); }
+	private:
+		FavLibrary::ColorRGB* pColorRGB;
+	};
 
-	//private:
-	//	//FavLibrary::ColorRGB^ pColorRGB;
-	//};
+	public ref class ColorRGBA : public ColorRGB
+	{
+	public:
+		ColorRGBA();
+		ColorRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+		~ColorRGBA();
 
-	//public ref class ColorRGBA : public ColorRGB
-	//{
-	//public:
-	//	ColorRGBA();
-	//	~ColorRGBA();
+		property unsigned char A { unsigned char get(); void set(unsigned char value); }
 
-	//	ColorMode colorMode = ColorMode::RGBA;
+		void setColorRBGA(ColorRGBA color);
+		void setColorRBGA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
-	//	unsigned char getA();
-	//	void setA(unsigned char a);
+		virtual property FavLibraryDotNet::ColorMode ColorMode { FavLibraryDotNet::ColorMode get() override; }
 
-	//	void setColorRBGA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+	private:
+		FavLibrary::ColorRGBA* pColorRGBA;
+	};
 
-	//private:
-	//	unsigned char a;
+	public ref class ColorGrayscale : public IColor
+	{
+	public:
+		ColorGrayscale();
+		ColorGrayscale(unsigned char gray);
+		~ColorGrayscale();
 
-	//	//FavLibrary::ColorRGBA^ pColorRGBA;
-	//};
+		property unsigned char Gray { unsigned char get(); void set(unsigned char value); }
 
-	//public ref class ColorGrayscale : public ColorBase
-	//{
-	//public:
-	//	ColorGrayscale();
-	//	~ColorGrayscale();
+		virtual property FavLibraryDotNet::ColorMode ColorMode { FavLibraryDotNet::ColorMode get(); }
 
-	//	ColorMode colorMode = ColorMode::Grayscale;
+	private:
+		FavLibrary::ColorGrayscale* pColorGrayscale;
+	};
 
-	//	unsigned char getGray();
-	//	void setGray(unsigned char gray);
+	public ref class ColorGrayscale16 : public IColor
+	{
+	public:
+		ColorGrayscale16();
+		ColorGrayscale16(unsigned short gray);
+		~ColorGrayscale16();
 
-	//private:
-	//	unsigned char gray;
+		property unsigned short Gray { unsigned short get(); void set(unsigned short value); }
 
-	//	//FavLibrary::ColorGrayscale^ pColorGrayscale;
-	//};
+		virtual property FavLibraryDotNet::ColorMode ColorMode { FavLibraryDotNet::ColorMode get(); }
 
-	//public ref class ColorGrayscale16 : public ColorGrayscale
-	//{
-	//public:
-	//	ColorGrayscale16();
-	//	~ColorGrayscale16();
+	private:
+		FavLibrary::ColorGrayscale16* pColorGrayscale16;
+	};
 
-	//	ColorMode colorMode = ColorMode::Grayscale16;
+	public ref class ColorCMYK : public IColor
+	{
+	public:
+		ColorCMYK();
+		ColorCMYK(unsigned char c, unsigned char m, unsigned char y, unsigned char k);
+		~ColorCMYK();
 
-	//	unsigned short getGray();
-	//	void setGray(unsigned short gray);
+		property unsigned char C { unsigned char get(); void set(unsigned char value); }
+		property unsigned char M { unsigned char get(); void set(unsigned char value); }
+		property unsigned char Y { unsigned char get(); void set(unsigned char value); }
+		property unsigned char K { unsigned char get(); void set(unsigned char value); }
+		
+		void setColorCMYK(ColorCMYK color);
+		void setColorCMYK(unsigned char c, unsigned char m, unsigned char y, unsigned char k);
 
-	//private:
-	//	unsigned short gray;
+		virtual property FavLibraryDotNet::ColorMode ColorMode { FavLibraryDotNet::ColorMode get(); }
 
-	//	//FavLibrary::ColorGrayscale16^ pColorGrayscale16;
-	//};
-
-	//public ref class ColorCMYK : public ColorBase
-	//{
-	//public:
-	//	ColorCMYK();
-	//	~ColorCMYK();
-
-	//	ColorMode colorMode = ColorMode::CMYK;
-
-	//	unsigned char getC();
-	//	void setC(unsigned char c);
-
-	//	unsigned char getM();
-	//	void setM(unsigned char m);
-
-	//	unsigned char getY();
-	//	void setY(unsigned char y);
-
-	//	unsigned char getK();
-	//	void setK(unsigned char k);
-
-	//	void setColorCMYK(unsigned char c, unsigned char m, unsigned char y, unsigned char k);
-
-	//private:
-	//	unsigned char c;
-	//	unsigned char m;
-	//	unsigned char y;
-	//	unsigned char k;
-
-	//	//FavLibrary::ColorCMYK^ pColorCMYK;
-	//};
+	private:
+		FavLibrary::ColorCMYK* pColorCMYK;
+	};
 
 }

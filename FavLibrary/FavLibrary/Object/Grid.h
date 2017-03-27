@@ -6,7 +6,7 @@
 #include <list>
 #include <vector>
 #include "../Primitive/Point3D.h"
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {

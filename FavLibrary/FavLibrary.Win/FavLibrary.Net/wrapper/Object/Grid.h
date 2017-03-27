@@ -8,25 +8,25 @@
 #include "../Primitive/Point3D.h"
 #include "../FavSettings.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 
-	RefClass Unit : public Point3D
+	public ref class Unit : public Point3D
 	{
 
 	};
 
-	RefClass Dimension : public Point3D
+	public ref class Dimension : public Point3D
 	{
 
 	};
 
-	RefClass Origin : public Point3D
+	public ref class Origin : public Point3D
 	{
 
 	};
 
-	RefClass Grid
+	public ref class Grid
 	{
 	public:
 		Grid();

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <exception>
 #include <stdexcept>
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {

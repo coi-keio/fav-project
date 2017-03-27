@@ -8,7 +8,7 @@
 #include <vector>
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {
@@ -40,7 +40,7 @@ namespace FavLibrary
 
 	class __declspec(dllexport) ProductInfo : public MaterialSpec {
 	public:
-
+		ProductInfo();
 		ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
 
 		std::string getManufacturer();
@@ -60,7 +60,7 @@ namespace FavLibrary
 
 	class __declspec(dllexport) IsoStandard : public MaterialSpec {
 	public:
-
+		IsoStandard();
 		IsoStandard(std::string iso_id_, std::string iso_name_);
 		std::string getIsoId();
 		void setIsoId(std::string iso_id_);

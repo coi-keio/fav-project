@@ -1,71 +1,50 @@
 #pragma once
-#include <stdio.h>
-#include <string>
-#include <map>
-#include <list>
-#include <vector>
-#include "../Primitive/Point3D.h"
-#include "../Primitive/FavPrimitive.h"
-#include "../FavSettings.h"
 
-namespace FavLibrary
+#include "../../FavLibrary/Palette/Geometry.h"
+#include "./wrapper/Primitive/Point3D.h"
+#include "./wrapper/Primitive/FavPrimitive.h"
+
+namespace FavLibraryDotNet
 {
-	RefEnum GeometryShape
+	public enum class GeometryShape
 	{
 		cube,
 		sphere,
 		user_defined,
 	};
 
-	RefClass Scale : public Point3D
+	public ref class Scale : public Point3D
 	{
 	public:
 		Scale();
 		Scale(double x, double y, double z);
 		~Scale();
-
-	private:
-#ifdef DotNet
-		Scale^ pScale;
-#endif
 	};
 
 
-	RefClass Geometry : public FavPrimitive
+	public ref class Geometry : public IFavPrimitive
 	{
 	public:
 		Geometry();
 		Geometry(unsigned int id_);
-		Geometry(std::string name_);
-		Geometry(unsigned int id_, std::string name_);
+		Geometry(System::String^ name_);
+		Geometry(unsigned int id_, System::String^ name_);
 		~Geometry();
 
-		GeometryShape getShape();
-		void setShape(GeometryShape shape_);
+		property GeometryShape Shape { GeometryShape get(); void set(GeometryShape value); }
+		property FavLibraryDotNet::Scale^ Scale { FavLibraryDotNet::Scale^ get(); void set(FavLibraryDotNet::Scale^ value); }
+		property System::String^ UserDefinedShapePath { System::String^ get(); void set(System::String^ value); }
 
-		std::string getName();
-		void setName(std::string name_);
+		/// Impliment IFavPrimitive  -----------------------------------------------------------------------------------------
+		virtual property bool IsRemoved { bool get(); }
+		virtual void Remove();
 
-		double getScaleX();
-		void setScaleX(double x_);
-
-		double getScaleY();
-		void setScaleY(double y_);
-
-		double getScaleZ();
-		void setScaleZ(double z_);
-
-		void setScale(double x_, double y_, double z_);
+		virtual property unsigned int ID { unsigned int get(); void set(unsigned int value); }
+		virtual property System::String^ Name { System::String^ get(); void set(System::String^ value); }
+		/// ------------------------------------------------------------------------------------------------------------------
 
 	private:
-		GeometryShape shape = GeometryShape::cube;
-		Scale scale;
-
-#ifdef DotNet
-		Geometry^ pGeometry;
-#else
-		std::string userDefinedShape;
-#endif
+		FavLibrary::Geometry* pGeometry;
 
 	};
 

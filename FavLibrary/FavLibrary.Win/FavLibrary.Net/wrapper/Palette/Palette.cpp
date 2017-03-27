@@ -1,14 +1,7 @@
-//
-//  Palette.cpp
-//  FavLibrary
-//
-//  Created by atsmsmr on 2016/11/14.
-//  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
-//
-
+#include "Stdafx.h"
 #include "Palette.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 	Palette::Palette() {
 		number_of_geometries = 0;
@@ -23,7 +16,7 @@ namespace FavLibrary
 
 		return res;
 	};
-	//	std::vector<Geometry> Palette::getGeometriesByName(std::string name_)
+	//	std::vector<Geometry> Palette::getGeometriesByNameSystem::String^ name_)
 	//	{
 	//		std::vector<Geometry> res;
 	//		if (geometriesName.count(name_) > 0)
@@ -52,7 +45,7 @@ namespace FavLibrary
 
 		return res;
 	};
-	//	std::vector<Material> Palette::getMaterialsByName(std::string name_)
+	//	std::vector<Material> Palette::getMaterialsByNameSystem::String^ name_)
 	//	{
 	//		std::vector<Material> res;
 	//		if (materialsName.count(name_) > 0)

@@ -1,35 +1,15 @@
 #pragma once
 
-#include <string>
-#include "../FavSettings.h"
-
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	RefClass FavPrimitive
+	interface class IFavPrimitive
 	{
 	public:
-		FavPrimitive(unsigned int id_);
-		FavPrimitive(std::string name_);
-		FavPrimitive(unsigned int id_, std::string name_);
+		property bool IsRemoved { bool get(); }
+		void Remove();
 
-		bool isRemoved();
-		void remove();
-
-		unsigned int getId();
-		void setId(unsigned int id_);
-		std::string getName();
-		void setName(std::string name_);
-
-	protected:
-		FavPrimitive();
-		~FavPrimitive();
-
-		unsigned int identifier;
-		sString name;
-
-	private:
-
-		bool is_removed = false;
+		property unsigned int ID { unsigned int get(); void set(unsigned int value); }
+		property System::String^ Name { System::String^ get(); void set(System::String^ value); }
 	};
 
 }

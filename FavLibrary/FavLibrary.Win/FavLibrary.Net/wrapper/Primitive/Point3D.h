@@ -1,29 +1,27 @@
 #pragma once
-#include "../FavSettings.h"
 
-namespace FavLibrary
+#include "../../FavLibrary/Primitive/Point3D.h"
+
+using namespace FavLibrary;
+
+namespace FavLibraryDotNet
 {
-	RefClass Point3D
+	public ref class Point3D
 	{
 	public:
 		Point3D();
 		Point3D(double x, double y, double z);
 		~Point3D();
 
-		void set(Point3D p);
+		void Set(Point3D p);
+		void Set(double x_, double y_, double z_);
 
-		double getX();
-		double getY();
-		double getZ();
-		void set(double x_, double y_, double z_);
-		void setX(double x_);
-		void setY(double y_);
-		void setZ(double z_);
+		property double X { double get(); void set(double value); }
+		property double Y { double get(); void set(double value); }
+		property double Z { double get(); void set(double value); }
 
 	protected:
-		double x = 0.0;
-		double y = 0.0;
-		double z = 0.0;
+		FavLibrary::Point3D* pPoint3D;
 	};
 
 }

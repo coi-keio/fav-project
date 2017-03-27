@@ -6,8 +6,6 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-//#ifndef __FavLibrary__FavWriter__
-//#define __FavLibrary__FavWriter__
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -25,7 +23,7 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
-#include "FavSettings.h"
+
 #include "Metadata.h"
 #include "Voxel.h"
 #include "./Palette/Palette.h"
@@ -83,4 +81,3 @@ namespace FavLibrary
     };
     
 }
-//#endif /* defined(__FavLibrary__FavWriter__) */

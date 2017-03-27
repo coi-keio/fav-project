@@ -1,13 +1,13 @@
 //
 //  Voxel.h
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by atsmsmr on 2016/11/14.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-#ifndef __FavLibrary__Voxel__
-#define __FavLibrary__Voxel__
+#ifndef __FavLibraryDotNet__Voxel__
+#define __FavLibraryDotNet__Voxel__
 
 #include <stdio.h>
 #include <string>
@@ -18,9 +18,9 @@
 #include "./Primitive/Color.h"
 #include "FavSettings.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	RefClass VoxelInfo {
+	public ref class VoxelInfo {
 	public:
 		VoxelInfo();
 		VoxelInfo(unsigned int id_);
@@ -33,14 +33,14 @@ namespace FavLibrary
 		unsigned int identifier;
 	};
 
-	RefClass GeometryInfo : public VoxelInfo {
+	public ref class GeometryInfo : public VoxelInfo {
 	public:
 		GeometryInfo();
 		GeometryInfo(unsigned int id_);
 		~GeometryInfo();
 	};
 
-	RefClass MaterialInfo : public VoxelInfo {
+	public ref class MaterialInfo : public VoxelInfo {
 	public:
 		MaterialInfo();
 		MaterialInfo(unsigned int id_);
@@ -55,7 +55,7 @@ namespace FavLibrary
 	};
 
 
-	RefClass Voxel : public FavPrimitive
+	public ref class Voxel : public FavPrimitive
 	{
 	public:
 		Voxel();
@@ -103,4 +103,4 @@ namespace FavLibrary
 
 
 }
-#endif /* defined(__FavLibrary__Voxel__) */
+#endif /* defined(__FavLibraryDotNet__Voxel__) */

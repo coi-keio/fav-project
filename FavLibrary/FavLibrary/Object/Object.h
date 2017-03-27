@@ -13,7 +13,7 @@
 #include "Grid.h"
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {

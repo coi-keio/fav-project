@@ -1,31 +1,64 @@
+#pragma once
+#include "Stdafx.h"
 #include "Geometry.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	Scale::Scale() : Point3D() { }
-	Scale::Scale(double x, double y, double z) : Point3D(x, y, z) { }
-	Scale::~Scale() {};
+	Scale::Scale() { pPoint3D = new FavLibrary::Scale(); }
+	Scale::Scale(double x, double y, double z) { Set(x, y, z); }
+	Scale::~Scale() { delete pPoint3D; }
 
-	Geometry::Geometry() {};
-	Geometry::Geometry(unsigned int id_) : FavPrimitive(id_) {};
-	Geometry::Geometry(std::string name_) : FavPrimitive(name_) {};
-	Geometry::Geometry(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
+	Geometry::Geometry() { pGeometry = new FavLibrary::Geometry(); }
+	Geometry::Geometry(unsigned int id_) { pGeometry = new FavLibrary::Geometry(id_); }
+	Geometry::Geometry(System::String^ name_) { pGeometry = new FavLibrary::Geometry(marshal_as<std::string>(name_)); }
+	Geometry::Geometry(unsigned int id_, System::String^ name_) { pGeometry = new FavLibrary::Geometry(id_, marshal_as<std::string>(name_)); }
 	Geometry::~Geometry() {};
 
-	GeometryShape Geometry::getShape() { return shape; };
-	void Geometry::setShape(GeometryShape shape_) { shape = shape_; };
+	GeometryShape Geometry::Shape::get()
+	{
+		switch (pGeometry->getShape())
+		{
+		case FavLibrary::GeometryShape::sphere:
+			return GeometryShape::sphere;
+		case FavLibrary::GeometryShape::user_defined:
+			return GeometryShape::user_defined;
+		default:
+			return GeometryShape::cube;
+		}
+	}
+	void Geometry::Shape::set(GeometryShape value) 
+	{
+		switch (value)
+		{
+		case GeometryShape::sphere:
+			return pGeometry->setShape(FavLibrary::GeometryShape::sphere);
+		case GeometryShape::user_defined:
+			return pGeometry->setShape(FavLibrary::GeometryShape::user_defined);
+		default:
+			return pGeometry->setShape(FavLibrary::GeometryShape::cube);
+		}
+	}
 
-	std::string Geometry::getName() { return name; };
-	void Geometry::setName(std::string name_) { name = name_; };
+	FavLibraryDotNet::Scale^ Geometry::Scale::get()
+	{
+		return gcnew FavLibraryDotNet::Scale(pGeometry->getScaleX(), pGeometry->getScaleY(), pGeometry->getScaleZ());
+	}
+	void Geometry::Scale::set(FavLibraryDotNet::Scale^ value)
+	{
+		return pGeometry->setScale(value->X, value->Y, value->Z);
+	}
 
-	double Geometry::getScaleX() { return scale.getX(); };
-	void Geometry::setScaleX(double x_) { scale.setX(x_); };
+	System::String^ Geometry::UserDefinedShapePath::get() { throw gcnew System::NotImplementedException(); }
+	void Geometry::UserDefinedShapePath::set(System::String^ value) { throw gcnew System::NotImplementedException(); }
 
-	double Geometry::getScaleY() { return scale.getY(); };
-	void Geometry::setScaleY(double y_) { scale.setY(y_); };
+	/// Impliment IFavPrimitive  -----------------------------------------------------------------------------------------
+	bool Geometry::IsRemoved::get() { return pGeometry->isRemoved(); }
+	void Geometry::Remove() { pGeometry->remove(); }
 
-	double Geometry::getScaleZ() { return scale.getZ(); };
-	void Geometry::setScaleZ(double z_) { scale.setZ(z_); };
+	unsigned int Geometry::ID::get() { return pGeometry->getId(); }
+	void Geometry::ID::set(unsigned int value) { pGeometry->setId(value); }
 
-	void Geometry::setScale(double x_, double y_, double z_) { this->scale.set(x_, y_, z_); };
+	System::String^ Geometry::Name::get() { return marshal_as<System::String^>(pGeometry->getName()); }
+	void Geometry::Name::set(System::String^ value) { pGeometry->setName(marshal_as<std::string>(value)); }
+	/// ------------------------------------------------------------------------------------------------------------------
 }

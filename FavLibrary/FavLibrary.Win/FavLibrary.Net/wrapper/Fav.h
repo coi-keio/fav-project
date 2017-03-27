@@ -1,6 +1,6 @@
 //
 //  Object.h
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by Atsushi Masumori on 2016/09/15.
 //  Copyright (c) 2016 Atsushi Masumori. All rights reserved.
@@ -21,9 +21,9 @@
 #include "Voxel.h"
 #include "Metadata.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	RefClass Fav : public MetadataObject
+	public ref class Fav : public MetadataObject
 	{
 	public:
 		Fav();

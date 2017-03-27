@@ -1,6 +1,6 @@
 //
 //  Structure.cpp
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by atsmsmr on 2016/12/02.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
@@ -10,7 +10,7 @@
 #include "Object.h"
 #include "Grid.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 	template <typename tVoxelMapType>
 	VoxelMap<tVoxelMapType>::VoxelMap(int size) {

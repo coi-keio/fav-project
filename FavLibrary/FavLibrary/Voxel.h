@@ -6,8 +6,7 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-#ifndef __FavLibrary__Voxel__
-#define __FavLibrary__Voxel__
+#pragma once
 
 #include <stdio.h>
 #include <string>
@@ -16,7 +15,7 @@
 #include "Metadata.h"
 #include "./Primitive/FavPrimitive.h"
 #include "./Primitive/Color.h"
-#include "FavSettings.h"
+
 
 namespace FavLibrary
 {
@@ -101,4 +100,3 @@ namespace FavLibrary
 
 
 }
-#endif /* defined(__FavLibrary__Voxel__) */

@@ -1,13 +1,13 @@
 //
 //  Structure.h
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by atsmsmr on 2016/12/02.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-#ifndef __FavLibrary__Structure__
-#define __FavLibrary__Structure__
+#ifndef __FavLibraryDotNet__Structure__
+#define __FavLibraryDotNet__Structure__
 
 #include <stdio.h>
 #include <string>
@@ -18,23 +18,23 @@
 #include "Grid.h"
 #include "../FavSettings.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 
-	RefEnum BitPerVoxel {
+	public enum class BitPerVoxel {
 		FourBit,
 		EightBit,
 		SixteenBit,
 	};
 
-	RefEnum Compression {
+	public enum class Compression {
 		None,
 		Zlib,
 		Base64,
 	};
 
 	template<typename tVoxelMapType>
-	RefClass VoxelMap {
+	public ref class VoxelMap {
 
 	public:
 		VoxelMap(int size);
@@ -48,7 +48,7 @@ namespace FavLibrary
 		tVoxelMapType* data;
 	};
 
-	RefClass Structure {
+	public ref class Structure {
 	public:
 		Structure(Grid* grid_);
 		Structure(int bit_per_voxel_);
@@ -70,16 +70,16 @@ namespace FavLibrary
 		void initColorMap();
 		void initColorMap(ColorMode color_mode_);
 		void setColorMode(ColorMode color_mode_);
-		void setColor(Point3D p_, PrmClass ColorRGB color_);
-		void setColor(Point3D p_, PrmClass ColorRGBA color_);
-		void setColor(Point3D p_, PrmClass ColorCMYK color_);
-		void setColor(Point3D p_, PrmClass ColorGrayScale color_);
-		void setColor(Point3D p_, PrmClass ColorGrayScale16 color_);
-		void setColor(int x_, int y_, int z_, PrmClass ColorRGB color_);
-		void setColor(int x_, int y_, int z_, PrmClass ColorRGBA color_);
-		void setColor(int x_, int y_, int z_, PrmClass ColorCMYK color_);
-		void setColor(int x_, int y_, int z_, PrmClass ColorGrayscale color_);
-		void setColor(int x_, int y_, int z_, PrmClass ColorGrayscale16 color_);
+		void setColor(Point3D p_, ref class ColorRGB color_);
+		void setColor(Point3D p_, ref class ColorRGBA color_);
+		void setColor(Point3D p_, ref class ColorCMYK color_);
+		void setColor(Point3D p_, ref class ColorGrayScale color_);
+		void setColor(Point3D p_, ref class ColorGrayScale16 color_);
+		void setColor(int x_, int y_, int z_, ref class ColorRGB color_);
+		void setColor(int x_, int y_, int z_, ref class ColorRGBA color_);
+		void setColor(int x_, int y_, int z_, ref class ColorCMYK color_);
+		void setColor(int x_, int y_, int z_, ref class ColorGrayscale color_);
+		void setColor(int x_, int y_, int z_, ref class ColorGrayscale16 color_);
 		void setColorRGB(Point3D p_, int r_, int g_, int b_);
 		void setColorRGBA(Point3D p_, int r_, int g_, int b_, int a_);
 		void setColorCMYK(Point3D p_, int c_, int m_, int cy_, int k_);
@@ -172,4 +172,4 @@ namespace FavLibrary
 	};
 
 }
-#endif /* defined(__FavLibrary__Structure__) */
+#endif /* defined(__FavLibraryDotNet__Structure__) */

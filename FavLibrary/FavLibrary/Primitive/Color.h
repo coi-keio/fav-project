@@ -1,5 +1,5 @@
 #pragma once
-#include "../FavSettings.h"
+
 #include "../Metadata.h"
 #include "FavPrimitive.h"
 
@@ -15,18 +15,18 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	class __declspec(dllexport) ColorBase : public MetadataObject, FavPrimitive
+	class __declspec(dllexport) IColor : public MetadataObject, FavPrimitive
 	{
 	public:
-		ColorBase();
-		~ColorBase();
+		IColor();
+		~IColor();
 
 		ColorMode colorMode;
 
 	private:
 	};
 
-	class __declspec(dllexport) ColorRGB : public ColorBase
+	class __declspec(dllexport) ColorRGB : public IColor
 	{
 	public:
 		ColorRGB();
@@ -68,7 +68,7 @@ namespace FavLibrary
 		unsigned char a;
 	};
 
-	class __declspec(dllexport) ColorGrayscale : public ColorBase
+	class __declspec(dllexport) ColorGrayscale : public IColor
 	{
 	public:
 		ColorGrayscale();
@@ -98,7 +98,7 @@ namespace FavLibrary
 		unsigned short gray;
 	};
 
-	class __declspec(dllexport) ColorCMYK : public ColorBase
+	class __declspec(dllexport) ColorCMYK : public IColor
 	{
 	public:
 		ColorCMYK();

@@ -1,13 +1,13 @@
 //
 //  FavWriter.h
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by atsmsmr on 2016/12/05.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-//#ifndef __FavLibrary__FavWriter__
-//#define __FavLibrary__FavWriter__
+//#ifndef __FavLibraryDotNet__FavWriter__
+//#define __FavLibraryDotNet__FavWriter__
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -35,11 +35,11 @@
 
 using namespace xercesc;
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-    RefClass Fav;
+    public ref class Fav;
 
-	RefClass FavWriter {
+	public ref class FavWriter {
 	public:
 		FavWriter(Fav* fav_) { fav = fav_; }
 		bool write(const char* file_path, const char* version);
@@ -70,4 +70,4 @@ namespace FavLibrary
 	};
 
 }
-//#endif /* defined(__FavLibrary__FavWriter__) */
+//#endif /* defined(__FavLibraryDotNet__FavWriter__) */

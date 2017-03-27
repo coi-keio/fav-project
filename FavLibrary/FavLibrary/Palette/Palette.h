@@ -5,9 +5,7 @@
 //  Created by atsmsmr on 2016/11/14.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
-
-#ifndef __FavLibrary__Palette__
-#define __FavLibrary__Palette__
+#pragma once
 
 #include <algorithm>
 #include <stdio.h>
@@ -15,7 +13,7 @@
 #include <map>
 #include "Geometry.h"
 #include "Material.h"
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {
@@ -53,4 +51,3 @@ namespace FavLibrary
 		Palette* pPalette;
 	};
 }
-#endif /* defined(__FavLibrary__Palette__) */

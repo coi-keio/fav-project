@@ -1,64 +1,120 @@
+#pragma once
+#include "Stdafx.h"
 #include "Material.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	MaterialSpec::MaterialSpec() {};
-	MaterialSpec::~MaterialSpec() {};
+	//MaterialSpec::MaterialSpec() {};
+	//MaterialSpec::~MaterialSpec() {};
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	MaterialName::MaterialName(std::string name_) { name = name_; materialType = MaterialType::material_name; }
-	std::string MaterialName::getMaterialName() { return name; }
-	void MaterialName::setMaterialName(std::string name_) { name = name_; }
+	MaterialName::MaterialName(System::String^ name_) { pMaterialName = new FavLibrary::MaterialName(marshal_as<std::string>(name_)); }
+	MaterialName::~MaterialName() { delete pMaterialName; }
 
-	ProductInfo::ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_)
+	System::String^ MaterialName::Name::get() { return  marshal_as<System::String^>(pMaterialName->getMaterialName()); }
+	void MaterialName::Name::set(System::String^ value) { pMaterialName->setMaterialName(marshal_as<std::string>(value)); }
+
+	MaterialType MaterialName::MaterialType::get() { return FavLibraryDotNet::MaterialType::material_name; }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	ProductInfo::ProductInfo() { pProductInfo = new FavLibrary::ProductInfo(); }
+	ProductInfo::ProductInfo(System::String^ manufacturer_, System::String^ product_name_, System::String^ url_)
 	{
-		materialType = MaterialType::product_info;
-		manufacturer = manufacturer_;
-		product_name = product_name_;
-		url = url_;
-	};
+		pProductInfo = new FavLibrary::ProductInfo(
+			marshal_as<std::string>(manufacturer_),
+			marshal_as<std::string>(product_name_),
+			marshal_as<std::string>(url_)
+		);
+	}
+	ProductInfo::~ProductInfo() { delete pProductInfo; }
 
-	std::string ProductInfo::getManufacturer() { return manufacturer; };
-	void ProductInfo::setManufacturer(std::string manufacturer_) { manufacturer = manufacturer_; };
+	System::String^ ProductInfo::Manufacturer::get() { return marshal_as<System::String^>(pProductInfo->getManufacturer()); }
+	void ProductInfo::Manufacturer::set(System::String^ value) { pProductInfo->setManufacturer(marshal_as<std::string>(value)); }
 
-	std::string ProductInfo::getUrl() { return url; };
-	void ProductInfo::setUrl(std::string url_) { url = url_; };
+	System::String^ ProductInfo::ProductName::get() { return  marshal_as<System::String^>(pProductInfo->getProductName()); }
+	void ProductInfo::ProductName::set(System::String^ value) { pProductInfo->setProductName(marshal_as<std::string>(value)); }
 
-	std::string ProductInfo::getProductName() { return product_name; };
-	void ProductInfo::setProductName(std::string product_name_) { product_name = product_name_; };
+	System::String^ ProductInfo::Url::get() { return marshal_as<System::String^>(pProductInfo->getUrl()); }
+	void ProductInfo::Url::set(System::String^ value) { pProductInfo->setUrl(marshal_as<std::string>(value)); }
 
-	IsoStandard::IsoStandard(std::string iso_id_, std::string iso_name_) { iso_id = iso_id_, iso_name = iso_name_; materialType = MaterialType::iso_standard; };
+	MaterialType ProductInfo::MaterialType::get() { return FavLibraryDotNet::MaterialType::product_info; }
 
-	std::string IsoStandard::getIsoId() { return iso_id; };
-	void IsoStandard::setIsoId(std::string iso_id_) { iso_id = iso_id_; };
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	std::string IsoStandard::getIsoName() { return iso_name; };
-	void IsoStandard::setIsoName(std::string iso_name_) { iso_name = iso_name_; };
+	IsoStandard::IsoStandard() { pIsoStandard = new FavLibrary::IsoStandard(); }
+	IsoStandard::IsoStandard(System::String^ iso_id_, System::String^ iso_name_)
+	{
+		pIsoStandard = new FavLibrary::IsoStandard(
+			marshal_as<std::string>(iso_id_),
+			marshal_as<std::string>(iso_name_)
+		);
+	}
+	IsoStandard::~IsoStandard() { delete pIsoStandard; }
 
-	Material::Material() {};
-	Material::Material(unsigned int id_) : FavPrimitive(id_) {};
-	Material::Material(std::string name_) : FavPrimitive(name_) {};
-	Material::Material(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
-	Material::~Material() {};
+	System::String^ IsoStandard::IsoID::get() { return marshal_as<System::String^>(pIsoStandard->getIsoId()); }
+	void IsoStandard::IsoID::set(System::String^ value) { pIsoStandard->setIsoId(marshal_as<std::string>(value)); }
 
-	bool Material::hasMaterials() { return getNumMaterials() > 0; };
+	System::String^ IsoStandard::IsoName::get() { return marshal_as<System::String^>(pIsoStandard->getIsoName()); }
+	void IsoStandard::IsoName::set(System::String^ value) { pIsoStandard->setIsoName(marshal_as<std::string>(value)); }
 
-	int Material::getNumMaterials() { return int(materials.size()); }
-	//std::map<int, MaterialSpec*> Material::getMaterials() { return materials; }
-	//std::vector<MaterialSpec*> Material::getMaterials() { return materials; }
+	MaterialType IsoStandard::MaterialType::get() { return FavLibraryDotNet::MaterialType::iso_standard; }
 
-	void Material::addMaterialName(std::string material_name_) { materials.push_back(new MaterialName(material_name_)); };
-	void Material::addMaterialName(MaterialName* material_name_) { materials.push_back(material_name_); };
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void Material::addProductInfo(std::string manufacturer_, std::string product_name_, std::string url_) {
-		materials.push_back(new ProductInfo(manufacturer_, product_name_, url_));
-	};
-	void Material::addProductInfo(ProductInfo* product_info_) { materials.push_back(product_info_); };
+	Material::Material() 
+	{
+		pMaterial = new FavLibrary::Material(); 
+		_metadata = gcnew FavLibraryDotNet::Metadata();
+	}
+	Material::Material(unsigned int id_) 
+	{
+		pMaterial = new FavLibrary::Material(id_);
+		_metadata = gcnew FavLibraryDotNet::Metadata();
+	}
+	Material::Material(System::String^ name_) 
+	{
+		pMaterial = new FavLibrary::Material(marshal_as<std::string>(name_));
+		_metadata = gcnew FavLibraryDotNet::Metadata();
+	}
+	Material::Material(unsigned int id_, System::String^ name_)
+	{
+		pMaterial = new FavLibrary::Material(id_, marshal_as<std::string>(name_));
+		_metadata = gcnew FavLibraryDotNet::Metadata();
+	}
+	Material::~Material() 
+	{
+		delete pMaterial;
+		_metadata->~Metadata();
+	}
 
-	void Material::addIsoStandard(std::string iso_id_, std::string iso_name_) {
-		materials.push_back(new IsoStandard(iso_id_, iso_name_));
-	};
-	void Material::addIsoStandard(IsoStandard* iso_standard_) { materials.push_back(iso_standard_); };
+	bool Material::HasMaterials::get() { return pMaterial->hasMaterials(); }
+	int Material::NumMaterials::get() { return pMaterial->getNumMaterials(); }
+
+	void addMaterialName(MaterialName material_name);
+	void addProductInfo(ProductInfo product_info);
+	void addIsoStandard(IsoStandard iso_standard);
+
+	//FavLibraryDotNet::Metadata^ Material::Metadata::get()
+	//{
+	//	return gcnew FavLibraryDotNet::Metadata(pMaterial->getScaleX(), pGeometry->getScaleY(), pGeometry->getScaleZ());
+	//}
+	//void Material::Metadata::set(FavLibraryDotNet::Metadata^ value)
+	//{
+	//	return pMaterial->setScale(value->X, value->Y, value->Z);
+	//}
+
+	/// Impliment IFavPrimitive  -----------------------------------------------------------------------------------------
+	bool Material::IsRemoved::get() { return pMaterial->isRemoved(); }
+	void Material::Remove() { pMaterial->remove(); }
+
+	unsigned int Material::ID::get() { return pMaterial->getId(); }
+	void Material::ID::set(unsigned int value) { pMaterial->setId(value); }
+
+	System::String^ Material::Name::get() { return marshal_as<System::String^>(pMaterial->getName()); }
+	void Material::Name::set(System::String^ value) { pMaterial->setName(marshal_as<std::string>(value)); }
+	/// ------------------------------------------------------------------------------------------------------------------
 
 
 }

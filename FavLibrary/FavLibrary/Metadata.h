@@ -6,15 +6,12 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-//#ifndef __FavLibrary__MetaData__
-//#define __FavLibrary__MetaData__
-
 #pragma once
 
 #include <stdio.h>
 #include <string>
 #include <vector>
-#include "FavSettings.h"
+
 
 namespace FavLibrary
 {
@@ -73,4 +70,3 @@ namespace FavLibrary
 	};
 
 }
-//#endif /* defined(__FavLibrary__MetaData__) */

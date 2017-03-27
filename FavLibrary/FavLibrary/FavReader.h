@@ -5,10 +5,7 @@
 //  Created by atsmsmr on 2016/12/05.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
-
-#ifndef __FavLibrary__FavReader__
-#define __FavLibrary__FavReader__
-
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -25,7 +22,7 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
-#include "FavSettings.h"
+
 #include "Metadata.h"
 #include "Voxel.h"
 #include "./Palette/Palette.h"
@@ -65,4 +62,3 @@ namespace FavLibrary
 		Fav* fav;
 	};
 }
-#endif /* defined(__FavLibrary__FavReader__) */
