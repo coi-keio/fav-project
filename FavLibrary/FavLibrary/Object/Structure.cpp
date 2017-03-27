@@ -112,7 +112,7 @@ namespace FavLibrary
             case ColorMode::Grayscale16:
                 color_map_16bit = new unsigned short[number_of_voxels];
                 break;
-            
+                
             default:
                 //TODO: エラー処理
                 break;
@@ -434,6 +434,64 @@ namespace FavLibrary
 	int Structure::getIndex(int x_, int y_, int z_) {
 		int ret = x_ + grid->getDimensionX() * y_ + grid->getDimensionX() * grid->getDimensionY() * z_;
 		return ret;
-		//    return x_ + grid->dimension.getX() * y_ + grid->dimension.getX() * grid->dimension.getY() * z_;
 	}
+    
+    void Structure::convertRgbToCmyk(){
+        
+        // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
+        // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
+        unsigned char*  new_color_map = new unsigned char[number_of_voxels * 4];
+        int count = 0;
+        for(int i=0; i<number_of_voxels*3; i=i+3){
+
+            double red   = color_map[i];
+            double green = color_map[i+1];
+            double blue  = color_map[i+2];
+            double black = std::min(1. - red / 255., std::min(1. - green / 255., 1. - blue / 255.));
+            
+             //FIXME: by 1.001, avoid to devide by zero.
+            new_color_map[count*4]   = (unsigned char)(((1. - (red  / 255.) - black) / (1.0001 - black))*255);// Cyan
+            new_color_map[count*4+1] = (unsigned char)(((1. - (green/ 255.) - black) / (1.0001 - black))*255);// Magenta
+            new_color_map[count*4+2] = (unsigned char)(((1. - (blue / 255.) - black) / (1.0001 - black))*255);// Yellow
+            new_color_map[count*4+3] = (unsigned char)(black*255);                                            // KeyPlate
+            
+            count++;
+        }
+
+        delete color_map;
+        color_map = nullptr;
+        color_map = new_color_map;
+        color_mode = ColorMode::CMYK;
+    };
+    
+//    void Structure::convertRgbToGrayscale(){};
+//    void Structure::convertRgbToGrayscale16(){};
+//    
+//    void Structure::convertColorMapToRGB(){
+//    
+//        switch(color_mode){
+//                
+//            case ColorMode::RGB:
+//                break;
+//                
+//            case ColorMode::RGBA:
+//                if(alpha_map != NULL){
+//                    delete[] alpha_map;
+//                    alpha_map = nullptr;
+//                }
+//                break;
+//                
+//            case ColorMode::CMYK:
+//                convertCmykToRgb();
+//                break;
+//                
+//            case ColorMode::Grayscale:
+//                convertGrayscaleToRgb();
+//                break;
+//                
+//            case ColorMode::Grayscale16:
+//                convertGrayscale16ToRgb();
+//                break;
+//        }
+//    };
 }

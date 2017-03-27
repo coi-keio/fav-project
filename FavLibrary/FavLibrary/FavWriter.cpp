@@ -612,6 +612,8 @@ namespace FavLibrary
     
 	void FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_structure) {
 
+        p_structure->convertRgbToCmyk();
+        
         // TODO: writeColorMap の実装はwriteVoxelMapができてからそれに準じてやる
         DOMElement *cmap_elem = doc->createElement(XMLString::transcode("color_map"));
         
@@ -645,18 +647,30 @@ namespace FavLibrary
                 
             case FavLibrary::ColorMode::RGBA:
                 color_mode = "RGBA";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapRGBA(cmap_elem, p_structure);
+
                 break;
                 
             case FavLibrary::ColorMode::CMYK:
                 color_mode = "CMYK";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapCMYK(cmap_elem, p_structure);
+
                 break;
                 
             case FavLibrary::ColorMode::Grayscale:
                 color_mode = "GrayScale";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapGrayScale(cmap_elem, p_structure);
+
                 break;
                 
             case FavLibrary::ColorMode::Grayscale16:
                 color_mode = "GrayScale16";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapGrayScale16(cmap_elem, p_structure);
+
                 break;
         }
         

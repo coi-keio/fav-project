@@ -498,11 +498,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavWriter.cpp"
-            timestampString = "512214701.112313"
+            timestampString = "512248463.034821"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "714"
-            endingLineNumber = "714"
+            startingLineNumber = "728"
+            endingLineNumber = "728"
             landmarkName = "FavWriter::writeXML(const char *filePath)"
             landmarkType = "5">
          </BreakpointContent>
@@ -646,6 +646,54 @@
             startingLineNumber = "35"
             endingLineNumber = "35"
             landmarkName = "FavWriter::write(const char* file_path)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/Object/Structure.cpp"
+            timestampString = "512248577.995004"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
+            landmarkName = "Structure::convertRgbToCmyk()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavWriter.cpp"
+            timestampString = "512248403.30108"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
+            landmarkName = "FavWriter::writeColorMapCMYK(DOMElement *cmap_elem, Structure* p_structure)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FavLibrary/FavWriter.cpp"
+            timestampString = "512248463.034821"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "657"
+            endingLineNumber = "657"
+            landmarkName = "FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_structure)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

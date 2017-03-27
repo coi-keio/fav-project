@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <algorithm>
+
 #include "../Primitive/Point3D.h"
 #include "../Primitive/Color.h"
 #include "Grid.h"
@@ -137,17 +139,32 @@ namespace FavLibrary
 		//        int getNeighbors(){ return neighbours; };
 
 		Grid* grid;
+        
+        void convertRgbToCmyk();
+
 
 	private:
-        void changeColorMapToRGB();
-        void changeColorMapToRGBA();
-		void changeColorMapToCMYK();
-		void changeColorMatToGrayScale();
-		void changeColorMatToGrayScale16();
+//        void convertColorMapToRGB();
+//        void convertColorMapToRGBA();
+//		void convertColorMapToCMYK();
+//		void convertColorMatToGrayScale();
+//		void convertColorMatToGrayScale16();
+////        void convertRgbToCmyk();
+//        void convertRgbToGrayscale();
+//        void convertRgbToGrayscale16();
+//        void convertCmykToRgb();
+//        void convertCmykToGrayscale();
+//        void convertCmykToGrayscale16();
+//        void convertGrayscaleToRgb();
+//        void convertGrayscaleToCmyk();
+//        void convertGrayscaleToGrayscale16();
+//        void convertGrayscale16ToRgb();
+//        void convertGrayscale16ToCmyk();
+//        void convertGrayscale16ToGrayscale();
 
 		int getIndex(int x, int y, int z); //returns the index of the array from xyz indices
 
-		int       bit_per_voxel;
+		int bit_per_voxel;
 		ColorMode color_mode;
 		Compression compression;
 		int number_of_voxels;
