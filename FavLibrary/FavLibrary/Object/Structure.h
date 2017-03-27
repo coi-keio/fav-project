@@ -137,27 +137,25 @@ namespace FavLibrary
 
 		Grid* grid;
         
-        void convertRgbToCmyk();
-
 
 	private:
-//        void convertColorMapToRGB();
+        void convertColorMapToRGB();
 //        void convertColorMapToRGBA();
-//		void convertColorMapToCMYK();
-//		void convertColorMatToGrayScale();
-//		void convertColorMatToGrayScale16();
-////        void convertRgbToCmyk();
-//        void convertRgbToGrayscale();
-//        void convertRgbToGrayscale16();
-//        void convertCmykToRgb();
-//        void convertCmykToGrayscale();
-//        void convertCmykToGrayscale16();
-//        void convertGrayscaleToRgb();
-//        void convertGrayscaleToCmyk();
-//        void convertGrayscaleToGrayscale16();
-//        void convertGrayscale16ToRgb();
-//        void convertGrayscale16ToCmyk();
-//        void convertGrayscale16ToGrayscale();
+		void convertColorMapToCMYK();
+		void convertColorMapToGrayscale();
+		void convertColorMapToGrayscale16();
+        void convertRgbToCmyk();
+        void convertRgbToGrayscale();
+        void convertRgbToGrayscale16();
+        void convertCmykToRgb();
+        void convertCmykToGrayscale();
+        void convertCmykToGrayscale16();
+        void convertGrayscaleToRgb();
+        void convertGrayscaleToCmyk();
+        void convertGrayscaleToGrayscale16();
+        void convertGrayscale16ToRgb();
+        void convertGrayscale16ToCmyk();
+        void convertGrayscale16ToGrayscale();
 
 		int getIndex(int x, int y, int z); //returns the index of the array from xyz indices
 

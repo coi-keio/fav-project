@@ -615,8 +615,6 @@ namespace FavLibrary
     }
     
 	void FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_structure) {
-
-        p_structure->convertRgbToCmyk();
         
         // TODO: writeColorMap の実装はwriteVoxelMapができてからそれに準じてやる
         DOMElement *cmap_elem = doc->createElement(XMLString::transcode("color_map"));
