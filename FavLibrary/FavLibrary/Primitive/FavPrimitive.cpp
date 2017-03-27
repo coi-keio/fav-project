@@ -1,3 +1,4 @@
+#pragma once
 #include "FavPrimitive.h"
 
 namespace FavLibrary

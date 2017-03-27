@@ -4,4 +4,11 @@
 
 #pragma once
 
+#include <msclr\marshal.h>
+#include <msclr\marshal_cppstd.h>
+#include "../../FavLibrary/FavSettings.h"
+
+using namespace msclr::interop;
+using namespace FavLibrary;
+
 #pragma comment(lib, "FavLibrary.lib")

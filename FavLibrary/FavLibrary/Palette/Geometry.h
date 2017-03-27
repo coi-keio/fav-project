@@ -6,11 +6,11 @@
 #include <vector>
 #include "../Primitive/Point3D.h"
 #include "../Primitive/FavPrimitive.h"
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {
-	enum RefClass GeometryShape
+	enum class __declspec(dllexport) GeometryShape
 	{
 		cube,
 		sphere,
@@ -18,7 +18,7 @@ namespace FavLibrary
         none,
 	};
 
-	RefClass Scale : public Point3D
+	class __declspec(dllexport) Scale : public Point3D
 	{
 	public:
 		Scale();
@@ -30,7 +30,7 @@ namespace FavLibrary
 	};
 
 
-	RefClass Geometry : public FavPrimitive
+	class __declspec(dllexport) Geometry : public FavPrimitive
 	{
 	public:
 		Geometry();

@@ -1,6 +1,6 @@
 #include "Grid.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 	Unit Grid::getUnit() { return unit; };
 	void Grid::setUnit(Point3D p) { unit.set(p); };

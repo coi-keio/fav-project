@@ -1,9 +1,11 @@
 #pragma once
-#include "../FavSettings.h"
+
+#include "../Metadata.h"
+#include "FavPrimitive.h"
 
 namespace FavLibrary
 {
-	RefEnum ColorMode
+	enum class __declspec(dllexport) ColorMode
 	{
 		None,
 		Grayscale,
@@ -13,22 +15,18 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	RefClass ColorBase
+	class __declspec(dllexport) IColor : public MetadataObject, FavPrimitive
 	{
 	public:
-		ColorBase();
-		~ColorBase();
+		IColor();
+		~IColor();
 
 		ColorMode colorMode;
 
 	protected:
-
-#ifdef DotNet
-		ColorBase^ pColorBase;
-#endif
 	};
 
-	RefClass ColorRGB : public ColorBase
+	class __declspec(dllexport) ColorRGB : public IColor
 	{
 	public:
 		ColorRGB();
@@ -52,13 +50,9 @@ namespace FavLibrary
 		unsigned char r;
 		unsigned char g;
 		unsigned char b;
-
-#ifdef DotNet
-		ColorRGB^ pColorRGB;
-#endif
 	};
 
-	RefClass ColorRGBA : public ColorRGB
+	class __declspec(dllexport) ColorRGBA : public ColorRGB
 	{
 	public:
 		ColorRGBA();
@@ -74,13 +68,9 @@ namespace FavLibrary
 
 	private:
 		unsigned char a;
-
-#ifdef DotNet
-		ColorRGBA^ pColorRGBA;
-#endif
 	};
 
-	RefClass ColorGrayscale : public ColorBase
+	class __declspec(dllexport) ColorGrayscale : public IColor
 	{
 	public:
 		ColorGrayscale();
@@ -93,13 +83,9 @@ namespace FavLibrary
 
 	protected:
 		unsigned char gray;
-
-#ifdef DotNet
-		ColorGrayscale^ pColorGrayscale;
-#endif
 	};
 
-	RefClass ColorGrayscale16 : public ColorGrayscale
+	class __declspec(dllexport) ColorGrayscale16 : public ColorGrayscale
 	{
 	public:
 		ColorGrayscale16();
@@ -112,13 +98,9 @@ namespace FavLibrary
 
 	private:
 		unsigned short gray;
-
-#ifdef DotNet
-		ColorGrayscale16^ pColorGrayscale16;
-#endif
 	};
 
-	RefClass ColorCMYK : public ColorBase
+	class __declspec(dllexport) ColorCMYK : public IColor
 	{
 	public:
 		ColorCMYK();
@@ -146,10 +128,6 @@ namespace FavLibrary
 		unsigned char m;
 		unsigned char y;
 		unsigned char k;
-
-#ifdef DotNet
-		ColorCMYK^ pColorCMYK;
-#endif
 	};
 
 }

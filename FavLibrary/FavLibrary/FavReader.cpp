@@ -364,7 +364,7 @@ namespace FavLibrary
             
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
             
-            int count_colors;
+            int count_colors = 0;
             for(int y=0; y<current_object->grid->getDimensionY(); ++y){
                 for(int x=0; x<current_object->grid->getDimensionX(); ++x){
                     if(structure->getVoxel(x,y,z) > 0 )
@@ -474,7 +474,7 @@ namespace FavLibrary
                 
             }else if (compression == "base64") {
                 
-                int count_colors;
+                int count_colors = 0;
                 for(int y=0; y<current_object->grid->getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid->getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
@@ -563,7 +563,7 @@ namespace FavLibrary
                 
             }else if (compression == "base64") {
                 
-                int count_colors;
+                int count_colors = 0;
                 for(int y=0; y<current_object->grid->getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid->getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
@@ -634,7 +634,7 @@ namespace FavLibrary
                 
             }else if (compression == "base64") {
                 
-                int count_colors;
+                int count_colors = 0;
                 for(int y=0; y<current_object->grid->getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid->getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
@@ -700,7 +700,7 @@ namespace FavLibrary
                 
             }else if (compression == "base64") {
                 
-                int count_colors;
+                int count_colors = 0;
                 for(int y=0; y<current_object->grid->getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid->getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )

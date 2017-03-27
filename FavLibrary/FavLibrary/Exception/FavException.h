@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <exception>
 #include <stdexcept>
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {
-	enum RefClass FavExceptionCode
+	enum class __declspec(dllexport) FavExceptionCode
 	{
 		Undefined,
 		// ïâÇÃêîÇÕéwíËÇ≈Ç´Ç‹ÇπÇÒÅD
@@ -15,7 +15,7 @@ namespace FavLibrary
 
 	};
 
-	RefClass FavException : public std::exception
+	class __declspec(dllexport) FavException : public std::exception
 	{
 	protected:
 		std::exception innerException;
@@ -23,7 +23,7 @@ namespace FavLibrary
 		FavExceptionCode code;
 	};
 
-	RefClass FavInvalidArgumentException : public FavException, std::invalid_argument
+	class __declspec(dllexport) FavInvalidArgumentException : public FavException, std::invalid_argument
 	{
 	public:
 	};

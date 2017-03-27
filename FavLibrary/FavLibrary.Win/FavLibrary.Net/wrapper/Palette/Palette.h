@@ -1,10 +1,3 @@
-//
-//  Palette.h
-//  FavLibrary
-//
-//  Created by atsmsmr on 2016/11/14.
-//  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
-//
 #pragma once
 
 #include <algorithm>
@@ -13,23 +6,24 @@
 #include <map>
 #include "Geometry.h"
 #include "Material.h"
+#include "../FavSettings.h"
 
-
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 
-	class __declspec(dllexport) Palette {
+	public ref class Palette {
 
 	public:
 		Palette();
+		~Palette();
 
 		Geometry getGeometryById(unsigned int id_);
-		//	std::vector<Geometry> getGeometriesByName(std::string name_);
+		//	std::vector<Geometry> getGeometriesByName(System::String^ name_);
 		void addGeometry(Geometry geometry_);
 		void removeGeometry(unsigned int id_);
 
 		Material getMaterialById(unsigned int id_);
-		//	std::vector<Material> getMaterialsByName(std::string name_);
+		//	std::vector<Material> getMaterialsByName(System::String^ name_);
 		void addMaterial(Material material_);
 		void removeMaterial(unsigned int id_);
 
@@ -42,12 +36,16 @@ namespace FavLibrary
 		std::vector<unsigned int> geometry_id_list;
 		std::vector<unsigned int> material_id_list;
 
-		std::map<std::string, std::vector<Geometry>> geometriesName;
-		std::map<std::string, std::vector<Material>> materialsName;
+		std::map<System::String^, std::vector<Geometry>> geometriesName;
+		std::map<System::String^, std::vector<Material>> materialsName;
 
 		unsigned int number_of_materials;
 		unsigned int number_of_geometries;
 
-		Palette* pPalette;
+#ifdef DotNet
+		Palette^ pPalette;
+#endif
+
 	};
 }
+#endif /* defined(__FavLibraryDotNet__Palette__) */

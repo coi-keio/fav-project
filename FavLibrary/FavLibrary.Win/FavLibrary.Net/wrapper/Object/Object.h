@@ -1,6 +1,6 @@
 //
 //  Object.h
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by Atsushi Masumori on 2016/09/15.
 //  Copyright (c) 2016 Atsushi Masumori. All rights reserved.
@@ -13,22 +13,29 @@
 #include "Grid.h"
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
+#include "../FavSettings.h"
 
-
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-
-	class __declspec(dllexport) Object : public FavPrimitive, MetadataObject
+	public ref class Object
+#ifdef DotNet
+		: public FavPrimitive
+#else
+		: public FavPrimitive, MetadataObject
+#endif
 	{
 	public:
 		Object();
 		Object(unsigned int id_);
 		Object(std::string name_);
 		Object(unsigned int id_, std::string name_);
-
 		~Object();
 
+#ifdef DotNet
+		void setStructure(Structure structure_new_);
+#else
 		void setStructure(Structure* structure_new_);
+#endif
 
 		/// この辺はStructureのメソッド呼ぶだけのショートカット
 		//int* getVoxelMap();
@@ -39,12 +46,16 @@ namespace FavLibrary
 		//void setColorMap(int* color_map_);
 		//void setLinkMap(int* link_map_);
 
+#ifndef DotNet
 		Grid* grid;
 		Structure* structure;
+#endif
 
 	private:
-		Object* pObject;
 
+#ifdef DotNet
+		Object^ pObject;
+#endif
 	};
 
 }

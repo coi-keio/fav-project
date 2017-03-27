@@ -1,6 +1,6 @@
 //
 //  Object.h
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by Atsushi Masumori on 2016/09/15.
 //  Copyright (c) 2016 Atsushi Masumori. All rights reserved.
@@ -13,7 +13,7 @@
 #include <map>
 #include <algorithm>
 
-
+#include "FavSettings.h"
 #include "./Palette/Palette.h"
 #include "./Object/Object.h"
 #include "FavReader.h"
@@ -21,15 +21,14 @@
 #include "Voxel.h"
 #include "Metadata.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
-	class __declspec(dllexport) Fav : public MetadataObject
+	public ref class Fav : public MetadataObject
 	{
 	public:
 		Fav();
 		~Fav();
-		bool read (const char* file_path);
-        bool write(const char* file_path, CompressionMode compression_mode_);
+		bool read(const char* file_path);
 		bool write(const char* file_path, const char* version_);
 
 		std::vector<Voxel> getVoxels();
@@ -56,7 +55,9 @@ namespace FavLibrary
 		FavReader* fav_reader;
 		FavWriter* fav_writer;
 
-		Fav* pFav;
+#ifdef DotNet
+		Fav^ pFav;
+#endif
 	};
 
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using FavLibrary;
+using FavLibraryDotNet;
 
 namespace FavLibraryApp
 {
@@ -21,10 +21,7 @@ namespace FavLibraryApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            FavLibrary.FavLibrary a = new FavLibrary.FavLibrary();
-
-            ColorBase cb = new ColorBase();
-            cb.colorMode = ColorMode.None;
+            ColorRGB c = new ColorRGB(255, 255, 255);
         }
     }
 }

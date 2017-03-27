@@ -5,10 +5,7 @@
 //  Created by atsmsmr on 2016/12/05.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
-
-#ifndef __FavLibrary__FavReader__
-#define __FavLibrary__FavReader__
-
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -52,9 +49,9 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-    RefClass Fav;
+    class __declspec(dllexport) Fav;
 
-	RefClass FavReader
+	class __declspec(dllexport) FavReader
 	{
         class ParserErrorHandler : public ErrorHandler
         {
@@ -121,4 +118,3 @@ namespace FavLibrary
 		Fav* fav;
 	};
 }
-#endif /* defined(__FavLibrary__FavReader__) */

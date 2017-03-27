@@ -8,17 +8,17 @@
 #include <vector>
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
-#include "../FavSettings.h"
+
 
 namespace FavLibrary
 {
-	enum RefClass MaterialType {
+	enum class __declspec(dllexport) MaterialType {
 		material_name = 0,
 		product_info = 1,
 		iso_standard = 2,
 	};
 
-	RefClass MaterialSpec {
+	class __declspec(dllexport) MaterialSpec {
 	public:
 		virtual void dammy() {};
 		MaterialSpec();
@@ -27,7 +27,7 @@ namespace FavLibrary
 		MaterialType materialType;
 	};
 
-	RefClass MaterialName : public MaterialSpec {
+	class __declspec(dllexport) MaterialName : public MaterialSpec {
 	public:
 
 		MaterialName(std::string name_);
@@ -38,9 +38,9 @@ namespace FavLibrary
 		std::string name;
 	};
 
-	RefClass ProductInfo : public MaterialSpec {
+	class __declspec(dllexport) ProductInfo : public MaterialSpec {
 	public:
-
+		ProductInfo();
 		ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
 
 		std::string getManufacturer();
@@ -58,9 +58,9 @@ namespace FavLibrary
 		std::string url;
 	};
 
-	RefClass IsoStandard : public MaterialSpec {
+	class __declspec(dllexport) IsoStandard : public MaterialSpec {
 	public:
-
+		IsoStandard();
 		IsoStandard(std::string iso_id_, std::string iso_name_);
 		std::string getIsoId();
 		void setIsoId(std::string iso_id_);
@@ -73,7 +73,7 @@ namespace FavLibrary
 		std::string iso_name;
 	};
 
-	RefClass Material : public FavPrimitive, MetadataObject
+	class __declspec(dllexport) Material : public FavPrimitive, MetadataObject
 	{
 	public:
 		Material();

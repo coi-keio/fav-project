@@ -22,7 +22,7 @@
     <ProjectGuid>{0561B450-DC52-47CF-974D-A7049514471F}</ProjectGuid>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>FavLibraryNet</RootNamespace>
+    <RootNamespace>FavLibraryDotNet</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,21 +140,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\FavLibrary\Primitive\Color.h" />
-    <ClInclude Include="FavLibrary.Net.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="wrapper\Metadata.h" />
+    <ClInclude Include="wrapper\Palette\Geometry.h" />
+    <ClInclude Include="wrapper\Palette\Material.h" />
+    <ClInclude Include="wrapper\Primitive\Color.h" />
+    <ClInclude Include="wrapper\Primitive\FavPrimitive.h" />
+    <ClInclude Include="wrapper\Primitive\Point3D.h" />
+    <ClInclude Include="wrapper\Primitive\Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="FavLibrary.Net.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="wrapper\Metadata.cpp" />
+    <ClCompile Include="wrapper\Palette\Geometry.cpp" />
+    <ClCompile Include="wrapper\Palette\Material.cpp" />
     <ClCompile Include="wrapper\Primitive\Color.cpp" />
+    <ClCompile Include="wrapper\Primitive\FavPrimitive.cpp" />
+    <ClCompile Include="wrapper\Primitive\Point3D.cpp" />
+    <ClCompile Include="wrapper\Primitive\Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

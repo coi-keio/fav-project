@@ -5,9 +5,6 @@
 //  Created by atsmsmr on 2016/12/05.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
-
-//#ifndef __FavLibrary__FavWriter__
-//#define __FavLibrary__FavWriter__
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -25,7 +22,6 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
 
-
 #include "FavSettings.h"
 #include "Metadata.h"
 #include "Voxel.h"
@@ -38,16 +34,16 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-    RefClass Fav;
+    class __declspec(dllexport) Fav;
     
-    RefClass FavWriter {
+    class __declspec(dllexport) FavWriter {
         
     public:
         
         FavWriter(Fav* fav_);
         bool write(const char* file_path);
         bool write(const char* file_path, CompressionMode compression_mode_);
-        bool write(const char* file_path, const char* version);
+        //bool write(const char* file_path, const char* version);
         
     private:
         
@@ -85,4 +81,3 @@ namespace FavLibrary
     };
     
 }
-//#endif /* defined(__FavLibrary__FavWriter__) */

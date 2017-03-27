@@ -2,8 +2,8 @@
 
 namespace FavLibrary
 {
-	ColorBase::ColorBase() {}
-	ColorBase::~ColorBase() {}
+	IColor::IColor() {}
+	IColor::~IColor() {}
 
 
 	ColorRGB::ColorRGB() {}

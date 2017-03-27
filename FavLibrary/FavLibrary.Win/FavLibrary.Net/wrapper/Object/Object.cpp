@@ -1,6 +1,6 @@
 //
 //  Object.h
-//  FavLibrary
+//  FavLibraryDotNet
 //
 //  Created by Atsushi Masumori on 2016/09/15.
 //  Copyright (c) 2016 Atsushi Masumori. All rights reserved.
@@ -9,7 +9,7 @@
 #include "Object.h"
 #include "Structure.h"
 
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 	Object::Object() {};
 	Object::Object(unsigned int id_) : FavPrimitive(id_) {};

@@ -6,29 +6,32 @@
 #include <list>
 #include <vector>
 #include "../Primitive/Point3D.h"
+#include "../FavSettings.h"
 
-
-namespace FavLibrary
+namespace FavLibraryDotNet
 {
 
-	class __declspec(dllexport) Unit : public Point3D
+	public ref class Unit : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Dimension : public Point3D
+	public ref class Dimension : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Origin : public Point3D
+	public ref class Origin : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Grid
+	public ref class Grid
 	{
 	public:
+		Grid();
+		~Grid();
+
 		Unit getUnit();
 		void setUnit(Point3D p);
 		void setUnit(double x, double y, double z);
@@ -64,7 +67,9 @@ namespace FavLibrary
 		Dimension dimension;
 		Origin origin;
 
-		Grid* pGrid;
+#ifdef DotNet
+		Grid^ pGrid;
+#endif
 	};
 
 }
