@@ -19,10 +19,23 @@ namespace FavLibrary
 		this->z = p.z;
 	}
 
-	double Point3D::getX() { return x; };
-	double Point3D::getY() { return y; };
-	double Point3D::getZ() { return z; };
-	void Point3D::set(double x_, double y_, double z_) { x = x_; y = y_; z = z_; };
+	double Point3D::getX() {
+        return x;
+    };
+    
+	double Point3D::getY() {
+        return y;
+    };
+    
+	double Point3D::getZ() {
+        return z;
+    };
+    
+	void Point3D::set(double x_, double y_, double z_) {
+        x = x_;
+        y = y_;
+        z = z_;
+    };
 	void Point3D::setX(double x_) { x = x_; };
 	void Point3D::setY(double y_) { y = y_; };
 	void Point3D::setZ(double z_) { z = z_; };

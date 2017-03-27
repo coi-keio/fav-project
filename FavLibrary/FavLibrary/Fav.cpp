@@ -28,10 +28,10 @@ namespace FavLibrary
 		return 1;
 	}
 
-	bool Fav::write(const char* file_path) {
+	bool Fav::write(const char* file_path, CompressionMode compression_mode_) {
 
 		fav_writer = new FavWriter(this);
-		fav_writer->write(file_path);
+		fav_writer->write(file_path, compression_mode_);
 		delete fav_writer;
 
 		return 1;

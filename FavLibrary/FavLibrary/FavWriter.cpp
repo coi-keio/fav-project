@@ -8,11 +8,6 @@
 
 #include "FavWriter.h"
 #include "Fav.h"
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
-#include <xercesc/util/Base64.hpp>
 
 using namespace xercesc;
 
@@ -22,10 +17,15 @@ namespace FavLibrary
         fav = fav_;
     }
     
+    
+    bool FavWriter::write(const char* file_path, CompressionMode compression_mode_) {
+        compression_mode = compression_mode_;
+        return write(file_path);
+    }
+    
     bool FavWriter::write(const char* file_path) {
         
-        //TODO: write later
-        // エラー処理
+        //TODO: エラー処理
         XMLPlatformUtils::Initialize();
         
         DOMImplementation *tpImpl = DOMImplementationRegistry::getDOMImplementation(XMLString::transcode("Core"));
@@ -42,8 +42,7 @@ namespace FavLibrary
         
         writeXML(file_path);
         
-        // TODO: write later
-        // ここもエラー処理か？
+        // TODO: エラー処理
         doc->release();
         XMLPlatformUtils::Terminate();
         
@@ -58,9 +57,8 @@ namespace FavLibrary
 		appendCDATA(metadata_elem, "title",   fav->getMetadataTitle());
 		appendCDATA(metadata_elem, "author",  fav->getMetadataAuthor());
 		appendCDATA(metadata_elem, "license", fav->getMetadataLicense());
-        // FIXME: revise later
-        // ノートが存在しなかった場合の処理 (上記は必須項目)
-        appendCDATA(metadata_elem, "note",    fav->getMetadataNote());
+        if(fav->getMetadataNote()!="")
+            appendCDATA(metadata_elem, "note",    fav->getMetadataNote());
 
         parent_elem->appendChild(metadata_elem);
 	}
@@ -77,43 +75,40 @@ namespace FavLibrary
 
 			Geometry current_geometry = fav->palette.getGeometryById(i + 1); //FIXME: ? この+1の処理は必須なんだっけ？
 			DOMElement *geometry_elem = doc->createElement(XMLString::transcode("geometry"));
-
-			setAttribute(geometry_elem, "id", std::to_string(current_geometry.getId()));
-
-			// TODO: write later
-            // nameは必須項目ではない。
-            // FIXME: なぜかnameが元ファイルと異なる、、なんで？
-			setAttribute(geometry_elem, "name", current_geometry.getName());
-
+			
+            setAttribute(geometry_elem, "id", std::to_string(current_geometry.getId()));
+            if(current_geometry.getName() !="")
+                setAttribute(geometry_elem, "name", current_geometry.getName());
             
-            switch(current_geometry.getShape()){
-                case GeometryShape::cube:
-                    appendText(geometry_elem, "shape", "cube");
-                    break;
-                    
-                case GeometryShape::sphere:
-                    appendText(geometry_elem, "shape", "spehre");
-                    break;
-                    
-                case GeometryShape::user_defined:
-                    // TODO: write later. under development : add reference path
-                    appendText(geometry_elem, "shape", "user_defined");
-                    break;
+            if(current_geometry.hasShape()){
+                switch(current_geometry.getShape()){
+                    case GeometryShape::cube:
+                        appendText(geometry_elem, "shape", "cube");
+                        break;
+                        
+                    case GeometryShape::sphere:
+                        appendText(geometry_elem, "shape", "spehre");
+                        break;
+                        
+                    case GeometryShape::user_defined:
+                        appendText(geometry_elem, "shape",     "user_defined"                 );
+                        appendText(geometry_elem, "reference", current_geometry.getReference());
+                        break;
+                }
             }
 
-			DOMElement* scale_elem = doc->createElement(XMLString::transcode("scale"));
-			appendText(scale_elem, "x", std::to_string(current_geometry.getScaleX()) );
-			appendText(scale_elem, "y", std::to_string(current_geometry.getScaleY()) );
-			appendText(scale_elem, "z", std::to_string(current_geometry.getScaleZ()) );
-            
-			geometry_elem->appendChild(scale_elem);
+            if(current_geometry.hasScale()){
+                DOMElement* scale_elem = doc->createElement(XMLString::transcode("scale"));
+                appendText(scale_elem, "x", std::to_string(current_geometry.getScaleX()) );
+                appendText(scale_elem, "y", std::to_string(current_geometry.getScaleY()) );
+                appendText(scale_elem, "z", std::to_string(current_geometry.getScaleZ()) );
+                geometry_elem->appendChild(scale_elem);
+            }
 			palette_elem->appendChild(geometry_elem);
 		}
 
-
 		// write material
 		int number_of_materials = fav->palette.getNumberOfMaterials();
-
 		for (int i = 0; i < number_of_materials; ++i) {
 
             int id = i + 1;
@@ -121,35 +116,49 @@ namespace FavLibrary
 			DOMElement *mat_elem = doc->createElement(XMLString::transcode("material"));
 
             setAttribute(mat_elem, "id", std::to_string(id));
-			// if(tmp->has_name){
-			setAttribute(mat_elem, "name", current_material.getName());
+            if(current_material.getName() !="")
+                setAttribute(mat_elem, "name", current_material.getName());
 
-            // FIXME: 優先順位の問題
-			// 優先順位問題をmaterialクラスの構造で解決する必要がある
-            // 必須じゃない項目の処理を追加
+            // write material
 			for (auto material : current_material.materials) {
 				
+                // write product_info
                 if (material->materialType == MaterialType::product_info) {
 					ProductInfo* pinfo = dynamic_cast<ProductInfo*>(material);
 					DOMElement* pinfo_elem = doc->createElement(XMLString::transcode("product_info"));
-					appendCDATA(pinfo_elem, "manufacturer", pinfo->getManufacturer());
-					appendCDATA(pinfo_elem, "product_name", pinfo->getProductName());
-					appendCDATA(pinfo_elem, "url",          pinfo->getUrl());
+                    
+                    if(pinfo->getManufacturer() != "")
+                        appendCDATA(pinfo_elem, "manufacturer", pinfo->getManufacturer());
+                    
+                    if(pinfo->getProductName() != "")
+                        appendCDATA(pinfo_elem, "product_name", pinfo->getProductName());
+                    
+                    if(pinfo->getUrl() != "")
+                        appendCDATA(pinfo_elem, "url", pinfo->getUrl());
+                    
 					mat_elem->appendChild(pinfo_elem);
 				}
-                
+                // write iso_standard
 				else if (material->materialType == MaterialType::iso_standard) {
                     IsoStandard* iso = dynamic_cast<IsoStandard*>(material);
 					DOMElement* iso_elem = doc->createElement(XMLString::transcode("iso_standard"));
-					appendCDATA(iso_elem, "iso_id",   iso->getIsoId());
-					appendCDATA(iso_elem, "iso_name", iso->getIsoName());
-					mat_elem->appendChild(iso_elem);
+					
+                    if(iso->getIsoId() != "")
+                        appendCDATA(iso_elem, "iso_id",   iso->getIsoId());
+                    
+                    if(iso->getIsoName() != "")
+                        appendCDATA(iso_elem, "iso_name", iso->getIsoName());
+					
+                    mat_elem->appendChild(iso_elem);
 				}
-
+                // write material_name
 				else if (material->materialType == MaterialType::material_name) {
                     MaterialName* material_name = dynamic_cast<MaterialName*>(material);
 					DOMElement* name_elem = doc->createElement(XMLString::transcode("material_name"));
-					appendCDATA(name_elem, "material_name", material_name->getMaterialName());
+                    
+                    if(material_name->getMaterialName() != "")
+                        appendCDATA(name_elem, "material_name", material_name->getMaterialName());
+                    
 					mat_elem->appendChild(name_elem);
 				}
 			}
@@ -166,7 +175,8 @@ namespace FavLibrary
             Voxel current_voxel  = fav->getVoxel(i + 1);
 			DOMElement*  vox_elem = doc->createElement(XMLString::transcode("voxel"));
 			setAttribute(vox_elem, "id",   std::to_string(current_voxel.getId()));
-			setAttribute(vox_elem, "name", current_voxel.getName());
+			if(current_voxel.getName() != "")
+                setAttribute(vox_elem, "name", current_voxel.getName());
 			
             DOMElement* geo_elem = doc->createElement(XMLString::transcode("geometry_info"));
 			appendText( geo_elem, "id", std::to_string(current_voxel.getGeometryInfo()));
@@ -175,18 +185,18 @@ namespace FavLibrary
 			for (int j = 0, size = current_voxel.getNumMaterialInfo(); j < size; ++j) {
 				DOMElement *matinfo_elem = doc->createElement(XMLString::transcode("material_info"));
 				appendText(matinfo_elem, "id",    std::to_string(current_voxel.getMaterialInfo(j).getId())   );
+                
 				appendText(matinfo_elem, "ratio", std::to_string(current_voxel.getMaterialInfo(j).getRatio()));
 				vox_elem->appendChild(matinfo_elem);
 			}
 			parent_elem->appendChild(vox_elem);
 		}
-	};
+	}
 
 	void FavWriter::writeGrid(DOMElement* parent_elem, Grid* grid) {
 
 		DOMElement *grid_elem  = doc->createElement(XMLString::transcode("grid"));
         
-        // FIXME: 必須じゃない項目の処理
 		DOMElement *origin_elem = doc->createElement(XMLString::transcode("origin"));
 		appendText(origin_elem, "x", std::to_string(grid->getOriginX()));
 		appendText(origin_elem, "y", std::to_string(grid->getOriginY()));
@@ -213,11 +223,9 @@ namespace FavLibrary
 		// voxel_map
 		// TODO: compression mode is under development
         //
-        
-        CompressionMode compression_test = CompressionMode::none;
         const char* compression;
         
-        switch(compression_test){
+        switch(compression_mode){
                 
             case CompressionMode::none:
                 compression = "none";
@@ -274,12 +282,12 @@ namespace FavLibrary
 					}
                     
 					else {
-						// TODO: エラー処理 (ただ、この辺はschemaのvaridationで全部省略できるのかな？)
+						// TODO: bit_per_voxelを決める関数を実装
 					}
 				}
 			}
 
-            switch(compression_test){
+            switch(compression_mode){
                 case CompressionMode::none:
                     
                     appendCDATA(vmap_elem, "layer", layer_data);
@@ -292,16 +300,10 @@ namespace FavLibrary
                     unsigned char* data = new unsigned char[size];
                     BytesFromHexString(data, layer_data.c_str());
                     
-                    
-                    
                     XMLSize_t len;
-                    //            XMLByte* testt = reinterpret_cast<XMLByte*>("");
                     XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
-                    //            XMLByte* data_decoded = xercesc::Base64::decode( data_encoded, &len );
-                    //            for(int dd=0; dd<size; dd++){
-                    //                std::cout << (int)data_decoded[dd] << ",";
-                    //            }
-                    // debug is needed? 何故かnew lineが入ってしまうのでここで除去している。
+                    
+                    // TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
                     std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
@@ -318,19 +320,351 @@ namespace FavLibrary
 		parent_elem->appendChild(vmap_elem);
 	}
 
-	void FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_str) {
+    void FavWriter::writeColorMapRGB(DOMElement *cmap_elem, Structure* p_structure){
+        
+        std::string layer_data;
+        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+            
+            layer_data.clear();
+            int count_colors = 0;
+            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+                    
+                    int voxel_state = p_structure->getVoxel(x,y,z);
+                    
+                    if(voxel_state != 0){
+                        
+                        char buff[2];
+                        sprintf(buff, "%02x", p_structure->getColorRed(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorGreen(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorBlue(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        count_colors++;
+                    }
+                    
+                }
+            }
+            
+            switch(compression_mode){
+                case CompressionMode::none:
+                    
+                    appendCDATA(cmap_elem, "layer", layer_data);
+                    
+                    break;
+                    
+                case CompressionMode::base64:
+
+                    int size = count_colors*3;
+                    unsigned char* data = new unsigned char[size];
+                    BytesFromHexString(data, layer_data.c_str());
+                    
+                    XMLSize_t len;
+                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+                    
+                    // TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
+                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+                    deleteNewLine(input_str);
+                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+                    appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    break;
+            }
+            
+        }
+    }
+    
+    void FavWriter::writeColorMapRGBA(DOMElement *cmap_elem, Structure* p_structure){
+        
+        std::string layer_data;
+        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+            
+            layer_data.clear();
+            int count_colors = 0;
+            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+                    
+                    int voxel_state = p_structure->getVoxel(x,y,z);
+                    
+                    if(voxel_state != 0){
+                        
+                        char buff[2];
+                        sprintf(buff, "%02x", p_structure->getColorRed(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorGreen(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorBlue(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorAlpha(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        count_colors++;
+                    }
+                    
+                }
+            }
+            
+            switch(compression_mode){
+                case CompressionMode::none:
+                    
+                    appendCDATA(cmap_elem, "layer", layer_data);
+                    
+                    break;
+                    
+                case CompressionMode::base64:
+                    
+                    int size = count_colors*4;
+                    unsigned char* data = new unsigned char[size];
+                    BytesFromHexString(data, layer_data.c_str());
+                    
+                    XMLSize_t len;
+                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+                    
+                    // TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
+                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+                    deleteNewLine(input_str);
+                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+                    appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    break;
+            }
+            
+        }
+    }
+    
+    void FavWriter::writeColorMapCMYK(DOMElement *cmap_elem, Structure* p_structure){
+        
+        std::string layer_data;
+        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+            
+            layer_data.clear();
+            int count_colors = 0;
+            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+                    
+                    int voxel_state = p_structure->getVoxel(x,y,z);
+                    
+                    if(voxel_state != 0){
+                        
+                        char buff[2];
+                        sprintf(buff, "%02x", p_structure->getColorCyan(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorMagenta(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorYellow(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        
+                        sprintf(buff, "%02x", p_structure->getColorKeyPlate(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        count_colors++;
+                    }
+                    
+                }
+            }
+            
+            switch(compression_mode){
+                case CompressionMode::none:
+                    
+                    appendCDATA(cmap_elem, "layer", layer_data);
+                    
+                    break;
+                    
+                case CompressionMode::base64:
+                    
+                    int size = count_colors*4;
+                    unsigned char* data = new unsigned char[size];
+                    BytesFromHexString(data, layer_data.c_str());
+                    
+                    XMLSize_t len;
+                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+                    
+                    // TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
+                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+                    deleteNewLine(input_str);
+                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+                    appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    break;
+            }
+            
+        }
+    }
+    
+    void FavWriter::writeColorMapGrayScale(DOMElement *cmap_elem, Structure* p_structure){
+        
+        std::string layer_data;
+        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+            
+            layer_data.clear();
+            int count_colors = 0;
+            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+                    
+                    int voxel_state = p_structure->getVoxel(x,y,z);
+                    
+                    if(voxel_state != 0){
+                        
+                        char buff[2];
+                        sprintf(buff, "%02x", p_structure->getColorGrayScale(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        count_colors++;
+                    }
+                    
+                }
+            }
+            
+            switch(compression_mode){
+                case CompressionMode::none:
+                    
+                    appendCDATA(cmap_elem, "layer", layer_data);
+                    
+                    break;
+                    
+                case CompressionMode::base64:
+                    
+                    int size = count_colors;
+                    unsigned char* data = new unsigned char[size];
+                    BytesFromHexString(data, layer_data.c_str());
+                    
+                    XMLSize_t len;
+                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+                    
+                    // TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
+                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+                    deleteNewLine(input_str);
+                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+                    appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    break;
+            }
+            
+        }
+    }
+    
+    void FavWriter::writeColorMapGrayScale16(DOMElement *cmap_elem, Structure* p_structure){
+        
+        std::string layer_data;
+        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+            
+            layer_data.clear();
+            int count_colors = 0;
+            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+                    
+                    int voxel_state = p_structure->getVoxel(x,y,z);
+                    
+                    if(voxel_state != 0){
+                        
+                        char buff[4];
+                        sprintf(buff, "%04x", p_structure->getColorGrayScale16(x, y, z));
+                        layer_data.push_back( buff[0] );
+                        layer_data.push_back( buff[1] );
+                        layer_data.push_back( buff[2] );
+                        layer_data.push_back( buff[3] );
+                        count_colors++;
+                    }
+                    
+                }
+            }
+            
+            switch(compression_mode){
+                case CompressionMode::none:
+                    
+                    appendCDATA(cmap_elem, "layer", layer_data);
+                    
+                    break;
+                    
+                case CompressionMode::base64:
+                    
+                    int size = count_colors;
+                    unsigned char* data = new unsigned char[size];
+                    BytesFromHexString(data, layer_data.c_str());
+                    
+                    XMLSize_t len;
+                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+                    
+                    // TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
+                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+                    deleteNewLine(input_str);
+                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+                    appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    break;
+            }
+            
+        }
+    }
+    
+	void FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_structure) {
 
         // TODO: writeColorMap の実装はwriteVoxelMapができてからそれに準じてやる
-		//
-		//    // color_map
-		//    DOMElement *cmap_elem = doc->createElement(XMLString::transcode("color_map"));
-		//    setAttribute(cmap_elem, "color_mode", std::to_string( p_str->getColorMode() ));
-		//
-		//    for(int i=0, size=p_str->grid->getDimensionZ(); size<i; ++i){
-		//        appendCDATA(cmap_elem, "layer", layer_data);
-		//    }
-		//    parent_elem->appendChild(cmap_elem);
+        DOMElement *cmap_elem = doc->createElement(XMLString::transcode("color_map"));
+        
+        std::string compression;
+        switch(compression_mode){
+                
+            case CompressionMode::none:
+                compression = "none";
+                break;
+                
+            case CompressionMode::base64:
+                compression = "base64";
+                
+                break;
+                
+            case CompressionMode::zlib:
+                compression = "zlib";
+                
+                break;
+        }
+        setAttribute(cmap_elem, "compression", compression);
 
+        std::string color_mode;
+        switch(p_structure->getColorMode()){
+                
+            case FavLibrary::ColorMode::RGB:
+                color_mode = "RGB";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapRGB(cmap_elem, p_structure);
+                break;
+                
+            case FavLibrary::ColorMode::RGBA:
+                color_mode = "RGBA";
+                break;
+                
+            case FavLibrary::ColorMode::CMYK:
+                color_mode = "CMYK";
+                break;
+                
+            case FavLibrary::ColorMode::Grayscale:
+                color_mode = "GrayScale";
+                break;
+                
+            case FavLibrary::ColorMode::Grayscale16:
+                color_mode = "GrayScale16";
+                break;
+        }
+        
+        parent_elem->appendChild(cmap_elem);
 	}
 
 	void FavWriter::writeStructure(DOMElement* parent_elem, Structure* p_structure) {
@@ -405,7 +739,7 @@ namespace FavLibrary
     }
     
     void FavWriter::BytesFromHexString(unsigned char *data, const char *string) {
-        printf("string:%s\n", string);
+//        printf("string:%s\n", string);
         int len = (int)strlen(string);
         for (int i = 0; i < len; i += 2) {
             unsigned int x;

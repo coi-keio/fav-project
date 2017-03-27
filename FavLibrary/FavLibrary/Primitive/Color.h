@@ -23,13 +23,14 @@ namespace FavLibrary
 
 		ColorMode colorMode;
 
-	private:
+	protected:
 	};
 
 	class __declspec(dllexport) ColorRGB : public IColor
 	{
 	public:
 		ColorRGB();
+        ColorRGB(unsigned char r_, unsigned char g_, unsigned char b_){r = r_; g = g_; b = b_;};
 		~ColorRGB();
 
 		ColorMode colorMode = ColorMode::RGB;//ここconstにするとcompile errorが出てた。要確認
@@ -45,7 +46,7 @@ namespace FavLibrary
 
 		void setColorRBG(unsigned char r, unsigned char g, unsigned char b);
 
-	private:
+	protected:
 		unsigned char r;
 		unsigned char g;
 		unsigned char b;
@@ -55,6 +56,7 @@ namespace FavLibrary
 	{
 	public:
 		ColorRGBA();
+        ColorRGBA(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_){r = r_; g = g_; b = b_; a=a_;};
 		~ColorRGBA();
 
 		ColorMode colorMode = ColorMode::RGBA;
@@ -79,7 +81,7 @@ namespace FavLibrary
 		unsigned char getGray();
 		void setGray(unsigned char gray);
 
-	private:
+	protected:
 		unsigned char gray;
 	};
 
@@ -102,6 +104,7 @@ namespace FavLibrary
 	{
 	public:
 		ColorCMYK();
+        ColorCMYK(unsigned char c_, unsigned char m_, unsigned char y_, unsigned char k_){c = c_; m = m_; y = y_; k = k_;};
 		~ColorCMYK();
 
 		ColorMode colorMode = ColorMode::CMYK;
