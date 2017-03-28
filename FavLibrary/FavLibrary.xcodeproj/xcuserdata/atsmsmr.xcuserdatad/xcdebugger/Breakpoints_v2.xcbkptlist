@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "512214647.023758"
+            timestampString = "512362851.737525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "777"
-            endingLineNumber = "777"
+            startingLineNumber = "808"
+            endingLineNumber = "808"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -498,11 +498,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavWriter.cpp"
-            timestampString = "512303157.119579"
+            timestampString = "512362851.737525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "727"
-            endingLineNumber = "727"
+            startingLineNumber = "746"
+            endingLineNumber = "746"
             landmarkName = "FavWriter::writeXML(const char *filePath)"
             landmarkType = "5">
          </BreakpointContent>
@@ -624,11 +624,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavReader.cpp"
-            timestampString = "512214647.023758"
+            timestampString = "512362851.737525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "787"
-            endingLineNumber = "787"
+            startingLineNumber = "818"
+            endingLineNumber = "818"
             landmarkName = "FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_)"
             landmarkType = "5">
          </BreakpointContent>
@@ -672,11 +672,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavWriter.cpp"
-            timestampString = "512248403.30108"
+            timestampString = "512362851.737525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "462"
-            endingLineNumber = "462"
+            startingLineNumber = "472"
+            endingLineNumber = "472"
             landmarkName = "FavWriter::writeColorMapCMYK(DOMElement *cmap_elem, Structure* p_structure)"
             landmarkType = "5">
          </BreakpointContent>
@@ -688,11 +688,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FavLibrary/FavWriter.cpp"
-            timestampString = "512303157.119579"
+            timestampString = "512362851.737525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "656"
-            endingLineNumber = "656"
+            startingLineNumber = "675"
+            endingLineNumber = "675"
             landmarkName = "FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_structure)"
             landmarkType = "5">
          </BreakpointContent>

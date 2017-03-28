@@ -65,10 +65,14 @@ namespace FavLibrary
 	};
 	Object Fav::getObject(unsigned int id_)
 	{
-		Object res;// = nullptr;
-		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
-			res = *objects[id_];
+		Object res;
+        // FIXME: このisRemoved()でチェックするの必要なのか？ どちらにせよこの書き方はアクセスエラーが起きうる。(masumori)
+        //        あと,objectが無かった場合に空を返すので良いのか？　
+//		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
+        if (objects.count(id_) > 0)
 
+			res = *objects[id_];
+            
 		return res;
 	};
 	void Fav::addObject(Object* object_) { objects[object_->getId()] = object_; };

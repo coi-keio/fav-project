@@ -8,6 +8,7 @@ include_directories(/usr/local/Cellar/xerces-c/3.1.4/include/)
 link_directories(/usr/local/Cellar/xerces-c/3.1.4/lib/)
 set(XercesLib xerces-c)
 set(CMAKE_CXX_FLAGS "-std=c++1y -g -O3 -Wall")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
 add_executable(Main
 	./FavLibrary/main.cpp

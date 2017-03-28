@@ -281,14 +281,14 @@ namespace FavLibrary
         for (int j = 0; j < number_of_layers; ++j) {
             
             std::string layer_data = getNodeValueString(vmap_layers->item(j)->getFirstChild());
-            std::string data_in;
+            std::string data_in = "";
             
             if (compression == "none") {
                 
                 if (bit_per_voxel == "4") { // need debug.
                     data_in.resize(layer_data.size());
                     for (int k = 0; k < (int)layer_data.size(); k++) {
-                        int dec;
+                        int dec = 0;
                         char hex[2] = { layer_data[k], layer_data[k + 1] };
                         sscanf(hex, "%01x", &dec);
                         data_in[k] = dec; //if compressed using this scheme
@@ -299,7 +299,7 @@ namespace FavLibrary
                     data_in.resize(layer_data.size() / 2);
                     int cur = 0;
                     for (int k = 0; k < (int)layer_data.size(); k = k + 2) {
-                        int dec;
+                        int dec = 0;
                         char hex[2] = { layer_data[k], layer_data[k + 1] };
                         sscanf(hex, "%02x", &dec);
                         data_in[cur] = dec; //if compressed using this scheme
@@ -310,7 +310,7 @@ namespace FavLibrary
                     data_in.resize(layer_data.size() / 4);
                     int cur = 0;
                     for (int k = 0; k < (int)layer_data.size(); k = k + 4) {
-                        int dec;
+                        int dec = 0;
                         char hex[4] = { layer_data[k], layer_data[k + 1], layer_data[k + 2], layer_data[k + 3] };
                         sscanf(hex, "%04x", &dec);
                         data_in[cur] = dec; //if compressed using this scheme
@@ -380,7 +380,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+6){
                     
-                    int r_value, g_value, b_value;
+                    int r_value, g_value, b_value = 0;
                     char r[2] = {layer_data[i],  layer_data[i+1]};
                     char g[2] = {layer_data[i+2],layer_data[i+3]};
                     char b[2] = {layer_data[i+4],layer_data[i+5]};
@@ -426,6 +426,12 @@ namespace FavLibrary
                     
                 }
             }
+            delete[] layer_r;
+            delete[] layer_g;
+            delete[] layer_b;
+            layer_r = nullptr;
+            layer_g = nullptr;
+            layer_b = nullptr;
         }
     }
     
@@ -454,7 +460,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+8){
                     
-                    int r_value, g_value, b_value;
+                    int r_value, g_value, b_value = 0;
                     char r[2] = {layer_data[i],  layer_data[i+1]};
                     char g[2] = {layer_data[i+2],layer_data[i+3]};
                     char b[2] = {layer_data[i+4],layer_data[i+5]};
@@ -515,7 +521,18 @@ namespace FavLibrary
                     
                 }
             }
+            
+            delete[] layer_r;
+            delete[] layer_g;
+            delete[] layer_b;
+            delete[] layer_a;
+            layer_r = nullptr;
+            layer_g = nullptr;
+            layer_b = nullptr;
+            layer_a = nullptr;
         }
+        
+        
     }
     
     void FavReader::readColorMapCMYK(DOMElement* cmap_elem, Object* current_object, Structure* structure){
@@ -532,7 +549,7 @@ namespace FavLibrary
         for(int z=0; z<number_of_layers; ++z){
             
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
-            std::string data_in;
+            std::string data_in = "";
             
             layer_c = new int[layer_data.size()/(2*4)]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
             layer_m = new int[layer_data.size()/(2*4)];
@@ -543,7 +560,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+8){
                     
-                    int r_value, g_value, b_value;
+                    int r_value, g_value, b_value = 0;
                     char r[2] = {layer_data[i],  layer_data[i+1]};
                     char g[2] = {layer_data[i+2],layer_data[i+3]};
                     char b[2] = {layer_data[i+4],layer_data[i+5]};
@@ -604,6 +621,16 @@ namespace FavLibrary
                     
                 }
             }
+            
+            delete[] layer_c;
+            delete[] layer_m;
+            delete[] layer_y;
+            delete[] layer_k;
+            
+            layer_c = nullptr;
+            layer_m = nullptr;
+            layer_y = nullptr;
+            layer_k = nullptr;
         }
     }
     
@@ -618,7 +645,7 @@ namespace FavLibrary
         for(int z=0; z<number_of_layers; ++z){
             
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
-            std::string data_in;
+            std::string data_in = "";
             
             layer_g = new int[layer_data.size()/2]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
             
@@ -626,7 +653,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+2){
                     
-                    int gray_value;
+                    int gray_value = 0;
                     char gray[2] = {layer_data[i],  layer_data[i+1]};
                     sscanf(gray, "%02x", &gray_value);
                     layer_g[i/2] = gray_value;
@@ -670,6 +697,8 @@ namespace FavLibrary
                     
                 }
             }
+            delete[] layer_g;
+            layer_g = nullptr;
         }
     }
     
@@ -684,7 +713,7 @@ namespace FavLibrary
         for(int z=0; z<number_of_layers; ++z){
             
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
-            std::string data_in;
+            std::string data_in = "";
             
             layer_g = new int[layer_data.size()/2]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
             
@@ -692,7 +721,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+4){
                     
-                    int gray_value;
+                    int gray_value = 0;
                     char gray[4] = {layer_data[i],  layer_data[i+1], layer_data[i+2],  layer_data[i+3] };
                     sscanf(gray, "%04x", &gray_value);
                     layer_g[i/4] = gray_value;
@@ -736,6 +765,8 @@ namespace FavLibrary
                     
                 }
             }
+            delete[] layer_g;
+            layer_g = nullptr;
         }
     }
     

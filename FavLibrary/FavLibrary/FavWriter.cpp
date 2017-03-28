@@ -309,6 +309,9 @@ namespace FavLibrary
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(vmap_elem, "layer", text_encoded);
                     
+                    delete[] data;
+                    data = nullptr;
+                    
                     break;
                 }
                 case CompressionMode::zlib:
@@ -318,6 +321,7 @@ namespace FavLibrary
 		}
         
 		parent_elem->appendChild(vmap_elem);
+        
 	}
 
     void FavWriter::writeColorMapRGB(DOMElement *cmap_elem, Structure* p_structure){
@@ -373,6 +377,9 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
             }
@@ -438,6 +445,9 @@ namespace FavLibrary
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
                     
+                    delete[] data;
+                    data = nullptr;
+                    
                     break;
             }
             
@@ -502,6 +512,9 @@ namespace FavLibrary
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
                     
+                    delete[] data;
+                    data = nullptr;
+                    
                     break;
             }
             
@@ -553,6 +566,9 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
             }
@@ -607,6 +623,9 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
             }
