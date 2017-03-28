@@ -46,7 +46,7 @@ namespace FavLibrary
 		int getNumObjects();
 		int getNumVoxels();
 
-		Palette palette;
+		Palette* palette;
 
 	private:
 		std::string version;

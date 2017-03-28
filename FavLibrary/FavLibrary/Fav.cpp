@@ -13,11 +13,12 @@
 namespace FavLibrary
 {
 	Fav::Fav() {
+        palette = new Palette;
 	}
 
 	Fav::~Fav() {
 		//    delete metadata;
-        
+        delete palette;
         for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
             if(it->second != NULL){
                 delete it->second;

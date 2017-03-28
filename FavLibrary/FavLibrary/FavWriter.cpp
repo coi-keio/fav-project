@@ -73,11 +73,11 @@ namespace FavLibrary
 		DOMElement *palette_elem = createElement("palette");
 
 		// write geometry
-		int number_of_geometries = fav->palette.getNumberOfGeometries();
+		int number_of_geometries = fav->palette->getNumberOfGeometries();
 
 		for (int i = 0; i < number_of_geometries; ++i) {
 
-			Geometry current_geometry = fav->palette.getGeometryById(i + 1); //FIXME: ? この+1の処理は必須なんだっけ？
+			Geometry current_geometry = fav->palette->getGeometryById(i + 1); //FIXME: ? この+1の処理は必須なんだっけ？
 			DOMElement *geometry_elem = createElement("geometry");
 			
             setAttribute(geometry_elem, "id", std::to_string(current_geometry.getId()));
@@ -112,11 +112,11 @@ namespace FavLibrary
 		}
 
 		// write material
-		int number_of_materials = fav->palette.getNumberOfMaterials();
+		int number_of_materials = fav->palette->getNumberOfMaterials();
 		for (int i = 0; i < number_of_materials; ++i) {
 
             int id = i + 1;
-			Material current_material = fav->palette.getMaterialById(id);
+			Material current_material = fav->palette->getMaterialById(id);
 			DOMElement *mat_elem = createElement("material");
 
             setAttribute(mat_elem, "id", std::to_string(id));
@@ -748,13 +748,13 @@ namespace FavLibrary
         std::map<unsigned int, Object*> objects = fav->getObjects();
         for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
 
-            Object current_object = *it->second;
+            Object* current_object = it->second;
             DOMElement  *obj_elem = createElement("object");
-            setAttribute(obj_elem, "id",   std::to_string(current_object.getId()));
-            setAttribute(obj_elem, "name", current_object.getName());
+            setAttribute(obj_elem, "id",   std::to_string(current_object->getId()));
+            setAttribute(obj_elem, "name", current_object->getName());
             
-            writeGrid(obj_elem, current_object.grid);
-            writeStructure(obj_elem, current_object.structure);
+            writeGrid(obj_elem, current_object->grid);
+            writeStructure(obj_elem, current_object->structure);
             parent_elem->appendChild(obj_elem);
             
             it++;

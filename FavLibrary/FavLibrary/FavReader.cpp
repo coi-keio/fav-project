@@ -92,7 +92,7 @@ namespace FavLibrary
 
     // FIXME: MetaData
     // この関数は、各タグの読み込み関数の内部で仕様するように変更する
-	void FavReader::readMetaData(xercesc_3_1::DOMNodeList *metadata_node_) {
+	void FavReader::readMetaData(xercesc::DOMNodeList *metadata_node_) {
 
 		int number_of_metadata = int(metadata_node_->getLength());
 
@@ -120,7 +120,7 @@ namespace FavLibrary
 
 	}
 
-	void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_) {
+	void FavReader::readPalette(xercesc::DOMNodeList *palette_list_) {
 
 		// load geometries
 		DOMNodeList* geometry_list = getElements(dynamic_cast<DOMElement*>(palette_list_->item(0)), "geometry");
@@ -159,7 +159,7 @@ namespace FavLibrary
             
             //TODO: ポインタ問題
             // ここはポインタ渡しじゃなくて良いんだっけ？一応、大丈夫そうだけど、バグが生じないか確認。
-			fav->palette.addGeometry(current_geometry);
+			fav->palette->addGeometry(current_geometry);
 		}
 
         // load materials
@@ -206,11 +206,11 @@ namespace FavLibrary
 				current_material.addIsoStandard(iso_id, iso_name);
 			}
 
-			fav->palette.addMaterial(current_material);
+			fav->palette->addMaterial(current_material);
 		}
 	}
 
-	void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_) {
+	void FavReader::readVoxel(xercesc::DOMNodeList *voxel_list_) {
 
 		int number_of_voxels = int(voxel_list_->getLength());
 		for (int i = 0; i < number_of_voxels; ++i) {
@@ -242,7 +242,7 @@ namespace FavLibrary
 		}
 	}
     
-    void FavReader::readGrid(xercesc_3_1::DOMElement *object_elem, Object* current_object){
+    void FavReader::readGrid(xercesc::DOMElement *object_elem, Object* current_object){
         
         
         // load origin
@@ -273,7 +273,7 @@ namespace FavLibrary
         }
     }
     
-    void FavReader::readVoxelMap(xercesc_3_1::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
+    void FavReader::readVoxelMap(xercesc::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
    
         DOMElement* vmap_elem = dynamic_cast<DOMElement*>(getElements(object_elem, "voxel_map")->item(0));
         std::string compression   = getAttribute(vmap_elem, "compression");
@@ -777,7 +777,7 @@ namespace FavLibrary
         }
     }
     
-    void FavReader::readColorMap(xercesc_3_1::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
+    void FavReader::readColorMap(xercesc::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
        
         DOMElement* cmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "color_map")->item(0) );
         std::string color_mode_str = getAttribute(cmap_elem, "color_mode");
@@ -810,7 +810,7 @@ namespace FavLibrary
         
     }
 
-	void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_) {
+	void FavReader::readObject(xercesc::DOMNodeList *object_node_) {
 
         
 		int number_of_object = int(object_node_->getLength());

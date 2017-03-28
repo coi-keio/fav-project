@@ -38,7 +38,7 @@ namespace FavLibrary
 
 	public:
 		VoxelMap(int size);
-//        ~VoxelMap();
+        ~VoxelMap();
 		void init();
 		void setVoxel(int index_, int value_);
 		tVoxelMapType getVoxel(int index_);

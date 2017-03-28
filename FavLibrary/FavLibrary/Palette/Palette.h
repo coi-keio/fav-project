@@ -22,7 +22,7 @@ namespace FavLibrary
 
 	public:
 		Palette();
-
+        ~Palette();
 		Geometry getGeometryById(unsigned int id_);
 		//	std::vector<Geometry> getGeometriesByName(std::string name_);
 		void addGeometry(Geometry geometry_);
@@ -42,8 +42,8 @@ namespace FavLibrary
 		std::vector<unsigned int> geometry_id_list;
 		std::vector<unsigned int> material_id_list;
 
-		std::map<std::string, std::vector<Geometry>> geometriesName;
-		std::map<std::string, std::vector<Material>> materialsName;
+		std::map<std::string, std::vector<Geometry> > geometriesName;
+		std::map<std::string, std::vector<Material> > materialsName;
 
 		unsigned int number_of_materials;
 		unsigned int number_of_geometries;

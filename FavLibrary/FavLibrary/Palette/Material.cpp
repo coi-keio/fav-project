@@ -51,10 +51,9 @@ namespace FavLibrary
 	
     Material::~Material() {
 //        for (std::list<MaterialSpec*>::iterator it = materials.begin(); it != materials.end(); ++it) {
-//            if(*it!=NULL)
-//                std::cout << *it << std::endl;
+//            delete *it;
 //        }
-//        materials.clear();
+        materials.clear();
     };
 
 	bool Material::hasMaterials() { return getNumMaterials() > 0; };
