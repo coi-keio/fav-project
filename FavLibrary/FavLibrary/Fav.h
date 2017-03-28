@@ -38,7 +38,7 @@ namespace FavLibrary
 		void removeVoxel(unsigned int id_);
 		bool existsVoxel(unsigned int id_);
 
-		std::vector<Object> getObjects();
+		std::map<unsigned int, Object*> getObjects();
 		Object getObject(unsigned int id_);
 		void addObject(Object* object_);
 		void removeObject(unsigned int id_);

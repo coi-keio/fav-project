@@ -47,6 +47,7 @@ namespace FavLibrary
         
     private:
         
+        DOMElement* createElement(const char* name_);
         void appendCDATA (DOMElement* parent_elem, const char* child_elem_name, XMLCh*      text);
         void appendCDATA (DOMElement* parent_elem, const char* child_elem_name, const char* text);
         void appendCDATA (DOMElement* parent_elem, const char* child_elem_name, std::string text);

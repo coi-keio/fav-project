@@ -18,6 +18,12 @@ namespace FavLibrary
 		number_of_voxels = size;
 		data = new tVoxelMapType[size];
 	};
+    
+//    template <typename tVoxelMapType>
+//    VoxelMap<tVoxelMapType>::~VoxelMap() {
+//            delete[] data;
+//            data = nullptr;
+//    };
 
 	template <typename tVoxelMapType>
 	void VoxelMap<tVoxelMapType>::init() {
@@ -39,35 +45,35 @@ namespace FavLibrary
 
 	Structure::Structure(Grid* grid_) {
 		grid = grid_;
-		number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();
+		number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();        
 	}
 
 	Structure::~Structure() {
         
-        if(voxel_map != NULL){
-            delete[] voxel_map;
-            voxel_map = nullptr;
-        }
-        
-        if(voxel_map_16bit != NULL){
-            delete[] voxel_map_16bit;
-            voxel_map_16bit = nullptr;
-        }
-        
-        if(color_map != NULL){
-            delete[] color_map;
-            color_map = nullptr;
-        }
-        
-        if(color_map_16bit != NULL){
-            delete[] color_map_16bit;
-            color_map_16bit = nullptr;
-        }
-        
-        if(alpha_map != NULL){
-            delete[] alpha_map;
-            alpha_map = nullptr;
-        }
+//        if(voxel_map != NULL){
+//            delete voxel_map;
+//            voxel_map = nullptr;
+//        }
+//        
+//        if(voxel_map_16bit != NULL){
+//            delete[] voxel_map_16bit;
+//            voxel_map_16bit = nullptr;
+//        }
+//        
+//        if(color_map != NULL){
+//            delete[] color_map;
+//            color_map = nullptr;
+//        }
+//        
+//        if(color_map_16bit != NULL){
+//            delete[] color_map_16bit;
+//            color_map_16bit = nullptr;
+//        }
+//        
+//        if(alpha_map != NULL){
+//            delete[] alpha_map;
+//            alpha_map = nullptr;
+//        }
 	}
 
 	void Structure::initVoxelMap() {

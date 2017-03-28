@@ -65,6 +65,9 @@ namespace FavLibrary
         validation(file_path);
         
         XercesDOMParser *parser = new XercesDOMParser;
+//        parser->setValidationScheme(XercesDOMParser::Val_Always);
+//        parser->setDoNamespaces(true);
+        
         parser->parse(file_path);
         
         DOMDocument *doc  = parser->getDocument();
@@ -80,6 +83,8 @@ namespace FavLibrary
         readVoxel   (voxel_list);
         readObject  (object_list);
         
+        delete parser;
+//        doc->release();
         XMLPlatformUtils::Terminate();
         
         return 1;
@@ -96,7 +101,8 @@ namespace FavLibrary
 			DOMNode *current_metadata = metadata_node_->item(i);
 			DOMNode *parent_node = dynamic_cast<DOMElement*>(current_metadata)->getParentNode();
 
-			if (XMLString::transcode(parent_node->getNodeName()) == std::string("fav")) {
+            char* node_name = XMLString::transcode(parent_node->getNodeName());
+			if (node_name == std::string("fav")) {
 
                 fav->setMetadataId     (getElementString(dynamic_cast<DOMElement*>(current_metadata), "id"   ));
 				fav->setMetadataTitle  (getElementString(dynamic_cast<DOMElement*>(current_metadata), "title"));
@@ -108,6 +114,7 @@ namespace FavLibrary
                 //TODO: MetaData
                 // fav以外の階層でのmetadataの読み込み
             }
+            XMLString::release(&node_name);
 
 		}
 
@@ -809,7 +816,6 @@ namespace FavLibrary
 		int number_of_object = int(object_node_->getLength());
 		for (int i=0; i<number_of_object; ++i) {
             
-
 			DOMElement* object_elem = dynamic_cast<DOMElement*>(object_node_->item(i));
 
 			//load attributes
@@ -819,8 +825,7 @@ namespace FavLibrary
             //FIXME: バグ
             // idを引数にして生成すると、write()の際にorigin.getX()でメモリのアクセスエラーが出る。
             // それに加えて、サンプルデータの書き出し後Originの値が変わってしまっている。
-			Object* current_object = new Object(name);
-//            current_object->setId(1);
+			Object* current_object = new Object(stoi(id), name);
 
             current_object->grid = new Grid();
             readGrid(object_elem, current_object);
@@ -856,9 +861,9 @@ namespace FavLibrary
     DOMNodeList* FavReader::getElements(DOMElement* element_, const char *tag_name_)
     {
         char* tag_name = (char *)tag_name_;
-        XMLCh* attributeName = XMLString::transcode(tag_name);
-        DOMNodeList* node_list = element_->getElementsByTagName(attributeName);
-        XMLString::release(&attributeName);
+        XMLCh* attribute_name = XMLString::transcode(tag_name);
+        DOMNodeList* node_list = element_->getElementsByTagName(attribute_name);
+        XMLString::release(&attribute_name);
         
         return node_list;
     }
@@ -866,12 +871,14 @@ namespace FavLibrary
     std::string FavReader::getAttribute(DOMElement* element_, const char *tag_name_)
     {
         char* tag_name = (char *)tag_name_;
-        XMLCh* attributeName = XMLString::transcode(tag_name);
-        const XMLCh* attribute_value = element_->getAttribute(attributeName);
+        XMLCh* attribute_name = XMLString::transcode(tag_name);
+        const XMLCh* attribute_value = element_->getAttribute(attribute_name);
         char* attribute_value_str = XMLString::transcode(attribute_value);
         std::string ret = std::string(attribute_value_str);
-        XMLString::release(&attribute_value_str);
         
+        XMLString::release(&attribute_name);
+        XMLString::release(&attribute_value_str);
+
         return ret;
     }
     
@@ -880,6 +887,7 @@ namespace FavLibrary
         const XMLCh* node_value = node_->getNodeValue();
         char* node_value_str = XMLString::transcode(node_value);
         int ret = atoi(node_value_str);
+        
         XMLString::release(&node_value_str);
         return ret;
     }

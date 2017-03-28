@@ -48,7 +48,14 @@ namespace FavLibrary
 	Material::Material(unsigned int id_) : FavPrimitive(id_) {};
 	Material::Material(std::string name_) : FavPrimitive(name_) {};
 	Material::Material(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
-	Material::~Material() {};
+	
+    Material::~Material() {
+//        for (std::list<MaterialSpec*>::iterator it = materials.begin(); it != materials.end(); ++it) {
+//            if(*it!=NULL)
+//                std::cout << *it << std::endl;
+//        }
+//        materials.clear();
+    };
 
 	bool Material::hasMaterials() { return getNumMaterials() > 0; };
 
