@@ -9,7 +9,7 @@ namespace FavLibrary
 	Geometry::Geometry() {};
 	Geometry::Geometry(unsigned int id_) : FavPrimitive(id_) {};
 	Geometry::Geometry(std::string name_) : FavPrimitive(name_) {};
-	Geometry::Geometry(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
+    Geometry::Geometry(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {identifier = id_; name = name_;};
 	Geometry::~Geometry() {};
 
 	GeometryShape Geometry::getShape() { return shape; };

@@ -20,7 +20,9 @@ namespace FavLibrary
 		//char cCurrentPath[FILENAME_MAX];
 		//GetCurrentDir(cCurrentPath, sizeof(cCurrentPath));
 
-		xsd_path = "C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\fav.xsd";
+//		xsd_path = "C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\fav.xsd";
+        
+        xsd_path = "/Users/atsmsmr/Documents/Developer/fav-project/xml_schema/fav.xsd";
 	};
     
 
