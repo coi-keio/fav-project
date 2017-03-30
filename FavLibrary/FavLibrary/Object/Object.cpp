@@ -12,14 +12,27 @@
 namespace FavLibrary
 {
 	Object::Object() {};
-	Object::Object(unsigned int id_)  : FavPrimitive(id_) {};
-	Object::Object(std::string name_) : FavPrimitive(name_) {};
-	Object::Object(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
+	
+    Object::Object(unsigned int id_)  : FavPrimitive(id_) {
+    
+        structure.setGridPointer(&grid);
+        
+    };
+    
+	Object::Object(std::string name_) : FavPrimitive(name_) {
+    
+        structure.setGridPointer(&grid);
 
-	Object::~Object() {
-        delete structure;
-        delete grid;
+    };
+    
+	Object::Object(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {
+    
+        structure.setGridPointer(&grid);
+
     };
 
-	void Object::setStructure(Structure* structure_new_) { structure = structure_new_; };
+	Object::~Object() {
+        
+    };
+
 }

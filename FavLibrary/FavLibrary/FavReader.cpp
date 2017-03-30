@@ -255,7 +255,7 @@ namespace FavLibrary
             double x = getElementDouble(dynamic_cast<DOMElement*>(origin_node->item(0)), "x");
             double y = getElementDouble(dynamic_cast<DOMElement*>(origin_node->item(0)), "y");
             double z = getElementDouble(dynamic_cast<DOMElement*>(origin_node->item(0)), "z");
-            current_object->grid->setOrigin(x, y, z);
+            current_object->grid.setOrigin(x, y, z);
         }
         
         // load unit
@@ -264,7 +264,7 @@ namespace FavLibrary
             double x = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "x");
             double y = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "y");
             double z = getElementInt(dynamic_cast<DOMElement*>(unit_node->item(0)), "z");
-            current_object->grid->setUnit(x, y, z);
+            current_object->grid.setUnit(x, y, z);
         }
         
         // load dimension
@@ -273,12 +273,15 @@ namespace FavLibrary
             int x = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "x");
             int y = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "y");
             int z = getElementInt(dynamic_cast<DOMElement*>(dimension_node->item(0)), "z");
-            current_object->grid->setDimension(x, y, z);
+            current_object->grid.setDimension(x, y, z);
         }
     }
     
     void FavReader::readVoxelMap(xercesc::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
    
+        
+        std::cout << current_object << std::endl;
+        
         DOMElement* vmap_elem = dynamic_cast<DOMElement*>(getElements(object_elem, "voxel_map")->item(0));
         std::string compression   = getAttribute(vmap_elem, "compression");
         std::string bit_per_voxel = getAttribute(vmap_elem, "bit_per_voxel");
@@ -292,11 +295,11 @@ namespace FavLibrary
         
         else if(bit_per_voxel == "16")
             structure->setBitPerVoxel(BitPerVoxel::Bit16);
-
     
+        structure->initVoxelMap();
+        
         DOMNodeList* vmap_layers = getElements(vmap_elem, "layer");
         int number_of_layers = int(vmap_layers->getLength());
-        structure->initVoxelMap();
         
         for (int j = 0; j < number_of_layers; ++j) {
             
@@ -342,7 +345,7 @@ namespace FavLibrary
                 // other compression mode is under development
             } else if (compression == "base64") {
                 
-                XMLSize_t size = current_object->grid->getDimensionX() * current_object->grid->getDimensionY();
+                XMLSize_t size = current_object->grid.getDimensionX() * current_object->grid.getDimensionY();
                 data_in.resize(size);
                 std::string input_str = getNodeValueString(vmap_layers->item(j)->getFirstChild());
                 XMLByte* data_decoded = xercesc::Base64::decode(reinterpret_cast<const XMLByte*>(input_str.c_str()), &size);
@@ -352,8 +355,8 @@ namespace FavLibrary
                 }
             }
             
-            int dim_x = current_object->grid->getDimensionX();
-            int dim_y = current_object->grid->getDimensionY();
+            int dim_x = current_object->grid.getDimensionX();
+            int dim_y = current_object->grid.getDimensionY();
             int layer_size = dim_x * dim_y;
             
             if (data_in.size() != layer_size) {
@@ -385,8 +388,8 @@ namespace FavLibrary
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
             
             int count_colors = 0;
-            for(int y=0; y<current_object->grid->getDimensionY(); ++y){
-                for(int x=0; x<current_object->grid->getDimensionX(); ++x){
+            for(int y=0; y<current_object->grid.getDimensionY(); ++y){
+                for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                     if(structure->getVoxel(x,y,z) > 0 )
                         count_colors++;
                 }
@@ -428,8 +431,8 @@ namespace FavLibrary
                 }
             }
             
-            int dim_x = current_object->grid->getDimensionX();
-            int dim_y = current_object->grid->getDimensionY();
+            int dim_x = current_object->grid.getDimensionX();
+            int dim_y = current_object->grid.getDimensionY();
             int count = 0;
             
             for(int y=0; y<dim_y; y++){
@@ -501,8 +504,8 @@ namespace FavLibrary
             }else if (compression == "base64") {
                 
                 int count_colors = 0;
-                for(int y=0; y<current_object->grid->getDimensionY(); ++y){
-                    for(int x=0; x<current_object->grid->getDimensionX(); ++x){
+                for(int y=0; y<current_object->grid.getDimensionY(); ++y){
+                    for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
                             count_colors++;
                     }
@@ -522,8 +525,8 @@ namespace FavLibrary
                 }
             }
             
-            int dim_x = current_object->grid->getDimensionX();
-            int dim_y = current_object->grid->getDimensionY();
+            int dim_x = current_object->grid.getDimensionX();
+            int dim_y = current_object->grid.getDimensionY();
             int count = 0;
             
             for(int y=0; y<dim_y; y++){
@@ -601,8 +604,8 @@ namespace FavLibrary
             }else if (compression == "base64") {
                 
                 int count_colors = 0;
-                for(int y=0; y<current_object->grid->getDimensionY(); ++y){
-                    for(int x=0; x<current_object->grid->getDimensionX(); ++x){
+                for(int y=0; y<current_object->grid.getDimensionY(); ++y){
+                    for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
                             count_colors++;
                     }
@@ -622,8 +625,8 @@ namespace FavLibrary
                 }
             }
             
-            int dim_x = current_object->grid->getDimensionX();
-            int dim_y = current_object->grid->getDimensionY();
+            int dim_x = current_object->grid.getDimensionX();
+            int dim_y = current_object->grid.getDimensionY();
             int count = 0;
             
             for(int y=0; y<dim_y; y++){
@@ -682,8 +685,8 @@ namespace FavLibrary
             }else if (compression == "base64") {
                 
                 int count_colors = 0;
-                for(int y=0; y<current_object->grid->getDimensionY(); ++y){
-                    for(int x=0; x<current_object->grid->getDimensionX(); ++x){
+                for(int y=0; y<current_object->grid.getDimensionY(); ++y){
+                    for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
                             count_colors++;
                     }
@@ -699,8 +702,8 @@ namespace FavLibrary
                 }
             }
             
-            int dim_x = current_object->grid->getDimensionX();
-            int dim_y = current_object->grid->getDimensionY();
+            int dim_x = current_object->grid.getDimensionX();
+            int dim_y = current_object->grid.getDimensionY();
             int count = 0;
             
             for(int y=0; y<dim_y; y++){
@@ -750,8 +753,8 @@ namespace FavLibrary
             }else if (compression == "base64") {
                 
                 int count_colors = 0;
-                for(int y=0; y<current_object->grid->getDimensionY(); ++y){
-                    for(int x=0; x<current_object->grid->getDimensionX(); ++x){
+                for(int y=0; y<current_object->grid.getDimensionY(); ++y){
+                    for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
                             count_colors++;
                     }
@@ -767,8 +770,8 @@ namespace FavLibrary
                 }
             }
             
-            int dim_x = current_object->grid->getDimensionX();
-            int dim_y = current_object->grid->getDimensionY();
+            int dim_x = current_object->grid.getDimensionX();
+            int dim_y = current_object->grid.getDimensionY();
             int count = 0;
             
             for(int y=0; y<dim_y; y++){
@@ -838,18 +841,15 @@ namespace FavLibrary
             //FIXME: バグ
             // idを引数にして生成すると、write()の際にorigin->getX()でメモリのアクセスエラーが出る。
             // それに加えて、サンプルデータの書き出し後Originの値が変わってしまっている。
-			Object* current_object = new Object(stoi(id), name);
+			Object current_object(stoi(id), name);
 
-            current_object->grid = new Grid();
-            readGrid(object_elem, current_object);
+            readGrid(object_elem, &current_object);
             // load Structure
             // TODO: ポインタ問題
             // こっちはポインタ渡しで上の方は違うので、どちらかに統一する?
-            Structure* structure = new Structure(current_object->grid);
-            current_object->setStructure(structure);
 
-            readVoxelMap(object_elem, current_object, structure);
-            readColorMap(object_elem, current_object, structure);
+            readVoxelMap(object_elem, &current_object, &current_object.structure);
+            readColorMap(object_elem, &current_object, &current_object.structure);
             
 
             //FIXME: バグ metadataが無い場合にメモリエラー

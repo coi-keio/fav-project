@@ -23,15 +23,16 @@ namespace FavLibrary
 //            palette = NULL;
 //        }
         
-        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
-            if(it->second != NULL){
-                delete it->second;
-                it->second = NULL;
-            }
-            it++;
-        }
-        objects.clear();
+//        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
+//            if(it->second != NULL){
+//                delete it->second;
+//                it->second = NULL;
+//            }
+//            it++;
+//        }
         
+        objects.clear();
+        voxels.clear();
 //        for(std::map<unsigned int, Voxel*>::iterator it = voxels.begin(); it != voxels.end();){
 //            if(it->second != NULL){
 //                delete it->second;
@@ -81,27 +82,29 @@ namespace FavLibrary
 	void Fav::removeVoxel(unsigned int id_) { voxels[id_].remove(); }
 	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0 && !voxels[id_].isRemoved(); }
 
-	std::map<unsigned int, Object*> Fav::getObjects()
+	std::map<unsigned int, Object> Fav::getObjects()
 	{
 //		std::vector<Object> res;
 		//		std::for_each(objects.begin(), objects.end(),
 		//			[&](const std::pair<const Object, Object>& ref) { res.push_back(ref.second); });
 		return objects;
 	};
-	Object* Fav::getObject(unsigned int id_)
+	Object Fav::getObject(unsigned int id_)
 	{
-		Object* res = nullptr;
-		// FIXME: „Åì„ÅEisRemoved()„Åß„ÉÅ„Çß„ÉÅEÇØ„Åô„Çã„ÅÆÂøÅE¶Å„Å™„ÅÆ„ÅãÔºÅE„Å©„Å°„Çâ„Å´„Åõ„Çà„Åì„ÅEÊõ∏„ÅçÊñπ„ÅØ„Ç¢„ÇØ„Çª„Çπ„Ç®„É©„Éº„ÅåËµ∑„Åç„ÅÜ„Çã„ÄÅEmasumori)
-		//        „ÅÇ„Å®,object„ÅåÁÑ°„Åã„Å£„ÅüÂ†¥Âêà„Å´Á©∫„ÇíËøî„Åô„ÅÆ„ÅßËâØ„ÅÅEÅE„ÅãÔºü„ÄÄ
+		// FIXME: what is isRemoved for???
+        // maybe
 //		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
 		if (objects.count(id_) > 0)
+			return objects[id_];
 
-			res = objects[id_];
-
-		return res;
+		return NULL;
 	}
-	void Fav::addObject(Object* object_) { objects[object_->getId()] = object_; };
-	void Fav::removeObject(unsigned int id_) { objects[id_]->remove(); }
+    void Fav::addObject(Object object_) {
+        objects[object_.getId()] = object_;
+        objects[object_.getId()].structure.setGridPointer(&objects[object_.getId()].grid);
+    };
+    
+	void Fav::removeObject(unsigned int id_) { objects[id_].remove(); }
 	//	bool existsObject(unsigned int id_) { return objects.count(id_) > 0 && !objects[id_]->isRemoved; }
 
 	int Fav::getNumObjects() { return (int)objects.size(); };

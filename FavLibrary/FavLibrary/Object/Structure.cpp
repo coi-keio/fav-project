@@ -43,53 +43,55 @@ namespace FavLibrary
 //		return data[index_];
 //	}
 
-	Structure::Structure(Grid* grid_) {
-		grid = grid_;
-		number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();
-	}
+//	Structure::Structure(Grid* grid_) {
+//		grid = grid_;
+//		number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();
+//	}
 
 	Structure::~Structure() {
         
-        if(voxel_map != NULL){
-            delete[] voxel_map;
-            voxel_map = NULL;
-        }
+//        if(voxel_map != NULL){
+//            delete[] voxel_map;
+//            voxel_map = NULL;
+//        }
+//        
+//        if(voxel_map_16bit != NULL){
+//            delete[] voxel_map_16bit;
+//            voxel_map_16bit = NULL;
+//        }
         
-        if(voxel_map_16bit != NULL){
-            delete[] voxel_map_16bit;
-            voxel_map_16bit = NULL;
-        }
-        
-        if(color_map != NULL){
-            delete[] color_map;
-            color_map = NULL;
-        }
-        if(color_map_16bit != NULL){
-            delete[] color_map_16bit;
-            color_map_16bit = NULL;
-        }
-        
-        if(alpha_map != NULL){
-            delete[] alpha_map;
-            alpha_map = NULL;
-        }
+//        if(color_map != NULL){
+//            delete[] color_map;
+//            color_map = NULL;
+//        }
+//        if(color_map_16bit != NULL){
+//            delete[] color_map_16bit;
+//            color_map_16bit = NULL;
+//        }
+//        
+//        if(alpha_map != NULL){
+//            delete[] alpha_map;
+//            alpha_map = NULL;
+//        }
         
 	}
 
 	void Structure::initVoxelMap() {
 
+        number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();
+        
         switch (bit_per_voxel) {
                 
             case BitPerVoxel::Bit4:
             case BitPerVoxel::Bit8:
                 
-                voxel_map = new unsigned char[number_of_voxels];
+                voxel_map.resize(number_of_voxels);
                 
                 break;
                 
             case BitPerVoxel::Bit16:
                 
-                voxel_map_16bit = new unsigned short[number_of_voxels];
+                voxel_map_16bit.resize(number_of_voxels);
                 
                 break;
                 
@@ -107,27 +109,31 @@ namespace FavLibrary
 
 	void Structure::initColorMap() {
         
+        color_map.clear();
+        color_map_16bit.clear();
+        alpha_map.clear();
+        
         switch(color_mode){
                 
             case ColorMode::RGB:
-                color_map = new unsigned char[number_of_voxels * 3];
+                color_map.resize(number_of_voxels * 3);
                 break;
                 
             case ColorMode::RGBA:
-                color_map = new unsigned char[number_of_voxels * 3];
-                alpha_map = new unsigned char[number_of_voxels];
+                color_map.resize(number_of_voxels * 3);
+                alpha_map.resize(number_of_voxels);
                 break;
                 
             case ColorMode::CMYK:
-                color_map = new unsigned char[number_of_voxels * 3];
+                color_map.resize(number_of_voxels * 3);
                 break;
                 
             case ColorMode::Grayscale:
-                color_map = new unsigned char[number_of_voxels];
+                color_map.resize(number_of_voxels);
                 break;
                 
             case ColorMode::Grayscale16:
-                color_map_16bit = new unsigned short[number_of_voxels];
+                color_map_16bit.resize(number_of_voxels);
                 break;
                 
             default:
@@ -140,19 +146,14 @@ namespace FavLibrary
         
         if(bit_per_voxel == BitPerVoxel::Bit4 || bit_per_voxel == BitPerVoxel::Bit8){
             
-            if(voxel_map_16bit != NULL){
-                delete voxel_map_16bit;
-                voxel_map_16bit = NULL;
-            }
-            
-            voxel_map_16bit = new unsigned short[number_of_voxels];
+            voxel_map_16bit.clear();
+            voxel_map_16bit.resize(number_of_voxels);
             
             for(int i=0; i<number_of_voxels; ++i){
                 voxel_map_16bit[i] = voxel_map[i];
             }
             
-            delete voxel_map;
-            voxel_map = NULL;
+            voxel_map.clear();
         }
         
     }
@@ -161,19 +162,14 @@ namespace FavLibrary
         
         if(bit_per_voxel == BitPerVoxel::Bit16){
             
-            if(voxel_map != NULL){
-                delete voxel_map;
-                voxel_map = NULL;
-            }
-            
-            voxel_map = new unsigned char[number_of_voxels];
+            voxel_map.clear();
+            voxel_map.resize(number_of_voxels);
             
             for(int i=0; i<number_of_voxels; ++i){
                 voxel_map[i] = voxel_map_16bit[i];
             }
             
-            delete voxel_map_16bit;
-            voxel_map_16bit = NULL;
+            voxel_map_16bit.resize(number_of_voxels);
         }
     }
     
@@ -534,7 +530,7 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels * 4];
+        std::vector<unsigned char> new_color_map(number_of_voxels * 4);
         int count = 0;
         for(int i=0; i<number_of_voxels*3; i=i+3){
 
@@ -552,9 +548,9 @@ namespace FavLibrary
             count++;
         }
 
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::CMYK;
     };
     
@@ -562,7 +558,7 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels];
+        std::vector<unsigned char> new_color_map(number_of_voxels);
         int count = 0;
         for(int i=0; i<number_of_voxels*3; i=i+3){
             
@@ -576,9 +572,9 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::Grayscale;
     };
     
@@ -586,7 +582,8 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned short*  new_color_map = new unsigned short[number_of_voxels];
+        std::vector<unsigned short> new_color_map(number_of_voxels);
+
         int count = 0;
         for(int i=0; i<number_of_voxels*3; i=i+3){
             
@@ -600,9 +597,9 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map_16bit.clear();
         color_map_16bit = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::Grayscale16;
     };
     
@@ -610,7 +607,8 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels * 3];
+        std::vector<unsigned char> new_color_map(number_of_voxels*3);
+
         int count = 0;
         
         for(int i=0; i<number_of_voxels*4; i=i+4){
@@ -627,9 +625,9 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::RGB;
 
     };
@@ -638,7 +636,8 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels];
+        std::vector<unsigned char> new_color_map(number_of_voxels);
+
         int count = 0;
         
         for(int i=0; i<number_of_voxels*4; i=i+4){
@@ -657,9 +656,9 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::Grayscale;
         
     };
@@ -668,7 +667,8 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned short* new_color_map = new unsigned short[number_of_voxels];
+        std::vector<unsigned short> new_color_map(number_of_voxels);
+
         int count = 0;
         
         for(int i=0; i<number_of_voxels*4; i=i+4){
@@ -687,16 +687,17 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map_16bit = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::Grayscale16;
         
     };
     
     void Structure::convertGrayscaleToRgb(){
         
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels * 3];
+        std::vector<unsigned char> new_color_map(number_of_voxels*3);
+
         int count = 0;
         
         for(int i=0; i<number_of_voxels; ++i){
@@ -710,9 +711,9 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::RGB;
 
     };
@@ -721,7 +722,8 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels * 4];
+        std::vector<unsigned char> new_color_map(number_of_voxels*4);
+
         int count = 0;
         
         for(int i=0; i<number_of_voxels; ++i){
@@ -740,16 +742,17 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::CMYK;
         
     };
     
     void Structure::convertGrayscaleToGrayscale16(){
         
-        unsigned short*  new_color_map = new unsigned short[number_of_voxels];
+        std::vector<unsigned short> new_color_map(number_of_voxels);
+
         int count = 0;
         for(int i=0; i<number_of_voxels; ++i){
             
@@ -760,15 +763,16 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map;
-        color_map = nullptr;
+        color_map.clear();
         color_map_16bit = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::Grayscale16;
     };
     
     void Structure::convertGrayscale16ToRgb(){
         
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels * 3];
+        std::vector<unsigned char> new_color_map(number_of_voxels*3);
+
         int count = 0;
         
         for(int i=0; i<number_of_voxels; ++i){
@@ -782,9 +786,10 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map_16bit;
-        color_map_16bit = nullptr;
+        
+        color_map_16bit.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::RGB;
 
     };
@@ -793,7 +798,8 @@ namespace FavLibrary
         
         // http://www.technotype.net/tutorial/tutorial.php?fileId=%7BImage%20processing%7D&sectionId=%7Bconverting-between-rgb-and-cmyk-color-space%7D
         // FIXME: 不可逆変換のアルゴリズムなので、もっと良い変換アルゴリズムに置き換えるべき
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels * 4];
+        std::vector<unsigned char> new_color_map(number_of_voxels*4);
+
         int count = 0;
         
         for(int i=0; i<number_of_voxels; ++i){
@@ -812,16 +818,17 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map_16bit;
-        color_map_16bit = nullptr;
+        color_map_16bit.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::CMYK;
         
     };
     
     void Structure::convertGrayscale16ToGrayscale(){
         
-        unsigned char*  new_color_map = new unsigned char[number_of_voxels];
+        std::vector<unsigned char> new_color_map(number_of_voxels);
+
         int count = 0;
         for(int i=0; i<number_of_voxels; ++i){
             
@@ -832,9 +839,9 @@ namespace FavLibrary
             count++;
         }
         
-        delete color_map_16bit;
-        color_map_16bit = nullptr;
+        color_map_16bit.clear();
         color_map = new_color_map;
+        new_color_map.clear();
         color_mode = ColorMode::Grayscale;
     };
     
@@ -881,10 +888,7 @@ namespace FavLibrary
                 
             case ColorMode::RGBA:
                 convertRgbToCmyk();
-                if(alpha_map != NULL){
-                    delete[] alpha_map;
-                    alpha_map = nullptr;
-                }
+                alpha_map.clear();
                 
                 break;
                 
@@ -915,10 +919,8 @@ namespace FavLibrary
                 
             case ColorMode::RGBA:
                 convertRgbToGrayscale();
-                if(alpha_map != NULL){
-                    delete[] alpha_map;
-                    alpha_map = nullptr;
-                }
+                alpha_map.clear();
+
                 break;
                 
             case ColorMode::CMYK:
@@ -948,10 +950,7 @@ namespace FavLibrary
                 
             case ColorMode::RGBA:
                 convertRgbToGrayscale16();
-                if(alpha_map != NULL){
-                    delete[] alpha_map;
-                    alpha_map = nullptr;
-                }
+                alpha_map.clear();
                 break;
                 
             case ColorMode::CMYK:

@@ -259,12 +259,12 @@ namespace FavLibrary
 		setAttribute(vmap_elem, "bit_per_voxel", std::to_string((int)p_structure->getBitPerVoxel()));
 
 		std::string layer_data;
-		for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+		for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
 			
             layer_data.clear();
 			
-            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
-				for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+            for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
+				for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
 					
                     int data = p_structure->getVoxel(x, y, z);
 
@@ -304,7 +304,7 @@ namespace FavLibrary
                     
                 case CompressionMode::base64:
                 {
-                    int size = p_structure->grid->getDimensionX() * p_structure->grid->getDimensionY();
+                    int size = p_structure->getDimensionX() * p_structure->getDimensionY();
                     unsigned char* data = new unsigned char[size];
                     for(int i=0; i<size; ++i) data[i] = 0;
 
@@ -339,12 +339,12 @@ namespace FavLibrary
     void FavWriter::writeColorMapRGB(DOMElement *cmap_elem, Structure* p_structure){
         
         std::string layer_data;
-        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+        for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
             
             layer_data.clear();
             int count_colors = 0;
-            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
-                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+            for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
                     
                     int voxel_state = p_structure->getVoxel(x,y,z);
                     
@@ -407,12 +407,12 @@ namespace FavLibrary
     void FavWriter::writeColorMapRGBA(DOMElement *cmap_elem, Structure* p_structure){
         
         std::string layer_data;
-        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+        for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
             
             layer_data.clear();
             int count_colors = 0;
-            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
-                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+            for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
                     
                     int voxel_state = p_structure->getVoxel(x,y,z);
                     
@@ -479,12 +479,12 @@ namespace FavLibrary
     void FavWriter::writeColorMapCMYK(DOMElement *cmap_elem, Structure* p_structure){
         
         std::string layer_data;
-        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+        for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
             
             layer_data.clear();
             int count_colors = 0;
-            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
-                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+            for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
                     
                     int voxel_state = p_structure->getVoxel(x,y,z);
                     
@@ -551,12 +551,12 @@ namespace FavLibrary
     void FavWriter::writeColorMapGrayScale(DOMElement *cmap_elem, Structure* p_structure){
         
         std::string layer_data;
-        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+        for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
             
             layer_data.clear();
             int count_colors = 0;
-            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
-                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+            for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
                     
                     int voxel_state = p_structure->getVoxel(x,y,z);
                     
@@ -611,12 +611,12 @@ namespace FavLibrary
     void FavWriter::writeColorMapGrayScale16(DOMElement *cmap_elem, Structure* p_structure){
         
         std::string layer_data;
-        for (int z = 0, size = p_structure->grid->getDimensionZ(); z < size; ++z) {
+        for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
             
             layer_data.clear();
             int count_colors = 0;
-            for (int y = 0, size = p_structure->grid->getDimensionY(); y < size; ++y) {
-                for (int x = 0, size = p_structure->grid->getDimensionX(); x < size; ++x) {
+            for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
+                for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
                     
                     int voxel_state = p_structure->getVoxel(x,y,z);
                     
@@ -749,16 +749,16 @@ namespace FavLibrary
 
 	void FavWriter::writeObject(DOMElement* parent_elem) {
         
-        std::map<unsigned int, Object*> objects = fav->getObjects();
-        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
+        std::map<unsigned int, Object> objects = fav->getObjects();
+        for(std::map<unsigned int, Object>::iterator it = objects.begin(); it != objects.end();){
 
-            Object* current_object = it->second;
+            Object current_object = it->second;
             DOMElement  *obj_elem = createElement("object");
-            setAttribute(obj_elem, "id",   std::to_string(current_object->getId()));
-            setAttribute(obj_elem, "name", current_object->getName());
+            setAttribute(obj_elem, "id",   std::to_string(current_object.getId()));
+            setAttribute(obj_elem, "name", current_object.getName());
             
-            writeGrid(obj_elem, current_object->grid);
-            writeStructure(obj_elem, current_object->structure);
+            writeGrid(obj_elem, &current_object.grid);
+            writeStructure(obj_elem, &current_object.structure);
             parent_elem->appendChild(obj_elem);
             
             it++;

@@ -24,25 +24,14 @@ namespace FavLibrary
 		Object();
 		Object(unsigned int id_);
 		Object(std::string name_);
-		Object(unsigned int id_, std::string name_);
-
+        Object(unsigned int id_, std::string name_);
 		~Object();
-
-		void setStructure(Structure* structure_new_);
-
-		/// この辺はStructureのメソッド呼ぶだけのショートカット
-		//int* getVoxelMap();
-		//int* getColorMap();
-		//int* getLinkMap();
-
-		//void setVoxelMap(int* voxel_map_); //grid infoと合わないデータが来た場合はエラーを返す。
-		//void setColorMap(int* color_map_);
-		//void setLinkMap(int* link_map_);
-
-		Grid* grid = NULL;
-		Structure* structure = NULL;
+        
+        Grid grid;
+        Structure structure;
 
 	private:
+
 		Object* pObject;
 
 	};

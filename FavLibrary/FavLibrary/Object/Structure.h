@@ -51,10 +51,9 @@ namespace FavLibrary
 	class IDll Structure {
 	public:
         Structure(){};
-		Structure(Grid* grid_);
-		Structure(int bit_per_voxel_);
-		Structure(int bit_per_voxel_, ColorMode color_mode_);
 		~Structure();
+        
+        void setGridPointer(Grid* grid_){grid = grid_;};
 		void setCompression(Compression compression_);
 		Compression getCompression();
 
@@ -127,18 +126,15 @@ namespace FavLibrary
 
 		ColorMode getColorMode() { return color_mode; };
 
-		int getDimensionX();
-		int getDimensionY();
-		int getDimensionZ();
+        int getDimensionX(){ return grid->getDimensionX(); };
+        int getDimensionY(){ return grid->getDimensionY(); };
+        int getDimensionZ(){ return grid->getDimensionZ(); };
 
 		//TODO: Link map is under development
 		//        void initLinkMap();
 		//        unsigned int getLink(Point3D p1_, Point3D p2_);
 		//        unsigned int getLink(int x1_, int y1_, int z1_, int x2_, int y2_, int z2_);
 		//        int getNeighbors(){ return neighbours; };
-
-		Grid* grid;
-        
 
 	private:
         
@@ -170,12 +166,14 @@ namespace FavLibrary
 		int number_of_voxels;
         bool has_color;
 
-		unsigned char*  voxel_map = NULL; //default voxel map
-		unsigned short* voxel_map_16bit = NULL;// for 16bit voxel map
-		unsigned char*  alpha_map = NULL;
-		unsigned char*  color_map = NULL;
-		unsigned short* color_map_16bit = NULL;
+        std::vector<unsigned char>  voxel_map; //default voxel map
+		std::vector<unsigned short> voxel_map_16bit;// for 16bit voxel map
+		std::vector<unsigned char>  alpha_map;
+		std::vector<unsigned char>  color_map;
+		std::vector<unsigned short> color_map_16bit;
 
+        Grid* grid;
+        
 		//TODO: Link map is under development
 		//        float* link_map;
 		//        int neighbours;
