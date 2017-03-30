@@ -50,30 +50,21 @@ namespace FavLibrary
 
 	Structure::~Structure() {
         
-        if(voxel_map != NULL){
-            delete voxel_map;
-            voxel_map = nullptr;
-        }
+        delete voxel_map;
+        voxel_map = nullptr;
         
-        if(voxel_map_16bit != NULL){
-            delete[] voxel_map_16bit;
-            voxel_map_16bit = nullptr;
-        }
+        delete[] voxel_map_16bit;
+        voxel_map_16bit = nullptr;
         
-        if(color_map != NULL){
-            delete[] color_map;
-            color_map = nullptr;
-        }
+        delete[] color_map;
+        color_map = nullptr;
         
-        if(color_map_16bit != NULL){
-            delete[] color_map_16bit;
-            color_map_16bit = nullptr;
-        }
+        delete[] color_map_16bit;
+        color_map_16bit = nullptr;
         
-        if(alpha_map != NULL){
-            delete[] alpha_map;
-            alpha_map = nullptr;
-        }
+        delete[] alpha_map;
+        alpha_map = nullptr;
+        
 	}
 
 	void Structure::initVoxelMap() {

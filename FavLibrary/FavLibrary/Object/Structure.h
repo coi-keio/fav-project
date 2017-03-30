@@ -166,11 +166,11 @@ namespace FavLibrary
 		int number_of_voxels;
         bool has_color;
 
-		VoxelMap<unsigned char>*  voxel_map       = NULL; //default voxel map
-		VoxelMap<unsigned short>* voxel_map_16bit = NULL;// for 16bit voxel map
-		unsigned char*  alpha_map       = NULL;
-		unsigned char*  color_map       = NULL;
-		unsigned short* color_map_16bit = NULL;
+		VoxelMap<unsigned char>*  voxel_map; //default voxel map
+		VoxelMap<unsigned short>* voxel_map_16bit;// for 16bit voxel map
+		unsigned char*  alpha_map;
+		unsigned char*  color_map;
+		unsigned short* color_map_16bit;
 
 		//TODO: Link map is under development
 		//        float* link_map;
