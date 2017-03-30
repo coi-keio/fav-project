@@ -32,9 +32,9 @@ namespace FavLibrary
     };
     
 	void Point3D::set(double x_, double y_, double z_) {
-        x = x_;
-        y = y_;
-        z = z_;
+		this->x = x_;
+		this->y = y_;
+		this->z = z_;
     };
 	void Point3D::setX(double x_) { x = x_; };
 	void Point3D::setY(double y_) { y = y_; };

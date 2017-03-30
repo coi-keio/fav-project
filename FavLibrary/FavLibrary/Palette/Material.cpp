@@ -50,9 +50,9 @@ namespace FavLibrary
 	Material::Material(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
 	
     Material::~Material() {
-//        for (std::list<MaterialSpec*>::iterator it = materials.begin(); it != materials.end(); ++it) {
-//            delete *it;
-//        }
+		for (std::list<MaterialSpec*>::iterator it = materials.begin(); it != materials.end(); ++it) {
+			delete *it;
+		}
         materials.clear();
     };
 

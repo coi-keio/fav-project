@@ -30,16 +30,16 @@ namespace FavLibrary
 		~Fav();
 		bool read (const char* file_path);
         bool write(const char* file_path, CompressionMode compression_mode_);
-		bool write(const char* file_path, const char* version_);
+		//bool write(const char* file_path, const char* version_);
 
-		std::vector<Voxel> getVoxels();
-		Voxel getVoxel(unsigned int id_);
+		std::vector<Voxel*> getVoxels();
+		Voxel* getVoxel(unsigned int id_);
 		void addVoxel(Voxel* voxel_);
 		void removeVoxel(unsigned int id_);
 		bool existsVoxel(unsigned int id_);
 
 		std::map<unsigned int, Object*> getObjects();
-		Object getObject(unsigned int id_);
+		Object* getObject(unsigned int id_);
 		void addObject(Object* object_);
 		void removeObject(unsigned int id_);
 

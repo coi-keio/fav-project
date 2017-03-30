@@ -15,11 +15,11 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	class IDll IColor : public MetadataObject, FavPrimitive
+	class IDll IColor
 	{
 	public:
 		IColor();
-		~IColor();
+		virtual ~IColor();
 
 		ColorMode colorMode;
 
@@ -31,7 +31,7 @@ namespace FavLibrary
 	public:
 		ColorRGB();
         ColorRGB(unsigned char r_, unsigned char g_, unsigned char b_){r = r_; g = g_; b = b_;};
-		~ColorRGB();
+		virtual ~ColorRGB();
 
 		ColorMode colorMode = ColorMode::RGB;//ここconstにするとcompile errorが出てた。要確認
 
@@ -57,7 +57,7 @@ namespace FavLibrary
 	public:
 		ColorRGBA();
         ColorRGBA(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_){r = r_; g = g_; b = b_; a=a_;};
-		~ColorRGBA();
+		virtual ~ColorRGBA();
 
 		ColorMode colorMode = ColorMode::RGBA;
 
@@ -74,7 +74,7 @@ namespace FavLibrary
 	{
 	public:
 		ColorGrayscale();
-		~ColorGrayscale();
+		virtual ~ColorGrayscale();
 
 		ColorMode colorMode = ColorMode::Grayscale;
 
@@ -89,7 +89,7 @@ namespace FavLibrary
 	{
 	public:
 		ColorGrayscale16();
-		~ColorGrayscale16();
+		virtual ~ColorGrayscale16();
 
 		ColorMode colorMode = ColorMode::Grayscale16;
 
@@ -105,7 +105,7 @@ namespace FavLibrary
 	public:
 		ColorCMYK();
         ColorCMYK(unsigned char c_, unsigned char m_, unsigned char y_, unsigned char k_){c = c_; m = m_; y = y_; k = k_;};
-		~ColorCMYK();
+		virtual ~ColorCMYK();
 
 		ColorMode colorMode = ColorMode::CMYK;
 

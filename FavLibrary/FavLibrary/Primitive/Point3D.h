@@ -9,7 +9,7 @@ namespace FavLibrary
 	public:
 		Point3D();
 		Point3D(double x, double y, double z);
-		~Point3D();
+		virtual ~Point3D();
 
 		void set(Point3D p);
 

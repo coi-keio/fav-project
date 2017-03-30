@@ -57,21 +57,21 @@ namespace FavLibrary
 		return 1;
 	}
 
-	std::vector<Voxel> Fav::getVoxels()
+	std::vector<Voxel*> Fav::getVoxels()
 	{
-		std::vector<Voxel> res;
+		std::vector<Voxel*> res;
 		//		std::for_each(voxels.begin(), voxels.end(),
 		//			[&](const std::pair<const Voxel, Voxel>& ref) { res.push_back(ref.second); });
 		return res;
 	};
-	Voxel Fav::getVoxel(unsigned int id_)
+	Voxel* Fav::getVoxel(unsigned int id_)
 	{
-		Voxel res;// = nullptr;
+		Voxel* res = nullptr;
 		if (voxels.count(id_) > 0 && !voxels[id_]->isRemoved())
-			res = *voxels[id_];
+			res = voxels[id_];
 
 		return res;
-	};
+	}
 	void Fav::addVoxel(Voxel* voxel_) { voxels[voxel_->getId()] = voxel_; };
 	void Fav::removeVoxel(unsigned int id_) { voxels[id_]->remove(); }
 	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0 && !voxels[id_]->isRemoved(); }
@@ -83,18 +83,18 @@ namespace FavLibrary
 		//			[&](const std::pair<const Object, Object>& ref) { res.push_back(ref.second); });
 		return objects;
 	};
-	Object Fav::getObject(unsigned int id_)
+	Object* Fav::getObject(unsigned int id_)
 	{
-		Object res;
-        // FIXME: このisRemoved()でチェックするの必要なのか？ どちらにせよこの書き方はアクセスエラーが起きうる。(masumori)
-        //        あと,objectが無かった場合に空を返すので良いのか？　
+		Object* res = nullptr;
+		// FIXME: こ�EisRemoved()でチェチE��するの忁E��なのか！Eどちらにせよこ�E書き方はアクセスエラーが起きうる、Emasumori)
+		//        あと,objectが無かった場合に空を返すので良ぁE�Eか？　
 //		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
-        if (objects.count(id_) > 0)
+		if (objects.count(id_) > 0)
 
-			res = *objects[id_];
-            
+			res = objects[id_];
+
 		return res;
-	};
+	}
 	void Fav::addObject(Object* object_) { objects[object_->getId()] = object_; };
 	void Fav::removeObject(unsigned int id_) { objects[id_]->remove(); }
 	//	bool existsObject(unsigned int id_) { return objects.count(id_) > 0 && !objects[id_]->isRemoved; }

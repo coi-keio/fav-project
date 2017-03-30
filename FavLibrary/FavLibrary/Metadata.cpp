@@ -19,6 +19,7 @@ namespace FavLibrary
 		author = author_;
 		license = license_;
 	};
+	Metadata::~Metadata() {};
 
 	std::string Metadata::getId() { return identifier; };
 	void Metadata::setId(std::string identifier_) { identifier = identifier_; };
@@ -35,28 +36,33 @@ namespace FavLibrary
 	std::string Metadata::getNote() { return note; };
 	void Metadata::setNote(std::string note_) { note = note_; };
 
-	Metadata MetadataObject::getMetadata() { return metadata; };
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	MetadataObject::MetadataObject() { metadata = new Metadata(); }
+	MetadataObject::~MetadataObject() { if(metadata != nullptr) delete metadata; }
+
+	Metadata* MetadataObject::getMetadata() { return metadata; };
 	void MetadataObject::setMetadata(Metadata metadata_) {
-		metadata.setId(metadata_.getId());
-		metadata.setAuthor(metadata_.getAuthor());
-		metadata.setTitle(metadata_.getTitle());
-		metadata.setLicense(metadata_.getLicense());
-		metadata.setNote(metadata_.getNote());
+		metadata->setId(metadata_.getId());
+		metadata->setAuthor(metadata_.getAuthor());
+		metadata->setTitle(metadata_.getTitle());
+		metadata->setLicense(metadata_.getLicense());
+		metadata->setNote(metadata_.getNote());
 	};
 
-	std::string MetadataObject::getMetadataId() { return metadata.getId(); };
-	void MetadataObject::setMetadataId(std::string id_) { metadata.setId(id_); };
+	std::string MetadataObject::getMetadataId() { return metadata->getId(); };
+	void MetadataObject::setMetadataId(std::string id_) { metadata->setId(id_); };
 
-	std::string MetadataObject::getMetadataAuthor() { return metadata.getAuthor(); };
-	void MetadataObject::setMetadataAuthor(std::string author_) { metadata.setAuthor(author_); };
+	std::string MetadataObject::getMetadataAuthor() { return metadata->getAuthor(); };
+	void MetadataObject::setMetadataAuthor(std::string author_) { metadata->setAuthor(author_); };
 
-	std::string MetadataObject::getMetadataTitle() { return metadata.getTitle(); };
-	void MetadataObject::setMetadataTitle(std::string title_) { metadata.setTitle(title_); };
+	std::string MetadataObject::getMetadataTitle() { return metadata->getTitle(); };
+	void MetadataObject::setMetadataTitle(std::string title_) { metadata->setTitle(title_); };
 
-	std::string MetadataObject::getMetadataLicense() { return metadata.getLicense(); };
-	void MetadataObject::setMetadataLicense(std::string license_) { metadata.setLicense(license_); };
+	std::string MetadataObject::getMetadataLicense() { return metadata->getLicense(); };
+	void MetadataObject::setMetadataLicense(std::string license_) { metadata->setLicense(license_); };
 
-	std::string MetadataObject::getMetadataNote() { return metadata.getNote(); };
-	void MetadataObject::setMetadataNote(std::string note_) { metadata.setNote(note_); };
+	std::string MetadataObject::getMetadataNote() { return metadata->getNote(); };
+	void MetadataObject::setMetadataNote(std::string note_) { metadata->setNote(note_); };
 
 }

@@ -29,7 +29,10 @@ namespace FavLibrary
 	class IDll Grid
 	{
 	public:
-		Unit getUnit();
+		Grid();
+		~Grid();
+
+		Unit* getUnit();
 		void setUnit(Point3D p);
 		void setUnit(double x, double y, double z);
 		double getUnitX();
@@ -39,7 +42,7 @@ namespace FavLibrary
 		double getUnitZ();
 		void setUnitZ(double z);
 
-		Dimension getDimension();
+		Dimension* getDimension();
 		void setDimension(Point3D p);
 		void setDimension(double x, double y, double z);
 		double getDimensionX();
@@ -49,7 +52,7 @@ namespace FavLibrary
 		double getDimensionZ();
 		void setDimensionZ(double z);
 
-		Origin getOrigin();
+		Origin* getOrigin();
 		void setOrigin(Point3D p);
 		void setOrigin(double x, double y, double z);
 		double getOriginX();
@@ -60,9 +63,9 @@ namespace FavLibrary
 		void setOriginZ(double z);
 
 	private:
-		Unit unit;
-		Dimension dimension;
-		Origin origin;
+		Unit* unit;
+		Dimension* dimension;
+		Origin* origin;
 
 		Grid* pGrid;
 	};

@@ -15,6 +15,8 @@ int main()
 	fav->read("C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\FAVSample_v1.fav");
 
 	system("pause");
+	delete fav;
+
     return 0;
 }
 

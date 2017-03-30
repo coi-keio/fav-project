@@ -23,7 +23,7 @@ namespace FavLibrary
 
 	protected:
 		FavPrimitive();
-		~FavPrimitive();
+		virtual ~FavPrimitive();
 
 		unsigned int identifier;
 		std::string name;

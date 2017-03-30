@@ -21,6 +21,7 @@ namespace FavLibrary
 	public:
 		Metadata();
 		Metadata(std::string identifier_, std::string title_, std::string author_, std::string license_);
+		virtual ~Metadata();
 
 		std::string getId();
 		void setId(std::string identifier_);
@@ -37,7 +38,7 @@ namespace FavLibrary
 		std::string getNote();
 		void setNote(std::string note_);
 
-	private:
+	protected:
 		std::string identifier;
 		std::string title;
 		std::string author;
@@ -48,7 +49,10 @@ namespace FavLibrary
 	class IDll MetadataObject
 	{
 	public:
-		Metadata getMetadata();
+		MetadataObject();
+		virtual ~MetadataObject();
+
+		Metadata* getMetadata();
 		void setMetadata(Metadata metadata_);
 
 		std::string getMetadataId();
@@ -67,7 +71,7 @@ namespace FavLibrary
 		void setMetadataNote(std::string note_);
 
 	private:
-		Metadata metadata;
+		Metadata* metadata;
 	};
 
 }

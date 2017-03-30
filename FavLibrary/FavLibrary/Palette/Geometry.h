@@ -23,7 +23,7 @@ namespace FavLibrary
 	public:
 		Scale();
 		Scale(double x, double y, double z);
-		~Scale();
+		virtual ~Scale();
 
 	private:
 		Scale* pScale;
