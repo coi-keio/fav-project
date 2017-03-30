@@ -32,40 +32,40 @@ namespace FavLibrary
 		Grid();
 		~Grid();
 
-		Unit* getUnit();
-		void setUnit(Point3D p);
-		void setUnit(double x, double y, double z);
-		double getUnitX();
-		void setUnitX(double x);
-		double getUnitY();
-		void setUnitY(double y);
-		double getUnitZ();
-		void setUnitZ(double z);
+		Unit getUnit();
+		void  setUnit(Point3D p);
+		void  setUnit(double x, double y, double z);
+        void  setUnitX(double x);
+        void  setUnitY(double y);
+        void  setUnitZ(double z);
+        double getUnitX();
+        double getUnitY();
+        double getUnitZ();
 
-		Dimension* getDimension();
+		Dimension getDimension();
 		void setDimension(Point3D p);
 		void setDimension(double x, double y, double z);
-		double getDimensionX();
 		void setDimensionX(double x);
-		double getDimensionY();
 		void setDimensionY(double y);
+        void setDimensionZ(double z);
+        double getDimensionX();
+        double getDimensionY();
 		double getDimensionZ();
-		void setDimensionZ(double z);
 
-		Origin* getOrigin();
+		Origin getOrigin();
 		void setOrigin(Point3D p);
 		void setOrigin(double x, double y, double z);
-		double getOriginX();
 		void setOriginX(double x);
-		double getOriginY();
 		void setOriginY(double y);
-		double getOriginZ();
 		void setOriginZ(double z);
+        double getOriginX();
+        double getOriginY();
+        double getOriginZ();
 
 	private:
-		Unit* unit;
-		Dimension* dimension;
-		Origin* origin;
+		Unit unit;
+		Dimension dimension;
+		Origin origin;
 
 		Grid* pGrid;
 	};
