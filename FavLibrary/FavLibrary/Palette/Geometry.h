@@ -61,7 +61,7 @@ namespace FavLibrary
 
 	private:
 		std::string reference;
-        GeometryShape shape = GeometryShape::none;
+        GeometryShape shape;// = GeometryShape::none;
 		Scale scale;
         
         bool has_shape = false;

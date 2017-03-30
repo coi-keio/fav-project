@@ -25,7 +25,9 @@ namespace FavLibrary
 	Voxel::Voxel(unsigned int id_) : FavPrimitive(id_) {};
 	Voxel::Voxel(std::string name_) : FavPrimitive(name_) {};
 	Voxel::Voxel(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
-	Voxel::~Voxel() {};
+	Voxel::~Voxel() {
+    
+    };
 
 	void Voxel::setGeometryInfo(unsigned int id_) { geometry_info.setId(id_); };
 	unsigned int Voxel::getGeometryInfo() { return geometry_info.getId(); }

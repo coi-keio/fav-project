@@ -13,10 +13,28 @@
 namespace FavLibrary
 {
 	Fav::Fav() {
+        palette = new Palette;
 	}
 
 	Fav::~Fav() {
 		//    delete metadata;
+        delete palette;
+        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
+            if(it->second != NULL){
+                delete it->second;
+                it->second = nullptr;
+            }
+            it++;
+        }
+        objects.clear();
+        
+        for(std::map<unsigned int, Voxel*>::iterator it = voxels.begin(); it != voxels.end();){
+            if(it->second != NULL){
+                delete it->second;
+                it->second = nullptr;
+            }
+            it++;
+        }
 	}
 
 	bool Fav::read(const char* file_path) {
@@ -24,6 +42,7 @@ namespace FavLibrary
 		fav_reader = new FavReader(this);
 		fav_reader->read(file_path);
 		delete fav_reader;
+        fav_reader = nullptr;
 
 		return 1;
 	}
@@ -33,7 +52,8 @@ namespace FavLibrary
 		fav_writer = new FavWriter(this);
 		fav_writer->write(file_path, compression_mode_);
 		delete fav_writer;
-
+        fav_writer = nullptr;
+        
 		return 1;
 	}
 
@@ -56,19 +76,23 @@ namespace FavLibrary
 	void Fav::removeVoxel(unsigned int id_) { voxels[id_]->remove(); }
 	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0 && !voxels[id_]->isRemoved(); }
 
-	std::vector<Object> Fav::getObjects()
+	std::map<unsigned int, Object*> Fav::getObjects()
 	{
-		std::vector<Object> res;
+//		std::vector<Object> res;
 		//		std::for_each(objects.begin(), objects.end(),
 		//			[&](const std::pair<const Object, Object>& ref) { res.push_back(ref.second); });
-		return res;
+		return objects;
 	};
 	Object Fav::getObject(unsigned int id_)
 	{
-		Object res;// = nullptr;
-		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
-			res = *objects[id_];
+		Object res;
+        // FIXME: このisRemoved()でチェックするの必要なのか？ どちらにせよこの書き方はアクセスエラーが起きうる。(masumori)
+        //        あと,objectが無かった場合に空を返すので良いのか？　
+//		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
+        if (objects.count(id_) > 0)
 
+			res = *objects[id_];
+            
 		return res;
 	};
 	void Fav::addObject(Object* object_) { objects[object_->getId()] = object_; };

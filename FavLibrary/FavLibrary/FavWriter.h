@@ -47,6 +47,7 @@ namespace FavLibrary
         
     private:
         
+        DOMElement* createElement(const char* name_);
         void appendCDATA (DOMElement* parent_elem, const char* child_elem_name, XMLCh*      text);
         void appendCDATA (DOMElement* parent_elem, const char* child_elem_name, const char* text);
         void appendCDATA (DOMElement* parent_elem, const char* child_elem_name, std::string text);
@@ -69,7 +70,7 @@ namespace FavLibrary
         void writeColorMapGrayScale  (DOMElement *cmap_elem, Structure* p_structure);
         void writeColorMapGrayScale16(DOMElement *cmap_elem, Structure* p_structure);
 
-        void writeXML      (const char* filePath);
+        void writeXML(const char* filePath);
         
         void str2bin(const unsigned char *str, unsigned char *hex, int len);
         void BytesFromHexString(unsigned char *data, const char *string);

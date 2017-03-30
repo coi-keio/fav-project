@@ -28,9 +28,13 @@ namespace FavLibrary
         //TODO: エラー処理
         XMLPlatformUtils::Initialize();
         
-        DOMImplementation *tpImpl = DOMImplementationRegistry::getDOMImplementation(XMLString::transcode("Core"));
+        XMLCh* xcore = XMLString::transcode("Core");
+        DOMImplementation *tpImpl = DOMImplementationRegistry::getDOMImplementation(xcore);
+        XMLString::release(&xcore);
         
-        doc = tpImpl->createDocument(0, XMLString::transcode("fav"), 0);
+        XMLCh* xfav = XMLString::transcode("fav");
+        doc = tpImpl->createDocument(0, xfav, 0);
+        XMLString::release(&xfav);
         DOMElement* fav_elem = doc->getDocumentElement();
         setAttribute(fav_elem, "version", "1.0");
         
@@ -51,7 +55,7 @@ namespace FavLibrary
 
 	void FavWriter::writeMetadata(DOMElement *parent_elem) {
 
-		DOMElement *metadata_elem = doc->createElement(XMLString::transcode("metadata"));
+		DOMElement *metadata_elem = createElement("metadata");
 
         appendCDATA(metadata_elem, "id",      fav->getMetadataId());
 		appendCDATA(metadata_elem, "title",   fav->getMetadataTitle());
@@ -66,15 +70,15 @@ namespace FavLibrary
 
 	void FavWriter::writePalette(DOMElement *parent_elem) {
 
-		DOMElement *palette_elem = doc->createElement(XMLString::transcode("palette"));
+		DOMElement *palette_elem = createElement("palette");
 
 		// write geometry
-		int number_of_geometries = fav->palette.getNumberOfGeometries();
+		int number_of_geometries = fav->palette->getNumberOfGeometries();
 
 		for (int i = 0; i < number_of_geometries; ++i) {
 
-			Geometry current_geometry = fav->palette.getGeometryById(i + 1); //FIXME: ? この+1の処理は必須なんだっけ？
-			DOMElement *geometry_elem = doc->createElement(XMLString::transcode("geometry"));
+			Geometry current_geometry = fav->palette->getGeometryById(i + 1); //FIXME: ? この+1の処理は必須なんだっけ？
+			DOMElement *geometry_elem = createElement("geometry");
 			
             setAttribute(geometry_elem, "id", std::to_string(current_geometry.getId()));
             if(current_geometry.getName() !="")
@@ -98,7 +102,7 @@ namespace FavLibrary
             }
 
             if(current_geometry.hasScale()){
-                DOMElement* scale_elem = doc->createElement(XMLString::transcode("scale"));
+                DOMElement* scale_elem = createElement("scale");
                 appendText(scale_elem, "x", std::to_string(current_geometry.getScaleX()) );
                 appendText(scale_elem, "y", std::to_string(current_geometry.getScaleY()) );
                 appendText(scale_elem, "z", std::to_string(current_geometry.getScaleZ()) );
@@ -108,12 +112,12 @@ namespace FavLibrary
 		}
 
 		// write material
-		int number_of_materials = fav->palette.getNumberOfMaterials();
+		int number_of_materials = fav->palette->getNumberOfMaterials();
 		for (int i = 0; i < number_of_materials; ++i) {
 
             int id = i + 1;
-			Material current_material = fav->palette.getMaterialById(id);
-			DOMElement *mat_elem = doc->createElement(XMLString::transcode("material"));
+			Material current_material = fav->palette->getMaterialById(id);
+			DOMElement *mat_elem = createElement("material");
 
             setAttribute(mat_elem, "id", std::to_string(id));
             if(current_material.getName() !="")
@@ -125,7 +129,7 @@ namespace FavLibrary
                 // write product_info
                 if (material->materialType == MaterialType::product_info) {
 					ProductInfo* pinfo = dynamic_cast<ProductInfo*>(material);
-					DOMElement* pinfo_elem = doc->createElement(XMLString::transcode("product_info"));
+					DOMElement* pinfo_elem = createElement("product_info");
                     
                     if(pinfo->getManufacturer() != "")
                         appendCDATA(pinfo_elem, "manufacturer", pinfo->getManufacturer());
@@ -141,7 +145,7 @@ namespace FavLibrary
                 // write iso_standard
 				else if (material->materialType == MaterialType::iso_standard) {
                     IsoStandard* iso = dynamic_cast<IsoStandard*>(material);
-					DOMElement* iso_elem = doc->createElement(XMLString::transcode("iso_standard"));
+					DOMElement* iso_elem = createElement("iso_standard");
 					
                     if(iso->getIsoId() != "")
                         appendCDATA(iso_elem, "iso_id",   iso->getIsoId());
@@ -154,7 +158,7 @@ namespace FavLibrary
                 // write material_name
 				else if (material->materialType == MaterialType::material_name) {
                     MaterialName* material_name = dynamic_cast<MaterialName*>(material);
-					DOMElement* name_elem = doc->createElement(XMLString::transcode("material_name"));
+					DOMElement* name_elem = createElement("material_name");
                     
                     if(material_name->getMaterialName() != "")
                         appendCDATA(name_elem, "material_name", material_name->getMaterialName());
@@ -173,17 +177,17 @@ namespace FavLibrary
 		for (int i = 0; i < number_of_voxels; ++i) {
             
             Voxel current_voxel  = fav->getVoxel(i + 1);
-			DOMElement*  vox_elem = doc->createElement(XMLString::transcode("voxel"));
+			DOMElement*  vox_elem = createElement("voxel");
 			setAttribute(vox_elem, "id",   std::to_string(current_voxel.getId()));
 			if(current_voxel.getName() != "")
                 setAttribute(vox_elem, "name", current_voxel.getName());
 			
-            DOMElement* geo_elem = doc->createElement(XMLString::transcode("geometry_info"));
+            DOMElement* geo_elem = createElement("geometry_info");
 			appendText( geo_elem, "id", std::to_string(current_voxel.getGeometryInfo()));
 			vox_elem->appendChild(geo_elem);
 
 			for (int j = 0, size = current_voxel.getNumMaterialInfo(); j < size; ++j) {
-				DOMElement *matinfo_elem = doc->createElement(XMLString::transcode("material_info"));
+				DOMElement *matinfo_elem = createElement("material_info");
 				appendText(matinfo_elem, "id",    std::to_string(current_voxel.getMaterialInfo(j).getId())   );
                 
 				appendText(matinfo_elem, "ratio", std::to_string(current_voxel.getMaterialInfo(j).getRatio()));
@@ -195,21 +199,21 @@ namespace FavLibrary
 
 	void FavWriter::writeGrid(DOMElement* parent_elem, Grid* grid) {
 
-		DOMElement *grid_elem  = doc->createElement(XMLString::transcode("grid"));
+		DOMElement *grid_elem  = createElement("grid");
         
-		DOMElement *origin_elem = doc->createElement(XMLString::transcode("origin"));
+		DOMElement *origin_elem = createElement("origin");
 		appendText(origin_elem, "x", std::to_string(grid->getOriginX()));
 		appendText(origin_elem, "y", std::to_string(grid->getOriginY()));
 		appendText(origin_elem, "z", std::to_string(grid->getOriginZ()));
 		grid_elem->appendChild(origin_elem);
 
-		DOMElement *unit_elem = doc->createElement(XMLString::transcode("unit"));
+		DOMElement *unit_elem = createElement("unit");
 		appendText(unit_elem, "x", std::to_string(grid->getUnitX()));
 		appendText(unit_elem, "y", std::to_string(grid->getUnitY()));
 		appendText(unit_elem, "z", std::to_string(grid->getUnitZ()));
 		grid_elem->appendChild(unit_elem);
 
-		DOMElement *dim_elem = doc->createElement(XMLString::transcode("dimension"));
+		DOMElement *dim_elem = createElement("dimension");
 		appendText(dim_elem, "x", std::to_string(grid->getDimensionX()));
 		appendText(dim_elem, "y", std::to_string(grid->getDimensionY()));
 		appendText(dim_elem, "z", std::to_string(grid->getDimensionZ()));
@@ -246,7 +250,7 @@ namespace FavLibrary
 				break;
         }
         
-		DOMElement *vmap_elem = doc->createElement(XMLString::transcode("voxel_map"));
+		DOMElement *vmap_elem = createElement("voxel_map");
 		setAttribute(vmap_elem, "compression",   std::string(compression));
 		setAttribute(vmap_elem, "bit_per_voxel", std::to_string(p_structure->getBitPerVoxel()));
 
@@ -298,6 +302,8 @@ namespace FavLibrary
                 {
                     int size = p_structure->grid->getDimensionX() * p_structure->grid->getDimensionY();
                     unsigned char* data = new unsigned char[size];
+                    for(int i=0; i<size; ++i) data[i] = 0;
+
                     BytesFromHexString(data, layer_data.c_str());
                     
                     XMLSize_t len;
@@ -308,6 +314,11 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(vmap_elem, "layer", text_encoded);
+                    XMLString::release(&text_encoded);
+                    XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+                    
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
                 }
@@ -318,6 +329,7 @@ namespace FavLibrary
 		}
         
 		parent_elem->appendChild(vmap_elem);
+        
 	}
 
     void FavWriter::writeColorMapRGB(DOMElement *cmap_elem, Structure* p_structure){
@@ -363,6 +375,8 @@ namespace FavLibrary
 
                     int size = count_colors*3;
                     unsigned char* data = new unsigned char[size];
+                    for(int i=0; i<size; ++i) data[i] = 0;
+                    
                     BytesFromHexString(data, layer_data.c_str());
                     
                     XMLSize_t len;
@@ -373,6 +387,12 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    XMLString::release(&text_encoded);
+                    XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
             }
@@ -427,6 +447,8 @@ namespace FavLibrary
                     
                     int size = count_colors*4;
                     unsigned char* data = new unsigned char[size];
+                    for(int i=0; i<size; ++i) data[i] = 0;
+                    
                     BytesFromHexString(data, layer_data.c_str());
                     
                     XMLSize_t len;
@@ -437,6 +459,12 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    XMLString::release(&text_encoded);
+                    XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
             }
@@ -491,6 +519,8 @@ namespace FavLibrary
                     
                     int size = count_colors*4;
                     unsigned char* data = new unsigned char[size];
+                    for(int i=0; i<size; ++i) data[i] = 0;
+                    
                     BytesFromHexString(data, layer_data.c_str());
                     
                     XMLSize_t len;
@@ -501,6 +531,12 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    XMLString::release(&text_encoded);
+                    XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
             }
@@ -543,6 +579,8 @@ namespace FavLibrary
                     
                     int size = count_colors;
                     unsigned char* data = new unsigned char[size];
+                    for(int i=0; i<size; ++i) data[i] = 0;
+
                     BytesFromHexString(data, layer_data.c_str());
                     
                     XMLSize_t len;
@@ -553,6 +591,12 @@ namespace FavLibrary
                     deleteNewLine(input_str);
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
+                    
+                    XMLString::release(&text_encoded);
+                    XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+
+                    delete[] data;
+                    data = nullptr;
                     
                     break;
             }
@@ -597,6 +641,8 @@ namespace FavLibrary
                     
                     int size = count_colors;
                     unsigned char* data = new unsigned char[size];
+                    for(int i=0; i<size; ++i) data[i] = 0;
+
                     BytesFromHexString(data, layer_data.c_str());
                     
                     XMLSize_t len;
@@ -608,6 +654,12 @@ namespace FavLibrary
                     XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
                     appendCDATA(cmap_elem, "layer", text_encoded);
                     
+                    XMLString::release(&text_encoded);
+                    XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+
+                    delete[] data;
+                    data = nullptr;
+                    
                     break;
             }
             
@@ -615,9 +667,9 @@ namespace FavLibrary
     }
     
 	void FavWriter::writeColorMap(DOMElement* parent_elem, Structure* p_structure) {
-
+        
         // TODO: writeColorMap の実装はwriteVoxelMapができてからそれに準じてやる
-        DOMElement *cmap_elem = doc->createElement(XMLString::transcode("color_map"));
+        DOMElement *cmap_elem = createElement("color_map");
         
         std::string compression;
         switch(compression_mode){
@@ -649,18 +701,30 @@ namespace FavLibrary
                 
             case FavLibrary::ColorMode::RGBA:
                 color_mode = "RGBA";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapRGBA(cmap_elem, p_structure);
+
                 break;
                 
             case FavLibrary::ColorMode::CMYK:
                 color_mode = "CMYK";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapCMYK(cmap_elem, p_structure);
+
                 break;
                 
             case FavLibrary::ColorMode::Grayscale:
                 color_mode = "GrayScale";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapGrayScale(cmap_elem, p_structure);
+
                 break;
                 
             case FavLibrary::ColorMode::Grayscale16:
                 color_mode = "GrayScale16";
+                setAttribute(cmap_elem, "color_mode",  color_mode );
+                writeColorMapGrayScale16(cmap_elem, p_structure);
+
                 break;
         }
         
@@ -670,7 +734,7 @@ namespace FavLibrary
 	void FavWriter::writeStructure(DOMElement* parent_elem, Structure* p_structure) {
 		
         // waiting for structure class
-		DOMElement *structure_elem = doc->createElement(XMLString::transcode("structure"));
+		DOMElement *structure_elem = createElement("structure");
 
 		writeVoxelMap(structure_elem, p_structure);
 		writeColorMap(structure_elem, p_structure);
@@ -680,18 +744,34 @@ namespace FavLibrary
 
 
 	void FavWriter::writeObject(DOMElement* parent_elem) {
+        
+        std::map<unsigned int, Object*> objects = fav->getObjects();
+        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
 
-		for (int i = 0, size = fav->getNumObjects(); i < size; ++i) {
-			
-            Object current_object = fav->getObject(i);
-			DOMElement  *obj_elem = doc->createElement(XMLString::transcode("object"));
-            setAttribute(obj_elem, "id",   std::to_string(current_object.getId()));
-            setAttribute(obj_elem, "name", current_object.getName());
-			
-            writeGrid(obj_elem, current_object.grid);
-			writeStructure(obj_elem, current_object.structure);
-			parent_elem->appendChild(obj_elem);
-		}
+            Object* current_object = it->second;
+            DOMElement  *obj_elem = createElement("object");
+            setAttribute(obj_elem, "id",   std::to_string(current_object->getId()));
+            setAttribute(obj_elem, "name", current_object->getName());
+            
+            writeGrid(obj_elem, current_object->grid);
+            writeStructure(obj_elem, current_object->structure);
+            parent_elem->appendChild(obj_elem);
+            
+            it++;
+        }
+        
+//        
+//		for (int i = 0, size = fav->getNumObjects(); i < size; ++i) {
+//			
+//            Object current_object = fav->getObject(i);
+//			DOMElement  *obj_elem = doc->createElement(XMLString::transcode("object"));
+//            setAttribute(obj_elem, "id",   std::to_string(current_object.getId()));
+//            setAttribute(obj_elem, "name", current_object.getName());
+//			
+//            writeGrid(obj_elem, current_object.grid);
+//			writeStructure(obj_elem, current_object.structure);
+//			parent_elem->appendChild(obj_elem);
+//		}
 
 	}
 
@@ -704,14 +784,17 @@ namespace FavLibrary
 		if (serializer->getDomConfig()->canSetParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true)) {
 			serializer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
 		}
-
-		serializer->setNewLine(XMLString::transcode("\r\n"));
-
+        
+        XMLCh* xnewline = XMLString::transcode("\r\n");
+		serializer->setNewLine(xnewline);
+        XMLString::release(&xnewline);
+        
 		// Change filepath to XMLCh type.
 		XMLCh *xFilePath = XMLString::transcode(filePath);
 
 		// Create target file.
 		XMLFormatTarget *formatTarget = new LocalFileFormatTarget(xFilePath);
+        XMLString::release(&xFilePath);
 
 		DOMLSOutput *output = ((DOMImplementationLS*)implementation)->createLSOutput();
 		output->setByteStream(formatTarget);
@@ -722,7 +805,6 @@ namespace FavLibrary
 		// Release
         // TODO: xercesの仕様を再度チェック
 		serializer->release();
-		XMLString::release(&xFilePath);
 		delete formatTarget;
 		output->release();
 	};
@@ -761,18 +843,34 @@ namespace FavLibrary
         targetStr = std::move(destStr);
     }
     
+    DOMElement* FavWriter::createElement(const char *name_){
+        XMLCh* xname  = XMLString::transcode(name_);
+        DOMElement* ret_elem = doc->createElement(xname);
+        XMLString::release(&xname);
+        return ret_elem;
+    };
+    
     void FavWriter::appendCDATA(DOMElement* parent_elem, const char* child_elem_name, XMLCh* text) {
-        DOMElement *child_elem = doc->createElement(XMLString::transcode(child_elem_name));
+
+        DOMElement *child_elem = createElement(child_elem_name);
         DOMCDATASection *text_elem = doc->createCDATASection(text);
         child_elem->appendChild(text_elem);
         parent_elem->appendChild(child_elem);
+
     };
     
     void FavWriter::appendCDATA(DOMElement* parent_elem, const char* child_elem_name, const char* text) {
-        DOMElement *child_elem = doc->createElement(XMLString::transcode(child_elem_name));
-        DOMCDATASection *text_elem = doc->createCDATASection(XMLString::transcode(text));
+        
+        XMLCh* xname  = XMLString::transcode(child_elem_name);
+        XMLCh* xtext  = XMLString::transcode(text);
+
+        DOMElement *child_elem = doc->createElement(xname);
+        DOMCDATASection *text_elem = doc->createCDATASection(xtext);
         child_elem->appendChild(text_elem);
         parent_elem->appendChild(child_elem);
+        
+        XMLString::release(&xname);
+        XMLString::release(&xtext);
     };
     
     void FavWriter::appendCDATA(DOMElement* parent_elem, const char* child_elem_name, std::string text) {
@@ -781,10 +879,16 @@ namespace FavLibrary
     
     
     void FavWriter::appendText(DOMElement* parent_elem, const char* child_elem_name, const char* text) {
-        DOMElement *child_elem = doc->createElement(XMLString::transcode(child_elem_name));
-        DOMText *text_elem = doc->createTextNode(XMLString::transcode(text));
+        XMLCh* xname  = XMLString::transcode(child_elem_name);
+        XMLCh* xtext  = XMLString::transcode(text);
+
+        DOMElement *child_elem = doc->createElement(xname);
+        DOMText *text_elem = doc->createTextNode(xtext);
         child_elem->appendChild(text_elem);
         parent_elem->appendChild(child_elem);
+        
+        XMLString::release(&xname);
+        XMLString::release(&xtext);
     };
     
     void FavWriter::appendText(DOMElement* parent_elem, const char* child_elem_name, std::string text) {
@@ -792,8 +896,13 @@ namespace FavLibrary
     };
     
     void FavWriter::setAttribute(DOMElement *elem, const char* attr_name, const char* attr_value) {
-        elem->setAttribute(XMLString::transcode(attr_name), XMLString::transcode(attr_value));
+        XMLCh* name  = XMLString::transcode(attr_name);
+        XMLCh* value = XMLString::transcode(attr_value);
         
+        elem->setAttribute(name, value);
+        
+        XMLString::release(&name);
+        XMLString::release(&value);
     };
     
     void FavWriter::setAttribute(DOMElement *elem, const char* attr_name, std::string attr_value) {

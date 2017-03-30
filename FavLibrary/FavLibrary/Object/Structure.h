@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <algorithm>
+
 #include "../Primitive/Point3D.h"
 #include "../Primitive/Color.h"
 #include "Grid.h"
@@ -36,6 +38,7 @@ namespace FavLibrary
 
 	public:
 		VoxelMap(int size);
+        ~VoxelMap();
 		void init();
 		void setVoxel(int index_, int value_);
 		tVoxelMapType getVoxel(int index_);
@@ -134,27 +137,40 @@ namespace FavLibrary
 		//        int getNeighbors(){ return neighbours; };
 
 		Grid* grid;
+        
 
 	private:
-        void changeColorMapToRGB();
-        void changeColorMapToRGBA();
-		void changeColorMapToCMYK();
-		void changeColorMatToGrayScale();
-		void changeColorMatToGrayScale16();
+        void convertColorMapToRGB();
+//        void convertColorMapToRGBA();
+		void convertColorMapToCMYK();
+		void convertColorMapToGrayscale();
+		void convertColorMapToGrayscale16();
+        void convertRgbToCmyk();
+        void convertRgbToGrayscale();
+        void convertRgbToGrayscale16();
+        void convertCmykToRgb();
+        void convertCmykToGrayscale();
+        void convertCmykToGrayscale16();
+        void convertGrayscaleToRgb();
+        void convertGrayscaleToCmyk();
+        void convertGrayscaleToGrayscale16();
+        void convertGrayscale16ToRgb();
+        void convertGrayscale16ToCmyk();
+        void convertGrayscale16ToGrayscale();
 
 		int getIndex(int x, int y, int z); //returns the index of the array from xyz indices
 
-		int       bit_per_voxel;
+		int bit_per_voxel;
 		ColorMode color_mode;
 		Compression compression;
 		int number_of_voxels;
         bool has_color;
 
-		VoxelMap<unsigned char>*  voxel_map; //default voxel map
-		VoxelMap<unsigned short>* voxel_map_16bit;// for 16bit voxel map
-		unsigned char*  alpha_map;
-		unsigned char*  color_map;
-		unsigned short* color_map_16bit;
+		VoxelMap<unsigned char>*  voxel_map       = NULL; //default voxel map
+		VoxelMap<unsigned short>* voxel_map_16bit = NULL;// for 16bit voxel map
+		unsigned char*  alpha_map       = NULL;
+		unsigned char*  color_map       = NULL;
+		unsigned short* color_map_16bit = NULL;
 
 		//TODO: Link map is under development
 		//        float* link_map;

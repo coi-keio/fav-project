@@ -16,7 +16,10 @@ namespace FavLibrary
 	Object::Object(std::string name_) : FavPrimitive(name_) {};
 	Object::Object(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
 
-	Object::~Object() {};
+	Object::~Object() {
+        delete structure;
+        delete grid;
+    };
 
 	void Object::setStructure(Structure* structure_new_) { structure = structure_new_; };
 }

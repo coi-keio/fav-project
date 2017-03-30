@@ -68,6 +68,9 @@ namespace FavLibrary
         validation(file_path);
         
         XercesDOMParser *parser = new XercesDOMParser;
+//        parser->setValidationScheme(XercesDOMParser::Val_Always);
+//        parser->setDoNamespaces(true);
+        
         parser->parse(file_path);
         
         DOMDocument *doc  = parser->getDocument();
@@ -83,6 +86,8 @@ namespace FavLibrary
         readVoxel   (voxel_list);
         readObject  (object_list);
         
+        delete parser;
+//        doc->release();
         XMLPlatformUtils::Terminate();
         
         return 1;
@@ -90,7 +95,7 @@ namespace FavLibrary
 
     // FIXME: MetaData
     // この関数は、各タグの読み込み関数の内部で仕様するように変更する
-	void FavReader::readMetaData(xercesc_3_1::DOMNodeList *metadata_node_) {
+	void FavReader::readMetaData(xercesc::DOMNodeList *metadata_node_) {
 
 		int number_of_metadata = int(metadata_node_->getLength());
 
@@ -99,7 +104,8 @@ namespace FavLibrary
 			DOMNode *current_metadata = metadata_node_->item(i);
 			DOMNode *parent_node = dynamic_cast<DOMElement*>(current_metadata)->getParentNode();
 
-			if (XMLString::transcode(parent_node->getNodeName()) == std::string("fav")) {
+            char* node_name = XMLString::transcode(parent_node->getNodeName());
+			if (node_name == std::string("fav")) {
 
                 fav->setMetadataId     (getElementString(dynamic_cast<DOMElement*>(current_metadata), "id"   ));
 				fav->setMetadataTitle  (getElementString(dynamic_cast<DOMElement*>(current_metadata), "title"));
@@ -111,12 +117,13 @@ namespace FavLibrary
                 //TODO: MetaData
                 // fav以外の階層でのmetadataの読み込み
             }
+            XMLString::release(&node_name);
 
 		}
 
 	}
 
-	void FavReader::readPalette(xercesc_3_1::DOMNodeList *palette_list_) {
+	void FavReader::readPalette(xercesc::DOMNodeList *palette_list_) {
 
 		// load geometries
 		DOMNodeList* geometry_list = getElements(dynamic_cast<DOMElement*>(palette_list_->item(0)), "geometry");
@@ -155,7 +162,7 @@ namespace FavLibrary
             
             //TODO: ポインタ問題
             // ここはポインタ渡しじゃなくて良いんだっけ？一応、大丈夫そうだけど、バグが生じないか確認。
-			fav->palette.addGeometry(current_geometry);
+			fav->palette->addGeometry(current_geometry);
 		}
 
         // load materials
@@ -202,11 +209,11 @@ namespace FavLibrary
 				current_material.addIsoStandard(iso_id, iso_name);
 			}
 
-			fav->palette.addMaterial(current_material);
+			fav->palette->addMaterial(current_material);
 		}
 	}
 
-	void FavReader::readVoxel(xercesc_3_1::DOMNodeList *voxel_list_) {
+	void FavReader::readVoxel(xercesc::DOMNodeList *voxel_list_) {
 
 		int number_of_voxels = int(voxel_list_->getLength());
 		for (int i = 0; i < number_of_voxels; ++i) {
@@ -238,7 +245,7 @@ namespace FavLibrary
 		}
 	}
     
-    void FavReader::readGrid(xercesc_3_1::DOMElement *object_elem, Object* current_object){
+    void FavReader::readGrid(xercesc::DOMElement *object_elem, Object* current_object){
         
         
         // load origin
@@ -269,7 +276,7 @@ namespace FavLibrary
         }
     }
     
-    void FavReader::readVoxelMap(xercesc_3_1::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
+    void FavReader::readVoxelMap(xercesc::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
    
         DOMElement* vmap_elem = dynamic_cast<DOMElement*>(getElements(object_elem, "voxel_map")->item(0));
         std::string compression   = getAttribute(vmap_elem, "compression");
@@ -284,14 +291,14 @@ namespace FavLibrary
         for (int j = 0; j < number_of_layers; ++j) {
             
             std::string layer_data = getNodeValueString(vmap_layers->item(j)->getFirstChild());
-            std::string data_in;
+            std::string data_in = "";
             
             if (compression == "none") {
                 
                 if (bit_per_voxel == "4") { // need debug.
                     data_in.resize(layer_data.size());
                     for (int k = 0; k < (int)layer_data.size(); k++) {
-                        int dec;
+                        int dec = 0;
                         char hex[2] = { layer_data[k], layer_data[k + 1] };
                         sscanf(hex, "%01x", &dec);
                         data_in[k] = dec; //if compressed using this scheme
@@ -302,7 +309,7 @@ namespace FavLibrary
                     data_in.resize(layer_data.size() / 2);
                     int cur = 0;
                     for (int k = 0; k < (int)layer_data.size(); k = k + 2) {
-                        int dec;
+                        int dec = 0;
                         char hex[2] = { layer_data[k], layer_data[k + 1] };
                         sscanf(hex, "%02x", &dec);
                         data_in[cur] = dec; //if compressed using this scheme
@@ -313,7 +320,7 @@ namespace FavLibrary
                     data_in.resize(layer_data.size() / 4);
                     int cur = 0;
                     for (int k = 0; k < (int)layer_data.size(); k = k + 4) {
-                        int dec;
+                        int dec = 0;
                         char hex[4] = { layer_data[k], layer_data[k + 1], layer_data[k + 2], layer_data[k + 3] };
                         sscanf(hex, "%04x", &dec);
                         data_in[cur] = dec; //if compressed using this scheme
@@ -383,7 +390,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+6){
                     
-                    int r_value, g_value, b_value;
+                    int r_value, g_value, b_value = 0;
                     char r[2] = {layer_data[i],  layer_data[i+1]};
                     char g[2] = {layer_data[i+2],layer_data[i+3]};
                     char b[2] = {layer_data[i+4],layer_data[i+5]};
@@ -429,6 +436,12 @@ namespace FavLibrary
                     
                 }
             }
+            delete[] layer_r;
+            delete[] layer_g;
+            delete[] layer_b;
+            layer_r = nullptr;
+            layer_g = nullptr;
+            layer_b = nullptr;
         }
     }
     
@@ -457,7 +470,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+8){
                     
-                    int r_value, g_value, b_value;
+                    int r_value, g_value, b_value = 0;
                     char r[2] = {layer_data[i],  layer_data[i+1]};
                     char g[2] = {layer_data[i+2],layer_data[i+3]};
                     char b[2] = {layer_data[i+4],layer_data[i+5]};
@@ -518,7 +531,18 @@ namespace FavLibrary
                     
                 }
             }
+            
+            delete[] layer_r;
+            delete[] layer_g;
+            delete[] layer_b;
+            delete[] layer_a;
+            layer_r = nullptr;
+            layer_g = nullptr;
+            layer_b = nullptr;
+            layer_a = nullptr;
         }
+        
+        
     }
     
     void FavReader::readColorMapCMYK(DOMElement* cmap_elem, Object* current_object, Structure* structure){
@@ -535,7 +559,7 @@ namespace FavLibrary
         for(int z=0; z<number_of_layers; ++z){
             
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
-            std::string data_in;
+            std::string data_in = "";
             
             layer_c = new int[layer_data.size()/(2*4)]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
             layer_m = new int[layer_data.size()/(2*4)];
@@ -546,7 +570,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+8){
                     
-                    int r_value, g_value, b_value;
+                    int r_value, g_value, b_value = 0;
                     char r[2] = {layer_data[i],  layer_data[i+1]};
                     char g[2] = {layer_data[i+2],layer_data[i+3]};
                     char b[2] = {layer_data[i+4],layer_data[i+5]};
@@ -607,6 +631,16 @@ namespace FavLibrary
                     
                 }
             }
+            
+            delete[] layer_c;
+            delete[] layer_m;
+            delete[] layer_y;
+            delete[] layer_k;
+            
+            layer_c = nullptr;
+            layer_m = nullptr;
+            layer_y = nullptr;
+            layer_k = nullptr;
         }
     }
     
@@ -621,7 +655,7 @@ namespace FavLibrary
         for(int z=0; z<number_of_layers; ++z){
             
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
-            std::string data_in;
+            std::string data_in = "";
             
             layer_g = new int[layer_data.size()/2]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
             
@@ -629,7 +663,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+2){
                     
-                    int gray_value;
+                    int gray_value = 0;
                     char gray[2] = {layer_data[i],  layer_data[i+1]};
                     sscanf(gray, "%02x", &gray_value);
                     layer_g[i/2] = gray_value;
@@ -673,6 +707,8 @@ namespace FavLibrary
                     
                 }
             }
+            delete[] layer_g;
+            layer_g = nullptr;
         }
     }
     
@@ -687,7 +723,7 @@ namespace FavLibrary
         for(int z=0; z<number_of_layers; ++z){
             
             std::string layer_data = getNodeValueString( cmap_layers->item(z)->getFirstChild() );
-            std::string data_in;
+            std::string data_in = "";
             
             layer_g = new int[layer_data.size()/2]; // 1 voxel has 2*[Sample_Per_Voxel] bytes.
             
@@ -695,7 +731,7 @@ namespace FavLibrary
                 
                 for (int i=0; i<(int)layer_data.size(); i=i+4){
                     
-                    int gray_value;
+                    int gray_value = 0;
                     char gray[4] = {layer_data[i],  layer_data[i+1], layer_data[i+2],  layer_data[i+3] };
                     sscanf(gray, "%04x", &gray_value);
                     layer_g[i/4] = gray_value;
@@ -739,10 +775,12 @@ namespace FavLibrary
                     
                 }
             }
+            delete[] layer_g;
+            layer_g = nullptr;
         }
     }
     
-    void FavReader::readColorMap(xercesc_3_1::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
+    void FavReader::readColorMap(xercesc::DOMElement *object_elem, Object* current_object, FavLibrary::Structure* structure){
        
         DOMElement* cmap_elem = dynamic_cast<DOMElement*>( getElements(object_elem, "color_map")->item(0) );
         std::string color_mode_str = getAttribute(cmap_elem, "color_mode");
@@ -775,13 +813,12 @@ namespace FavLibrary
         
     }
 
-	void FavReader::readObject(xercesc_3_1::DOMNodeList *object_node_) {
+	void FavReader::readObject(xercesc::DOMNodeList *object_node_) {
 
         
 		int number_of_object = int(object_node_->getLength());
 		for (int i=0; i<number_of_object; ++i) {
             
-
 			DOMElement* object_elem = dynamic_cast<DOMElement*>(object_node_->item(i));
 
 			//load attributes
@@ -791,8 +828,7 @@ namespace FavLibrary
             //FIXME: バグ
             // idを引数にして生成すると、write()の際にorigin.getX()でメモリのアクセスエラーが出る。
             // それに加えて、サンプルデータの書き出し後Originの値が変わってしまっている。
-			Object* current_object = new Object(name);
-//            current_object->setId(1);
+			Object* current_object = new Object(stoi(id), name);
 
             current_object->grid = new Grid();
             readGrid(object_elem, current_object);
@@ -828,9 +864,9 @@ namespace FavLibrary
     DOMNodeList* FavReader::getElements(DOMElement* element_, const char *tag_name_)
     {
         char* tag_name = (char *)tag_name_;
-        XMLCh* attributeName = XMLString::transcode(tag_name);
-        DOMNodeList* node_list = element_->getElementsByTagName(attributeName);
-        XMLString::release(&attributeName);
+        XMLCh* attribute_name = XMLString::transcode(tag_name);
+        DOMNodeList* node_list = element_->getElementsByTagName(attribute_name);
+        XMLString::release(&attribute_name);
         
         return node_list;
     }
@@ -838,12 +874,14 @@ namespace FavLibrary
     std::string FavReader::getAttribute(DOMElement* element_, const char *tag_name_)
     {
         char* tag_name = (char *)tag_name_;
-        XMLCh* attributeName = XMLString::transcode(tag_name);
-        const XMLCh* attribute_value = element_->getAttribute(attributeName);
+        XMLCh* attribute_name = XMLString::transcode(tag_name);
+        const XMLCh* attribute_value = element_->getAttribute(attribute_name);
         char* attribute_value_str = XMLString::transcode(attribute_value);
         std::string ret = std::string(attribute_value_str);
-        XMLString::release(&attribute_value_str);
         
+        XMLString::release(&attribute_name);
+        XMLString::release(&attribute_value_str);
+
         return ret;
     }
     
@@ -852,6 +890,7 @@ namespace FavLibrary
         const XMLCh* node_value = node_->getNodeValue();
         char* node_value_str = XMLString::transcode(node_value);
         int ret = atoi(node_value_str);
+        
         XMLString::release(&node_value_str);
         return ret;
     }
