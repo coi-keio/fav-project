@@ -16,13 +16,13 @@ namespace FavLibrary
 	};
     
     Palette::~Palette() {
-//        for(std::map<unsigned int, Material*>::iterator it = materials.begin(); it != materials.end();){
-//            if(it->second != NULL){
-//                delete it->second;
-//                it->second = nullptr;
-//            }
-//            it++;
-//        }
+        for(std::map<unsigned int, Material*>::iterator it = materials.begin(); it != materials.end();){
+            if(it->second != NULL){
+                delete it->second;
+                it->second = nullptr;
+            }
+            it++;
+        }
     };
 
 	Geometry* Palette::getGeometryById(unsigned int id_)
