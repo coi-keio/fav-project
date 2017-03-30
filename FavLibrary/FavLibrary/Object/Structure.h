@@ -21,20 +21,20 @@
 namespace FavLibrary
 {
 
-	enum class __declspec(dllexport) BitPerVoxel {
+	enum class IDll BitPerVoxel {
 		FourBit,
 		EightBit,
 		SixteenBit,
 	};
 
-	enum class __declspec(dllexport) Compression {
+	enum class IDll Compression {
 		None,
 		Zlib,
 		Base64,
 	};
 
 	template<typename tVoxelMapType>
-	class __declspec(dllexport) VoxelMap {
+	class IDll VoxelMap {
 
 	public:
 		VoxelMap(int size);
@@ -48,7 +48,7 @@ namespace FavLibrary
 		tVoxelMapType* data;
 	};
 
-	class __declspec(dllexport) Structure {
+	class IDll Structure {
 	public:
 		Structure(Grid* grid_);
 		Structure(int bit_per_voxel_);

@@ -5,6 +5,7 @@
 //  Created by atsmsmr on 2016/12/05.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "FavReader.h"
 #include "Fav.h"
@@ -13,12 +14,14 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-
     FavReader::FavReader(Fav* fav_) {
         fav = fav_;
-        //FIXME: xsdのパスの指定の仕方を検討
-        xsd_path = "file:///Users/atsmsmr/Documents/Developer/fav-project/xml_schema/fav.xsd";
-    };
+
+		//char cCurrentPath[FILENAME_MAX];
+		//GetCurrentDir(cCurrentPath, sizeof(cCurrentPath));
+
+		xsd_path = "C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\fav.xsd";
+	};
     
 
     bool FavReader::validation(const char* file_path)
@@ -134,27 +137,27 @@ namespace FavLibrary
             std::string  reference   = getElementString(dynamic_cast<DOMElement*>(geometry_list->item(i)), "reference");
             DOMNodeList* scale_node  =      getElements(dynamic_cast<DOMElement*>(geometry_list->item(i)), "scale"    );
             
-            Geometry current_geometry = Geometry(std::stoi(id), name);
+            Geometry* current_geometry = new Geometry(std::stoi(id), name);
             
             if(shape == "cube"){
              
-                current_geometry.setShape(GeometryShape::cube);
+                current_geometry->setShape(GeometryShape::cube);
             
             }else if(shape == "sphere"){
 
-                current_geometry.setShape(GeometryShape::sphere);
+                current_geometry->setShape(GeometryShape::sphere);
 
             }else if(shape == "user_defined"){
                 
-                current_geometry.setShape(GeometryShape::user_defined);
-                current_geometry.setReference(reference);
+                current_geometry->setShape(GeometryShape::user_defined);
+                current_geometry->setReference(reference);
             }
             
 			if (scale_node->getLength() > 0) {
 				double x = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "x");
 				double y = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "y");
 				double z = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "z");
-				current_geometry.setScale(x, y, z);
+				current_geometry->setScale(x, y, z);
 			}
             
             //TODO: ポインタ問題
@@ -171,7 +174,7 @@ namespace FavLibrary
 			//load attributes
             std::string id   = getAttribute(dynamic_cast<DOMElement*>(material_list->item(i)), "id"  );
 			std::string name = getAttribute(dynamic_cast<DOMElement*>(material_list->item(i)), "name");
-			Material current_material = Material(std::stoi(id), name);
+			Material* current_material = new Material(std::stoi(id), name);
             
             // load material name
             DOMNodeList* material_name_list = getElements(dynamic_cast<DOMElement*>(material_list->item(i)), "material_name");
@@ -182,7 +185,7 @@ namespace FavLibrary
                 char* node_value_str    = XMLString::transcode(node_value);
                 std::string name        = std::string(node_value_str);
                 XMLString::release(&node_value_str);
-                current_material.addMaterialName(name);
+                current_material->addMaterialName(name);
             }
             
 			// load product_info
@@ -193,7 +196,7 @@ namespace FavLibrary
 				std::string manufacturer = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "manufacturer");
 				std::string product_name = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "product_name");
 				std::string url          = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "url");
-				current_material.addProductInfo(manufacturer, product_name, url);
+				current_material->addProductInfo(manufacturer, product_name, url);
 			}
 
 			// load iso_standard
@@ -203,7 +206,7 @@ namespace FavLibrary
 			for (int j = 0; j < number_of_iso_standard; ++j) {
 				std::string iso_id   = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_id");
 				std::string iso_name = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_name");
-				current_material.addIsoStandard(iso_id, iso_name);
+				current_material->addIsoStandard(iso_id, iso_name);
 			}
 
 			fav->palette->addMaterial(current_material);
@@ -823,7 +826,7 @@ namespace FavLibrary
 			std::string name = getAttribute(object_elem, "name");
             
             //FIXME: バグ
-            // idを引数にして生成すると、write()の際にorigin.getX()でメモリのアクセスエラーが出る。
+            // idを引数にして生成すると、write()の際にorigin->getX()でメモリのアクセスエラーが出る。
             // それに加えて、サンプルデータの書き出し後Originの値が変わってしまっている。
 			Object* current_object = new Object(stoi(id), name);
 

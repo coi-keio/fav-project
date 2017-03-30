@@ -2,10 +2,11 @@
 
 #include <string>
 
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) FavPrimitive
+	class IDll FavPrimitive
 	{
 	public:
 		FavPrimitive(unsigned int id_);
@@ -22,7 +23,7 @@ namespace FavLibrary
 
 	protected:
 		FavPrimitive();
-		~FavPrimitive();
+		virtual ~FavPrimitive();
 
 		unsigned int identifier;
 		std::string name;

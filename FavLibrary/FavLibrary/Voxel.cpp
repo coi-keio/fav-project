@@ -21,42 +21,48 @@ namespace FavLibrary
 	double MaterialInfo::getRatio() { return ratio; };
 	void MaterialInfo::setRatio(double ratio_) { ratio = ratio_; };
 
-	Voxel::Voxel() {};
-	Voxel::Voxel(unsigned int id_) : FavPrimitive(id_) {};
-	Voxel::Voxel(std::string name_) : FavPrimitive(name_) {};
-	Voxel::Voxel(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
-	Voxel::~Voxel() {
-    
-    };
-
-	void Voxel::setGeometryInfo(unsigned int id_) { geometry_info.setId(id_); };
-	unsigned int Voxel::getGeometryInfo() { return geometry_info.getId(); }
-
-	std::vector<MaterialInfo> Voxel::getMaterialInfo()
+	Voxel::Voxel() : FavPrimitive()
 	{
-		std::vector<MaterialInfo> res;
+		geometry_info = new GeometryInfo();
+		display = new ColorRGBA();
+	}
+	Voxel::Voxel(unsigned int id_) : FavPrimitive(id_) { Voxel(); }
+	Voxel::Voxel(std::string name_) : FavPrimitive(name_) { Voxel(); }
+	Voxel::Voxel(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) { Voxel(); }
+	Voxel::~Voxel() 
+	{
+		delete geometry_info;
+		delete display;
+	}
+
+	void Voxel::setGeometryInfo(GeometryInfo geometry_info_) { geometry_info = new GeometryInfo(geometry_info_); }
+	GeometryInfo* Voxel::getGeometryInfo() { return geometry_info; }
+
+	std::vector<MaterialInfo*> Voxel::getMaterialInfo()
+	{
+		std::vector<MaterialInfo*> res;
 		//		std::for_each(material_info.begin(), material_info.end(),
 		//			[&](const std::pair<const MaterialInfo, MaterialInfo>& ref) { res.push_back(ref.second); });
 		return res;
 	};
-	MaterialInfo Voxel::getMaterialInfo(unsigned int id_) { return *material_info[id_]; };
+	MaterialInfo* Voxel::getMaterialInfo(unsigned int id_) { return material_info[id_]; };
 	void Voxel::addMaterialInfo(unsigned int id_, double ratio_) { material_info.push_back(new MaterialInfo(id_, ratio_)); };
 	void Voxel::unpdateMaterialInfo(unsigned int id_, double ratio_) { material_info[id_]->setRatio(ratio_); };
 	void Voxel::removeMaterialInfo(unsigned int id_) { material_info.erase(material_info.begin() + id_); }
 	bool Voxel::existsMaterialInfo(unsigned int id_) { return material_info.size() > 0; }
 	int Voxel::getNumMaterialInfo() { return (int)material_info.size(); };
-	ColorRGBA Voxel::getDisplay() { return display; };
-	void Voxel::setDisplay(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_) { display.setColorRBGA(r_, g_, b_, a_); };
-	void Voxel::setDisplay(ColorRGBA color_) { display.setColorRBGA(color_.getR(), color_.getG(), color_.getB(), color_.getA()); };
+	ColorRGBA* Voxel::getDisplay() { return display; };
+	void Voxel::setDisplay(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_) { display->setColorRBGA(r_, g_, b_, a_); };
+	void Voxel::setDisplay(ColorRGBA color_) { display->setColorRBGA(color_.getR(), color_.getG(), color_.getB(), color_.getA()); };
 
-	unsigned char Voxel::getDisplayR() { return display.getR(); };
-	void Voxel::setDisplayR(unsigned char r_) { display.setR(r_); };
-	unsigned char Voxel::getDisplayG() { return display.getG(); };
-	void Voxel::setDisplayG(unsigned char g_) { display.setG(g_); };
-	unsigned char Voxel::getDisplayB() { return display.getB(); };
-	void Voxel::setDisplayB(unsigned char b_) { display.setB(b_); };
-	unsigned char Voxel::getDisplayA() { return display.getA(); };
-	void Voxel::setDisplayA(unsigned char a_) { display.setA(a_); };
+	unsigned char Voxel::getDisplayR() { return display->getR(); };
+	void Voxel::setDisplayR(unsigned char r_) { display->setR(r_); };
+	unsigned char Voxel::getDisplayG() { return display->getG(); };
+	void Voxel::setDisplayG(unsigned char g_) { display->setG(g_); };
+	unsigned char Voxel::getDisplayB() { return display->getB(); };
+	void Voxel::setDisplayB(unsigned char b_) { display->setB(b_); };
+	unsigned char Voxel::getDisplayA() { return display->getA(); };
+	void Voxel::setDisplayA(unsigned char a_) { display->setA(a_); };
 
 	std::string Voxel::getApplicationNote() { return application_note; };
 	void Voxel::setApplicationNote(std::string note_) { application_note = note_; };

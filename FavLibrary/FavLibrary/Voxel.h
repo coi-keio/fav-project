@@ -19,27 +19,27 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) VoxelInfo {
+	class IDll VoxelInfo {
 	public:
 		VoxelInfo();
 		VoxelInfo(unsigned int id_);
-		~VoxelInfo();
+		virtual ~VoxelInfo();
 
-		unsigned int getId();
-		void setId(unsigned int id_);
+		virtual unsigned int getId();
+		virtual void setId(unsigned int id_);
 
 	private:
 		unsigned int identifier;
 	};
 
-	class __declspec(dllexport) GeometryInfo : public VoxelInfo {
+	class IDll GeometryInfo : public VoxelInfo {
 	public:
 		GeometryInfo();
 		GeometryInfo(unsigned int id_);
 		~GeometryInfo();
 	};
 
-	class __declspec(dllexport) MaterialInfo : public VoxelInfo {
+	class IDll MaterialInfo : public VoxelInfo {
 	public:
 		MaterialInfo();
 		MaterialInfo(unsigned int id_);
@@ -54,7 +54,7 @@ namespace FavLibrary
 	};
 
 
-	class __declspec(dllexport) Voxel : public FavPrimitive, MetadataObject
+	class IDll Voxel : public FavPrimitive, MetadataObject
 	{
 	public:
 		Voxel();
@@ -63,17 +63,17 @@ namespace FavLibrary
 		Voxel(unsigned int id_, std::string name_);
 		~Voxel();
 
-		void setGeometryInfo(unsigned int id_);
-		unsigned int getGeometryInfo();
+		void setGeometryInfo(GeometryInfo geometry_info_);
+		GeometryInfo* getGeometryInfo();
 
-		std::vector<MaterialInfo> getMaterialInfo();
-		MaterialInfo getMaterialInfo(unsigned int id_);
+		std::vector<MaterialInfo*> getMaterialInfo();
+		MaterialInfo* getMaterialInfo(unsigned int id_);
 		void addMaterialInfo(unsigned int id_, double ratio_);
 		void unpdateMaterialInfo(unsigned int id_, double ratio_);
 		void removeMaterialInfo(unsigned int id_);
 		bool existsMaterialInfo(unsigned int id_);
 		int getNumMaterialInfo();
-		ColorRGBA getDisplay();
+		ColorRGBA* getDisplay();
 		void setDisplay(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_);
 		void setDisplay(ColorRGBA color_);
 
@@ -90,9 +90,9 @@ namespace FavLibrary
 		void setApplicationNote(std::string note_);
 
 	private:
-		GeometryInfo geometry_info;
+		GeometryInfo* geometry_info = nullptr;
 		std::vector<MaterialInfo*> material_info;
-		ColorRGBA display;
+		ColorRGBA* display = nullptr;
 		std::string application_note;
 
 		Voxel* pVoxel;

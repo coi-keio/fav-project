@@ -77,15 +77,15 @@ namespace FavLibrary
 
 		for (int i = 0; i < number_of_geometries; ++i) {
 
-			Geometry current_geometry = fav->palette->getGeometryById(i + 1); //FIXME: ? この+1の処理は必須なんだっけ？
+			Geometry* current_geometry = fav->palette->getGeometryById(i + 1); //FIXME: ? この+1の処理は必須なんだっけ？
 			DOMElement *geometry_elem = createElement("geometry");
 			
-            setAttribute(geometry_elem, "id", std::to_string(current_geometry.getId()));
-            if(current_geometry.getName() !="")
-                setAttribute(geometry_elem, "name", current_geometry.getName());
+            setAttribute(geometry_elem, "id", std::to_string(current_geometry->getId()));
+            if(current_geometry->getName() !="")
+                setAttribute(geometry_elem, "name", current_geometry->getName());
             
-            if(current_geometry.hasShape()){
-                switch(current_geometry.getShape()){
+            if(current_geometry->hasShape()){
+                switch(current_geometry->getShape()){
                     case GeometryShape::cube:
                         appendText(geometry_elem, "shape", "cube");
                         break;
@@ -96,16 +96,16 @@ namespace FavLibrary
                         
                     case GeometryShape::user_defined:
                         appendText(geometry_elem, "shape",     "user_defined"                 );
-                        appendText(geometry_elem, "reference", current_geometry.getReference());
+                        appendText(geometry_elem, "reference", current_geometry->getReference());
                         break;
                 }
             }
 
-            if(current_geometry.hasScale()){
+            if(current_geometry->hasScale()){
                 DOMElement* scale_elem = createElement("scale");
-                appendText(scale_elem, "x", std::to_string(current_geometry.getScaleX()) );
-                appendText(scale_elem, "y", std::to_string(current_geometry.getScaleY()) );
-                appendText(scale_elem, "z", std::to_string(current_geometry.getScaleZ()) );
+                appendText(scale_elem, "x", std::to_string(current_geometry->getScaleX()) );
+                appendText(scale_elem, "y", std::to_string(current_geometry->getScaleY()) );
+                appendText(scale_elem, "z", std::to_string(current_geometry->getScaleZ()) );
                 geometry_elem->appendChild(scale_elem);
             }
 			palette_elem->appendChild(geometry_elem);
@@ -116,15 +116,15 @@ namespace FavLibrary
 		for (int i = 0; i < number_of_materials; ++i) {
 
             int id = i + 1;
-			Material current_material = fav->palette->getMaterialById(id);
+			Material* current_material = fav->palette->getMaterialById(id);
 			DOMElement *mat_elem = createElement("material");
 
             setAttribute(mat_elem, "id", std::to_string(id));
-            if(current_material.getName() !="")
-                setAttribute(mat_elem, "name", current_material.getName());
+            if(current_material->getName() !="")
+                setAttribute(mat_elem, "name", current_material->getName());
 
             // write material
-			for (auto material : current_material.materials) {
+			for (auto material : current_material->materials) {
 				
                 // write product_info
                 if (material->materialType == MaterialType::product_info) {
@@ -176,21 +176,21 @@ namespace FavLibrary
         int number_of_voxels = fav->getNumVoxels();
 		for (int i = 0; i < number_of_voxels; ++i) {
             
-            Voxel current_voxel  = fav->getVoxel(i + 1);
+            Voxel* current_voxel  = fav->getVoxel(i + 1);
 			DOMElement*  vox_elem = createElement("voxel");
-			setAttribute(vox_elem, "id",   std::to_string(current_voxel.getId()));
-			if(current_voxel.getName() != "")
-                setAttribute(vox_elem, "name", current_voxel.getName());
+			setAttribute(vox_elem, "id",   std::to_string(current_voxel->getId()));
+			if(current_voxel->getName() != "")
+                setAttribute(vox_elem, "name", current_voxel->getName());
 			
             DOMElement* geo_elem = createElement("geometry_info");
-			appendText( geo_elem, "id", std::to_string(current_voxel.getGeometryInfo()));
+			appendText( geo_elem, "id", std::to_string(current_voxel->getGeometryInfo()->getId()));
 			vox_elem->appendChild(geo_elem);
 
-			for (int j = 0, size = current_voxel.getNumMaterialInfo(); j < size; ++j) {
+			for (int j = 0, size = current_voxel->getNumMaterialInfo(); j < size; ++j) {
 				DOMElement *matinfo_elem = createElement("material_info");
-				appendText(matinfo_elem, "id",    std::to_string(current_voxel.getMaterialInfo(j).getId())   );
+				appendText(matinfo_elem, "id",    std::to_string(current_voxel->getMaterialInfo(j)->getId())   );
                 
-				appendText(matinfo_elem, "ratio", std::to_string(current_voxel.getMaterialInfo(j).getRatio()));
+				appendText(matinfo_elem, "ratio", std::to_string(current_voxel->getMaterialInfo(j)->getRatio()));
 				vox_elem->appendChild(matinfo_elem);
 			}
 			parent_elem->appendChild(vox_elem);

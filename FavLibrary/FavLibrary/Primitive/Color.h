@@ -5,7 +5,7 @@
 
 namespace FavLibrary
 {
-	enum class __declspec(dllexport) ColorMode
+	enum class IDll ColorMode
 	{
 		None,
 		Grayscale,
@@ -15,23 +15,23 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	class __declspec(dllexport) IColor : public MetadataObject, FavPrimitive
+	class IDll IColor
 	{
 	public:
 		IColor();
-		~IColor();
+		virtual ~IColor();
 
 		ColorMode colorMode;
 
 	protected:
 	};
 
-	class __declspec(dllexport) ColorRGB : public IColor
+	class IDll ColorRGB : public IColor
 	{
 	public:
 		ColorRGB();
         ColorRGB(unsigned char r_, unsigned char g_, unsigned char b_){r = r_; g = g_; b = b_;};
-		~ColorRGB();
+		virtual ~ColorRGB();
 
 		ColorMode colorMode = ColorMode::RGB;//ここconstにするとcompile errorが出てた。要確認
 
@@ -52,12 +52,12 @@ namespace FavLibrary
 		unsigned char b;
 	};
 
-	class __declspec(dllexport) ColorRGBA : public ColorRGB
+	class IDll ColorRGBA : public ColorRGB
 	{
 	public:
 		ColorRGBA();
         ColorRGBA(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_){r = r_; g = g_; b = b_; a=a_;};
-		~ColorRGBA();
+		virtual ~ColorRGBA();
 
 		ColorMode colorMode = ColorMode::RGBA;
 
@@ -70,11 +70,11 @@ namespace FavLibrary
 		unsigned char a;
 	};
 
-	class __declspec(dllexport) ColorGrayscale : public IColor
+	class IDll ColorGrayscale : public IColor
 	{
 	public:
 		ColorGrayscale();
-		~ColorGrayscale();
+		virtual ~ColorGrayscale();
 
 		ColorMode colorMode = ColorMode::Grayscale;
 
@@ -85,11 +85,11 @@ namespace FavLibrary
 		unsigned char gray;
 	};
 
-	class __declspec(dllexport) ColorGrayscale16 : public ColorGrayscale
+	class IDll ColorGrayscale16 : public ColorGrayscale
 	{
 	public:
 		ColorGrayscale16();
-		~ColorGrayscale16();
+		virtual ~ColorGrayscale16();
 
 		ColorMode colorMode = ColorMode::Grayscale16;
 
@@ -100,12 +100,12 @@ namespace FavLibrary
 		unsigned short gray;
 	};
 
-	class __declspec(dllexport) ColorCMYK : public IColor
+	class IDll ColorCMYK : public IColor
 	{
 	public:
 		ColorCMYK();
         ColorCMYK(unsigned char c_, unsigned char m_, unsigned char y_, unsigned char k_){c = c_; m = m_; y = y_; k = k_;};
-		~ColorCMYK();
+		virtual ~ColorCMYK();
 
 		ColorMode colorMode = ColorMode::CMYK;
 

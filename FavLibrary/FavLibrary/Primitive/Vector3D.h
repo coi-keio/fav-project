@@ -6,7 +6,7 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Vector3D : public Point3D
+	class IDll Vector3D : public Point3D
 	{
 	public:
 		Vector3D();
