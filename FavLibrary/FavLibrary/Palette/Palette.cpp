@@ -16,19 +16,19 @@ namespace FavLibrary
 	};
     
     Palette::~Palette() {
-        for(std::map<unsigned int, Material*>::iterator it = materials.begin(); it != materials.end();){
-            if(it->second != NULL){
-                delete it->second;
-                it->second = nullptr;
-            }
-            it++;
-        }
+//        for(std::map<unsigned int, Material*>::iterator it = materials.begin(); it != materials.end();){
+//            if(it->second != NULL){
+//                delete it->second;
+//                it->second = nullptr;
+//            }
+//            it++;
+//        }
     };
 
-	Geometry* Palette::getGeometryById(unsigned int id_)
+	Geometry Palette::getGeometryById(unsigned int id_)
 	{
-		Geometry* res = nullptr;
-		if (geometries.count(id_) > 0 && !geometries[id_]->isRemoved())
+		Geometry res;
+		if (geometries.count(id_) > 0 && !geometries[id_].isRemoved())
 			res = geometries[id_];
 
 		return res;
@@ -42,22 +42,22 @@ namespace FavLibrary
 	//		
 	//		return res;
 	//	};
-	void Palette::addGeometry(Geometry* geometry_)
+	void Palette::addGeometry(Geometry geometry_)
 	{
-		geometries[geometry_->getId()] = geometry_;
-		geometriesName[geometry_->getName()].push_back(geometry_);
+		geometries[geometry_.getId()] = geometry_;
+		geometriesName[geometry_.getName()].push_back(geometry_);
 	};
 	void Palette::removeGeometry(unsigned int id_)
 	{
-		geometries[id_]->remove();
+		geometries[id_].remove();
 	}
 
 
 
-	Material* Palette::getMaterialById(unsigned int id_)
+	Material Palette::getMaterialById(unsigned int id_)
 	{
-		Material* res = nullptr;
-		if (materials.count(id_) > 0 && !materials[id_]->isRemoved())
+		Material res;
+		if (materials.count(id_) > 0 && !materials[id_].isRemoved())
 			res = materials[id_];
 
 		return res;
@@ -69,14 +69,14 @@ namespace FavLibrary
 	//			res = std::copy_if(materialsName.begin(), materialsName.end(), res,
 	//				[name_](Material m) { return m.getName() == name_ && !m.isRemoved(); });
 	//	};
-	void Palette::addMaterial(Material* material_)
+	void Palette::addMaterial(Material material_)
 	{
-		materials[material_->getId()] = material_;
-		materialsName[material_->getName()].push_back(material_);
+		materials[material_.getId()] = material_;
+		materialsName[material_.getName()].push_back(material_);
 	};
 	void Palette::removeMaterial(unsigned int id_)
 	{
-		materials[id_]->remove();
+		materials[id_].remove();
 	}
 
 	int Palette::getNumberOfGeometries() { return int(geometries.size()); };

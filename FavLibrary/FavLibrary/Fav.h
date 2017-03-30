@@ -32,9 +32,9 @@ namespace FavLibrary
         bool write(const char* file_path, CompressionMode compression_mode_);
 		//bool write(const char* file_path, const char* version_);
 
-		std::vector<Voxel*> getVoxels();
-		Voxel* getVoxel(unsigned int id_);
-		void addVoxel(Voxel* voxel_);
+		std::vector<Voxel> getVoxels();
+		Voxel getVoxel(unsigned int id_);
+		void addVoxel(Voxel voxel_);
 		void removeVoxel(unsigned int id_);
 		bool existsVoxel(unsigned int id_);
 
@@ -46,15 +46,15 @@ namespace FavLibrary
 		int getNumObjects();
 		int getNumVoxels();
 
-		Palette* palette;
+		Palette palette;
 
 	private:
 		std::string version;
-		std::map<unsigned int, Voxel*> voxels;
+		std::map<unsigned int, Voxel> voxels;
 		std::map<unsigned int, Object*> objects;
 
-		FavReader* fav_reader;
-		FavWriter* fav_writer;
+		FavReader* fav_reader = NULL;
+		FavWriter* fav_writer = NULL;
 
 		Fav* pFav;
 	};

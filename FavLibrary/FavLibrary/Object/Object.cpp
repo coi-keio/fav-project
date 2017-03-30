@@ -12,7 +12,7 @@
 namespace FavLibrary
 {
 	Object::Object() {};
-	Object::Object(unsigned int id_) : FavPrimitive(id_) {};
+	Object::Object(unsigned int id_)  : FavPrimitive(id_) {};
 	Object::Object(std::string name_) : FavPrimitive(name_) {};
 	Object::Object(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
 

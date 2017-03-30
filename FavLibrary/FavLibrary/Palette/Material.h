@@ -91,13 +91,13 @@ namespace FavLibrary
 		//std::vector<MaterialSpec*> getMaterials();
 
 		void addMaterialName(std::string material_name_);
-		void addMaterialName(MaterialName* material_name_);
+		void addMaterialName(MaterialName material_name_);
 
 		void addProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
-		void addProductInfo(ProductInfo* product_info_);
+		void addProductInfo(ProductInfo product_info_);
 
 		void addIsoStandard(std::string iso_id_, std::string iso_name_);
-		void addIsoStandard(IsoStandard* iso_standard_);
+		void addIsoStandard(IsoStandard iso_standard_);
 
 	private:
 	};

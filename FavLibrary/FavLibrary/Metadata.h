@@ -52,7 +52,7 @@ namespace FavLibrary
 		MetadataObject();
 		virtual ~MetadataObject();
 
-		Metadata* getMetadata();
+		Metadata getMetadata();
 		void setMetadata(Metadata metadata_);
 
 		std::string getMetadataId();
@@ -71,7 +71,7 @@ namespace FavLibrary
 		void setMetadataNote(std::string note_);
 
 	private:
-		Metadata* metadata;
+		Metadata metadata;
 	};
 
 }

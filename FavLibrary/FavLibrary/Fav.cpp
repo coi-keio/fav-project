@@ -13,28 +13,32 @@
 namespace FavLibrary
 {
 	Fav::Fav() {
-        palette = new Palette;
 	}
 
 	Fav::~Fav() {
 		//    delete metadata;
-        delete palette;
+        
+//        if(palette != NULL){
+//            delete palette;
+//            palette = NULL;
+//        }
+        
         for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
             if(it->second != NULL){
                 delete it->second;
-                it->second = nullptr;
+                it->second = NULL;
             }
             it++;
         }
         objects.clear();
         
-        for(std::map<unsigned int, Voxel*>::iterator it = voxels.begin(); it != voxels.end();){
-            if(it->second != NULL){
-                delete it->second;
-                it->second = nullptr;
-            }
-            it++;
-        }
+//        for(std::map<unsigned int, Voxel*>::iterator it = voxels.begin(); it != voxels.end();){
+//            if(it->second != NULL){
+//                delete it->second;
+//                it->second = NULL;
+//            }
+//            it++;
+//        }
 	}
 
 	bool Fav::read(const char* file_path) {
@@ -42,7 +46,7 @@ namespace FavLibrary
 		fav_reader = new FavReader(this);
 		fav_reader->read(file_path);
 		delete fav_reader;
-        fav_reader = nullptr;
+        fav_reader = NULL;
 
 		return 1;
 	}
@@ -52,29 +56,30 @@ namespace FavLibrary
 		fav_writer = new FavWriter(this);
 		fav_writer->write(file_path, compression_mode_);
 		delete fav_writer;
-        fav_writer = nullptr;
+        fav_writer = NULL;
         
 		return 1;
 	}
 
-	std::vector<Voxel*> Fav::getVoxels()
+	std::vector<Voxel> Fav::getVoxels()
 	{
-		std::vector<Voxel*> res;
+		std::vector<Voxel> res;
 		//		std::for_each(voxels.begin(), voxels.end(),
 		//			[&](const std::pair<const Voxel, Voxel>& ref) { res.push_back(ref.second); });
 		return res;
 	};
-	Voxel* Fav::getVoxel(unsigned int id_)
+    
+	Voxel Fav::getVoxel(unsigned int id_)
 	{
-		Voxel* res = nullptr;
-		if (voxels.count(id_) > 0 && !voxels[id_]->isRemoved())
+		Voxel res;
+		if (voxels.count(id_) > 0 && !voxels[id_].isRemoved())
 			res = voxels[id_];
 
 		return res;
 	}
-	void Fav::addVoxel(Voxel* voxel_) { voxels[voxel_->getId()] = voxel_; };
-	void Fav::removeVoxel(unsigned int id_) { voxels[id_]->remove(); }
-	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0 && !voxels[id_]->isRemoved(); }
+	void Fav::addVoxel(Voxel voxel_) { voxels[voxel_.getId()] = voxel_; };
+	void Fav::removeVoxel(unsigned int id_) { voxels[id_].remove(); }
+	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0 && !voxels[id_].isRemoved(); }
 
 	std::map<unsigned int, Object*> Fav::getObjects()
 	{
@@ -86,8 +91,8 @@ namespace FavLibrary
 	Object* Fav::getObject(unsigned int id_)
 	{
 		Object* res = nullptr;
-		// FIXME: こ�EisRemoved()でチェチE��するの忁E��なのか！Eどちらにせよこ�E書き方はアクセスエラーが起きうる、Emasumori)
-		//        あと,objectが無かった場合に空を返すので良ぁE�Eか？　
+		// FIXME: „Åì„ÅEisRemoved()„Åß„ÉÅ„Çß„ÉÅEÇØ„Åô„Çã„ÅÆÂøÅE¶Å„Å™„ÅÆ„ÅãÔºÅE„Å©„Å°„Çâ„Å´„Åõ„Çà„Åì„ÅEÊõ∏„ÅçÊñπ„ÅØ„Ç¢„ÇØ„Çª„Çπ„Ç®„É©„Éº„ÅåËµ∑„Åç„ÅÜ„Çã„ÄÅEmasumori)
+		//        „ÅÇ„Å®,object„ÅåÁÑ°„Åã„Å£„ÅüÂ†¥Âêà„Å´Á©∫„ÇíËøî„Åô„ÅÆ„ÅßËâØ„ÅÅEÅE„ÅãÔºü„ÄÄ
 //		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
 		if (objects.count(id_) > 0)
 

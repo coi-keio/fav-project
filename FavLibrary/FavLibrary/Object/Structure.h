@@ -22,9 +22,9 @@ namespace FavLibrary
 {
 
 	enum class IDll BitPerVoxel {
-		FourBit,
-		EightBit,
-		SixteenBit,
+		Bit4 = 4,
+		Bit8 = 8,
+		Bit16 = 16,
 	};
 
 	enum class IDll Compression {
@@ -33,23 +33,24 @@ namespace FavLibrary
 		Base64,
 	};
 
-	template<typename tVoxelMapType>
-	class IDll VoxelMap {
-
-	public:
-		VoxelMap(int size);
-        ~VoxelMap();
-		void init();
-		void setVoxel(int index_, int value_);
-		tVoxelMapType getVoxel(int index_);
-
-	private:
-		unsigned int number_of_voxels;
-		tVoxelMapType* data;
-	};
+//	template<typename tVoxelMapType>
+//	class IDll VoxelMap {
+//
+//	public:
+//		VoxelMap(int size);
+//        ~VoxelMap();
+//		void init();
+//		void setVoxel(int index_, int value_);
+//		tVoxelMapType getVoxel(int index_);
+//
+//	private:
+//		unsigned int number_of_voxels;
+//		tVoxelMapType* data;
+//	};
 
 	class IDll Structure {
 	public:
+        Structure(){};
 		Structure(Grid* grid_);
 		Structure(int bit_per_voxel_);
 		Structure(int bit_per_voxel_, ColorMode color_mode_);
@@ -58,12 +59,12 @@ namespace FavLibrary
 		Compression getCompression();
 
 		void initVoxelMap();
-		void setBitPerVoxel(int bit_per_voxel_) { bit_per_voxel = bit_per_voxel_; };
+		void setBitPerVoxel(BitPerVoxel bit_per_voxel_);
 		void setVoxel(int index_, int value_);
 		void setVoxel(Point3D p_, int value_);
 		void setVoxel(int x_, int y_, int z_, int value_);
-		int getBitPerVoxel() { return bit_per_voxel; };
-		int getVoxel(int index_) { return voxel_map->getVoxel(index_); };
+		BitPerVoxel getBitPerVoxel() { return bit_per_voxel; };
+		int getVoxel(int index_);
 		int getVoxel(Point3D p_);
 		int getVoxel(int x_, int y_, int z_);
 
@@ -140,6 +141,9 @@ namespace FavLibrary
         
 
 	private:
+        
+        void convertVoxelMapToVoxelMap16Bit();
+        void convertVoxelMap16BitToVoxelMap();
         void convertColorMapToRGB();
 //        void convertColorMapToRGBA();
 		void convertColorMapToCMYK();
@@ -160,17 +164,17 @@ namespace FavLibrary
 
 		int getIndex(int x, int y, int z); //returns the index of the array from xyz indices
 
-		int bit_per_voxel;
+		BitPerVoxel bit_per_voxel;
 		ColorMode color_mode;
 		Compression compression;
 		int number_of_voxels;
         bool has_color;
 
-		VoxelMap<unsigned char>*  voxel_map; //default voxel map
-		VoxelMap<unsigned short>* voxel_map_16bit;// for 16bit voxel map
-		unsigned char*  alpha_map;
-		unsigned char*  color_map;
-		unsigned short* color_map_16bit;
+		unsigned char*  voxel_map = NULL; //default voxel map
+		unsigned short* voxel_map_16bit = NULL;// for 16bit voxel map
+		unsigned char*  alpha_map = NULL;
+		unsigned char*  color_map = NULL;
+		unsigned short* color_map_16bit = NULL;
 
 		//TODO: Link map is under development
 		//        float* link_map;

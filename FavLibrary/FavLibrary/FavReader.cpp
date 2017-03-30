@@ -89,7 +89,6 @@ namespace FavLibrary
         readObject  (object_list);
         
         delete parser;
-//        doc->release();
         XMLPlatformUtils::Terminate();
         
         return 1;
@@ -120,7 +119,6 @@ namespace FavLibrary
                 // fav以外の階層でのmetadataの読み込み
             }
             XMLString::release(&node_name);
-
 		}
 
 	}
@@ -139,32 +137,33 @@ namespace FavLibrary
             std::string  reference   = getElementString(dynamic_cast<DOMElement*>(geometry_list->item(i)), "reference");
             DOMNodeList* scale_node  =      getElements(dynamic_cast<DOMElement*>(geometry_list->item(i)), "scale"    );
             
-            Geometry* current_geometry = new Geometry(std::stoi(id), name);
+            Geometry current_geometry(std::stoi(id), name);
             
             if(shape == "cube"){
              
-                current_geometry->setShape(GeometryShape::cube);
+                current_geometry.setShape(GeometryShape::cube);
             
             }else if(shape == "sphere"){
 
-                current_geometry->setShape(GeometryShape::sphere);
+                current_geometry.setShape(GeometryShape::sphere);
 
             }else if(shape == "user_defined"){
                 
-                current_geometry->setShape(GeometryShape::user_defined);
-                current_geometry->setReference(reference);
+                current_geometry.setShape(GeometryShape::user_defined);
+                current_geometry.setReference(reference);
             }
             
 			if (scale_node->getLength() > 0) {
 				double x = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "x");
 				double y = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "y");
 				double z = getElementDouble(dynamic_cast<DOMElement*>(scale_node->item(0)), "z");
-				current_geometry->setScale(x, y, z);
+				current_geometry.setScale(x, y, z);
 			}
             
+            std::cout << i << std::endl;
             //TODO: ポインタ問題
             // ここはポインタ渡しじゃなくて良いんだっけ？一応、大丈夫そうだけど、バグが生じないか確認。
-			fav->palette->addGeometry(current_geometry);
+			fav->palette.addGeometry(current_geometry);
 		}
 
         // load materials
@@ -176,7 +175,7 @@ namespace FavLibrary
 			//load attributes
             std::string id   = getAttribute(dynamic_cast<DOMElement*>(material_list->item(i)), "id"  );
 			std::string name = getAttribute(dynamic_cast<DOMElement*>(material_list->item(i)), "name");
-			Material* current_material = new Material(std::stoi(id), name);
+			Material current_material(std::stoi(id), name);
             
             // load material name
             DOMNodeList* material_name_list = getElements(dynamic_cast<DOMElement*>(material_list->item(i)), "material_name");
@@ -187,7 +186,7 @@ namespace FavLibrary
                 char* node_value_str    = XMLString::transcode(node_value);
                 std::string name        = std::string(node_value_str);
                 XMLString::release(&node_value_str);
-                current_material->addMaterialName(name);
+                current_material.addMaterialName(name);
             }
             
 			// load product_info
@@ -198,7 +197,7 @@ namespace FavLibrary
 				std::string manufacturer = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "manufacturer");
 				std::string product_name = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "product_name");
 				std::string url          = getElementString(dynamic_cast<DOMElement*>(product_info_list->item(j)), "url");
-				current_material->addProductInfo(manufacturer, product_name, url);
+				current_material.addProductInfo(manufacturer, product_name, url);
 			}
 
 			// load iso_standard
@@ -208,10 +207,10 @@ namespace FavLibrary
 			for (int j = 0; j < number_of_iso_standard; ++j) {
 				std::string iso_id   = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_id");
 				std::string iso_name = getElementString(dynamic_cast<DOMElement*>(iso_standard_list->item(j)), "iso_name");
-				current_material->addIsoStandard(iso_id, iso_name);
+				current_material.addIsoStandard(iso_id, iso_name);
 			}
 
-			fav->palette->addMaterial(current_material);
+			fav->palette.addMaterial(current_material);
 		}
 	}
 
@@ -225,13 +224,13 @@ namespace FavLibrary
             //load attributes
 			std::string id   = getAttribute(voxel, "id"  );
 			std::string name = getAttribute(voxel, "name");
-			Voxel* current_voxel = new Voxel(std::stoi(id), name);
+			Voxel current_voxel(std::stoi(id), name);
 
 			//load geometry_info
 			DOMNodeList* geoinfo_node   = getElements(voxel, "geometry_info");
 			DOMElement*  geoinfo_element = dynamic_cast<DOMElement*>(geoinfo_node->item(0));
 			int geometry_id = getElementInt(geoinfo_element, "id");
-			current_voxel->setGeometryInfo(geometry_id);
+			current_voxel.setGeometryInfo(geometry_id);
 
 			//load material_info
 			DOMNodeList* matinfo_node = getElements(voxel, "material_info");
@@ -241,7 +240,7 @@ namespace FavLibrary
 				DOMElement* matinfo_element = dynamic_cast<DOMElement*>(matinfo_node->item(j));
 				int    material_id    = getElementInt   (matinfo_element, "id");
 				double material_ratio = getElementDouble(matinfo_element, "ratio");
-				current_voxel->addMaterialInfo(material_id, material_ratio);
+				current_voxel.addMaterialInfo(material_id, material_ratio);
 			}
 			fav->addVoxel(current_voxel);
 		}
@@ -284,8 +283,17 @@ namespace FavLibrary
         std::string compression   = getAttribute(vmap_elem, "compression");
         std::string bit_per_voxel = getAttribute(vmap_elem, "bit_per_voxel");
         
-        structure->setBitPerVoxel(std::atoi(bit_per_voxel.c_str()));
         
+        if(bit_per_voxel == "4")
+            structure->setBitPerVoxel(BitPerVoxel::Bit4);
+        
+        else if(bit_per_voxel == "8")
+            structure->setBitPerVoxel(BitPerVoxel::Bit8);
+        
+        else if(bit_per_voxel == "16")
+            structure->setBitPerVoxel(BitPerVoxel::Bit16);
+
+    
         DOMNodeList* vmap_layers = getElements(vmap_elem, "layer");
         int number_of_layers = int(vmap_layers->getLength());
         structure->initVoxelMap();

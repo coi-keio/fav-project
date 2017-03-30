@@ -50,9 +50,9 @@ namespace FavLibrary
 	Material::Material(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
 	
     Material::~Material() {
-		for (std::list<MaterialSpec*>::iterator it = materials.begin(); it != materials.end(); ++it) {
-			delete *it;
-		}
+//		for (std::list<MaterialSpec*>::iterator it = materials.begin(); it != materials.end(); ++it) {
+//			delete *it;
+//		}
         materials.clear();
     };
 
@@ -62,18 +62,41 @@ namespace FavLibrary
 	//std::map<int, MaterialSpec*> Material::getMaterials() { return materials; }
 	//std::vector<MaterialSpec*> Material::getMaterials() { return materials; }
 
-	void Material::addMaterialName(std::string material_name_) { materials.push_back(new MaterialName(material_name_)); };
-	void Material::addMaterialName(MaterialName* material_name_) { materials.push_back(material_name_); };
+	void Material::addMaterialName(std::string material_name_) {
+        MaterialName* material_name = new MaterialName(material_name_);
+        materials.push_back(material_name);
+        
+    };
+    
+	void Material::addMaterialName(MaterialName material_name_) {
+        
+        MaterialName* tmp = new MaterialName(material_name_.getMaterialName());
+        materials.push_back(tmp);
+        
+    };
 
 	void Material::addProductInfo(std::string manufacturer_, std::string product_name_, std::string url_) {
-		materials.push_back(new ProductInfo(manufacturer_, product_name_, url_));
+		
+        ProductInfo* pinfo = new ProductInfo(manufacturer_, product_name_, url_);
+        
+        materials.push_back(pinfo);
+        
 	};
-	void Material::addProductInfo(ProductInfo* product_info_) { materials.push_back(product_info_); };
+	void Material::addProductInfo(ProductInfo product_info_) {
+        ProductInfo* pinfo = new ProductInfo(product_info_.getManufacturer(), product_info_.getProductName(), product_info_.getUrl());
+        materials.push_back(pinfo);
+    };
 
 	void Material::addIsoStandard(std::string iso_id_, std::string iso_name_) {
-		materials.push_back(new IsoStandard(iso_id_, iso_name_));
+        IsoStandard* iso_standard = new IsoStandard(iso_id_, iso_name_);
+		materials.push_back(iso_standard);
 	};
-	void Material::addIsoStandard(IsoStandard* iso_standard_) { materials.push_back(iso_standard_); };
+	void Material::addIsoStandard(IsoStandard iso_standard_) {
+        
+        IsoStandard* iso_standard = new IsoStandard(iso_standard_.getIsoId(), iso_standard_.getIsoName());
+        materials.push_back(iso_standard);
+    
+    };
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

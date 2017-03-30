@@ -39,8 +39,8 @@ namespace FavLibrary
 		//void setColorMap(int* color_map_);
 		//void setLinkMap(int* link_map_);
 
-		Grid* grid;
-		Structure* structure;
+		Grid* grid = NULL;
+		Structure* structure = NULL;
 
 	private:
 		Object* pObject;

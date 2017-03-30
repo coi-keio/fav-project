@@ -64,16 +64,16 @@ namespace FavLibrary
 		~Voxel();
 
 		void setGeometryInfo(GeometryInfo geometry_info_);
-		GeometryInfo* getGeometryInfo();
+		GeometryInfo getGeometryInfo();
 
-		std::vector<MaterialInfo*> getMaterialInfo();
-		MaterialInfo* getMaterialInfo(unsigned int id_);
+		std::vector<MaterialInfo> getMaterialInfo();
+		MaterialInfo getMaterialInfo(unsigned int id_);
 		void addMaterialInfo(unsigned int id_, double ratio_);
 		void unpdateMaterialInfo(unsigned int id_, double ratio_);
 		void removeMaterialInfo(unsigned int id_);
 		bool existsMaterialInfo(unsigned int id_);
 		int getNumMaterialInfo();
-		ColorRGBA* getDisplay();
+		ColorRGBA getDisplay();
 		void setDisplay(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_);
 		void setDisplay(ColorRGBA color_);
 
@@ -90,9 +90,9 @@ namespace FavLibrary
 		void setApplicationNote(std::string note_);
 
 	private:
-		GeometryInfo* geometry_info = nullptr;
-		std::vector<MaterialInfo*> material_info;
-		ColorRGBA* display = nullptr;
+		GeometryInfo geometry_info;
+		std::vector<MaterialInfo> material_info;
+		ColorRGBA display;
 		std::string application_note;
 
 		Voxel* pVoxel;

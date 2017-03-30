@@ -13,70 +13,90 @@
 //TODO: implement changeColorMap*()
 namespace FavLibrary
 {
-	template <typename tVoxelMapType>
-	VoxelMap<tVoxelMapType>::VoxelMap(int size) {
-		number_of_voxels = size;
-		data = new tVoxelMapType[size];
-	};
-    
-    template <typename tVoxelMapType>
-    VoxelMap<tVoxelMapType>::~VoxelMap() {
-            delete[] data;
-            data = nullptr;
-    };
-
-	template <typename tVoxelMapType>
-	void VoxelMap<tVoxelMapType>::init() {
-		data = new tVoxelMapType[number_of_voxels];
-		for (int i = 0; i < number_of_voxels; ++i) {
-			data[i] = (tVoxelMapType)0;
-		}
-	};
-
-	template <typename tVoxelMapType>
-	void VoxelMap<tVoxelMapType>::setVoxel(int index_, int value_) {
-		data[index_] = (tVoxelMapType)value_;
-	};
-
-	template <typename tVoxelMapType>
-	tVoxelMapType VoxelMap<tVoxelMapType>::getVoxel(int index_) {
-		return data[index_];
-	}
+//	template <typename tVoxelMapType>
+//	VoxelMap<tVoxelMapType>::VoxelMap(int size) {
+//		number_of_voxels = size;
+//		data = new tVoxelMapType[size];
+//	};
+//    
+//    template <typename tVoxelMapType>
+//    VoxelMap<tVoxelMapType>::~VoxelMap() {
+//            delete[] data;
+//            data = nullptr;
+//    };
+//
+//	template <typename tVoxelMapType>
+//	void VoxelMap<tVoxelMapType>::init() {
+//		data = new tVoxelMapType[number_of_voxels];
+//		for (int i = 0; i < number_of_voxels; ++i) {
+//			data[i] = (tVoxelMapType)0;
+//		}
+//	};
+//
+//	template <typename tVoxelMapType>
+//	void VoxelMap<tVoxelMapType>::setVoxel(int index_, int value_) {
+//		data[index_] = (tVoxelMapType)value_;
+//	};
+//
+//	template <typename tVoxelMapType>
+//	tVoxelMapType VoxelMap<tVoxelMapType>::getVoxel(int index_) {
+//		return data[index_];
+//	}
 
 	Structure::Structure(Grid* grid_) {
 		grid = grid_;
-		number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();        
+		number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();
 	}
 
 	Structure::~Structure() {
         
-        delete voxel_map;
-        voxel_map = nullptr;
+        if(voxel_map != NULL){
+            delete[] voxel_map;
+            voxel_map = NULL;
+        }
         
-        delete[] voxel_map_16bit;
-        voxel_map_16bit = nullptr;
+        if(voxel_map_16bit != NULL){
+            delete[] voxel_map_16bit;
+            voxel_map_16bit = NULL;
+        }
         
-        delete[] color_map;
-        color_map = nullptr;
+        if(color_map != NULL){
+            delete[] color_map;
+            color_map = NULL;
+        }
+        if(color_map_16bit != NULL){
+            delete[] color_map_16bit;
+            color_map_16bit = NULL;
+        }
         
-        delete[] color_map_16bit;
-        color_map_16bit = nullptr;
-        
-        delete[] alpha_map;
-        alpha_map = nullptr;
+        if(alpha_map != NULL){
+            delete[] alpha_map;
+            alpha_map = NULL;
+        }
         
 	}
 
 	void Structure::initVoxelMap() {
 
-		if (bit_per_voxel == 4 || bit_per_voxel == 8) {
-			voxel_map = new VoxelMap<unsigned char>(number_of_voxels);
-			voxel_map->init();
-		}
-		else if (bit_per_voxel == 16) {
-			voxel_map_16bit = new VoxelMap<unsigned short>(number_of_voxels);
-			voxel_map_16bit->init();
-		}
+        switch (bit_per_voxel) {
+                
+            case BitPerVoxel::Bit4:
+            case BitPerVoxel::Bit8:
+                
+                voxel_map = new unsigned char[number_of_voxels];
+                
+                break;
+                
+            case BitPerVoxel::Bit16:
+                
+                voxel_map_16bit = new unsigned short[number_of_voxels];
+                
+                break;
+                
+            default:
+                //TODO: エラー
+                break;
+        }
 
 	}
 
@@ -115,21 +135,103 @@ namespace FavLibrary
                 break;
         }
 	}
+    
+    void Structure::convertVoxelMapToVoxelMap16Bit(){
+        
+        if(bit_per_voxel == BitPerVoxel::Bit4 || bit_per_voxel == BitPerVoxel::Bit8){
+            
+            if(voxel_map_16bit != NULL){
+                delete voxel_map_16bit;
+                voxel_map_16bit = NULL;
+            }
+            
+            voxel_map_16bit = new unsigned short[number_of_voxels];
+            
+            for(int i=0; i<number_of_voxels; ++i){
+                voxel_map_16bit[i] = voxel_map[i];
+            }
+            
+            delete voxel_map;
+            voxel_map = NULL;
+        }
+        
+    }
+    
+    void Structure::convertVoxelMap16BitToVoxelMap(){
+        
+        if(bit_per_voxel == BitPerVoxel::Bit16){
+            
+            if(voxel_map != NULL){
+                delete voxel_map;
+                voxel_map = NULL;
+            }
+            
+            voxel_map = new unsigned char[number_of_voxels];
+            
+            for(int i=0; i<number_of_voxels; ++i){
+                voxel_map[i] = voxel_map_16bit[i];
+            }
+            
+            delete voxel_map_16bit;
+            voxel_map_16bit = NULL;
+        }
+    }
+    
+    void Structure::setBitPerVoxel(BitPerVoxel bit_per_voxel_) {
+        
+        switch (bit_per_voxel_) {
+                
+            case BitPerVoxel::Bit4:
+            case BitPerVoxel::Bit8:
+                
+                convertVoxelMapToVoxelMap16Bit();
+                bit_per_voxel = bit_per_voxel_;
+
+                break;
+                
+            case BitPerVoxel::Bit16:
+                
+                convertVoxelMap16BitToVoxelMap();
+                bit_per_voxel = bit_per_voxel_;
+
+                break;
+            default:
+                //TODO: error
+                break;
+        }
+        
+        
+    };
 
 	void Structure::setVoxel(int index_, int value_) {
-		voxel_map->setVoxel(index_, value_);
+        
+        if(bit_per_voxel == BitPerVoxel::Bit4  || bit_per_voxel == BitPerVoxel::Bit8)
+            voxel_map[index_] = value_;
+        else
+            voxel_map_16bit[index_] = value_;
+
 	};
 
-	void Structure::setVoxel(Point3D p_, int value_) {};
+	void Structure::setVoxel(Point3D p_, int value_) {
+        setVoxel(p_.getX(), p_.getY(), p_.getZ(), value_);
+    };
+    
 	void Structure::setVoxel(int x_, int y_, int z_, int value_) {
 
 		int index = getIndex(x_, y_, z_);
-
-		if (bit_per_voxel == 4 || bit_per_voxel == 8) voxel_map->setVoxel(index, value_);
-		else if (bit_per_voxel == 16) voxel_map_16bit->setVoxel(index, value_);
+		setVoxel(index, value_);
 
 	};
 
+    int Structure::getVoxel(int index_){
+        
+        if (bit_per_voxel == BitPerVoxel::Bit4 || bit_per_voxel == BitPerVoxel::Bit8)
+            return voxel_map[index_];
+        else
+            return voxel_map_16bit[index_];
+        
+    };
+    
 	int Structure::getVoxel(Point3D p_){
         return getVoxel(p_.getX(), p_.getY(), p_.getZ());
     };
@@ -137,14 +239,9 @@ namespace FavLibrary
 	int Structure::getVoxel(int x_, int y_, int z_) {
 
 		int index = getIndex(x_, y_, z_);
-		int value;
+		int value = -1;
 		
-        if (bit_per_voxel == 4 || bit_per_voxel == 8) {
-			value = voxel_map->getVoxel(index);
-		}
-        else if (bit_per_voxel == 16) {
-            value = voxel_map_16bit->getVoxel(index);
-        }
+        value = getVoxel(index);
         
 		return value;
 	};
