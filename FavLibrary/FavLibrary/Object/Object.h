@@ -18,7 +18,7 @@
 namespace FavLibrary
 {
 
-	class __declspec(dllexport) Object : public FavPrimitive, MetadataObject
+	class IDll Object : public FavPrimitive, MetadataObject
 	{
 	public:
 		Object();

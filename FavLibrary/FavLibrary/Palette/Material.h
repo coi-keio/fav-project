@@ -12,13 +12,13 @@
 
 namespace FavLibrary
 {
-	enum class __declspec(dllexport) MaterialType {
+	enum class IDll MaterialType {
 		material_name = 0,
 		product_info = 1,
 		iso_standard = 2,
 	};
 
-	class __declspec(dllexport) MaterialSpec {
+	class IDll MaterialSpec {
 	public:
 		virtual void dammy() {};
 		MaterialSpec();
@@ -27,7 +27,7 @@ namespace FavLibrary
 		MaterialType materialType;
 	};
 
-	class __declspec(dllexport) MaterialName : public MaterialSpec {
+	class IDll MaterialName : public MaterialSpec {
 	public:
 
 		MaterialName(std::string name_);
@@ -38,7 +38,7 @@ namespace FavLibrary
 		std::string name;
 	};
 
-	class __declspec(dllexport) ProductInfo : public MaterialSpec {
+	class IDll ProductInfo : public MaterialSpec {
 	public:
 		ProductInfo();
 		ProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
@@ -58,7 +58,7 @@ namespace FavLibrary
 		std::string url;
 	};
 
-	class __declspec(dllexport) IsoStandard : public MaterialSpec {
+	class IDll IsoStandard : public MaterialSpec {
 	public:
 		IsoStandard();
 		IsoStandard(std::string iso_id_, std::string iso_name_);
@@ -73,7 +73,7 @@ namespace FavLibrary
 		std::string iso_name;
 	};
 
-	class __declspec(dllexport) Material : public FavPrimitive, MetadataObject
+	class IDll Material : public FavPrimitive, MetadataObject
 	{
 	public:
 		Material();

@@ -12,10 +12,11 @@
 #include <string>
 #include <vector>
 
+#include "FavSettings.h"
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Metadata {
+	class IDll Metadata {
 
 	public:
 		Metadata();
@@ -44,7 +45,7 @@ namespace FavLibrary
 		std::string note;
 	};
 
-	class __declspec(dllexport) MetadataObject
+	class IDll MetadataObject
 	{
 	public:
 		Metadata getMetadata();

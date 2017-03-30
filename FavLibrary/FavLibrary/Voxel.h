@@ -19,7 +19,7 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) VoxelInfo {
+	class IDll VoxelInfo {
 	public:
 		VoxelInfo();
 		VoxelInfo(unsigned int id_);
@@ -32,14 +32,14 @@ namespace FavLibrary
 		unsigned int identifier;
 	};
 
-	class __declspec(dllexport) GeometryInfo : public VoxelInfo {
+	class IDll GeometryInfo : public VoxelInfo {
 	public:
 		GeometryInfo();
 		GeometryInfo(unsigned int id_);
 		~GeometryInfo();
 	};
 
-	class __declspec(dllexport) MaterialInfo : public VoxelInfo {
+	class IDll MaterialInfo : public VoxelInfo {
 	public:
 		MaterialInfo();
 		MaterialInfo(unsigned int id_);
@@ -54,7 +54,7 @@ namespace FavLibrary
 	};
 
 
-	class __declspec(dllexport) Voxel : public FavPrimitive, MetadataObject
+	class IDll Voxel : public FavPrimitive, MetadataObject
 	{
 	public:
 		Voxel();

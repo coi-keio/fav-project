@@ -49,9 +49,9 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-    class __declspec(dllexport) Fav;
+    class IDll Fav;
 
-	class __declspec(dllexport) FavReader
+	class IDll FavReader
 	{
         class ParserErrorHandler : public ErrorHandler
         {

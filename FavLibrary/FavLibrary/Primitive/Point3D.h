@@ -1,9 +1,10 @@
 #pragma once
 
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Point3D
+	class IDll Point3D
 	{
 	public:
 		Point3D();

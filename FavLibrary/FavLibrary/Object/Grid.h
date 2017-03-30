@@ -11,22 +11,22 @@
 namespace FavLibrary
 {
 
-	class __declspec(dllexport) Unit : public Point3D
+	class IDll Unit : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Dimension : public Point3D
+	class IDll Dimension : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Origin : public Point3D
+	class IDll Origin : public Point3D
 	{
 
 	};
 
-	class __declspec(dllexport) Grid
+	class IDll Grid
 	{
 	public:
 		Unit getUnit();

@@ -5,7 +5,7 @@
 
 namespace FavLibrary
 {
-	enum class __declspec(dllexport) ColorMode
+	enum class IDll ColorMode
 	{
 		None,
 		Grayscale,
@@ -15,7 +15,7 @@ namespace FavLibrary
 		CMYK,
 	};
 
-	class __declspec(dllexport) IColor : public MetadataObject, FavPrimitive
+	class IDll IColor : public MetadataObject, FavPrimitive
 	{
 	public:
 		IColor();
@@ -26,7 +26,7 @@ namespace FavLibrary
 	protected:
 	};
 
-	class __declspec(dllexport) ColorRGB : public IColor
+	class IDll ColorRGB : public IColor
 	{
 	public:
 		ColorRGB();
@@ -52,7 +52,7 @@ namespace FavLibrary
 		unsigned char b;
 	};
 
-	class __declspec(dllexport) ColorRGBA : public ColorRGB
+	class IDll ColorRGBA : public ColorRGB
 	{
 	public:
 		ColorRGBA();
@@ -70,7 +70,7 @@ namespace FavLibrary
 		unsigned char a;
 	};
 
-	class __declspec(dllexport) ColorGrayscale : public IColor
+	class IDll ColorGrayscale : public IColor
 	{
 	public:
 		ColorGrayscale();
@@ -85,7 +85,7 @@ namespace FavLibrary
 		unsigned char gray;
 	};
 
-	class __declspec(dllexport) ColorGrayscale16 : public ColorGrayscale
+	class IDll ColorGrayscale16 : public ColorGrayscale
 	{
 	public:
 		ColorGrayscale16();
@@ -100,7 +100,7 @@ namespace FavLibrary
 		unsigned short gray;
 	};
 
-	class __declspec(dllexport) ColorCMYK : public IColor
+	class IDll ColorCMYK : public IColor
 	{
 	public:
 		ColorCMYK();

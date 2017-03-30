@@ -18,7 +18,7 @@
 namespace FavLibrary
 {
 
-	class __declspec(dllexport) Palette {
+	class IDll Palette {
 
 	public:
 		Palette();

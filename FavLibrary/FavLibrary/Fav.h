@@ -23,7 +23,7 @@
 
 namespace FavLibrary
 {
-	class __declspec(dllexport) Fav : public MetadataObject
+	class IDll Fav : public MetadataObject
 	{
 	public:
 		Fav();

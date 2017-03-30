@@ -4,10 +4,11 @@
 #include <exception>
 #include <stdexcept>
 
+#include "../FavSettings.h"
 
 namespace FavLibrary
 {
-	enum class __declspec(dllexport) FavExceptionCode
+	enum class IDll FavExceptionCode
 	{
 		Undefined,
 		// ïâÇÃêîÇÕéwíËÇ≈Ç´Ç‹ÇπÇÒÅD
@@ -15,7 +16,7 @@ namespace FavLibrary
 
 	};
 
-	class __declspec(dllexport) FavException : public std::exception
+	class IDll FavException : public std::exception
 	{
 	protected:
 		std::exception innerException;
@@ -23,7 +24,7 @@ namespace FavLibrary
 		FavExceptionCode code;
 	};
 
-	class __declspec(dllexport) FavInvalidArgumentException : public FavException, std::invalid_argument
+	class IDll FavInvalidArgumentException : public FavException, std::invalid_argument
 	{
 	public:
 	};

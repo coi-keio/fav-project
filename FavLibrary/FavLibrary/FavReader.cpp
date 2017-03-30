@@ -5,6 +5,7 @@
 //  Created by atsmsmr on 2016/12/05.
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "FavReader.h"
 #include "Fav.h"
@@ -13,12 +14,14 @@ using namespace xercesc;
 
 namespace FavLibrary
 {
-
     FavReader::FavReader(Fav* fav_) {
         fav = fav_;
-        //FIXME: xsdのパスの指定の仕方を検討
-        xsd_path = "file:///Users/atsmsmr/Documents/Developer/fav-project/xml_schema/fav.xsd";
-    };
+
+		//char cCurrentPath[FILENAME_MAX];
+		//GetCurrentDir(cCurrentPath, sizeof(cCurrentPath));
+
+		xsd_path = "C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\fav.xsd";
+	};
     
 
     bool FavReader::validation(const char* file_path)

@@ -10,7 +10,7 @@
 
 namespace FavLibrary
 {
-	enum class __declspec(dllexport) GeometryShape
+	enum class IDll GeometryShape
 	{
 		cube,
 		sphere,
@@ -18,7 +18,7 @@ namespace FavLibrary
         none,
 	};
 
-	class __declspec(dllexport) Scale : public Point3D
+	class IDll Scale : public Point3D
 	{
 	public:
 		Scale();
@@ -30,7 +30,7 @@ namespace FavLibrary
 	};
 
 
-	class __declspec(dllexport) Geometry : public FavPrimitive
+	class IDll Geometry : public FavPrimitive
 	{
 	public:
 		Geometry();
