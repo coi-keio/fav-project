@@ -45,6 +45,11 @@
 #include "./Object/Structure.h"
 #include "./Primitive/Color.h"
 
+#include <xercesc/sax2/SAX2XMLReader.hpp>
+#include <xercesc/sax2/XMLReaderFactory.hpp>
+#include <xercesc/sax/ErrorHandler.hpp>
+#include <xercesc/sax/SAXParseException.hpp>
+
 using namespace xercesc;
 
 namespace FavLibrary
@@ -53,35 +58,78 @@ namespace FavLibrary
 
 	class IDll FavReader
 	{
-        class ParserErrorHandler : public ErrorHandler
+//        class ParserErrorHandler : public ErrorHandler
+//        {
+//        private:
+//            void reportParseException(const SAXParseException& ex)
+//            {
+//                char* msg = XMLString::transcode(ex.getMessage());
+//                fprintf(stderr, "at line %llu column %llu, %s\n", ex.getLineNumber(), ex.getColumnNumber(), msg);
+//                XMLString::release(&msg);
+//            }
+//            
+//        public:
+//            void warning(const SAXParseException& ex)
+//            {
+//                reportParseException(ex);
+//            }
+//            
+//            void error(const SAXParseException& ex)
+//            {
+//                reportParseException(ex);
+//            }
+//            
+//            void fatalError(const SAXParseException& ex)
+//            {
+//                reportParseException(ex);
+//            }
+//            
+//            void resetErrors()
+//            {
+//            }
+//        };
+        
+        class CErrorHandler : public xercesc::ErrorHandler
         {
+//        public:
+//            /** Warning message method */
+//            void warning(const xercesc::SAXParseException& ex);
+//            /** Error message method */
+//            void error(const xercesc::SAXParseException& ex);
+//            /** Fatal error message method */
+//            void fatalError(const xercesc::SAXParseException& ex);
+//            /** Errors resetter method */
+//            void resetErrors();
         private:
-            void reportParseException(const SAXParseException& ex)
-            {
-                char* msg = XMLString::transcode(ex.getMessage());
-                fprintf(stderr, "at line %llu column %llu, %s\n", ex.getLineNumber(), ex.getColumnNumber(), msg);
-                XMLString::release(&msg);
-            }
+            /** Based message reporter method */
+//            void reportParseException(const xercesc::SAXParseException& ex);
+        void reportParseException(const xercesc::SAXParseException& ex)
+        {
+            char* message = xercesc::XMLString::transcode(ex.getMessage());
+            std::cout << message << " at line " << ex.getLineNumber() << " column " << ex.getColumnNumber() << std::endl;
             
+            xercesc::XMLString::release(&message);
+        }
+        
         public:
-            void warning(const SAXParseException& ex)
-            {
-                reportParseException(ex);
-            }
-            
-            void error(const SAXParseException& ex)
-            {
-                reportParseException(ex);
-            }
-            
-            void fatalError(const SAXParseException& ex)
-            {
-                reportParseException(ex);
-            }
-            
-            void resetErrors()
-            {
-            }
+        void warning(const xercesc::SAXParseException& ex)
+        {
+            reportParseException(ex);
+        }
+        
+        void error(const xercesc::SAXParseException& ex)
+        {
+            reportParseException(ex);
+        }
+        
+        void fatalError(const xercesc::SAXParseException& ex)
+        {
+            reportParseException(ex);
+        }
+        
+        void resetErrors()
+        {
+        }
         };
         
 	public:
@@ -100,6 +148,7 @@ namespace FavLibrary
         DOMNodeList* getElements       (DOMElement* elem, const char *tagName);
         std::string  getAttribute      (DOMElement* elem, const char *tagName);
 
+        void setXsdString();
         bool validation(const char* file_path);
 		void readMetaData(DOMNodeList* metadata_node_);
 		void readPalette (DOMNodeList* palette_node_);
@@ -114,7 +163,9 @@ namespace FavLibrary
         void readColorMapGrayscale  (DOMElement* cmap_elem, Object* current_object, Structure* structure);
         void readColorMapGrayscale16(DOMElement* cmap_elem, Object* current_object, Structure* structure);
 
+        std::string xsd_string;
         std::string xsd_path;
+
 		Fav* fav;
 	};
 }

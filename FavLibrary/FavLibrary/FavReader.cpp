@@ -10,10 +10,22 @@
 #include "FavReader.h"
 #include "Fav.h"
 
+#include <xercesc/sax2/SAX2XMLReader.hpp>
+#include <xercesc/sax2/XMLReaderFactory.hpp>
+#include <xercesc/sax/ErrorHandler.hpp>
+#include <xercesc/sax/SAXParseException.hpp>
+
+#include <xercesc/validators/common/Grammar.hpp>
+#include <xercesc/parsers/SAXParser.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
+#include <xercesc/util/XMLString.hpp>
+#include <fstream>
+
 using namespace xercesc;
 
 namespace FavLibrary
 {
+    
     FavReader::FavReader(Fav* fav_) {
         fav = fav_;
 
@@ -23,31 +35,59 @@ namespace FavLibrary
 //		xsd_path = "C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\fav.xsd";
         
         xsd_path = "/Users/atsmsmr/Documents/Developer/fav-project/xml_schema/fav.xsd";
+        
+        
 	};
     
+    void FavReader::setXsdString(){
+        xsd_string = "<?xml version=\"3.0\" encoding=\"UTF-8\" ?>";
+        
+
+    }
 
     bool FavReader::validation(const char* file_path)
     {
-        ParserErrorHandler parserErrorHandler;
+        std::ifstream ifs(xsd_path);
         
-        XercesDOMParser domParser;
+        std::istreambuf_iterator<char> it(ifs);
+        std::istreambuf_iterator<char> last;
+        std::string str(it, last);
+
+        xsd_string = str;
         
-        if (domParser.loadGrammar(xsd_path.c_str(), Grammar::SchemaGrammarType) == NULL)
-        {
-            fprintf(stderr, "couldn't load schema\n");
-            return 0;
-        }
+        ErrorHandler* parserErrorHandler = new CErrorHandler;
         
-        domParser.setErrorHandler(&parserErrorHandler);
-        domParser.setValidationScheme(XercesDOMParser::Val_Auto);
-        domParser.setDoNamespaces(true);
-        domParser.setDoSchema(true);
-        domParser.setValidationSchemaFullChecking(true);
-//        domParser.setValidationConstraintFatal(true);
-        domParser.setExternalNoNamespaceSchemaLocation(xsd_path.c_str());
-        domParser.parse(file_path);
+        SAX2XMLReader *parser = XMLReaderFactory::createXMLReader();
         
-        if (domParser.getErrorCount() == 0)
+        xercesc::MemBufInputSource input_xsd(reinterpret_cast<const XMLByte*>(xsd_string.c_str()), xsd_string.size (), "/schema.xsd");
+        
+        parser->loadGrammar(xsd_path.c_str(), xercesc::Grammar::SchemaGrammarType, true);
+        parser->setFeature(xercesc::XMLUni::fgXercesUseCachedGrammarInParse, true);
+        parser->setFeature(xercesc::XMLUni::fgSAX2CoreValidation, true);
+        parser->setFeature(xercesc::XMLUni::fgSAX2CoreNameSpaces, true);
+        parser->setProperty(xercesc::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, const_cast<void*>(static_cast<const void*>("")));
+        parser->setErrorHandler(parserErrorHandler);
+        parser->parse(file_path);
+        
+        
+//        XercesDOMParser domParser;
+//        
+//        if (domParser.loadGrammar(xsd_path.c_str(), Grammar::SchemaGrammarType) == NULL)
+//        {
+//            fprintf(stderr, "couldn't load schema\n");
+//            return 0;
+//        }
+//        
+//        domParser.setErrorHandler(&parserErrorHandler);
+//        domParser.setValidationScheme(XercesDOMParser::Val_Auto);
+//        domParser.setDoNamespaces(true);
+//        domParser.setDoSchema(true);
+//        domParser.setValidationSchemaFullChecking(true);
+////        domParser.setValidationConstraintFatal(true);
+//        domParser.setExternalNoNamespaceSchemaLocation(xsd_path.c_str());
+//        domParser.parse(file_path);
+//        
+        if (parser->getErrorCount() == 0)
             printf("This file confirm to Fav ver.1.0\n");
         else
             printf("This file doesn't conform to Fav ver.1.0\n");
