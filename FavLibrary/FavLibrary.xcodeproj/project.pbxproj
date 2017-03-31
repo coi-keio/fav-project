@@ -339,6 +339,7 @@
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-std=c++11",
+					"-o3",
 				);
 				OTHER_LDFLAGS = "-lxerces-c";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -357,6 +358,7 @@
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-std=c++11",
+					"-o3",
 				);
 				OTHER_LDFLAGS = "-lxerces-c";
 				PRODUCT_NAME = "$(TARGET_NAME)";

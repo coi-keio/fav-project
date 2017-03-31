@@ -338,6 +338,10 @@ namespace FavLibrary
 
     void FavWriter::writeColorMapRGB(DOMElement *cmap_elem, Structure* p_structure){
         
+        std::cout << p_structure->getDimensionX() << std::endl;
+        std::cout << p_structure->getDimensionY() << std::endl;
+        std::cout << p_structure->getDimensionZ() << std::endl;
+        
         std::string layer_data;
         for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
             
@@ -346,7 +350,7 @@ namespace FavLibrary
             for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
                 for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
                     
-                    int voxel_state = p_structure->getVoxel(x,y,z);
+                    int voxel_state = (int)p_structure->getVoxel(x,y,z);
                     
                     if(voxel_state != 0){
                         
@@ -362,6 +366,7 @@ namespace FavLibrary
                         sprintf(buff, "%02x", p_structure->getColorBlue(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
+                        
                         count_colors++;
                     }
                     
@@ -666,7 +671,6 @@ namespace FavLibrary
                     
                     break;
             }
-            
         }
     }
     
@@ -752,13 +756,24 @@ namespace FavLibrary
         std::map<unsigned int, Object> objects = fav->getObjects();
         for(std::map<unsigned int, Object>::iterator it = objects.begin(); it != objects.end();){
 
-            Object current_object = it->second;
+            Object* current_object = &it->second;
             DOMElement  *obj_elem = createElement("object");
-            setAttribute(obj_elem, "id",   std::to_string(current_object.getId()));
-            setAttribute(obj_elem, "name", current_object.getName());
+            setAttribute(obj_elem, "id",   std::to_string(current_object->getId()));
+            setAttribute(obj_elem, "name", current_object->getName());
             
-            writeGrid(obj_elem, &current_object.grid);
-            writeStructure(obj_elem, &current_object.structure);
+            DOMElement *metadata_elem = createElement("metadata");
+            appendCDATA(metadata_elem, "id",      current_object->getMetadataId());
+            appendCDATA(metadata_elem, "title",   current_object->getMetadataTitle());
+            appendCDATA(metadata_elem, "author",  current_object->getMetadataAuthor());
+            appendCDATA(metadata_elem, "license", current_object->getMetadataLicense());
+            if(current_object->getMetadataNote()!="")
+                appendCDATA(metadata_elem, "note",    current_object->getMetadataNote());
+            
+            obj_elem->appendChild(metadata_elem);
+            
+            writeGrid(obj_elem, &current_object->grid);
+            writeStructure(obj_elem, &current_object->structure);
+            
             parent_elem->appendChild(obj_elem);
             
             it++;

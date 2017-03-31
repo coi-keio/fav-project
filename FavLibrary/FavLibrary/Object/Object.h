@@ -18,7 +18,7 @@
 namespace FavLibrary
 {
 
-	class IDll Object : public FavPrimitive, MetadataObject
+	class IDll Object : public FavPrimitive, public MetadataObject
 	{
 	public:
 		Object();

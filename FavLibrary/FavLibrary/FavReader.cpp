@@ -852,20 +852,19 @@ namespace FavLibrary
             readColorMap(object_elem, &current_object, &current_object.structure);
             
 
-            //FIXME: バグ metadataが無い場合にメモリエラー
-            // load metadata
-//            DOMNodeList* metadata_list = getElements(object_elem, "metadata");
-//            if(metadata_list->getLength() == 1){
-//            
-//                current_object->setMetadataId     (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "id"   ));
-//                current_object->setMetadataTitle  (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "title"));
-//                current_object->setMetadataAuthor (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "author"));
-//                current_object->setMetadataLicense(getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "license"));
-//                current_object->setMetadataNote   (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "note"));
-//            
-//            }else if(metadata_list->getLength() > 1){
-//                //TODO: エラー処理
-//            }
+//             load metadata
+            DOMNodeList* metadata_list = getElements(object_elem, "metadata");
+            if(metadata_list->getLength() == 1){
+            
+                current_object.setMetadataId     (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "id"   ));
+                current_object.setMetadataTitle  (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "title"));
+                current_object.setMetadataAuthor (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "author"));
+                current_object.setMetadataLicense(getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "license"));
+                current_object.setMetadataNote   (getElementString(dynamic_cast<DOMElement*>(metadata_list->item(0)), "note"));
+            
+            }else if(metadata_list->getLength() > 1){
+                //TODO: エラー処理
+            }
             
 			fav->addObject(current_object);
 		}
