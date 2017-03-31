@@ -161,12 +161,13 @@ namespace FavLibrary
 				else if (material->materialType == MaterialType::material_name) {
                     MaterialName* material_name = dynamic_cast<MaterialName*>(material);
 //                    MaterialName* material_name = dynamic_cast<MaterialName*>(tmp);
-					DOMElement* name_elem = createElement("material_name");
+					//DOMElement* name_elem = createElement("material_name");
                     
                     if(material_name->getMaterialName() != "")
-                        appendCDATA(name_elem, "material_name", material_name->getMaterialName());
-                    
-					mat_elem->appendChild(name_elem);
+						//appendCDATA(name_elem, "material_name", material_name->getMaterialName());
+						appendCDATA(mat_elem, "material_name", material_name->getMaterialName());
+
+					//mat_elem->appendChild(name_elem);
                     delete material_name;
 				}
 			}
