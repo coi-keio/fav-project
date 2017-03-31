@@ -74,7 +74,7 @@ namespace FavLibrary
 		std::string iso_name;
 	};
 
-	class IDll Material : public FavPrimitive, MetadataObject
+	class IDll Material : public FavPrimitive, public MetadataObject
 	{
 	public:
 		Material();
