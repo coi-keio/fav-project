@@ -41,15 +41,6 @@ namespace FavLibrary
 	MetadataObject::MetadataObject()  {  }
 	MetadataObject::~MetadataObject() {  }
 
-	Metadata MetadataObject::getMetadata() { return metadata; };
-	void MetadataObject::setMetadata(Metadata metadata_) {
-		metadata.setId(metadata_.getId());
-		metadata.setAuthor(metadata_.getAuthor());
-		metadata.setTitle(metadata_.getTitle());
-		metadata.setLicense(metadata_.getLicense());
-		metadata.setNote(metadata_.getNote());
-	};
-
 	std::string MetadataObject::getMetadataId() { return metadata.getId(); };
 	void MetadataObject::setMetadataId(std::string id_) { metadata.setId(id_); };
 

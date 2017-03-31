@@ -25,18 +25,14 @@ namespace FavLibrary
 	Voxel::Voxel(unsigned int id_) : FavPrimitive(id_) { Voxel(); }
 	Voxel::Voxel(std::string name_) : FavPrimitive(name_) { Voxel(); }
 	Voxel::Voxel(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) { Voxel(); }
-	Voxel::~Voxel() 
-	{
-	}
+	Voxel::~Voxel() { }
 
 	void Voxel::setGeometryInfo(GeometryInfo geometry_info_) { geometry_info = GeometryInfo(geometry_info_); }
 	GeometryInfo Voxel::getGeometryInfo() { return geometry_info; }
 
 	std::vector<MaterialInfo> Voxel::getMaterialInfo()
 	{
-		std::vector<MaterialInfo> res;
-		//		std::for_each(material_info.begin(), material_info.end(),
-		//			[&](const std::pair<const MaterialInfo, MaterialInfo>& ref) { res.push_back(ref.second); });
+		std::vector<MaterialInfo> res = material_info;
 		return res;
 	};
 	MaterialInfo Voxel::getMaterialInfo(unsigned int id_) { return material_info[id_]; };

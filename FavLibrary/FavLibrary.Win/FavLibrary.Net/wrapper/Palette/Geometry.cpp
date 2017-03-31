@@ -52,9 +52,6 @@ namespace FavLibraryDotNet
 	void Geometry::UserDefinedShapePath::set(System::String^ value) { throw gcnew System::NotImplementedException(); }
 
 	/// Impliment IFavPrimitive  -----------------------------------------------------------------------------------------
-	bool Geometry::IsRemoved::get() { return pGeometry->isRemoved(); }
-	void Geometry::Remove() { pGeometry->remove(); }
-
 	unsigned int Geometry::ID::get() { return pGeometry->getId(); }
 	void Geometry::ID::set(unsigned int value) { pGeometry->setId(value); }
 

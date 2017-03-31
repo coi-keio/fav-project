@@ -13,9 +13,6 @@ namespace FavLibrary
 		FavPrimitive(std::string name_);
 		FavPrimitive(unsigned int id_, std::string name_);
 
-		bool isRemoved();
-		void remove();
-
 		unsigned int getId();
 		void setId(unsigned int id_);
 		std::string getName();
@@ -29,8 +26,6 @@ namespace FavLibrary
 		std::string name;
 
 	private:
-
-		bool is_removed = false;
 	};
 
 }

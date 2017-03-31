@@ -106,8 +106,6 @@ namespace FavLibraryDotNet
 	//}
 
 	/// Impliment IFavPrimitive  -----------------------------------------------------------------------------------------
-	bool Material::IsRemoved::get() { return pMaterial->isRemoved(); }
-	void Material::Remove() { pMaterial->remove(); }
 
 	unsigned int Material::ID::get() { return pMaterial->getId(); }
 	void Material::ID::set(unsigned int value) { pMaterial->setId(value); }

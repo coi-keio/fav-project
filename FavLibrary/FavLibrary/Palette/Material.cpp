@@ -59,8 +59,7 @@ namespace FavLibrary
 	bool Material::hasMaterials() { return getNumMaterials() > 0; };
 
 	int Material::getNumMaterials() { return int(materials.size()); }
-	//std::map<int, MaterialSpec*> Material::getMaterials() { return materials; }
-	//std::vector<MaterialSpec*> Material::getMaterials() { return materials; }
+
 
 	void Material::addMaterialName(std::string material_name_) {
         MaterialName* material_name = new MaterialName(material_name_);
