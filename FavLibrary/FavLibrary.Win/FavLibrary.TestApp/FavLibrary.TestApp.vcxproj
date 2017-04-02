@@ -140,6 +140,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)packages\xerces-c-3.1.4\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -20,9 +20,6 @@ namespace FavLibrary
 		setName(name_);
 	};
 
-	bool FavPrimitive::isRemoved() { return this->is_removed; }
-	void FavPrimitive::remove() { this->is_removed = true; }
-
 	unsigned int FavPrimitive::getId() { return identifier; };
 	void FavPrimitive::setId(unsigned int id_) { identifier = id_; };
 	std::string FavPrimitive::getName() { return name; };

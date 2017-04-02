@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <map>
@@ -73,7 +74,7 @@ namespace FavLibrary
 		std::string iso_name;
 	};
 
-	class IDll Material : public FavPrimitive, MetadataObject
+	class IDll Material : public FavPrimitive, public MetadataObject
 	{
 	public:
 		Material();
@@ -87,8 +88,6 @@ namespace FavLibrary
 		bool hasMaterials();
 
 		int getNumMaterials();
-		//std::map<int, MaterialSpec*> getMaterials();
-		//std::vector<MaterialSpec*> getMaterials();
 
 		void addMaterialName(std::string material_name_);
 		void addMaterialName(MaterialName material_name_);

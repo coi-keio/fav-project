@@ -52,9 +52,6 @@ namespace FavLibrary
 		MetadataObject();
 		virtual ~MetadataObject();
 
-		Metadata getMetadata();
-		void setMetadata(Metadata metadata_);
-
 		std::string getMetadataId();
 		void setMetadataId(std::string id_);
 

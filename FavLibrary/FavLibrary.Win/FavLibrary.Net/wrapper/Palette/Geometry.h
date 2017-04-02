@@ -36,9 +36,6 @@ namespace FavLibraryDotNet
 		property System::String^ UserDefinedShapePath { System::String^ get(); void set(System::String^ value); }
 
 		/// Impliment IFavPrimitive  -----------------------------------------------------------------------------------------
-		virtual property bool IsRemoved { bool get(); }
-		virtual void Remove();
-
 		virtual property unsigned int ID { unsigned int get(); void set(unsigned int value); }
 		virtual property System::String^ Name { System::String^ get(); void set(System::String^ value); }
 		/// ------------------------------------------------------------------------------------------------------------------

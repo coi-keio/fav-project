@@ -30,7 +30,6 @@ namespace FavLibrary
 		~Fav();
 		bool read (const char* file_path);
         bool write(const char* file_path, CompressionMode compression_mode_);
-		//bool write(const char* file_path, const char* version_);
 
 		std::vector<Voxel> getVoxels();
 		Voxel getVoxel(unsigned int id_);

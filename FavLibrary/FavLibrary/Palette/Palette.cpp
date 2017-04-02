@@ -27,56 +27,38 @@ namespace FavLibrary
 
 	Geometry Palette::getGeometryById(unsigned int id_)
 	{
-		Geometry res;
-		if (geometries.count(id_) > 0 && !geometries[id_].isRemoved())
+		Geometry res = NULL;
+		if (geometries.count(id_) > 0)
 			res = geometries[id_];
 
 		return res;
 	};
-	//	std::vector<Geometry> Palette::getGeometriesByName(std::string name_)
-	//	{
-	//		std::vector<Geometry> res;
-	//		if (geometriesName.count(name_) > 0)
-	//			res = std::copy_if(geometriesName.begin(), geometriesName.end(), res,
-	//				[name_](Geometry g) { return g.getName() == name_ && !g.isRemoved(); });
-	//		
-	//		return res;
-	//	};
 	void Palette::addGeometry(Geometry geometry_)
 	{
 		geometries[geometry_.getId()] = geometry_;
-		geometriesName[geometry_.getName()].push_back(geometry_);
 	};
 	void Palette::removeGeometry(unsigned int id_)
 	{
-		geometries[id_].remove();
+		geometries.erase(id_);
 	}
 
 
 
 	Material Palette::getMaterialById(unsigned int id_)
 	{
-		Material res;
-		if (materials.count(id_) > 0 && !materials[id_].isRemoved())
+		Material res = NULL;
+		if (materials.count(id_) > 0)
 			res = materials[id_];
 
 		return res;
 	}
-	//	std::vector<Material> Palette::getMaterialsByName(std::string name_)
-	//	{
-	//		std::vector<Material> res;
-	//		if (materialsName.count(name_) > 0)
-	//			res = std::copy_if(materialsName.begin(), materialsName.end(), res,
-	//				[name_](Material m) { return m.getName() == name_ && !m.isRemoved(); });
-	//	};
 	void Palette::addMaterial(Material material_)
 	{
 		materials[material_.getId()] = material_;
-		materialsName[material_.getName()].push_back(material_);
 	};
 	void Palette::removeMaterial(unsigned int id_)
 	{
-		materials[id_].remove();
+		materials.erase(id_);
 	}
 
 	int Palette::getNumberOfGeometries() { return int(geometries.size()); };

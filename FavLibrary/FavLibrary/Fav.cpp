@@ -65,47 +65,41 @@ namespace FavLibrary
 	std::vector<Voxel> Fav::getVoxels()
 	{
 		std::vector<Voxel> res;
-		//		std::for_each(voxels.begin(), voxels.end(),
-		//			[&](const std::pair<const Voxel, Voxel>& ref) { res.push_back(ref.second); });
+		std::for_each(voxels.begin(), voxels.end(),
+			[&](const std::pair<const Voxel, Voxel>& ref) { res.push_back(ref.second); });
 		return res;
-	};
+	}
     
 	Voxel Fav::getVoxel(unsigned int id_)
 	{
-		Voxel res;
-		if (voxels.count(id_) > 0 && !voxels[id_].isRemoved())
+		Voxel res = NULL;
+		if (voxels.count(id_) > 0)
 			res = voxels[id_];
 
 		return res;
 	}
 	void Fav::addVoxel(Voxel voxel_) { voxels[voxel_.getId()] = voxel_; };
-	void Fav::removeVoxel(unsigned int id_) { voxels[id_].remove(); }
-	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0 && !voxels[id_].isRemoved(); }
+	void Fav::removeVoxel(unsigned int id_) { voxels.erase(id_); }
+	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0; }
 
 	std::map<unsigned int, Object> Fav::getObjects()
 	{
-//		std::vector<Object> res;
-		//		std::for_each(objects.begin(), objects.end(),
-		//			[&](const std::pair<const Object, Object>& ref) { res.push_back(ref.second); });
 		return objects;
 	};
 	Object Fav::getObject(unsigned int id_)
 	{
-		// FIXME: what is isRemoved for???
-        // maybe
-//		if (objects.count(id_) > 0 && !objects[id_]->isRemoved())
+		Object res = NULL;
 		if (objects.count(id_) > 0)
-			return objects[id_];
+			res = objects[id_];
 
-		return NULL;
+		return res;
 	}
     void Fav::addObject(Object object_) {
         objects[object_.getId()] = object_;
         objects[object_.getId()].structure.setGridPointer(&objects[object_.getId()].grid);
     };
     
-	void Fav::removeObject(unsigned int id_) { objects[id_].remove(); }
-	//	bool existsObject(unsigned int id_) { return objects.count(id_) > 0 && !objects[id_]->isRemoved; }
+	void Fav::removeObject(unsigned int id_) { objects.erase(id_); }
 
 	int Fav::getNumObjects() { return (int)objects.size(); };
 	int Fav::getNumVoxels() { return (int)voxels.size(); };
