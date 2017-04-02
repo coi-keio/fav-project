@@ -6,7 +6,7 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 #pragma once
-#include "MetaData.h"
+#include "Metadata.h"
 
 
 namespace FavLibrary
