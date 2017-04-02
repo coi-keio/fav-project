@@ -837,27 +837,28 @@ namespace FavLibrary
 			std::string id   = getAttribute(object_elem, "id"  );
 			std::string name = getAttribute(object_elem, "name");
             
-			Object current_object(stoi(id), name);
+			Object* current_object = new Object(stoi(id), name);
 
-            readGrid(object_elem, &current_object);
+            readGrid(object_elem, current_object);
             
             // load Structure
-            readVoxelMap(object_elem, &current_object, &current_object.structure);
-            readColorMap(object_elem, &current_object, &current_object.structure);
+            readVoxelMap(object_elem, current_object, &current_object->structure);
+            readColorMap(object_elem, current_object, &current_object->structure);
             
 
             // load metadata
             xercesc::DOMNodeList* metadata_list = getElements(object_elem, "metadata");
             if(metadata_list->getLength() > 0){
-                current_object.setMetadataId     (getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "id"   ));
-                current_object.setMetadataTitle  (getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "title"));
-                current_object.setMetadataAuthor (getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "author"));
-                current_object.setMetadataLicense(getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "license"));
+                current_object->setMetadataId     (getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "id"   ));
+                current_object->setMetadataTitle  (getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "title"));
+                current_object->setMetadataAuthor (getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "author"));
+                current_object->setMetadataLicense(getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "license"));
                 std::string note = getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "note");
-                if(note != "") current_object.setMetadataNote(note);
+                if(note != "") current_object->setMetadataNote(note);
             }
-			fav->addObject(current_object);
-		}
+			fav->addObject(*current_object);
+            delete current_object;
+        }
 	}
     
     xercesc::DOMNodeList* FavReader::getElements(xercesc::DOMElement* element_, const char *tag_name_)

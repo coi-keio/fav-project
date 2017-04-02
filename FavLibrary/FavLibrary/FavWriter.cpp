@@ -338,28 +338,33 @@ namespace FavLibrary
 	}
 
     void FavWriter::writeColorMapRGB(xercesc::DOMElement *cmap_elem, Structure* p_structure){
-        
-        std::cout << p_structure->getDimensionX() << std::endl;
-        std::cout << p_structure->getDimensionY() << std::endl;
-        std::cout << p_structure->getDimensionZ() << std::endl;
-        
+                
         std::string layer_data;
+        
+        //FIXME: Without following useless codes(5 lines), push_back() is not functioned here....
+        int data = 0;
+        char buff[2];
+        sprintf(buff, "%02x", data);
+        layer_data.push_back(buff[0]);
+        layer_data.push_back(buff[1]);
+        
         for (int z = 0, size = p_structure->getDimensionZ(); z < size; ++z) {
             
             layer_data.clear();
             int count_colors = 0;
+            
             for (int y = 0, size = p_structure->getDimensionY(); y < size; ++y) {
                 for (int x = 0, size = p_structure->getDimensionX(); x < size; ++x) {
                     
-                    int voxel_state = (int)p_structure->getVoxel(x,y,z);
+                    int voxel_state = p_structure->getVoxel(x,y,z);
                     
-                    if(voxel_state != 0){
-                        
+                    if(voxel_state > 0){
+                    
                         char buff[2];
                         sprintf(buff, "%02x", p_structure->getColorRed(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
-                        
+
                         sprintf(buff, "%02x", p_structure->getColorGreen(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
@@ -370,7 +375,6 @@ namespace FavLibrary
                         
                         count_colors++;
                     }
-                    
                 }
             }
             

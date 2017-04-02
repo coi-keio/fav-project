@@ -32,7 +32,6 @@ namespace FavLibrary
     };
 
 	Object::~Object() {
-        
     };
 
 }
