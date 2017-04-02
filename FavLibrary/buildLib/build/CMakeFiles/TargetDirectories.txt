@@ -1,0 +1,3 @@
+/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildLib/build/CMakeFiles/rebuild_cache.dir
+/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildLib/build/CMakeFiles/edit_cache.dir
+/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildLib/build/CMakeFiles/fav.dir
