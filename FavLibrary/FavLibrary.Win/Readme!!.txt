@@ -1,0 +1,1 @@
+NuGetできるxercescの最新(安定版)は[xercesc.3.1.1]だが，Windows10環境では[xerces-c-3.1.4]を求められるため，手動で入手し，./packagesに格納してください．現在[FavLibrary.Win.vcxproj]では[xerces-c-3.1.4]をリンクしているため，他のバージョンをリンクする場合はポロジェクト設定を変更してください．
