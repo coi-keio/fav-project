@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Primitive">
+      <UniqueIdentifier>{06e97c38-d43a-4d10-89b2-df043fb1d5ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Palette">
+      <UniqueIdentifier>{00b3fa26-12d1-4012-8829-0c6572d1faaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Primitive">
+      <UniqueIdentifier>{60621d8a-bdb5-437e-8c60-af287727042c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object">
+      <UniqueIdentifier>{3cf077e6-fc9b-45a1-bf82-2050ed7633d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object">
+      <UniqueIdentifier>{593beca3-945d-4cb3-91fe-a4d39b743406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Palette">
+      <UniqueIdentifier>{87e5b151-51f5-4475-b9bf-eae1ffd33da3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\FavLibrary\Fav.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Voxel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\FavReader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\FavWriter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Metadata.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Object\Object.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Object\Structure.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Palette\Geometry.cpp">
+      <Filter>ソース ファイル\Palette</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Palette\Material.cpp">
+      <Filter>ソース ファイル\Palette</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Palette\Palette.cpp">
+      <Filter>ソース ファイル\Palette</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Primitive\Color.cpp">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Primitive\FavPrimitive.cpp">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Primitive\Point3D.cpp">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Primitive\Vector3D.cpp">
+      <Filter>ソース ファイル\Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FavLibrary\Object\Grid.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\FavLibrary\Fav.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Metadata.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Voxel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\FavReader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\FavWriter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Palette\Geometry.h">
+      <Filter>ヘッダー ファイル\Palette</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Palette\Material.h">
+      <Filter>ヘッダー ファイル\Palette</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Palette\Palette.h">
+      <Filter>ヘッダー ファイル\Palette</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Object\Object.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Object\Structure.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Primitive\Color.h">
+      <Filter>ヘッダー ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Primitive\Point3D.h">
+      <Filter>ヘッダー ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Primitive\FavPrimitive.h">
+      <Filter>ヘッダー ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Primitive\Vector3D.h">
+      <Filter>ヘッダー ファイル\Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\Object\Grid.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FavLibrary\FavSettings.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
