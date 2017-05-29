@@ -15,6 +15,11 @@
 using namespace FavLibrary;
 
 #pragma comment(lib, "FavLibrary.lib")
+
+#ifdef _DEBUG
+#pragma comment(lib, "xerces-c_3D.lib")
+#else
 #pragma comment(lib, "xerces-c_3.lib")
+#endif
 
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください
