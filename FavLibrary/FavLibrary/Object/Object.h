@@ -29,11 +29,6 @@ namespace FavLibrary
         
         Grid grid;
         Structure structure;
-
-	private:
-
-		Object* pObject;
-
 	};
 
 }

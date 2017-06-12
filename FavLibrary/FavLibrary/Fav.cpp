@@ -44,22 +44,14 @@ namespace FavLibrary
 
 	bool Fav::read(const char* file_path) {
 
-		fav_reader = new FavReader(this);
-		fav_reader->read(file_path);
-		delete fav_reader;
-        fav_reader = NULL;
-
-		return 1;
+		FavReader fav_reader(this);
+		return fav_reader.read(file_path);
 	}
 
 	bool Fav::write(const char* file_path, CompressionMode compression_mode_) {
 
-		fav_writer = new FavWriter(this);
-		fav_writer->write(file_path, compression_mode_);
-		delete fav_writer;
-        fav_writer = NULL;
-        
-		return 1;
+		FavWriter fav_writer(this);
+		return fav_writer.write(file_path, compression_mode_);
 	}
 
 	std::vector<Voxel> Fav::getVoxels()

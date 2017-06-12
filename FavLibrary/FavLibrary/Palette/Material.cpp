@@ -50,9 +50,6 @@ namespace FavLibrary
 	Material::Material(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
 	
     Material::~Material() {
-//		for (std::list<MaterialSpec*>::iterator it = materials.begin(); it != materials.end(); ++it) {
-//			delete *it;
-//		}
         materials.clear();
     };
 
@@ -63,14 +60,14 @@ namespace FavLibrary
 
 	void Material::addMaterialName(std::string material_name_) {
         MaterialName* material_name = new MaterialName(material_name_);
-        materials.push_back(material_name);
+        materials.push_back(std::shared_ptr<MaterialSpec>(material_name));
         
     };
     
 	void Material::addMaterialName(MaterialName material_name_) {
         
         MaterialName* tmp = new MaterialName(material_name_.getMaterialName());
-        materials.push_back(tmp);
+        materials.push_back(std::shared_ptr<MaterialSpec>(tmp));
         
     };
 
@@ -78,22 +75,22 @@ namespace FavLibrary
 		
         ProductInfo* pinfo = new ProductInfo(manufacturer_, product_name_, url_);
         
-        materials.push_back(pinfo);
+        materials.push_back(std::shared_ptr<MaterialSpec>(pinfo));
         
 	};
 	void Material::addProductInfo(ProductInfo product_info_) {
         ProductInfo* pinfo = new ProductInfo(product_info_.getManufacturer(), product_info_.getProductName(), product_info_.getUrl());
-        materials.push_back(pinfo);
+        materials.push_back(std::shared_ptr<MaterialSpec>(pinfo));
     };
 
 	void Material::addIsoStandard(std::string iso_id_, std::string iso_name_) {
         IsoStandard* iso_standard = new IsoStandard(iso_id_, iso_name_);
-		materials.push_back(iso_standard);
+		materials.push_back(std::shared_ptr<MaterialSpec>(iso_standard));
 	};
 	void Material::addIsoStandard(IsoStandard iso_standard_) {
         
         IsoStandard* iso_standard = new IsoStandard(iso_standard_.getIsoId(), iso_standard_.getIsoName());
-        materials.push_back(iso_standard);
+        materials.push_back(std::shared_ptr<MaterialSpec>(iso_standard));
     
     };
 

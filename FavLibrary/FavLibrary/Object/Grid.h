@@ -66,8 +66,6 @@ namespace FavLibrary
 		Unit unit;
 		Dimension dimension;
 		Origin origin;
-
-		Grid* pGrid;
 	};
 
 }

@@ -6,7 +6,6 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <string>
@@ -14,6 +13,10 @@
 #include <iostream>
 #include <xercesc/dom/DOM.hpp>
 #include "./Object/Object.h"
+
+#include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/util/Base64.hpp>
+#include <xercesc/framework/LocalFileFormatTarget.hpp>
 
 //using namespace xercesc;
 

@@ -109,6 +109,8 @@ namespace FavLibrary
 
 	void Structure::initColorMap() {
         
+        number_of_voxels = grid->getDimensionX() * grid->getDimensionY() * grid->getDimensionZ();
+        
         color_map.clear();
         color_map_16bit.clear();
         alpha_map.clear();
