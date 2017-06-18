@@ -6,8 +6,10 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 
-#include "FavWriter.h"
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "Fav.h"
+#include "FavWriter.h"
 
 
 namespace FavLibrary
@@ -134,7 +136,7 @@ namespace FavLibrary
 				
                 // write product_info
                 if (material->materialType == MaterialType::product_info) {
-					ProductInfo* product_info = dynamic_cast<ProductInfo*>(material);
+					ProductInfo* product_info = dynamic_cast<ProductInfo*>(material.get());
 					xercesc::DOMElement* pinfo_elem = createElement("product_info");
                     
                     if(product_info->getManufacturer() != "")
@@ -147,11 +149,10 @@ namespace FavLibrary
                         appendCDATA(pinfo_elem, "url", product_info->getUrl());
                     
 					mat_elem->appendChild(pinfo_elem);
-                    delete product_info;
 				}
                 // write iso_standard
 				else if (material->materialType == MaterialType::iso_standard) {
-                    IsoStandard* iso_standard = dynamic_cast<IsoStandard*>(material);
+                    IsoStandard* iso_standard = dynamic_cast<IsoStandard*>(material.get());
 					xercesc::DOMElement* iso_elem = createElement("iso_standard");
 					
                     if(iso_standard->getIsoId() != "")
@@ -161,16 +162,13 @@ namespace FavLibrary
                         appendCDATA(iso_elem, "iso_name", iso_standard->getIsoName());
 					
                     mat_elem->appendChild(iso_elem);
-                    delete iso_standard;
 				}
                 // write material_name
 				else if (material->materialType == MaterialType::material_name) {
-                    MaterialName* material_name = dynamic_cast<MaterialName*>(material);
+                    MaterialName* material_name = dynamic_cast<MaterialName*>(material.get());
                     
                     if(material_name->getMaterialName() != "")
                         appendCDATA(mat_elem, "material_name", material_name->getMaterialName());
-
-                    delete material_name;
 				}
 			}
 			palette_elem->appendChild(mat_elem);
@@ -274,7 +272,7 @@ namespace FavLibrary
 					}
                     
 					else if (p_structure->getBitPerVoxel() == BitPerVoxel::Bit8) {
-						char buff[2];
+						char buff[3];
 						sprintf(buff, "%02x", data);
 						layer_data.push_back(buff[0]);
 						layer_data.push_back(buff[1]);
@@ -282,7 +280,7 @@ namespace FavLibrary
 					}
                     
 					else if (p_structure->getBitPerVoxel() == BitPerVoxel::Bit16) {
-						char buff[4];
+						char buff[5];
 						sprintf(buff, "%04x", data);
 						layer_data.push_back(buff[0]);
 						layer_data.push_back(buff[1]);
@@ -306,24 +304,28 @@ namespace FavLibrary
                 case CompressionMode::base64:
                 {
                     int size = p_structure->getDimensionX() * p_structure->getDimensionY();
-                    unsigned char* data = new unsigned char[size];
-                    for(int i=0; i<size; ++i) data[i] = 0;
+					if(size != 0){
+						unsigned char* data = new unsigned char[size];
+						for(int i=0; i<size; ++i) data[i] = 0;
 
-                    BytesFromHexString(data, layer_data.c_str());
+						BytesFromHexString(data, layer_data.c_str());
                     
-                    XMLSize_t len;
-                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+						XMLSize_t len;
+						XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
                     
-                    // TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
-                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
-                    deleteNewLine(input_str);
-                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
-                    appendCDATA(vmap_elem, "layer", text_encoded);
-                    xercesc::XMLString::release(&text_encoded);
-                    xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+						// TODO: check later. 何故かnew lineが入ってしまうのでここで除去している。
+						std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+						deleteNewLine(input_str);
+						XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+						appendCDATA(vmap_elem, "layer", text_encoded);
+						xercesc::XMLString::release(&text_encoded);
+						xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
                     
-                    delete[] data;
-                    data = nullptr;
+						delete[] data;
+						data = nullptr;
+					}else{
+						appendCDATA(vmap_elem, "layer", "");
+					}
                     
                     break;
                 }
@@ -343,7 +345,7 @@ namespace FavLibrary
         
         //FIXME: Without following useless codes(5 lines), push_back() is not functioned here....
         int data = 0;
-        char buff[2];
+        char buff[3];
         sprintf(buff, "%02x", data);
         layer_data.push_back(buff[0]);
         layer_data.push_back(buff[1]);
@@ -360,7 +362,7 @@ namespace FavLibrary
                     
                     if(voxel_state > 0){
                     
-                        char buff[2];
+                        char buff[3];
                         sprintf(buff, "%02x", p_structure->getColorRed(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
@@ -388,25 +390,29 @@ namespace FavLibrary
                 case CompressionMode::base64:
 
                     int size = count_colors*3;
-                    unsigned char* data = new unsigned char[size];
-                    for(int i=0; i<size; ++i) data[i] = 0;
+					if(size != 0){
+						unsigned char* data = new unsigned char[size];
+						for(int i=0; i<size; ++i) data[i] = 0;
                     
-                    BytesFromHexString(data, layer_data.c_str());
+						BytesFromHexString(data, layer_data.c_str());
                     
-                    XMLSize_t len;
-                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+						XMLSize_t len;
+						XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
                     
-                    // FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
-                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
-                    deleteNewLine(input_str);
-                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
-                    appendCDATA(cmap_elem, "layer", text_encoded);
+						// FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
+						std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+						deleteNewLine(input_str);
+						XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+						appendCDATA(cmap_elem, "layer", text_encoded);
                     
-                    xercesc::XMLString::release(&text_encoded);
-                    xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+						xercesc::XMLString::release(&text_encoded);
+						xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
 
-                    delete[] data;
-                    data = nullptr;
+						delete[] data;
+						data = nullptr;
+					}else{
+						appendCDATA(cmap_elem, "layer", "");
+					}
                     
                     break;
             }
@@ -428,7 +434,7 @@ namespace FavLibrary
                     
                     if(voxel_state != 0){
                         
-                        char buff[2];
+                        char buff[3];
                         sprintf(buff, "%02x", p_structure->getColorRed(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
@@ -460,25 +466,29 @@ namespace FavLibrary
                 case CompressionMode::base64:
                     
                     int size = count_colors*4;
-                    unsigned char* data = new unsigned char[size];
-                    for(int i=0; i<size; ++i) data[i] = 0;
+					if(size != 0){
+						unsigned char* data = new unsigned char[size];
+						for(int i=0; i<size; ++i) data[i] = 0;
                     
-                    BytesFromHexString(data, layer_data.c_str());
+						BytesFromHexString(data, layer_data.c_str());
                     
-                    XMLSize_t len;
-                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+						XMLSize_t len;
+						XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
                     
-                    // FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
-                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
-                    deleteNewLine(input_str);
-                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
-                    appendCDATA(cmap_elem, "layer", text_encoded);
+						// FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
+						std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+						deleteNewLine(input_str);
+						XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+						appendCDATA(cmap_elem, "layer", text_encoded);
                     
-                    xercesc::XMLString::release(&text_encoded);
-                    xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+						xercesc::XMLString::release(&text_encoded);
+						xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
 
-                    delete[] data;
-                    data = nullptr;
+						delete[] data;
+						data = nullptr;
+					}else{
+						appendCDATA(cmap_elem, "layer", "");
+					}
                     
                     break;
             }
@@ -500,7 +510,7 @@ namespace FavLibrary
                     
                     if(voxel_state != 0){
                         
-                        char buff[2];
+                        char buff[3];
                         sprintf(buff, "%02x", p_structure->getColorCyan(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
@@ -532,25 +542,29 @@ namespace FavLibrary
                 case CompressionMode::base64:
                     
                     int size = count_colors*4;
-                    unsigned char* data = new unsigned char[size];
-                    for(int i=0; i<size; ++i) data[i] = 0;
+					if(size != 0){
+						unsigned char* data = new unsigned char[size];
+						for(int i=0; i<size; ++i) data[i] = 0;
                     
-                    BytesFromHexString(data, layer_data.c_str());
+						BytesFromHexString(data, layer_data.c_str());
                     
-                    XMLSize_t len;
-                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+						XMLSize_t len;
+						XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
                     
-                    // FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
-                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
-                    deleteNewLine(input_str);
-                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
-                    appendCDATA(cmap_elem, "layer", text_encoded);
+						// FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
+						std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+						deleteNewLine(input_str);
+						XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+						appendCDATA(cmap_elem, "layer", text_encoded);
                     
-                    xercesc::XMLString::release(&text_encoded);
-                    xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+						xercesc::XMLString::release(&text_encoded);
+						xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
 
-                    delete[] data;
-                    data = nullptr;
+						delete[] data;
+						data = nullptr;
+					}else{
+						appendCDATA(cmap_elem, "layer", "");
+					}
                     
                     break;
             }
@@ -572,7 +586,7 @@ namespace FavLibrary
                     
                     if(voxel_state != 0){
                         
-                        char buff[2];
+                        char buff[3];
                         sprintf(buff, "%02x", p_structure->getColorGrayScale(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
@@ -592,25 +606,29 @@ namespace FavLibrary
                 case CompressionMode::base64:
                     
                     int size = count_colors;
-                    unsigned char* data = new unsigned char[size];
-                    for(int i=0; i<size; ++i) data[i] = 0;
+					if(size != 0){
+						unsigned char* data = new unsigned char[size];
+						for(int i=0; i<size; ++i) data[i] = 0;
 
-                    BytesFromHexString(data, layer_data.c_str());
+						BytesFromHexString(data, layer_data.c_str());
                     
-                    XMLSize_t len;
-                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+						XMLSize_t len;
+						XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
                     
-                    // FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
-                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
-                    deleteNewLine(input_str);
-                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
-                    appendCDATA(cmap_elem, "layer", text_encoded);
+						// FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
+						std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+						deleteNewLine(input_str);
+						XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+						appendCDATA(cmap_elem, "layer", text_encoded);
                     
-                    xercesc::XMLString::release(&text_encoded);
-                    xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+						xercesc::XMLString::release(&text_encoded);
+						xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
 
-                    delete[] data;
-                    data = nullptr;
+						delete[] data;
+						data = nullptr;
+					}else{
+						appendCDATA(cmap_elem, "layer", "");
+					}
                     
                     break;
             }
@@ -632,7 +650,7 @@ namespace FavLibrary
                     
                     if(voxel_state != 0){
                         
-                        char buff[4];
+                        char buff[5];
                         sprintf(buff, "%04x", p_structure->getColorGrayScale16(x, y, z));
                         layer_data.push_back( buff[0] );
                         layer_data.push_back( buff[1] );
@@ -654,25 +672,29 @@ namespace FavLibrary
                 case CompressionMode::base64:
                     
                     int size = count_colors;
-                    unsigned char* data = new unsigned char[size];
-                    for(int i=0; i<size; ++i) data[i] = 0;
+					if(size != 0){
+						unsigned char* data = new unsigned char[size];
+						for(int i=0; i<size; ++i) data[i] = 0;
 
-                    BytesFromHexString(data, layer_data.c_str());
+						BytesFromHexString(data, layer_data.c_str());
                     
-                    XMLSize_t len;
-                    XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
+						XMLSize_t len;
+						XMLByte* data_encoded = xercesc::Base64::encode(reinterpret_cast<const XMLByte*>(data), size, &len);
                     
-                    // FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
-                    std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
-                    deleteNewLine(input_str);
-                    XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
-                    appendCDATA(cmap_elem, "layer", text_encoded);
+						// FIXME: check later. 何故かnew lineが入ってしまうのでここで除去している。
+						std::string input_str = std::string(reinterpret_cast<char*>(data_encoded));
+						deleteNewLine(input_str);
+						XMLCh* text_encoded = xercesc::XMLString::transcode(input_str.c_str());
+						appendCDATA(cmap_elem, "layer", text_encoded);
                     
-                    xercesc::XMLString::release(&text_encoded);
-                    xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
+						xercesc::XMLString::release(&text_encoded);
+						xercesc::XMLPlatformUtils::fgMemoryManager->deallocate(data_encoded);
 
-                    delete[] data;
-                    data = nullptr;
+						delete[] data;
+						data = nullptr;
+					}else{
+						appendCDATA(cmap_elem, "layer", "");
+					}
                     
                     break;
             }

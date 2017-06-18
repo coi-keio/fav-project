@@ -6,7 +6,6 @@
 //  Copyright (c) 2016年 Atsushi Masumori. All rights reserved.
 //
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <string>

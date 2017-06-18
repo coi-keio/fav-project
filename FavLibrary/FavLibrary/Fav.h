@@ -16,8 +16,6 @@
 
 #include "./Palette/Palette.h"
 #include "./Object/Object.h"
-#include "FavReader.h"
-#include "FavWriter.h"
 #include "Voxel.h"
 #include "Metadata.h"
 
@@ -51,11 +49,6 @@ namespace FavLibrary
 		std::string version;
 		std::map<unsigned int, Voxel> voxels;
 		std::map<unsigned int, Object> objects;
-
-		FavReader* fav_reader = NULL;
-		FavWriter* fav_writer = NULL;
-
-		Fav* pFav;
 	};
 
 }

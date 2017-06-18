@@ -7,8 +7,8 @@
 //
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "FavReader.h"
 #include "Fav.h"
+#include "FavReader.h"
 
 
 namespace FavLibrary
@@ -356,6 +356,7 @@ namespace FavLibrary
                 for (int d = 0; d < size; d++) {
                     data_in[d] = (unsigned int)data_decoded[d];
                 }
+				delete data_decoded;
             }
             
             int dim_x = current_object->grid.getDimensionX();
@@ -432,6 +433,7 @@ namespace FavLibrary
                     layer_b[count] = (unsigned int)data_decoded[d+2];
                     count++;
                 }
+				delete data_decoded;
             }
             
             int dim_x = current_object->grid.getDimensionX();
@@ -526,6 +528,7 @@ namespace FavLibrary
                     layer_a[count] = (unsigned int)data_decoded[d+3];
                     count++;
                 }
+				delete data_decoded;
             }
             
             int dim_x = current_object->grid.getDimensionX();
@@ -626,6 +629,7 @@ namespace FavLibrary
                     layer_k[count] = (unsigned int)data_decoded[d+3];
                     count++;
                 }
+				delete data_decoded;
             }
             
             int dim_x = current_object->grid.getDimensionX();
@@ -702,6 +706,7 @@ namespace FavLibrary
                 for (int d = 0; d < size; ++d) {
                     layer_g[d] = (unsigned int)data_decoded[d];
                 }
+				delete data_decoded;
             }
             
             int dim_x = current_object->grid.getDimensionX();
@@ -769,6 +774,7 @@ namespace FavLibrary
                 for (int d = 0; d < size; ++d) {
                     layer_g[d] = (unsigned int)data_decoded[d];
                 }
+				delete data_decoded;
             }
             
             int dim_x = current_object->grid.getDimensionX();

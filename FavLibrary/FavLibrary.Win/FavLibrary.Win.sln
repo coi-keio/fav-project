@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FavLibrary.Win", "FavLibrary.Win\FavLibrary.Win.vcxproj", "{D55F9C52-8D98-4911-9448-DCCF7563AE4B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FavLibrary.TestApp", "FavLibrary.TestApp\FavLibrary.TestApp.vcxproj", "{AE0E6AFC-141A-4507-AF6C-70200BE7775E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D55F9C52-8D98-4911-9448-DCCF7563AE4B} = {D55F9C52-8D98-4911-9448-DCCF7563AE4B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,6 +7,7 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <memory>
 #include "../Metadata.h"
 #include "../Primitive/FavPrimitive.h"
 
@@ -83,7 +84,7 @@ namespace FavLibrary
 		Material(unsigned int id_, std::string name_);
 		~Material();
 
-		std::list<MaterialSpec*> materials;
+		std::list<std::shared_ptr<MaterialSpec>> materials;
 
 		bool hasMaterials();
 

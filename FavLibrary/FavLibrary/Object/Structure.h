@@ -54,8 +54,8 @@ namespace FavLibrary
 		~Structure();
         
         void setGridPointer(Grid* grid_){grid = grid_;};
-		void setCompression(Compression compression_);
-		Compression getCompression();
+		//void setCompression(Compression compression_);
+		//Compression getCompression();
 
 		void initVoxelMap();
 		void setBitPerVoxel(BitPerVoxel bit_per_voxel_);
@@ -162,7 +162,7 @@ namespace FavLibrary
 
 		BitPerVoxel bit_per_voxel;
 		ColorMode color_mode;
-		Compression compression;
+		//Compression compression;
 		int number_of_voxels;
         bool has_color;
 
