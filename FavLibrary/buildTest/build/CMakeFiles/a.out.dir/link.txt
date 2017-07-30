@@ -1,1 +1,0 @@
-/usr/bin/g++   -std=c++1y -g -O3 -Wall -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/a.out.dir/testDLL.cpp.o  -o a.out  -L/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildLib/build -Wl,-rpath,/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildLib/build  -lfav 

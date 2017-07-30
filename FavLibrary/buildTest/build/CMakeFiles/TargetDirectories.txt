@@ -1,3 +1,0 @@
-/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildTest/build/CMakeFiles/rebuild_cache.dir
-/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildTest/build/CMakeFiles/edit_cache.dir
-/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildTest/build/CMakeFiles/a.out.dir

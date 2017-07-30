@@ -13,7 +13,6 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -g -o3 -Wall")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
 add_library(fav SHARED
-	../FavLibrary/main.cpp
 	../FavLibrary/Fav.cpp
 	../FavLibrary/Primitive/Color.cpp
 	../FavLibrary/Primitive/FavPrimitive.cpp
