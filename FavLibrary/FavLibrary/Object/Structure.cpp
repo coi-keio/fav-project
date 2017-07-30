@@ -420,8 +420,8 @@ namespace FavLibrary
     
     int Structure::getColorRed(int x_, int y_, int z_){
         if(color_mode != ColorMode::RGB && color_mode != ColorMode::RGBA){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)*3];
         }
@@ -429,8 +429,8 @@ namespace FavLibrary
     
     int Structure::getColorGreen(int x_, int y_, int z_){
         if(color_mode != ColorMode::RGB && color_mode != ColorMode::RGBA){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)*3+1];
         }
@@ -438,8 +438,8 @@ namespace FavLibrary
     
     int Structure::getColorBlue(int x_, int y_, int z_){
         if(color_mode != ColorMode::RGB && color_mode != ColorMode::RGBA){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)*3+2];
         }
@@ -447,8 +447,8 @@ namespace FavLibrary
     
     int Structure::getColorAlpha(int x_, int y_, int z_){
         if(color_mode != ColorMode::RGBA){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return alpha_map[getIndex(x_, y_, z_)];
         }
@@ -456,8 +456,8 @@ namespace FavLibrary
     
     int Structure::getColorCyan(int x_, int y_, int z_){
         if(color_mode != ColorMode::CMYK){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)*4];
         }
@@ -465,8 +465,8 @@ namespace FavLibrary
     
     int Structure::getColorMagenta(int x_, int y_, int z_){
         if(color_mode != ColorMode::CMYK){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)*4+1];
         }
@@ -474,8 +474,8 @@ namespace FavLibrary
     
     int Structure::getColorYellow(int x_, int y_, int z_){
         if(color_mode != ColorMode::CMYK){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)*4+2];
         }
@@ -483,8 +483,8 @@ namespace FavLibrary
     
     int Structure::getColorKeyPlate(int x_, int y_, int z_){
         if(color_mode != ColorMode::CMYK){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)*4+3];
         }
@@ -492,8 +492,8 @@ namespace FavLibrary
     
     int Structure::getColorGrayScale(int x_, int y_, int z_){
         if(color_mode != ColorMode::Grayscale){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map[getIndex(x_, y_, z_)];
         }
@@ -501,8 +501,8 @@ namespace FavLibrary
     
     int Structure::getColorGrayScale16(int x_, int y_, int z_){
         if(color_mode != ColorMode::Grayscale16){
-            //TODO: エラー処理
-            return NULL;
+            //TODO: error handling
+            return -1;
         }else{
             return color_map_16bit[getIndex(x_, y_, z_)];
         }

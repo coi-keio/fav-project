@@ -7,7 +7,6 @@ namespace FavLibrary
 {
 	enum class IDll ColorMode
 	{
-		None,
 		Grayscale,
 		Grayscale16,
 		RGB,

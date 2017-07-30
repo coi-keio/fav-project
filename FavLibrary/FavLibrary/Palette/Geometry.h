@@ -25,8 +25,8 @@ namespace FavLibrary
 		Scale(double x, double y, double z);
 		virtual ~Scale();
 
-	private:
-		Scale* pScale;
+//	private:
+//		Scale* pScale;
 	};
 
 
@@ -67,7 +67,7 @@ namespace FavLibrary
         bool has_shape = false;
         bool has_scale = false;
         
-		Geometry* pGeometry;
+//		Geometry* pGeometry;
 	};
 
 

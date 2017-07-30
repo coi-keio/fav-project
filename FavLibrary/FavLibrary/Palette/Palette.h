@@ -43,6 +43,6 @@ namespace FavLibrary
 		unsigned int number_of_materials;
 		unsigned int number_of_geometries;
 
-		Palette* pPalette;
+//		Palette* pPalette;
 	};
 }

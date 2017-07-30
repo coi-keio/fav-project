@@ -95,7 +95,7 @@ namespace FavLibrary
 		ColorRGBA display;
 		std::string application_note;
 
-		Voxel* pVoxel;
+//		Voxel* pVoxel;
 	};
 
 

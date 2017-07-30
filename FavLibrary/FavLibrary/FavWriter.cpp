@@ -93,7 +93,13 @@ namespace FavLibrary
                 setAttribute(geometry_elem, "name", current_geometry.getName());
             
             if(current_geometry.hasShape()){
+                
                 switch(current_geometry.getShape()){
+                        
+                    case GeometryShape::none:
+                        appendText(geometry_elem, "shape", "none");
+                        break;
+                        
                     case GeometryShape::cube:
                         appendText(geometry_elem, "shape", "cube");
                         break;
@@ -381,6 +387,12 @@ namespace FavLibrary
             }
             
             switch(compression_mode){
+                    
+                    
+                case CompressionMode::zlib:
+                    //TODO: zlib complession have not been implemented yet.
+                    break;
+                    
                 case CompressionMode::none:
                     
                     appendCDATA(cmap_elem, "layer", layer_data);
@@ -415,6 +427,7 @@ namespace FavLibrary
 					}
                     
                     break;
+
             }
             
         }
@@ -457,6 +470,11 @@ namespace FavLibrary
             }
             
             switch(compression_mode){
+                    
+                case CompressionMode::zlib:
+                    //TODO: zlib complession have not been implemented yet.
+                    break;
+                    
                 case CompressionMode::none:
                     
                     appendCDATA(cmap_elem, "layer", layer_data);
@@ -533,6 +551,11 @@ namespace FavLibrary
             }
             
             switch(compression_mode){
+                    
+                case CompressionMode::zlib:
+                    //TODO: zlib complession have not been implemented yet.
+                    break;
+                    
                 case CompressionMode::none:
                     
                     appendCDATA(cmap_elem, "layer", layer_data);
@@ -597,6 +620,11 @@ namespace FavLibrary
             }
             
             switch(compression_mode){
+                    
+                case CompressionMode::zlib:
+                    //TODO: zlib complession have not been implemented yet.
+                    break;
+                    
                 case CompressionMode::none:
                     
                     appendCDATA(cmap_elem, "layer", layer_data);
@@ -663,6 +691,11 @@ namespace FavLibrary
             }
             
             switch(compression_mode){
+                    
+                case CompressionMode::zlib:
+                    //TODO: zlib complession have not been implemented yet.
+                    break;
+                    
                 case CompressionMode::none:
                     
                     appendCDATA(cmap_elem, "layer", layer_data);
