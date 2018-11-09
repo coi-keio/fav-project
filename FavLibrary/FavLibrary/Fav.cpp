@@ -16,43 +16,45 @@ namespace FavLibrary
 	}
 
 	Fav::~Fav() {
-		//    delete metadata;
+    //    delete metadata;
         
-//        if(palette != NULL){
-//            delete palette;
-//            palette = NULL;
-//        }
+    //        if(palette != NULL){
+    //            delete palette;
+    //            palette = NULL;
+    //        }
         
-//        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
-//            if(it->second != NULL){
-//                delete it->second;
-//                it->second = NULL;
-//            }
-//            it++;
-//        }
+    //        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
+    //            if(it->second != NULL){
+    //                delete it->second;
+    //                it->second = NULL;
+    //            }
+    //            it++;
+    //        }
         
-        objects.clear();
-        voxels.clear();
-//        for(std::map<unsigned int, Voxel*>::iterator it = voxels.begin(); it != voxels.end();){
-//            if(it->second != NULL){
-//                delete it->second;
-//                it->second = NULL;
-//            }
-//            it++;
-//        }
+    objects.clear();
+    voxels.clear();
+
+    //        for(std::map<unsigned int, Voxel*>::iterator it = voxels.begin(); it != voxels.end();){
+    //            if(it->second != NULL){
+    //                delete it->second;
+    //                it->second = NULL;
+    //            }
+    //            it++;
+    //        }
 	}
 
-	bool Fav::read(const char* file_path) {
 
-		FavReader fav_reader(this);
-		return fav_reader.read(file_path);
-	}
+  bool Fav::read(const char* file_path) 
+  {
+    FavReader fav_reader(this);
+    return fav_reader.read(file_path);
+  }
 
-	bool Fav::write(const char* file_path, CompressionMode compression_mode_) {
-
-		FavWriter fav_writer(this);
-		return fav_writer.write(file_path, compression_mode_);
-	}
+  bool Fav::write(const char* file_path, CompressionMode compression_mode_) 
+  {
+    FavWriter fav_writer(this);
+    return fav_writer.write(file_path, compression_mode_);
+  }
 
 	std::vector<Voxel> Fav::getVoxels()
 	{
@@ -67,7 +69,6 @@ namespace FavLibrary
 		Voxel res = NULL;
 		if (voxels.count(id_) > 0)
 			res = voxels[id_];
-
 		return res;
 	}
 	void Fav::addVoxel(Voxel voxel_) { voxels[voxel_.getId()] = voxel_; };

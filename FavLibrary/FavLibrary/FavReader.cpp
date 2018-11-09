@@ -1,4 +1,4 @@
-//
+﻿//
 //  FavReader.cpp
 //  FavLibrary
 //
@@ -16,7 +16,7 @@ namespace FavLibrary
     
     FavReader::FavReader(Fav* fav_) {
         fav = fav_;
-	};
+	  };
     
     bool FavReader::validation(const char* file_path)
     {
@@ -242,7 +242,7 @@ namespace FavLibrary
 			xercesc::DOMNodeList* matinfo_node = getElements(voxel, "material_info");
 			int number_of_matinfo = int(matinfo_node->getLength());
 			
-            for (int j = 0; j < number_of_matinfo; ++j) {
+      for (int j = 0; j < number_of_matinfo; ++j) {
 				xercesc::DOMElement* matinfo_element = dynamic_cast<xercesc::DOMElement*>(matinfo_node->item(j));
 				int    material_id    = getElementInt   (matinfo_element, "id");
 				double material_ratio = getElementDouble(matinfo_element, "ratio");

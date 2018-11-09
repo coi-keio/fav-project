@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "../Metadata.h"
 #include "FavPrimitive.h"
