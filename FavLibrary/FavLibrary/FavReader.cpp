@@ -18,6 +18,7 @@ namespace FavLibrary
         fav = fav_;
 	};
     
+
     bool FavReader::validation(const char* file_path)
     {
         
@@ -955,6 +956,15 @@ namespace FavLibrary
         return ret;
     }
     
+
+
+    //TODO Fav 1.1からmaterialのIDは0からふるので、以下の書き直しをする
+    //古) "<xsd:attribute name=\"id\"   type=\"xsd:positiveInteger\" use=\"required\"/>"
+    //新) "<xsd:attribute name=\"id\"   type=\"xsd:nonNegativeInteger\" use=\"required\"/>"
+
+    //TODO 上記の修正は, VOXEL/OBJECTにも行う？
+    //TODO VOXELにreference プロパティを持たせる
+
     void FavReader::setXsdSchemaAsString(){
         
         xsd_string =

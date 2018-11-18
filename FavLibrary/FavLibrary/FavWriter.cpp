@@ -128,7 +128,8 @@ namespace FavLibrary
 		// write material
 		int number_of_materials = fav->palette.getNumberOfMaterials();
 		for (int i = 0; i < number_of_materials; ++i) {
-
+            
+            //TODO FAV 1.1では matrial idは0からふるので以下の文は id = iにする  
             int id = i + 1;
 			Material current_material = fav->palette.getMaterialById(id);
 			xercesc::DOMElement *mat_elem = createElement("material");

@@ -20,7 +20,7 @@
 
 namespace FavLibrary
 {
-	enum class IDll CompressionMode
+    enum class IDll CompressionMode
     {
         none,
         base64,

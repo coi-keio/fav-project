@@ -11,12 +11,13 @@ using namespace FavLibrary;
 
 int main()
 {
+    printf("1111111111111111111111");
 	Fav fav;
-	fav.read("C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\FAVSample2.fav");
+	fav.read("C:\\VCProjects\\fav-project\\Sample_FAVs\\disk.fav");
 
 	system("pause");
 
-	fav.write("C:\\Users\\fx28613\\Desktop\\Sources\\fav-project\\FavLibrary\\FavLibrary.Win\\x64\\Release\\FAVSample3.fav", FavLibrary::CompressionMode::base64);
+	fav.write("C:\\VCProjects\\fav-project\\Sample_FAVs\\test.fav", FavLibrary::CompressionMode::base64);
 
 	system("pause");
 
