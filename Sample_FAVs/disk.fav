@@ -58,8 +58,12 @@
       <id>1</id>
     </geometry_info>
     <material_info>
+      <id>0</id>
+      <ratio>0.2</ratio>
+    </material_info>
+    <material_info>
       <id>1</id>
-      <ratio>1</ratio>
+      <ratio>0.5</ratio>
     </material_info>
   </voxel>
   <voxel id="2" name="hard_cube">

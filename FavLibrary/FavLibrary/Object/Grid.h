@@ -42,12 +42,13 @@ namespace FavLibrary
         double getUnitY();
         double getUnitZ();
 
+        //TODO dimension‚Í double‚Å‚È‚­int‚Å‚Â‚×‚«
 		Dimension getDimension();
-		void setDimension(Point3D p);
-		void setDimension(double x, double y, double z);
-		void setDimensionX(double x);
-		void setDimensionY(double y);
-        void setDimensionZ(double z);
+		void   setDimension (Point3D p);
+		void   setDimension (double x, double y, double z);
+		void   setDimensionX(double x);
+		void   setDimensionY(double y);
+        void   setDimensionZ(double z);
         double getDimensionX();
         double getDimensionY();
 		double getDimensionZ();
