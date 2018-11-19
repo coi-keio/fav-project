@@ -24,10 +24,10 @@ namespace FavLibrary
 {
     class IDll Fav;
     
-    class IDll FavWriter {
+    class IDll FavWriter 
+    {
         
-    public:
-        
+    public:    
         FavWriter(Fav* fav_);
         bool write(const char* file_path);
         bool write(const char* file_path, CompressionMode compression_mode_);

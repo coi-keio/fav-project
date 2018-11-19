@@ -40,44 +40,43 @@ namespace FavLibrary
 {
     class IDll Fav;
 
-	class IDll FavReader
-	{
+    class IDll FavReader
+    {
         
-	public:
-		FavReader(Fav* fav_);
-		bool read(const char* file_path);
+    public:
+        FavReader(Fav* fav_);
+        bool read(const char* file_path);
 
-	private:
-        
+    private:
         int          getNodeValueInt   (xercesc::DOMNode* node_);
         double       getNodeValueDouble(xercesc::DOMNode* node_);
-		std::string  getNodeValueString(xercesc::DOMNode* node_);
-		int          getElementInt     (xercesc::DOMElement* elem, const char *tagName);
-		double       getElementDouble  (xercesc::DOMElement* elem, const char *tagName);
-        std::string  getElementString  (xercesc::DOMElement* elem);
-		std::string  getElementString  (xercesc::DOMElement* elem, const char *tagName);
-        std::string  getAttribute      (xercesc::DOMElement* elem, const char *tagName);
-        xercesc::DOMNodeList* getElements (xercesc::DOMElement* elem, const char *tagName);
+        std::string  getNodeValueString(xercesc::DOMNode* node_);
+        int          getElementInt       (xercesc::DOMElement* elem, const char *tagName);
+        double       getElementDouble    (xercesc::DOMElement* elem, const char *tagName);
+        std::string  getElementString    (xercesc::DOMElement* elem);
+        std::string  getElementString    (xercesc::DOMElement* elem, const char *tagName);
+        std::string  getAttribute        (xercesc::DOMElement* elem, const char *tagName);
+        xercesc::DOMNodeList* getElements(xercesc::DOMElement* elem, const char *tagName);
 
         void setXsdSchemaAsString();
         bool validation(const char* file_path);
-		void readMetaData(xercesc::DOMNodeList* metadata_node_);
-		void readPalette (xercesc::DOMNodeList* palette_node_);
-		void readVoxel   (xercesc::DOMNodeList* voxel_node_);
-		void readObject  (xercesc::DOMNodeList* object_node_);
-		void readGrid    (xercesc::DOMElement* parent_elem, Object* pObject);
-        void readColorMap(xercesc::DOMElement* parent_elem, Object* pObject, Structure* pStructure);
-        void readVoxelMap(xercesc::DOMElement* parent_elem, Object* pObject, Structure* pStructure);
-        void readColorMapRGB (xercesc::DOMElement* cmap_elem, Object* current_object, Structure* structure);
-        void readColorMapRGBA(xercesc::DOMElement* cmap_elem, Object* current_object, Structure* structure);
-        void readColorMapCMYK(xercesc::DOMElement* cmap_elem, Object* current_object, Structure* structure);
+        void readMetaData(xercesc::DOMNodeList* metadata_node_);
+        void readPalette (xercesc::DOMNodeList* palette_node_);
+        void readVoxel   (xercesc::DOMNodeList* voxel_node_);
+        void readObject  (xercesc::DOMNodeList* object_node_);
+        void readGrid        (xercesc::DOMElement* parent_elem, Object* pObject);
+        void readColorMap    (xercesc::DOMElement* parent_elem, Object* pObject       , Structure* pStructure);
+        void readVoxelMap    (xercesc::DOMElement* parent_elem, Object* pObject       , Structure* pStructure);
+        void readColorMapRGB (xercesc::DOMElement* cmap_elem  , Object* current_object, Structure* structure);
+        void readColorMapRGBA(xercesc::DOMElement* cmap_elem  , Object* current_object, Structure* structure);
+        void readColorMapCMYK(xercesc::DOMElement* cmap_elem  , Object* current_object, Structure* structure);
         void readColorMapGrayscale  (xercesc::DOMElement* cmap_elem, Object* current_object, Structure* structure);
         void readColorMapGrayscale16(xercesc::DOMElement* cmap_elem, Object* current_object, Structure* structure);
 
         std::string xsd_path;
         std::string xsd_string;
-		Fav* fav;
-	};
+        Fav* fav;
+    };
     
     class ValidateErrorHandler : public xercesc::ErrorHandler
     {
@@ -89,12 +88,12 @@ namespace FavLibrary
         
         void error(const xercesc::SAXParseException& ex)
         {
-            reportParseException(ex);
+           reportParseException(ex);
         }
         
         void fatalError(const xercesc::SAXParseException& ex)
         {
-            reportParseException(ex);
+           reportParseException(ex);
         }
         
         void resetErrors()

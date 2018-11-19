@@ -18,6 +18,7 @@ namespace FavLibrary
         fav = fav_;
 	};
     
+
     bool FavReader::validation(const char* file_path)
     {
         
@@ -239,16 +240,19 @@ namespace FavLibrary
 			current_voxel.setGeometryInfo(geometry_id);
 
 			//load material_info
-			xercesc::DOMNodeList* matinfo_node = getElements(voxel, "material_info");
+			double total_ratio = 0;
+            xercesc::DOMNodeList* matinfo_node = getElements(voxel, "material_info");
 			int number_of_matinfo = int(matinfo_node->getLength());
-			
+           			
             for (int j = 0; j < number_of_matinfo; ++j) {
 				xercesc::DOMElement* matinfo_element = dynamic_cast<xercesc::DOMElement*>(matinfo_node->item(j));
 				int    material_id    = getElementInt   (matinfo_element, "id");
 				double material_ratio = getElementDouble(matinfo_element, "ratio");
 				current_voxel.addMaterialInfo(material_id, material_ratio);
+                total_ratio += material_ratio;
 			}
             
+            if( total_ratio != 1.0 ) printf("!!!WARNING!!! : the total ration of the voxel [id:%s, name:%s] is not 1.0!\n", id.c_str(), name.c_str());
 			fav->addVoxel(current_voxel);
 		}
 	}
@@ -955,6 +959,12 @@ namespace FavLibrary
         return ret;
     }
     
+
+
+    //TODO Fav 1.1からmaterial_info のmaterial id = 0 を許可するので以下の書き直しを行った
+    //古)"<xsd:element name=\"id\"    type=\"xsd:positiveInteger\" minOccurs=\"1\" maxOccurs=\"1\"/>"
+    //新)"<xsd:element name=\"id\"    type=\"xsd:nonNegativeInteger\" minOccurs=\"1\" maxOccurs=\"1\"/>"
+
     void FavReader::setXsdSchemaAsString(){
         
         xsd_string =
@@ -1071,7 +1081,7 @@ namespace FavLibrary
         "<xsd:element name=\"material_info\">"
         "<xsd:complexType>"
         "<xsd:all>"
-        "<xsd:element name=\"id\"    type=\"xsd:positiveInteger\" minOccurs=\"1\" maxOccurs=\"1\"/>"
+        "<xsd:element name=\"id\"    type=\"xsd:nonNegativeInteger\" minOccurs=\"1\" maxOccurs=\"1\"/>"
         "<xsd:element name=\"ratio\" type=\"xsd:double\"/>"
         "</xsd:all>"
         "</xsd:complexType>"
