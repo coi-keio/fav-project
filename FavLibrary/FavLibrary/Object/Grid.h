@@ -16,6 +16,7 @@ namespace FavLibrary
 
 	};
 
+    //TODO dimension‚Í‰ğ‘œ“x‚È‚Ì‚Ådouble‚Å‚È‚­int‚Å‚Â‚×‚«
 	class IDll Dimension : public Point3D
 	{
 
@@ -42,23 +43,22 @@ namespace FavLibrary
         double getUnitY();
         double getUnitZ();
 
-        //TODO dimension‚Í double‚Å‚È‚­int‚Å‚Â‚×‚«
 		Dimension getDimension();
 		void   setDimension (Point3D p);
 		void   setDimension (double x, double y, double z);
 		void   setDimensionX(double x);
 		void   setDimensionY(double y);
         void   setDimensionZ(double z);
-        double getDimensionX();
-        double getDimensionY();
-		double getDimensionZ();
+        int    getDimensionX();
+        int    getDimensionY();
+		int    getDimensionZ();
 
 		Origin getOrigin();
-		void setOrigin(Point3D p);
-		void setOrigin(double x, double y, double z);
-		void setOriginX(double x);
-		void setOriginY(double y);
-		void setOriginZ(double z);
+		void   setOrigin(Point3D p);
+		void   setOrigin(double x, double y, double z);
+		void   setOriginX(double x);
+		void   setOriginY(double y);
+		void   setOriginZ(double z);
         double getOriginX();
         double getOriginY();
         double getOriginZ();

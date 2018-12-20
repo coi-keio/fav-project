@@ -168,7 +168,7 @@ namespace FavLibrary
             voxel_map.resize(number_of_voxels);
             
             for(int i=0; i<number_of_voxels; ++i){
-                voxel_map[i] = voxel_map_16bit[i];
+                voxel_map[i] = (unsigned char) voxel_map_16bit[i];
             }
             
             voxel_map_16bit.resize(number_of_voxels);
@@ -211,7 +211,7 @@ namespace FavLibrary
 	};
 
 	void Structure::setVoxel(Point3D p_, int value_) {
-        setVoxel(p_.getX(), p_.getY(), p_.getZ(), value_);
+        setVoxel((int)p_.getX(), (int)p_.getY(), (int)p_.getZ(), value_);
     };
     
 	void Structure::setVoxel(int x_, int y_, int z_, int value_) {
@@ -231,7 +231,7 @@ namespace FavLibrary
     };
     
 	int Structure::getVoxel(Point3D p_){
-        return getVoxel(p_.getX(), p_.getY(), p_.getZ());
+        return getVoxel( (int)p_.getX(), (int)p_.getY(), (int)p_.getZ());
     };
     
 	int Structure::getVoxel(int x_, int y_, int z_) {
@@ -407,16 +407,16 @@ namespace FavLibrary
         }
     }
 
-    int Structure::getColorRed  (FavLibrary::Point3D p_){ return getColorRed  (p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorGreen(FavLibrary::Point3D p_){ return getColorGreen(p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorBlue (FavLibrary::Point3D p_){ return getColorBlue (p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorAlpha(FavLibrary::Point3D p_){ return getColorAlpha(p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorCyan    (FavLibrary::Point3D p_){ return getColorCyan    (p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorMagenta (FavLibrary::Point3D p_){ return getColorMagenta (p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorYellow  (FavLibrary::Point3D p_){ return getColorYellow  (p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorKeyPlate(FavLibrary::Point3D p_){ return getColorKeyPlate(p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorGrayScale  (FavLibrary::Point3D p_){ return getColorGrayScale  (p_.getX(), p_.getY(), p_.getZ()); };
-    int Structure::getColorGrayScale16(FavLibrary::Point3D p_){ return getColorGrayScale16(p_.getX(), p_.getY(), p_.getZ()); };
+    int Structure::getColorRed     (FavLibrary::Point3D p_){ return getColorRed     ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorGreen   (FavLibrary::Point3D p_){ return getColorGreen   ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorBlue    (FavLibrary::Point3D p_){ return getColorBlue    ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorAlpha   (FavLibrary::Point3D p_){ return getColorAlpha   ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorCyan    (FavLibrary::Point3D p_){ return getColorCyan    ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorMagenta (FavLibrary::Point3D p_){ return getColorMagenta ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorYellow  (FavLibrary::Point3D p_){ return getColorYellow  ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorKeyPlate(FavLibrary::Point3D p_){ return getColorKeyPlate((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorGrayScale  (FavLibrary::Point3D p_){ return getColorGrayScale  ((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
+    int Structure::getColorGrayScale16(FavLibrary::Point3D p_){ return getColorGrayScale16((int)p_.getX(), (int)p_.getY(), (int)p_.getZ()); };
     
     int Structure::getColorRed(int x_, int y_, int z_){
         if(color_mode != ColorMode::RGB && color_mode != ColorMode::RGBA){
@@ -704,9 +704,9 @@ namespace FavLibrary
         
         for(int i=0; i<number_of_voxels; ++i){
             
-            double gray = color_map[i];
+            unsigned char gray = color_map[i];
             
-            new_color_map[count*3]   = gray;// Red
+            new_color_map[count*3+0] = gray;// Red
             new_color_map[count*3+1] = gray;// Green
             new_color_map[count*3+2] = gray;// Blue
             
