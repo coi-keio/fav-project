@@ -1,4 +1,5 @@
 #include "Voxel.h"
+#include "Fav.h"
 
 namespace FavLibrary
 {
@@ -21,11 +22,24 @@ namespace FavLibrary
 	double MaterialInfo::getRatio() { return ratio; };
 	void MaterialInfo::setRatio(double ratio_) { ratio = ratio_; };
 
-	Voxel::Voxel() : FavPrimitive(){}
-	Voxel::Voxel(unsigned int id_) : FavPrimitive(id_) { Voxel(); }
+
+	///////////////////////////////////////////
+	////////////////class Voxel////////////////
+	///////////////////////////////////////////
+	Voxel::Voxel() : FavPrimitive()
+	{
+		m_reference_fav  = 0;
+		m_reference_path = std::string("");
+	}
+	Voxel::Voxel(unsigned int id_ ) : FavPrimitive(id_  ) { Voxel(); }
 	Voxel::Voxel(std::string name_) : FavPrimitive(name_) { Voxel(); }
 	Voxel::Voxel(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) { Voxel(); }
-	Voxel::~Voxel() { }
+	
+	Voxel::~Voxel() 
+	{ 
+		if(m_reference_fav!= 0) delete m_reference_fav;
+		m_reference_fav = 0;
+	}
 
 	void Voxel::setGeometryInfo(GeometryInfo geometry_info_) { geometry_info = GeometryInfo(geometry_info_); }
 	GeometryInfo Voxel::getGeometryInfo() { return geometry_info; }
@@ -56,5 +70,19 @@ namespace FavLibrary
 
 	std::string Voxel::getApplicationNote() { return application_note; };
 	void Voxel::setApplicationNote(std::string note_) { application_note = note_; };
+
+
+	void Voxel::setReferencePath(std::string reference_path)
+	{
+		//TODO load fav file!
+		printf("todo load fav file\n");
+		m_reference_path = reference_path;
+	}
+
+	std::string Voxel::getReferencePath()
+	{
+		return m_reference_path;
+	}
+
 
 }

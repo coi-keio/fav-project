@@ -224,8 +224,8 @@ namespace FavLibrary
 	void FavReader::readVoxel(xercesc::DOMNodeList *voxel_list_) {
 
 		int number_of_voxels = int(voxel_list_->getLength());
-		for (int i = 0; i < number_of_voxels; ++i) {
-
+		for (int i = 0; i < number_of_voxels; ++i) 
+		{
 			xercesc::DOMElement* voxel = dynamic_cast<xercesc::DOMElement*>(voxel_list_->item(i));
 			
             //load attributes
@@ -233,27 +233,41 @@ namespace FavLibrary
 			std::string name = getAttribute(voxel, "name");
 			Voxel current_voxel(std::stoi(id), name);
 
-			//load geometry_info
-			xercesc::DOMNodeList* geoinfo_node   = getElements(voxel, "geometry_info");
-			xercesc::DOMElement*  geoinfo_element = dynamic_cast<xercesc::DOMElement*>(geoinfo_node->item(0));
-			int geometry_id = getElementInt(geoinfo_element, "id");
-			current_voxel.setGeometryInfo(geometry_id);
-
-			//load material_info
-			double total_ratio = 0;
-            xercesc::DOMNodeList* matinfo_node = getElements(voxel, "material_info");
-			int number_of_matinfo = int(matinfo_node->getLength());
-           			
-            for (int j = 0; j < number_of_matinfo; ++j) {
-				xercesc::DOMElement* matinfo_element = dynamic_cast<xercesc::DOMElement*>(matinfo_node->item(j));
-				int    material_id    = getElementInt   (matinfo_element, "id");
-				double material_ratio = getElementDouble(matinfo_element, "ratio");
-				current_voxel.addMaterialInfo(material_id, material_ratio);
-                total_ratio += material_ratio;
+			xercesc::DOMNodeList* reference_node = getElements(voxel, "reference");
+			if( reference_node->getLength() > 0 )
+			{
+				//!!refernce voxel!!
+				xercesc::DOMElement*  reference_element = dynamic_cast<xercesc::DOMElement*>(reference_node->item(0));
+				std::string s = getElementString(voxel, "reference");
+				current_voxel.setReferencePath(s);
+				fav->addVoxel(current_voxel);
 			}
+			else 
+			{
+				//!!normal voxel!!
+
+				//load geometry_info
+				xercesc::DOMNodeList* geoinfo_node   = getElements(voxel, "geometry_info");
+				xercesc::DOMElement*  geoinfo_element = dynamic_cast<xercesc::DOMElement*>(geoinfo_node->item(0));
+				int geometry_id = getElementInt(geoinfo_element, "id");
+				current_voxel.setGeometryInfo(geometry_id);
+
+				//load material_info
+				double total_ratio = 0;
+				xercesc::DOMNodeList* matinfo_node = getElements(voxel, "material_info");
+				int number_of_matinfo = int(matinfo_node->getLength());
+           			
+				for (int j = 0; j < number_of_matinfo; ++j) {
+					xercesc::DOMElement* matinfo_element = dynamic_cast<xercesc::DOMElement*>(matinfo_node->item(j));
+					int    material_id    = getElementInt   (matinfo_element, "id");
+					double material_ratio = getElementDouble(matinfo_element, "ratio");
+					current_voxel.addMaterialInfo(material_id, material_ratio);
+					total_ratio += material_ratio;
+				}
             
-            if( total_ratio != 1.0 ) printf("!!!WARNING!!! : the total ration of the voxel [id:%s, name:%s] is not 1.0!\n", id.c_str(), name.c_str());
-			fav->addVoxel(current_voxel);
+				if( total_ratio != 1.0 ) printf("!!!WARNING!!! : the total ration of the voxel [id:%s, name:%s] is not 1.0!\n", id.c_str(), name.c_str());
+				fav->addVoxel(current_voxel);
+			}
 		}
 	}
     
@@ -1059,12 +1073,17 @@ namespace FavLibrary
         
         "<xsd:element name=\"voxel\">"
         "<xsd:complexType>"
-        "<xsd:choice maxOccurs=\"unbounded\">"
-        "<xsd:element ref=\"geometry_info\"/>"
-        "<xsd:element ref=\"material_info\"/>"
-        "<xsd:element ref=\"display\"/>"
-        "<xsd:element name=\"application_note\" type=\"xsd:string\"/>"
+
+        "<xsd:choice  minOccurs=\"1\" maxOccurs=\"1\">"
+			"<xsd:choice maxOccurs=\"unbounded\">"
+				"<xsd:element ref=\"geometry_info\"/>"
+				"<xsd:element ref=\"material_info\"/>"
+				"<xsd:element ref=\"display\"/>"
+				"<xsd:element name=\"application_note\" type=\"xsd:string\"/>"
+			"</xsd:choice>"
+			"<xsd:element name=\"reference\" type=\"xsd:string\"/>"
         "</xsd:choice>"
+		
         "<xsd:attribute name=\"id\"   type=\"xsd:positiveInteger\" use=\"required\"/>"
         "<xsd:attribute name=\"name\" type=\"xsd:string\"/>"
         "</xsd:complexType>"

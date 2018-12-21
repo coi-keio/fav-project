@@ -53,6 +53,7 @@
       </iso_standard>
     </material>
   </palette>
+  
   <voxel id="1" name="soft_cube">
     <geometry_info>
       <id>1</id>
@@ -66,6 +67,7 @@
       <ratio>0.5</ratio>
     </material_info>
   </voxel>
+  
   <voxel id="2" name="hard_cube">
     <geometry_info>
       <id>1</id>
@@ -75,6 +77,7 @@
       <ratio>1</ratio>
     </material_info>
   </voxel>
+  
   <voxel id="3" name="mixed_cube">
     <geometry_info>
       <id>1</id>
@@ -89,6 +92,11 @@
     </material_info>
     <application_note><![CDATA[HM-H01:Hybrid Hard Material Nusmber 01]]></application_note>
   </voxel>
+  
+  <voxel id="4" name="ref_test">
+    <reference><![CDATA[./child_fav_test.fav]]></reference>
+  </voxel>
+  
   <object id="1" name="SampleObject">
     <metadata>
       <id>cd1d44ae-e353-4ac0-8757-7633b081e01a</id>

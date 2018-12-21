@@ -94,6 +94,10 @@
     </material_info>
   </voxel>
 
+  <voxel id="4" name="ref_test">
+    <id><![CDATA[./child_fav_test.fav]]></id>
+  </voxel>
+
   <object id="1" name="SampleObject">
     <metadata>
       <id><![CDATA[cd1d44ae-e353-4ac0-8757-7633b081e01a]]></id>
@@ -113,9 +117,9 @@
         <z>1.000000</z>
       </unit>
       <dimension>
-        <x>31.000000</x>
-        <y>31.000000</y>
-        <z>1.000000</z>
+        <x>31</x>
+        <y>31</y>
+        <z>1</z>
       </dimension>
     </grid>
     <structure>

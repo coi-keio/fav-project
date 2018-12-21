@@ -19,6 +19,8 @@
 
 namespace FavLibrary
 {
+	class Fav;
+
     class IDll VoxelInfo 
     {    
     public:
@@ -91,16 +93,23 @@ namespace FavLibrary
         unsigned char getDisplayA();
         void setDisplayA(unsigned char a_);
 
+		void setReferencePath(std::string reference_path);
+
         std::string getApplicationNote();
         void setApplicationNote(std::string note_);
 
+		std::string getReferencePath();
     private:
+		
+		//for standard voxel
         GeometryInfo geometry_info;
         std::vector<MaterialInfo> material_info;
         ColorRGBA display;
         std::string application_note;
-
-        //		Voxel* pVoxel;
+		
+		//for reference voxel
+		std::string m_reference_path;
+		Fav*        m_reference_fav ;
     };
 
 

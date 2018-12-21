@@ -186,26 +186,36 @@ namespace FavLibrary
 	void FavWriter::writeVoxel(xercesc::DOMElement *parent_elem) {
 
         int number_of_voxels = fav->getNumVoxels();
-		for (int i = 0; i < number_of_voxels; ++i) {
+		for (int i = 0; i < number_of_voxels; ++i) 
+		{
             
             Voxel current_voxel  = fav->getVoxel(i + 1);
 			xercesc::DOMElement*  vox_elem = createElement("voxel");
 			setAttribute(vox_elem, "id",   std::to_string(current_voxel.getId()));
 			if(current_voxel.getName() != "")
                 setAttribute(vox_elem, "name", current_voxel.getName());
-			
-            xercesc::DOMElement* geo_elem = createElement("geometry_info");
-			appendText( geo_elem, "id", std::to_string(current_voxel.getGeometryInfo().getId()));
-			vox_elem->appendChild(geo_elem);
-
-			for (int j = 0, size = current_voxel.getNumMaterialInfo(); j < size; ++j) {
-				xercesc::DOMElement *matinfo_elem = createElement("material_info");
-				appendText(matinfo_elem, "id",    std::to_string(current_voxel.getMaterialInfo(j).getId())   );
-                
-				appendText(matinfo_elem, "ratio", std::to_string(current_voxel.getMaterialInfo(j).getRatio()));
-				vox_elem->appendChild(matinfo_elem);
+		
+			if(current_voxel.getReferencePath().length() > 0) 
+			{
+				appendCDATA(vox_elem, "id", current_voxel.getReferencePath());	
+				parent_elem->appendChild(vox_elem);
 			}
-			parent_elem->appendChild(vox_elem);
+			else
+			{
+				xercesc::DOMElement* geo_elem = createElement("geometry_info");
+				appendText( geo_elem, "id", std::to_string(current_voxel.getGeometryInfo().getId()));
+				vox_elem->appendChild(geo_elem);
+
+				for (int j = 0, size = current_voxel.getNumMaterialInfo(); j < size; ++j) {
+					xercesc::DOMElement *matinfo_elem = createElement("material_info");
+					appendText(matinfo_elem, "id",    std::to_string(current_voxel.getMaterialInfo(j).getId())   );
+                
+					appendText(matinfo_elem, "ratio", std::to_string(current_voxel.getMaterialInfo(j).getRatio()));
+					vox_elem->appendChild(matinfo_elem);
+				}
+				parent_elem->appendChild(vox_elem);
+			}
+
 		}
 	}
 
