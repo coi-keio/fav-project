@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fav xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+  <metadata>
+    <id>e2cb6cb2-332a-42d1-930b-88dbc4621f30</id>
+    <title><![CDATA[FAV Ver1.0 Sample File]]></title>
+    <author><![CDATA[ABC co.]]></author>
+    <license><![CDATA[CC BY]]></license>
+    <note><![CDATA[This is a sample file in FAV format ver1.0.]]></note>
+  </metadata>
+  <palette>
+    <geometry id="1" name="NormalCube">
+      <shape>cube</shape>
+      <scale>
+        <x>0.5</x>
+        <y>0.5</y>
+        <z>0.5</z>
+      </scale>
+    </geometry>
+    <material id="1" name="SoftMat1">
+      <material_name><![CDATA[Some-soft-materials]]></material_name>
+    </material>
+  </palette>
+  <voxel id="1" name="soft_cube">
+    <geometry_info>
+      <id>1</id>
+    </geometry_info>
+    <material_info>
+      <id>1</id>
+      <ratio>1</ratio>
+    </material_info>
+  </voxel>
+
+  <object id="1" name="SampleObject">
+    <metadata>
+      <id>a86ee7d5-b135-444a-9149-55c46ba6b2f6</id>
+      <title><![CDATA[]]></title>
+      <author><![CDATA[Takashi Ijiri]]></author>
+      <license><![CDATA[No rights reserved]]></license>
+    </metadata>
+    <grid>
+      <origin>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </origin>
+      <unit>
+        <x>0.25</x>
+        <y>0.25</y>
+        <z>0.25</z>
+      </unit>
+      <dimension>
+        <x>4</x>
+        <y>4</y>
+        <z>4</z>
+      </dimension>
+    </grid>
+    <structure>
+      <voxel_map compression="none" bit_per_voxel="8">
+        <layer><![CDATA[01010101010101010101010101010101]]></layer>
+        <layer><![CDATA[01010101010101010101010101010101]]></layer>
+        <layer><![CDATA[01010101010101010101010101010101]]></layer>
+        <layer><![CDATA[01010101010101010101010101010101]]></layer>
+      </voxel_map>
+      <color_map compression="none" color_mode="RGB">
+        <layer><![CDATA[d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3]]></layer>
+        <layer><![CDATA[d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3]]></layer>
+        <layer><![CDATA[d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3]]></layer>
+        <layer><![CDATA[d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3]]></layer>
+      </color_map>
+      <link_map compression="none" neighbors="6" />
+    </structure>
+  </object>
+</fav>

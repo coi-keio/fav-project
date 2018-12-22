@@ -60,7 +60,7 @@
     </geometry_info>
     <material_info>
       <id>0</id>
-      <ratio>0.5</ratio>
+      <ratio>0.2</ratio>
     </material_info>
     <material_info>
       <id>1</id>
@@ -92,7 +92,11 @@
     </material_info>
     <application_note><![CDATA[HM-H01:Hybrid Hard Material Nusmber 01]]></application_note>
   </voxel>
-    
+  
+  <voxel id="4" name="ref_test">
+    <reference><![CDATA[\\child_fav_testKKK.fav]]></reference>
+  </voxel>
+  
   <object id="1" name="SampleObject">
     <metadata>
       <id>cd1d44ae-e353-4ac0-8757-7633b081e01a</id>
