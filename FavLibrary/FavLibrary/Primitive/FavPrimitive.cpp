@@ -19,8 +19,8 @@ namespace FavLibrary
 		setName(name_);
 	};
 
-	unsigned int FavPrimitive::getId() { return identifier; };
+	unsigned int FavPrimitive::getId() const { return identifier; };
 	void FavPrimitive::setId(unsigned int id_) { identifier = id_; };
-	std::string FavPrimitive::getName() { return name; };
+	std::string FavPrimitive::getName() const { return name; };
 	void FavPrimitive::setName(std::string name_) { name = name_; };
 }

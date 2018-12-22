@@ -13,9 +13,9 @@ namespace FavLibrary
 		FavPrimitive(std::string name_);
 		FavPrimitive(unsigned int id_, std::string name_);
 
-		unsigned int getId();
+		unsigned int getId() const ;
 		void setId(unsigned int id_);
-		std::string getName();
+		std::string getName() const ;
 		void setName(std::string name_);
 
 	protected:

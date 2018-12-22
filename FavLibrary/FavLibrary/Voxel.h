@@ -19,6 +19,8 @@
 
 namespace FavLibrary
 {
+	class Fav;
+
     class IDll VoxelInfo 
     {    
     public:
@@ -68,16 +70,21 @@ namespace FavLibrary
         Voxel(unsigned int id_, std::string name_);
         ~Voxel();
 
+        //copy constractor 
+        Voxel(const Voxel &src);
+        Voxel &operator=(const Voxel &src);
+        void copy(const Voxel &src);
+    
         void setGeometryInfo(GeometryInfo geometry_info_);
-        GeometryInfo getGeometryInfo();
+        GeometryInfo getGeometryInfo() const ;
 
-        std::vector<MaterialInfo> getMaterialInfo();
-        MaterialInfo getMaterialInfo(unsigned int id_);
+        std::vector<MaterialInfo> getMaterialInfo() const;
+        MaterialInfo getMaterialInfo(unsigned int id_) const ;
         void addMaterialInfo(unsigned int id_, double ratio_);
         void unpdateMaterialInfo(unsigned int id_, double ratio_);
         void removeMaterialInfo(unsigned int id_);
         bool existsMaterialInfo(unsigned int id_);
-        int getNumMaterialInfo();
+        int getNumMaterialInfo() const ;
         ColorRGBA getDisplay();
         void setDisplay(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_);
         void setDisplay(ColorRGBA color_);
@@ -91,16 +98,23 @@ namespace FavLibrary
         unsigned char getDisplayA();
         void setDisplayA(unsigned char a_);
 
-        std::string getApplicationNote();
+		void setReferencePath(std::string reference_path, std::string favfile_dirpath);
+
+        std::string getApplicationNote() const ;
         void setApplicationNote(std::string note_);
 
-    private:
+		std::string getReferencePath() const ;
+
+    private:		
+		//for standard voxel
         GeometryInfo geometry_info;
         std::vector<MaterialInfo> material_info;
         ColorRGBA display;
         std::string application_note;
-
-        //		Voxel* pVoxel;
+		
+		//for reference voxel
+		std::string m_reference_path;
+		Fav        *m_reference_fav ; 
     };
 
 

@@ -25,9 +25,9 @@ namespace FavLibrary
 	void Grid::setDimensionX(double x) { dimension.setX(x); }
     void Grid::setDimensionY(double y) { dimension.setY(y); }
     void Grid::setDimensionZ(double z) { dimension.setZ(z); }
-    double Grid::getDimensionX() { return dimension.getX(); }
-	double Grid::getDimensionY() { return dimension.getY(); }
-	double Grid::getDimensionZ() { return dimension.getZ(); }
+    int  Grid::getDimensionX() { return (int)dimension.getX(); }
+	int  Grid::getDimensionY() { return (int)dimension.getY(); }
+	int  Grid::getDimensionZ() { return (int)dimension.getZ(); }
 
 	Origin Grid::getOrigin() { return origin; }
 	void Grid::setOrigin (Point3D p) { origin.set(p); }

@@ -61,9 +61,9 @@ namespace FavLibrary
         void setXsdSchemaAsString();
         bool validation(const char* file_path);
         void readMetaData(xercesc::DOMNodeList* metadata_node_);
-        void readPalette (xercesc::DOMNodeList* palette_node_);
-        void readVoxel   (xercesc::DOMNodeList* voxel_node_);
-        void readObject  (xercesc::DOMNodeList* object_node_);
+        void readPalette (xercesc::DOMNodeList* palette_node_ );
+        void readVoxel   (xercesc::DOMNodeList* voxel_node_   );
+        void readObject  (xercesc::DOMNodeList* object_node_  );
         void readGrid        (xercesc::DOMElement* parent_elem, Object* pObject);
         void readColorMap    (xercesc::DOMElement* parent_elem, Object* pObject       , Structure* pStructure);
         void readVoxelMap    (xercesc::DOMElement* parent_elem, Object* pObject       , Structure* pStructure);
@@ -73,8 +73,11 @@ namespace FavLibrary
         void readColorMapGrayscale  (xercesc::DOMElement* cmap_elem, Object* current_object, Structure* structure);
         void readColorMapGrayscale16(xercesc::DOMElement* cmap_elem, Object* current_object, Structure* structure);
 
-        std::string xsd_path;
+        std::string xsd_path  ;
         std::string xsd_string;
+
+        std::string favfile_fullpath;
+        std::string favfile_dirpath ;
         Fav* fav;
     };
     
