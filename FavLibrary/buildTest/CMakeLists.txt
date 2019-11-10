@@ -7,8 +7,12 @@ cmake_minimum_required(VERSION 2.8)
 #include_directories(/usr/local/Cellar/xerces-c/3.1.4/include/)
 #link_directories(/usr/local/Cellar/xerces-c/3.1.4/lib/)
 
-include_directories(/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/)
-link_directories(/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildLib/build/)
+#include_directories(/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/FavLibrary/)
+#link_directories(/Users/atsmsmr/Documents/Developer/fav-project/FavLibrary/buildLib/build/)
+
+# Directory settings for Docker
+include_directories(/usr/local/fav/FavLibrary/FavLibrary/)
+link_directories(/usr/local/fav/FavLibrary/buildLib/build/)
 
 #set(XercesLib xerces-c)
 set(CMAKE_CXX_FLAGS "-std=c++1y -g -O3 -Wall")
