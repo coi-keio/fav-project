@@ -17,12 +17,12 @@ namespace FavLibrary
 
 	Fav::~Fav() {
 		//    delete metadata;
-        
+
 //        if(palette != NULL){
 //            delete palette;
 //            palette = NULL;
 //        }
-        
+
 //        for(std::map<unsigned int, Object*>::iterator it = objects.begin(); it != objects.end();){
 //            if(it->second != NULL){
 //                delete it->second;
@@ -30,7 +30,7 @@ namespace FavLibrary
 //            }
 //            it++;
 //        }
-        
+
         objects.clear();
         voxels.clear();
 //        for(std::map<unsigned int, Voxel*>::iterator it = voxels.begin(); it != voxels.end();){
@@ -61,7 +61,7 @@ namespace FavLibrary
 			[&](const std::pair<const Voxel, Voxel>& ref) { res.push_back(ref.second); });
 		return res;
 	}
-    
+
 	Voxel Fav::getVoxel(unsigned int id_)
 	{
 		Voxel res = NULL;
@@ -90,7 +90,7 @@ namespace FavLibrary
         objects[object_.getId()] = object_;
         objects[object_.getId()].structure.setGridPointer(&objects[object_.getId()].grid);
     };
-    
+
 	void Fav::removeObject(unsigned int id_) { objects.erase(id_); }
 
 	int Fav::getNumObjects() { return (int)objects.size(); };

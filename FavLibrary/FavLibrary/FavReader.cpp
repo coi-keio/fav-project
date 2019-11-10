@@ -16,7 +16,7 @@ namespace FavLibrary
 
     FavReader::FavReader(Fav* fav_) {
         fav = fav_;
-	};
+    };
 
 
     bool FavReader::validation(const char* file_path)
@@ -58,9 +58,9 @@ namespace FavLibrary
         size_t n = favfile_fullpath.find_last_of("/\\");
 
         if ( n == std::string::npos)
-            favfile_dirpath  = "";
+        favfile_dirpath  = "";
         else
-            favfile_dirpath  = favfile_fullpath.substr(0, n+1 );;
+        favfile_dirpath  = favfile_fullpath.substr(0, n+1 );;
 
         //printf("\n read file [dir:%s] [full:%s] \n", favfile_dirpath.c_str(), favfile_fullpath.c_str());
 
@@ -110,39 +110,39 @@ namespace FavLibrary
         return 1;
     }
 
-	void FavReader::readMetaData(xercesc::DOMNodeList *metadata_node_) {
+    void FavReader::readMetaData(xercesc::DOMNodeList *metadata_node_) {
 
-		int number_of_metadata = int(metadata_node_->getLength());
+        int number_of_metadata = int(metadata_node_->getLength());
 
-		for (int i=0; i<number_of_metadata; ++i) {
+        for (int i=0; i<number_of_metadata; ++i) {
 
-			xercesc::DOMNode *current_metadata = metadata_node_->item(i);
-			xercesc::DOMNode *parent_node = dynamic_cast<xercesc::DOMElement*>(current_metadata)->getParentNode();
+            xercesc::DOMNode *current_metadata = metadata_node_->item(i);
+            xercesc::DOMNode *parent_node = dynamic_cast<xercesc::DOMElement*>(current_metadata)->getParentNode();
 
             char* node_name = xercesc::XMLString::transcode(parent_node->getNodeName());
-			if (node_name == std::string("fav")) {
+            if (node_name == std::string("fav")) {
 
                 fav->setMetadataId     (getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "id"   ));
-				fav->setMetadataTitle  (getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "title"));
-				fav->setMetadataAuthor (getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "author"));
-				fav->setMetadataLicense(getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "license"));
+                fav->setMetadataTitle  (getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "title"));
+                fav->setMetadataAuthor (getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "author"));
+                fav->setMetadataLicense(getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "license"));
                 std::string note = getElementString(dynamic_cast<xercesc::DOMElement*>(current_metadata), "note");
                 if(note != "") fav->setMetadataNote(note);
             }
             xercesc::XMLString::release(&node_name);
-		}
-	}
+        }
+    }
 
-	void FavReader::readPalette(xercesc::DOMNodeList *palette_list_) {
+    void FavReader::readPalette(xercesc::DOMNodeList *palette_list_) {
 
-		// load geometries
-		xercesc::DOMNodeList* geometry_list = getElements(dynamic_cast<xercesc::DOMElement*>(palette_list_->item(0)), "geometry");
-		int number_of_geometry = int(geometry_list->getLength());
+        // load geometries
+        xercesc::DOMNodeList* geometry_list = getElements(dynamic_cast<xercesc::DOMElement*>(palette_list_->item(0)), "geometry");
+        int number_of_geometry = int(geometry_list->getLength());
 
-		for (int i=0; i<number_of_geometry; ++i) {
+        for (int i=0; i<number_of_geometry; ++i) {
 
-			std::string  id          =     getAttribute(dynamic_cast<xercesc::DOMElement*>(geometry_list->item(i)), "id"       );
-			std::string  name        =     getAttribute(dynamic_cast<xercesc::DOMElement*>(geometry_list->item(i)), "name"     );
+            std::string  id          =     getAttribute(dynamic_cast<xercesc::DOMElement*>(geometry_list->item(i)), "id"       );
+            std::string  name        =     getAttribute(dynamic_cast<xercesc::DOMElement*>(geometry_list->item(i)), "name"     );
             std::string  shape       = getElementString(dynamic_cast<xercesc::DOMElement*>(geometry_list->item(i)), "shape"    );
             std::string  reference   = getElementString(dynamic_cast<xercesc::DOMElement*>(geometry_list->item(i)), "reference");
             xercesc::DOMNodeList* scale_node = getElements(dynamic_cast<xercesc::DOMElement*>(geometry_list->item(i)), "scale"    );
@@ -163,30 +163,30 @@ namespace FavLibrary
                 current_geometry.setReference(reference);
             }
 
-			if (scale_node->getLength() > 0) {
-				double x = getElementDouble(dynamic_cast<xercesc::DOMElement*>(scale_node->item(0)), "x");
-				double y = getElementDouble(dynamic_cast<xercesc::DOMElement*>(scale_node->item(0)), "y");
-				double z = getElementDouble(dynamic_cast<xercesc::DOMElement*>(scale_node->item(0)), "z");
-				current_geometry.setScale(x, y, z);
-			}
+            if (scale_node->getLength() > 0) {
+                double x = getElementDouble(dynamic_cast<xercesc::DOMElement*>(scale_node->item(0)), "x");
+                double y = getElementDouble(dynamic_cast<xercesc::DOMElement*>(scale_node->item(0)), "y");
+                double z = getElementDouble(dynamic_cast<xercesc::DOMElement*>(scale_node->item(0)), "z");
+                current_geometry.setScale(x, y, z);
+            }
 
-			fav->palette.addGeometry(current_geometry);
-		}
+            fav->palette.addGeometry(current_geometry);
+        }
 
         // load materials
-		xercesc::DOMNodeList* material_list = getElements(dynamic_cast<xercesc::DOMElement*>(palette_list_->item(0)), "material");
-		int number_of_material = int(material_list->getLength());
+        xercesc::DOMNodeList* material_list = getElements(dynamic_cast<xercesc::DOMElement*>(palette_list_->item(0)), "material");
+        int number_of_material = int(material_list->getLength());
 
-		for (int i = 0; i < number_of_material; ++i) {
+        for (int i = 0; i < number_of_material; ++i) {
 
-			//load attributes
+            //load attributes
             std::string id   = getAttribute(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "id"  );
-			std::string name = getAttribute(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "name");
-			Material current_material(std::stoi(id), name);
+            std::string name = getAttribute(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "name");
+            Material current_material(std::stoi(id), name);
 
             // load material name
             xercesc::DOMNodeList* material_name_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "material_name");
-			int number_of_material_name = int(material_name_list->getLength());
+            int number_of_material_name = int(material_name_list->getLength());
 
             for(int j=0; j<number_of_material_name; ++j){
                 const XMLCh* node_value = ((material_name_list->item(j))->getFirstChild())->getNodeValue();
@@ -196,26 +196,26 @@ namespace FavLibrary
                 current_material.addMaterialName(name);
             }
 
-			// load product_info
-			xercesc::DOMNodeList* product_info_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "product_info");
-			int number_of_product_info = int(product_info_list->getLength());
+            // load product_info
+            xercesc::DOMNodeList* product_info_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "product_info");
+            int number_of_product_info = int(product_info_list->getLength());
 
-			for (int j = 0; j < number_of_product_info; ++j) {
-				std::string manufacturer = getElementString(dynamic_cast<xercesc::DOMElement*>(product_info_list->item(j)), "manufacturer");
-				std::string product_name = getElementString(dynamic_cast<xercesc::DOMElement*>(product_info_list->item(j)), "product_name");
-				std::string url          = getElementString(dynamic_cast<xercesc::DOMElement*>(product_info_list->item(j)), "url");
-				current_material.addProductInfo(manufacturer, product_name, url);
-			}
+            for (int j = 0; j < number_of_product_info; ++j) {
+                std::string manufacturer = getElementString(dynamic_cast<xercesc::DOMElement*>(product_info_list->item(j)), "manufacturer");
+                std::string product_name = getElementString(dynamic_cast<xercesc::DOMElement*>(product_info_list->item(j)), "product_name");
+                std::string url          = getElementString(dynamic_cast<xercesc::DOMElement*>(product_info_list->item(j)), "url");
+                current_material.addProductInfo(manufacturer, product_name, url);
+            }
 
-			// load iso_standard
-			xercesc::DOMNodeList* iso_standard_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "iso_standard");
-			int number_of_iso_standard = int(iso_standard_list->getLength());
+            // load iso_standard
+            xercesc::DOMNodeList* iso_standard_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "iso_standard");
+            int number_of_iso_standard = int(iso_standard_list->getLength());
 
-			for (int j = 0; j < number_of_iso_standard; ++j) {
-				std::string iso_id   = getElementString(dynamic_cast<xercesc::DOMElement*>(iso_standard_list->item(j)), "iso_id");
-				std::string iso_name = getElementString(dynamic_cast<xercesc::DOMElement*>(iso_standard_list->item(j)), "iso_name");
-				current_material.addIsoStandard(iso_id, iso_name);
-			}
+            for (int j = 0; j < number_of_iso_standard; ++j) {
+                std::string iso_id   = getElementString(dynamic_cast<xercesc::DOMElement*>(iso_standard_list->item(j)), "iso_id");
+                std::string iso_name = getElementString(dynamic_cast<xercesc::DOMElement*>(iso_standard_list->item(j)), "iso_name");
+                current_material.addIsoStandard(iso_id, iso_name);
+            }
 
             // load metadata
             xercesc::DOMNodeList* metadata_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "metadata");
@@ -228,62 +228,62 @@ namespace FavLibrary
                 if(note != "") current_material.setMetadataNote(note);
             }
 
-			fav->palette.addMaterial(current_material);
-		}
-	}
-
-	void FavReader::readVoxel(xercesc::DOMNodeList *voxel_list_) {
-		int number_of_voxels = int(voxel_list_->getLength());
-		for (int i = 0; i < number_of_voxels; ++i) {
-			xercesc::DOMElement* voxel = dynamic_cast<xercesc::DOMElement*>(voxel_list_->item(i));
-
-      //load attributes
-			std::string id   = getAttribute(voxel, "id"  );
-			std::string name = getAttribute(voxel, "name");
-			Voxel current_voxel(std::stoi(id), name);
-
-			xercesc::DOMNodeList* reference_node = getElements(voxel, "reference");
-			if( reference_node->getLength() > 0 ) {
-				//refernce voxel
-				//xercesc::DOMElement*  reference_element = dynamic_cast<xercesc::DOMElement*>(reference_node->item(0));
-				std::string s = getElementString(voxel, "reference");
-				current_voxel.setReferencePath(s, favfile_dirpath);
-				fav->addVoxel(current_voxel);
-			} else {
-				//standard  voxel
-
-				//load geometry_info
-				xercesc::DOMNodeList* geoinfo_node   = getElements(voxel, "geometry_info");
-				xercesc::DOMElement*  geoinfo_element = dynamic_cast<xercesc::DOMElement*>(geoinfo_node->item(0));
-				int geometry_id = getElementInt(geoinfo_element, "id");
-				current_voxel.setGeometryInfo(geometry_id);
-
-				//load material_info
-				double total_ratio = 0;
-				xercesc::DOMNodeList* matinfo_node = getElements(voxel, "material_info");
-				int number_of_matinfo = int(matinfo_node->getLength());
-
-				for (int j = 0; j < number_of_matinfo; ++j) {
-					xercesc::DOMElement* matinfo_element = dynamic_cast<xercesc::DOMElement*>(matinfo_node->item(j));
-					int    material_id    = getElementInt   (matinfo_element, "id");
-					double material_ratio = getElementDouble(matinfo_element, "ratio");
-					current_voxel.addMaterialInfo(material_id, material_ratio);
-					total_ratio += material_ratio;
-				}
-
-        //application_note
-        xercesc::DOMNodeList* application_note_node = getElements(voxel, "application_note");
-			  if( application_note_node->getLength() > 0 ) {
-				  //xercesc::DOMElement*  application_note_element = dynamic_cast<xercesc::DOMElement*>(application_note_node->item(0));
-				  std::string s = getElementString(voxel, "application_note");
-				  current_voxel.setApplicationNote(s);
+            fav->palette.addMaterial(current_material);
         }
+    }
 
-			  if( total_ratio != 1.0 ) printf("!!!WARNING!!! : the total ration of the voxel [id:%s, name:%s] is not 1.0!\n", id.c_str(), name.c_str());
-				fav->addVoxel(current_voxel);
-			}
-		}
-	}
+    void FavReader::readVoxel(xercesc::DOMNodeList *voxel_list_) {
+        int number_of_voxels = int(voxel_list_->getLength());
+        for (int i = 0; i < number_of_voxels; ++i) {
+            xercesc::DOMElement* voxel = dynamic_cast<xercesc::DOMElement*>(voxel_list_->item(i));
+
+            //load attributes
+            std::string id   = getAttribute(voxel, "id"  );
+            std::string name = getAttribute(voxel, "name");
+            Voxel current_voxel(std::stoi(id), name);
+
+            xercesc::DOMNodeList* reference_node = getElements(voxel, "reference");
+            if( reference_node->getLength() > 0 ) {
+                //refernce voxel
+                //xercesc::DOMElement*  reference_element = dynamic_cast<xercesc::DOMElement*>(reference_node->item(0));
+                std::string s = getElementString(voxel, "reference");
+                current_voxel.setReferencePath(s, favfile_dirpath);
+                fav->addVoxel(current_voxel);
+            } else {
+                //standard  voxel
+
+                //load geometry_info
+                xercesc::DOMNodeList* geoinfo_node   = getElements(voxel, "geometry_info");
+                xercesc::DOMElement*  geoinfo_element = dynamic_cast<xercesc::DOMElement*>(geoinfo_node->item(0));
+                int geometry_id = getElementInt(geoinfo_element, "id");
+                current_voxel.setGeometryInfo(geometry_id);
+
+                //load material_info
+                double total_ratio = 0;
+                xercesc::DOMNodeList* matinfo_node = getElements(voxel, "material_info");
+                int number_of_matinfo = int(matinfo_node->getLength());
+
+                for (int j = 0; j < number_of_matinfo; ++j) {
+                    xercesc::DOMElement* matinfo_element = dynamic_cast<xercesc::DOMElement*>(matinfo_node->item(j));
+                    int    material_id    = getElementInt   (matinfo_element, "id");
+                    double material_ratio = getElementDouble(matinfo_element, "ratio");
+                    current_voxel.addMaterialInfo(material_id, material_ratio);
+                    total_ratio += material_ratio;
+                }
+
+                //application_note
+                xercesc::DOMNodeList* application_note_node = getElements(voxel, "application_note");
+                if( application_note_node->getLength() > 0 ) {
+                    //xercesc::DOMElement*  application_note_element = dynamic_cast<xercesc::DOMElement*>(application_note_node->item(0));
+                    std::string s = getElementString(voxel, "application_note");
+                    current_voxel.setApplicationNote(s);
+                }
+
+                if( total_ratio != 1.0 ) printf("!!!WARNING!!! : the total ration of the voxel [id:%s, name:%s] is not 1.0!\n", id.c_str(), name.c_str());
+                fav->addVoxel(current_voxel);
+            }
+        }
+    }
 
     void FavReader::readGrid(xercesc::DOMElement *object_elem, Object* current_object){
 
@@ -324,13 +324,13 @@ namespace FavLibrary
 
 
         if(bit_per_voxel == "4")
-            structure->setBitPerVoxel(BitPerVoxel::Bit4);
+        structure->setBitPerVoxel(BitPerVoxel::Bit4);
 
         else if(bit_per_voxel == "8")
-            structure->setBitPerVoxel(BitPerVoxel::Bit8);
+        structure->setBitPerVoxel(BitPerVoxel::Bit8);
 
         else if(bit_per_voxel == "16")
-            structure->setBitPerVoxel(BitPerVoxel::Bit16);
+        structure->setBitPerVoxel(BitPerVoxel::Bit16);
 
         structure->initVoxelMap();
 
@@ -377,7 +377,7 @@ namespace FavLibrary
                     }
                 }
 
-            // TODO: Zlib compression is under development
+                // TODO: Zlib compression is under development
             } else if (compression == "base64") {
 
                 XMLSize_t size = current_object->grid.getDimensionX() * current_object->grid.getDimensionY();
@@ -388,7 +388,7 @@ namespace FavLibrary
                 for (int d = 0; d < size; d++) {
                     data_in[d] = (unsigned int)data_decoded[d];
                 }
-				delete data_decoded;
+                delete data_decoded;
             }
 
             int dim_x = current_object->grid.getDimensionX();
@@ -427,7 +427,7 @@ namespace FavLibrary
             for(int y=0; y<current_object->grid.getDimensionY(); ++y){
                 for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                     if(structure->getVoxel(x,y,z) > 0 )
-                        count_colors++;
+                    count_colors++;
                 }
             }
 
@@ -465,7 +465,7 @@ namespace FavLibrary
                     layer_b[count] = (unsigned int)data_decoded[d+2];
                     count++;
                 }
-				delete data_decoded;
+                delete data_decoded;
             }
 
             int dim_x = current_object->grid.getDimensionX();
@@ -544,7 +544,7 @@ namespace FavLibrary
                 for(int y=0; y<current_object->grid.getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
-                            count_colors++;
+                        count_colors++;
                     }
                 }
 
@@ -560,7 +560,7 @@ namespace FavLibrary
                     layer_a[count] = (unsigned int)data_decoded[d+3];
                     count++;
                 }
-				delete data_decoded;
+                delete data_decoded;
             }
 
             int dim_x = current_object->grid.getDimensionX();
@@ -645,7 +645,7 @@ namespace FavLibrary
                 for(int y=0; y<current_object->grid.getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
-                            count_colors++;
+                        count_colors++;
                     }
                 }
 
@@ -661,7 +661,7 @@ namespace FavLibrary
                     layer_k[count] = (unsigned int)data_decoded[d+3];
                     count++;
                 }
-				delete data_decoded;
+                delete data_decoded;
             }
 
             int dim_x = current_object->grid.getDimensionX();
@@ -727,7 +727,7 @@ namespace FavLibrary
                 for(int y=0; y<current_object->grid.getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
-                            count_colors++;
+                        count_colors++;
                     }
                 }
 
@@ -738,7 +738,7 @@ namespace FavLibrary
                 for (int d = 0; d < size; ++d) {
                     layer_g[d] = (unsigned int)data_decoded[d];
                 }
-				delete data_decoded;
+                delete data_decoded;
             }
 
             int dim_x = current_object->grid.getDimensionX();
@@ -795,7 +795,7 @@ namespace FavLibrary
                 for(int y=0; y<current_object->grid.getDimensionY(); ++y){
                     for(int x=0; x<current_object->grid.getDimensionX(); ++x){
                         if(structure->getVoxel(x,y,z) > 0 )
-                            count_colors++;
+                        count_colors++;
                     }
                 }
 
@@ -806,7 +806,7 @@ namespace FavLibrary
                 for (int d = 0; d < size; ++d) {
                     layer_g[d] = (unsigned int)data_decoded[d];
                 }
-				delete data_decoded;
+                delete data_decoded;
             }
 
             int dim_x = current_object->grid.getDimensionX();
@@ -863,19 +863,19 @@ namespace FavLibrary
         }
     }
 
-	void FavReader::readObject(xercesc::DOMNodeList *object_node_) {
+    void FavReader::readObject(xercesc::DOMNodeList *object_node_) {
 
 
-		int number_of_object = int(object_node_->getLength());
-		for (int i=0; i<number_of_object; ++i) {
+        int number_of_object = int(object_node_->getLength());
+        for (int i=0; i<number_of_object; ++i) {
 
-			xercesc::DOMElement* object_elem = dynamic_cast<xercesc::DOMElement*>(object_node_->item(i));
+            xercesc::DOMElement* object_elem = dynamic_cast<xercesc::DOMElement*>(object_node_->item(i));
 
-			//load attributes
-			std::string id   = getAttribute(object_elem, "id"  );
-			std::string name = getAttribute(object_elem, "name");
+            //load attributes
+            std::string id   = getAttribute(object_elem, "id"  );
+            std::string name = getAttribute(object_elem, "name");
 
-			Object* current_object = new Object(stoi(id), name);
+            Object* current_object = new Object(stoi(id), name);
 
             readGrid(object_elem, current_object);
 
@@ -894,10 +894,10 @@ namespace FavLibrary
                 std::string note = getElementString(dynamic_cast<xercesc::DOMElement*>(metadata_list->item(0)), "note");
                 if(note != "") current_object->setMetadataNote(note);
             }
-			fav->addObject(*current_object);
+            fav->addObject(*current_object);
             delete current_object;
         }
-	}
+    }
 
     xercesc::DOMNodeList* FavReader::getElements(xercesc::DOMElement* element_, const char *tag_name_)
     {
@@ -1089,13 +1089,13 @@ namespace FavLibrary
         "<xsd:complexType>"
 
         "<xsd:choice  minOccurs=\"1\" maxOccurs=\"1\">"
-			"<xsd:choice maxOccurs=\"unbounded\">"
-				"<xsd:element ref=\"geometry_info\"/>"
-				"<xsd:element ref=\"material_info\"/>"
-				"<xsd:element ref=\"display\"/>"
-				"<xsd:element name=\"application_note\" type=\"xsd:string\"/>"
-			"</xsd:choice>"
-			"<xsd:element name=\"reference\" type=\"xsd:string\"/>"
+        "<xsd:choice maxOccurs=\"unbounded\">"
+        "<xsd:element ref=\"geometry_info\"/>"
+        "<xsd:element ref=\"material_info\"/>"
+        "<xsd:element ref=\"display\"/>"
+        "<xsd:element name=\"application_note\" type=\"xsd:string\"/>"
+        "</xsd:choice>"
+        "<xsd:element name=\"reference\" type=\"xsd:string\"/>"
         "</xsd:choice>"
 
         "<xsd:attribute name=\"id\"   type=\"xsd:positiveInteger\" use=\"required\"/>"
