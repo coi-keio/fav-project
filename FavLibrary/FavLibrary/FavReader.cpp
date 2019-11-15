@@ -235,15 +235,16 @@ namespace FavLibrary
     void FavReader::readVoxel(xercesc::DOMNodeList *voxel_list_) {
         int number_of_voxels = int(voxel_list_->getLength());
         for (int i = 0; i < number_of_voxels; ++i) {
+            printf("i: %d\n", i);
             xercesc::DOMElement* voxel = dynamic_cast<xercesc::DOMElement*>(voxel_list_->item(i));
 
             //load attributes
-            std::string id   = getAttribute(voxel, "id"  );
+            std::string id = getAttribute(voxel, "id");
             std::string name = getAttribute(voxel, "name");
             Voxel current_voxel(std::stoi(id), name);
 
             xercesc::DOMNodeList* reference_node = getElements(voxel, "reference");
-            if( reference_node->getLength() > 0 ) {
+            if (reference_node->getLength() > 0) {
                 //refernce voxel
                 //xercesc::DOMElement*  reference_element = dynamic_cast<xercesc::DOMElement*>(reference_node->item(0));
                 std::string s = getElementString(voxel, "reference");
@@ -253,7 +254,7 @@ namespace FavLibrary
                 //standard  voxel
 
                 //load geometry_info
-                xercesc::DOMNodeList* geoinfo_node   = getElements(voxel, "geometry_info");
+                xercesc::DOMNodeList* geoinfo_node = getElements(voxel, "geometry_info");
                 xercesc::DOMElement*  geoinfo_element = dynamic_cast<xercesc::DOMElement*>(geoinfo_node->item(0));
                 int geometry_id = getElementInt(geoinfo_element, "id");
                 current_voxel.setGeometryInfo(geometry_id);
@@ -265,7 +266,7 @@ namespace FavLibrary
 
                 for (int j = 0; j < number_of_matinfo; ++j) {
                     xercesc::DOMElement* matinfo_element = dynamic_cast<xercesc::DOMElement*>(matinfo_node->item(j));
-                    int    material_id    = getElementInt   (matinfo_element, "id");
+                    int material_id = getElementInt(matinfo_element, "id");
                     double material_ratio = getElementDouble(matinfo_element, "ratio");
                     current_voxel.addMaterialInfo(material_id, material_ratio);
                     total_ratio += material_ratio;
@@ -273,13 +274,15 @@ namespace FavLibrary
 
                 //application_note
                 xercesc::DOMNodeList* application_note_node = getElements(voxel, "application_note");
-                if( application_note_node->getLength() > 0 ) {
+                if (application_note_node->getLength() > 0) {
                     //xercesc::DOMElement*  application_note_element = dynamic_cast<xercesc::DOMElement*>(application_note_node->item(0));
                     std::string s = getElementString(voxel, "application_note");
                     current_voxel.setApplicationNote(s);
                 }
 
-                if( total_ratio != 1.0 ) printf("!!!WARNING!!! : the total ration of the voxel [id:%s, name:%s] is not 1.0!\n", id.c_str(), name.c_str());
+                if (total_ratio != 1.0) {
+                    printf("!!!WARNING!!! : the total ration of the voxel [id:%s, name:%s] is not 1.0!\n", id.c_str(), name.c_str());
+                }
                 fav->addVoxel(current_voxel);
             }
         }
