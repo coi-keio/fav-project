@@ -46,22 +46,21 @@ namespace FavLibrary
 
         this->geometry_info = src.geometry_info;
         this->material_info = src.material_info;
-        this->display       = src.display;
+        this->display = src.display;
         this->application_note = src.application_note;
         this->m_reference_path = src.m_reference_path;
-     
-       if( this->m_reference_fav != 0) delete this->m_reference_fav ;
+
+        if (this->m_reference_fav != 0) delete this->m_reference_fav;
         this->m_reference_fav = 0;
-        if( src.m_reference_fav != 0)
-        {
+        if (src.m_reference_fav != 0) {
             this->m_reference_fav = new Fav(*src.m_reference_fav);
         }
     }
-	
 
 
-	Voxel::~Voxel() 
-	{ 
+
+	Voxel::~Voxel()
+	{
         if(m_reference_fav != 0) delete m_reference_fav;
         m_reference_fav = 0;
 	}
@@ -101,20 +100,20 @@ namespace FavLibrary
 	{
         //set reference fav file path
 		m_reference_path = reference_path;
-        
+
         //load reference fav file
         if(m_reference_fav != 0) delete m_reference_fav;
         m_reference_fav = new Fav();
 		FavReader fav_reader( m_reference_fav );
 		if ( !fav_reader.read( (favfile_dirpath + reference_path).c_str() ) )
         {
-            printf("WARNING (Reading Voxel). System could not read the reference fav file [id:%d, file path:%s]\n", 
-                this->identifier, 
+            printf("WARNING (Reading Voxel). System could not read the reference fav file [id:%d, file path:%s]\n",
+                this->identifier,
                 (favfile_dirpath + reference_path).c_str() );
         }
 	}
 
-	std::string Voxel::getReferencePath() const 
+	std::string Voxel::getReferencePath() const
 	{
 		return m_reference_path;
 	}
