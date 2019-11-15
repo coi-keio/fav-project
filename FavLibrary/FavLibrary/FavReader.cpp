@@ -235,7 +235,6 @@ namespace FavLibrary
     void FavReader::readVoxel(xercesc::DOMNodeList *voxel_list_) {
         int number_of_voxels = int(voxel_list_->getLength());
         for (int i = 0; i < number_of_voxels; ++i) {
-            printf("i: %d\n", i);
             xercesc::DOMElement* voxel = dynamic_cast<xercesc::DOMElement*>(voxel_list_->item(i));
 
             //load attributes
