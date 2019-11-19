@@ -244,7 +244,7 @@ namespace FavLibrary
 
             xercesc::DOMNodeList* reference_node = getElements(voxel, "reference");
             if (reference_node->getLength() > 0) {
-                //refernce voxel
+                //reference voxel
                 //xercesc::DOMElement*  reference_element = dynamic_cast<xercesc::DOMElement*>(reference_node->item(0));
                 std::string s = getElementString(voxel, "reference");
                 current_voxel.setReferencePath(s, favfile_dirpath);
@@ -254,7 +254,7 @@ namespace FavLibrary
 
                 //load geometry_info
                 xercesc::DOMNodeList* geoinfo_node = getElements(voxel, "geometry_info");
-                xercesc::DOMElement*  geoinfo_element = dynamic_cast<xercesc::DOMElement*>(geoinfo_node->item(0));
+                xercesc::DOMElement* geoinfo_element = dynamic_cast<xercesc::DOMElement*>(geoinfo_node->item(0));
                 int geometry_id = getElementInt(geoinfo_element, "id");
                 current_voxel.setGeometryInfo(geometry_id);
 

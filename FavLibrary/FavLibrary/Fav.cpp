@@ -70,7 +70,9 @@ namespace FavLibrary
 
 		return res;
 	}
-	void Fav::addVoxel(Voxel voxel_) { voxels[voxel_.getId()] = voxel_; };
+	void Fav::addVoxel(Voxel voxel_) {
+		voxels[voxel_.getId()] = voxel_;
+	};
 	void Fav::removeVoxel(unsigned int id_) { voxels.erase(id_); }
 	bool Fav::existsVoxel(unsigned int id_) { return voxels.count(id_) > 0; }
 

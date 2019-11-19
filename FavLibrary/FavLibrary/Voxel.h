@@ -21,8 +21,8 @@ namespace FavLibrary
 {
 	class Fav;
 
-    class IDll VoxelInfo 
-    {    
+    class IDll VoxelInfo
+    {
     public:
         VoxelInfo();
         VoxelInfo(unsigned int id_);
@@ -36,7 +36,7 @@ namespace FavLibrary
     };
 
 
-    class IDll GeometryInfo : public VoxelInfo 
+    class IDll GeometryInfo : public VoxelInfo
     {
     public:
         GeometryInfo();
@@ -45,7 +45,7 @@ namespace FavLibrary
     };
 
 
-    class IDll MaterialInfo : public VoxelInfo 
+    class IDll MaterialInfo : public VoxelInfo
     {
     public:
         MaterialInfo();
@@ -70,11 +70,11 @@ namespace FavLibrary
         Voxel(unsigned int id_, std::string name_);
         ~Voxel();
 
-        //copy constractor 
+        //copy constractor
         Voxel(const Voxel &src);
         Voxel &operator=(const Voxel &src);
         void copy(const Voxel &src);
-    
+
         void setGeometryInfo(GeometryInfo geometry_info_);
         GeometryInfo getGeometryInfo() const ;
 
@@ -105,16 +105,16 @@ namespace FavLibrary
 
 		std::string getReferencePath() const ;
 
-    private:		
+    private:
 		//for standard voxel
         GeometryInfo geometry_info;
         std::vector<MaterialInfo> material_info;
         ColorRGBA display;
         std::string application_note;
-		
+
 		//for reference voxel
 		std::string m_reference_path;
-		Fav        *m_reference_fav ; 
+		Fav *m_reference_fav; 
     };
 
 

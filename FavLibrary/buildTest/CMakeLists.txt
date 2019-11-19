@@ -22,6 +22,11 @@ add_executable(a.out
 	./testDLL.cpp
 )
 
+add_executable(writer
+	./testWriter.cpp
+)
+
 #target_link_libraries(a.out fav ${XercesLib})
-target_link_libraries(a.out fav )
+target_link_libraries(a.out fav)
+target_link_libraries(writer fav)
 #ADD_LIBRARY(fav SHARED)
