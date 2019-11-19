@@ -114,7 +114,7 @@ namespace FavLibrary
 
 		//for reference voxel
 		std::string m_reference_path;
-		Fav *m_reference_fav = NULL; 
+		Fav *m_reference_fav = nullptr; 
     };
 
 
