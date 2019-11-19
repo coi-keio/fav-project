@@ -51,7 +51,6 @@ int main(int argc, const char * argv[]) {
     fav.palette.addMaterial(material1);
 
     Voxel voxel1 = Voxel(1, "voxel1");
-    printf("%s\n", voxel1.getReferencePath());
     voxel1.addMaterialInfo(material1.getId(), 1.0);
     voxel1.setGeometryInfo(GeometryInfo(geometry1.getId()));
     fav.addVoxel(voxel1);

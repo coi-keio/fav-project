@@ -53,14 +53,13 @@ namespace FavLibrary
 
         if (this->m_reference_fav != 0) delete this->m_reference_fav;
         this->m_reference_fav = 0;
-		// printf("%s\n", src.m_reference_path);
-        // if (src.m_reference_fav != 0) {
-        //     this->m_reference_fav = new Fav(*src.m_reference_fav);
-        // }
+        if (src.m_reference_fav != 0) {
+            this->m_reference_fav = new Fav(*src.m_reference_fav);
+        }
     }
 
 	Voxel::~Voxel() {
-        // if(m_reference_fav != 0) delete m_reference_fav;
+        if(m_reference_fav != 0) delete m_reference_fav;
         m_reference_fav = 0;
 	}
 
