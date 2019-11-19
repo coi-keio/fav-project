@@ -64,11 +64,14 @@ namespace FavLibrary
 	public:
 		IsoStandard();
 		IsoStandard(std::string iso_id_, std::string iso_name_);
+
 		std::string getIsoId();
 		void setIsoId(std::string iso_id_);
 
 		std::string getIsoName();
 		void setIsoName(std::string iso_name_);
+
+		std::string getStandardName();
 
 	private:
 		std::string iso_id;

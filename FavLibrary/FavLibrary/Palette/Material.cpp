@@ -34,7 +34,11 @@ namespace FavLibrary
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	IsoStandard::IsoStandard() {};
-	IsoStandard::IsoStandard(std::string iso_id_, std::string iso_name_) { iso_id = iso_id_, iso_name = iso_name_; materialType = MaterialType::iso_standard; };
+	IsoStandard::IsoStandard(std::string iso_id_, std::string iso_name_) {
+		iso_id = iso_id_;
+		iso_name = iso_name_;
+		materialType = MaterialType::iso_standard;
+	}
 
 	std::string IsoStandard::getIsoId() { return iso_id; };
 	void IsoStandard::setIsoId(std::string iso_id_) { iso_id = iso_id_; };
@@ -42,13 +46,17 @@ namespace FavLibrary
 	std::string IsoStandard::getIsoName() { return iso_name; };
 	void IsoStandard::setIsoName(std::string iso_name_) { iso_name = iso_name_; };
 
+	std::string IsoStandard::getStandardName() {
+		return iso_id + " " + iso_name;
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	Material::Material() {};
 	Material::Material(unsigned int id_) : FavPrimitive(id_) {};
 	Material::Material(std::string name_) : FavPrimitive(name_) {};
 	Material::Material(unsigned int id_, std::string name_) : FavPrimitive(id_, name_) {};
-	
+
     Material::~Material() {
         materials.clear();
     };
@@ -61,22 +69,22 @@ namespace FavLibrary
 	void Material::addMaterialName(std::string material_name_) {
         MaterialName* material_name = new MaterialName(material_name_);
         materials.push_back(std::shared_ptr<MaterialSpec>(material_name));
-        
+
     };
-    
+
 	void Material::addMaterialName(MaterialName material_name_) {
-        
+
         MaterialName* tmp = new MaterialName(material_name_.getMaterialName());
         materials.push_back(std::shared_ptr<MaterialSpec>(tmp));
-        
+
     };
 
 	void Material::addProductInfo(std::string manufacturer_, std::string product_name_, std::string url_) {
-		
+
         ProductInfo* pinfo = new ProductInfo(manufacturer_, product_name_, url_);
-        
+
         materials.push_back(std::shared_ptr<MaterialSpec>(pinfo));
-        
+
 	};
 	void Material::addProductInfo(ProductInfo product_info_) {
         ProductInfo* pinfo = new ProductInfo(product_info_.getManufacturer(), product_info_.getProductName(), product_info_.getUrl());
@@ -88,10 +96,10 @@ namespace FavLibrary
 		materials.push_back(std::shared_ptr<MaterialSpec>(iso_standard));
 	};
 	void Material::addIsoStandard(IsoStandard iso_standard_) {
-        
+
         IsoStandard* iso_standard = new IsoStandard(iso_standard_.getIsoId(), iso_standard_.getIsoName());
         materials.push_back(std::shared_ptr<MaterialSpec>(iso_standard));
-    
+
     };
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
