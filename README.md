@@ -17,7 +17,7 @@ NuGet 経由でも「xercesc」を取得できますが、Windows や VisualStud
 
 ## 使用方法
 
-詳細な解説は`FAV_Library_Usage.pdf`をご覧ください。
+詳細な解説は[FAV_Library_Usage.pdf](FAV_Library_Usage.pdf)をご覧ください。
 
 ### FavLibrary の include
 
