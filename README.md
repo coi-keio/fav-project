@@ -17,6 +17,8 @@ NuGet 経由でも「xercesc」を取得できますが、Windows や VisualStud
 
 ## 使用方法
 
+詳細な解説は`FAV_Library_Usage.pdf`をご覧ください。
+
 ### FavLibrary の include
 
 お使いの環境の構成に合わせて、`Fav.h`を include します。
@@ -53,12 +55,36 @@ fav.write("destination/file/path.fav", FavLibrary::Compression::base64);  // 2
 using namespace FavLibrary;
 
 // ボクセルデータ
-voxelSource[4][4][4] = {...};
+int voxelSource[4][4][4] = {
+    {
+        {0, 0, 0, 0},
+        {0, 1, 1, 0},
+        {0, 1, 1, 0},
+        {0, 0, 0, 0},
+    },
+    {
+        {0, 1, 1, 0},
+        {1, 1, 1, 1},
+        {1, 1, 1, 1},
+        {0, 1, 1, 0},
+    },
+    {
+        {0, 1, 1, 0},
+        {1, 1, 1, 1},
+        {1, 1, 1, 1},
+        {0, 1, 1, 0},
+    },
+    {
+        {0, 0, 0, 0},
+        {0, 1, 1, 0},
+        {0, 1, 1, 0},
+        {0, 0, 0, 0},
+    }
+};
 
 
 int main(int argc, const char * argv[]) {
 
-    // FAVクラスのインスタンスを作成
     Fav fav;
 
     // Metadataの保存
@@ -99,7 +125,6 @@ int main(int argc, const char * argv[]) {
     structure1.initVoxelMap();
 
     // ボクセルに色を指定したい場合、色の記述方法 (ColorMode) を指定して ColorMap を初期化
-    // 色数が少ない場合は、ColorMap の代わりに、色を定義した Voxel (Voxel.display) も使用できる
     structure1.initColorMap(ColorMode::RGB);
 
     for (int z = 0; z < grid1.getDimensionZ(); z++) {
@@ -121,14 +146,14 @@ int main(int argc, const char * argv[]) {
         }
     }
 
-    // 実際の FAV データを表す Objecct のインスタンス(object1)を生成し、
-    // Voxel を配置する Grid (grid1)と、実際に Voxel を配置した Structure (structure1) を登録
+    // 実際のFAVデータを表す Object のインスタンス (object1) を生成し、
+    // Voxelを配置する Grid (grid1) と、実際に Voxel を配置した Structure (structure1) を登録
     Object object1 = Object(1, "object1");
     object1.grid = grid1;
     object1.structure = structure1;
     fav.addObject(object1);
 
-    // fav 書き出し
+    // fav書き出し
     // fav.write("sample.fav", CompressionMode::base64);
     fav.write("sample.fav", CompressionMode::none);
     return 0;
