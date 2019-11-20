@@ -39,14 +39,14 @@ namespace FavLibrary
         {
             delete parser;
             delete handler;
-            printf("This file confirm to Fav ver.1.0\n");
+            printf("This file confirm to Fav version 1.1a\n");
             return 1;
         }
         else
         {
             delete parser;
             delete handler;
-            printf("This file does not conform to Fav ver.1.0\n");
+            printf("This file does not confirm to Fav version 1.1a\n");
             return 0;
         }
     }
@@ -208,13 +208,15 @@ namespace FavLibrary
             }
 
             // load iso_standard
-            xercesc::DOMNodeList* iso_standard_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "iso_standard");
+            xercesc::DOMNodeList* iso_standard_list = getElements(dynamic_cast<xercesc::DOMElement*>(material_list->item(i)), "standard_name");
             int number_of_iso_standard = int(iso_standard_list->getLength());
 
             for (int j = 0; j < number_of_iso_standard; ++j) {
-                std::string iso_id   = getElementString(dynamic_cast<xercesc::DOMElement*>(iso_standard_list->item(j)), "iso_id");
-                std::string iso_name = getElementString(dynamic_cast<xercesc::DOMElement*>(iso_standard_list->item(j)), "iso_name");
-                current_material.addIsoStandard(iso_id, iso_name);
+                const XMLCh* node_value = ((iso_standard_list->item(j))->getFirstChild())->getNodeValue();
+                char* node_value_str = xercesc::XMLString::transcode(node_value);
+                std::string name = std::string(node_value_str);
+                xercesc::XMLString::release(&node_value_str);
+                current_material.addIsoStandard(name);
             }
 
             // load metadata
@@ -1060,8 +1062,8 @@ namespace FavLibrary
         "<xsd:complexType>"
         "<xsd:choice minOccurs=\"0\" maxOccurs=\"unbounded\">"
         "<xsd:element name=\"material_name\" type=\"xsd:string\"/>"
-        "<xsd:element  ref=\"product_info\"/>"
-        "<xsd:element  ref=\"iso_standard\"/>"
+        "<xsd:element ref=\"product_info\"/>"
+        "<xsd:element name=\"standard_name\" type=\"xsd:string\"/>"
         "</xsd:choice>"
         "<xsd:attribute name=\"id\"   type=\"xsd:positiveInteger\" use=\"required\"/>"
         "<xsd:attribute name=\"name\" type=\"xsd:string\"/>"
@@ -1074,15 +1076,6 @@ namespace FavLibrary
         "<xsd:element name=\"manufacturer\" type=\"xsd:string\" minOccurs=\"0\" maxOccurs=\"1\"/>"
         "<xsd:element name=\"product_name\" type=\"xsd:string\" minOccurs=\"0\" maxOccurs=\"1\"/>"
         "<xsd:element name=\"url\"          type=\"xsd:anyURI\" minOccurs=\"0\" maxOccurs=\"1\"/>"
-        "</xsd:all>"
-        "</xsd:complexType>"
-        "</xsd:element>"
-
-        "<xsd:element name=\"iso_standard\">"
-        "<xsd:complexType>"
-        "<xsd:all>"
-        "<xsd:element name=\"iso_id\"   type=\"xsd:string\" minOccurs=\"0\" maxOccurs=\"1\"/>"
-        "<xsd:element name=\"iso_name\" type=\"xsd:string\" minOccurs=\"0\" maxOccurs=\"1\"/>"
         "</xsd:all>"
         "</xsd:complexType>"
         "</xsd:element>"

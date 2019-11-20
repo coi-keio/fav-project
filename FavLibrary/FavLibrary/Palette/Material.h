@@ -63,19 +63,13 @@ namespace FavLibrary
 	class IDll IsoStandard : public MaterialSpec {
 	public:
 		IsoStandard();
-		IsoStandard(std::string iso_id_, std::string iso_name_);
-
-		std::string getIsoId();
-		void setIsoId(std::string iso_id_);
-
-		std::string getIsoName();
-		void setIsoName(std::string iso_name_);
+		IsoStandard(std::string standard_name_);
 
 		std::string getStandardName();
+		void setStandardName(std::string standard_name_);
 
 	private:
-		std::string iso_id;
-		std::string iso_name;
+		std::string standard_name;
 	};
 
 	class IDll Material : public FavPrimitive, public MetadataObject
@@ -99,7 +93,7 @@ namespace FavLibrary
 		void addProductInfo(std::string manufacturer_, std::string product_name_, std::string url_);
 		void addProductInfo(ProductInfo product_info_);
 
-		void addIsoStandard(std::string iso_id_, std::string iso_name_);
+		void addIsoStandard(std::string standard_name_);
 		void addIsoStandard(IsoStandard iso_standard_);
 
 	private:

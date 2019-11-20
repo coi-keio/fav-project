@@ -34,20 +34,16 @@ namespace FavLibrary
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	IsoStandard::IsoStandard() {};
-	IsoStandard::IsoStandard(std::string iso_id_, std::string iso_name_) {
-		iso_id = iso_id_;
-		iso_name = iso_name_;
+	IsoStandard::IsoStandard(std::string standard_name_) {
+		standard_name = standard_name_;
 		materialType = MaterialType::iso_standard;
 	}
 
-	std::string IsoStandard::getIsoId() { return iso_id; };
-	void IsoStandard::setIsoId(std::string iso_id_) { iso_id = iso_id_; };
-
-	std::string IsoStandard::getIsoName() { return iso_name; };
-	void IsoStandard::setIsoName(std::string iso_name_) { iso_name = iso_name_; };
-
 	std::string IsoStandard::getStandardName() {
-		return iso_id + " " + iso_name;
+		return standard_name;
+	}
+	void IsoStandard::setStandardName(std::string standard_name_) {
+		standard_name = standard_name_;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,13 +87,12 @@ namespace FavLibrary
         materials.push_back(std::shared_ptr<MaterialSpec>(pinfo));
     };
 
-	void Material::addIsoStandard(std::string iso_id_, std::string iso_name_) {
-        IsoStandard* iso_standard = new IsoStandard(iso_id_, iso_name_);
+	void Material::addIsoStandard(std::string standard_name_) {
+        IsoStandard* iso_standard = new IsoStandard(standard_name_);
 		materials.push_back(std::shared_ptr<MaterialSpec>(iso_standard));
 	};
 	void Material::addIsoStandard(IsoStandard iso_standard_) {
-
-        IsoStandard* iso_standard = new IsoStandard(iso_standard_.getIsoId(), iso_standard_.getIsoName());
+        IsoStandard* iso_standard = new IsoStandard(iso_standard_.getStandardName());
         materials.push_back(std::shared_ptr<MaterialSpec>(iso_standard));
 
     };

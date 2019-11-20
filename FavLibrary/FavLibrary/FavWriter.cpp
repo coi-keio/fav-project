@@ -161,7 +161,7 @@ namespace FavLibrary
 				else if (material->materialType == MaterialType::iso_standard) {
                     IsoStandard* iso_standard = dynamic_cast<IsoStandard*>(material.get());
 
-                    if(iso_standard->getIsoId() != "" && iso_standard->getIsoName() != "")
+                    if(iso_standard->getStandardName() != "")
                         appendCDATA(mat_elem, "standard_name", iso_standard->getStandardName());
 				}
                 // write material_name

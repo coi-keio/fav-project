@@ -48,7 +48,7 @@ int main(int argc, const char * argv[]) {
 
     Material material1 = Material(1, "material1");
     material1.addMaterialName("soft_mat1");
-    material1.addIsoStandard("ISO 1043-1:2006", "ABS");
+    material1.addIsoStandard("ISO 1043-1:2006 ABS");
     fav.palette.addMaterial(material1);
 
     Voxel voxel1 = Voxel(1, "voxel1");
