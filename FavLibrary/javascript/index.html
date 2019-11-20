@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Favjs</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      .buttons {
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="buttons">
+      <button type="button" onclick="exportFAV()">Export FAV</button>
+    </div>
+    <div id="canvas"></div>
+    <script src="js/XMLWriter-1.0.0-min.js"></script>
+    <script src="js/FileSaver.js"></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <!-- <script src="js/STLLoader.js"></script> -->
+    <!-- <script src="js/STLExporter.js"></script> -->
+    <script src="js/FAVLoader.js"></script>
+    <script src="js/FAVExporter.js"></script>
+    <script>
+      var container;
+			var camera, controls, scene, renderer;
+      var objects = [];
+      var voxSize = 0.01;
+      var exporter = new THREE.FAVExporter();
+
+			init();
+			animate();
+
+      function deg2rad(deg) {
+        return deg*THREE.Math.DEG2RAD;
+      }
+
+      function exportFAV() {
+        for (var object of objects) {
+          var data = exporter.parse(object.cubeGroup.children, object.dimension, voxSize);
+          var blob = new Blob([data], {type: 'application/xml'});
+          var date = new Date();
+          var timestamp = [date.getHours(), date.getMinutes(), date.getSeconds()].join('');
+          saveAs(blob, 'sample_' + timestamp + '.fav');
+        }
+      }
+
+			function init() {
+				container = document.getElementById('canvas');
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color(0x999999);
+				scene.fog = new THREE.Fog(0x999999, 2, 15);
+
+
+        // Helpers
+
+        var axesHelper = new THREE.AxesHelper(2);
+        scene.add(axesHelper);
+
+        var gridHelper = new THREE.GridHelper(1, 1 / voxSize);
+        scene.add(gridHelper);
+
+
+        // Ground
+
+				var plane = new THREE.Mesh(
+					new THREE.PlaneBufferGeometry(40, 40),
+					new THREE.MeshPhongMaterial({color: 0x999999, specular: 0x101010})
+				);
+				plane.rotation.x = - Math.PI / 2;
+        plane.position.y = - 0.001;
+        plane.receiveShadow = false;
+				scene.add(plane);
+
+
+				// STL file
+
+				// var loader = new THREE.STLLoader();
+				// loader.load('data/slotted_disk.stl', function (geometry) {
+        //
+				// 	var material = new THREE.MeshPhongMaterial({color: 0xff5533, specular: 0x111111, shininess: 200});
+				// 	var mesh = new THREE.Mesh(geometry, material);
+        //
+				// 	mesh.position.set(0, 0, 0);
+				// 	mesh.rotation.set(0, - Math.PI / 2, 0);
+				// 	mesh.scale.set(0.5, 0.5, 0.5);
+        //
+				// 	mesh.castShadow = true;
+				// 	mesh.receiveShadow = true;
+        //
+				// 	scene.add(mesh);
+        //
+				// });
+
+
+        // FAV file
+
+				var loader = new THREE.FAVLoader();
+				loader.load('data/ChessKing_Color_reso1_v1.fav', function (volumeList) {
+          for (var volume of volumeList) {
+            var geometry = new THREE.BoxGeometry(voxSize, voxSize, voxSize);
+            var cubeGroup = new THREE.Group();
+
+            for (var i = 0; i < volume.voxels.length; i++) {
+              var position = volume.voxels[i];
+              var material = new THREE.MeshPhongMaterial({color: '#' + volume.colors[i]});
+              var cube = new THREE.Mesh(geometry, material);
+              cube.position.set(
+                (position[0] + 0.5) * voxSize,
+                (position[1] + 0.5) * voxSize,
+                (position[2] + 0.5) * voxSize);
+              cube.castShadow = true;
+        			cube.receiveShadow = true;
+              cubeGroup.add(cube);
+            }
+
+            cubeGroup.position.z = volume.dimension.y * voxSize;
+            cubeGroup.rotation.set(deg2rad(-90), 0, 0);
+            scene.add(cubeGroup);
+            objects.push({
+              'cubeGroup': cubeGroup,
+              'dimension': volume.dimension
+            });
+            console.log(volume.dimension);
+          }
+				});
+
+
+				// Lights
+
+				scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
+				addShadowedLight(1, 1, 1, 0xffffff, 1.35);
+				addShadowedLight(0.5, 1, - 1, 0xaaaaaa, 1);
+
+
+        // Renderer
+
+				renderer = new THREE.WebGLRenderer({antialias: true});
+				renderer.setPixelRatio(window.devicePixelRatio);
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.gammaInput = true;
+				renderer.gammaOutput = true;
+				renderer.shadowMap.enabled = true;
+				container.appendChild(renderer.domElement);
+
+        camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 15);
+				camera.position.set(2, 1, 2);
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+
+			function addShadowedLight(x, y, z, color, intensity) {
+				var directionalLight = new THREE.DirectionalLight(color, intensity);
+				directionalLight.position.set(x, y, z);
+				scene.add(directionalLight);
+
+				directionalLight.castShadow = true;
+
+				var d = 1;
+				directionalLight.shadow.camera.left = - d;
+				directionalLight.shadow.camera.right = d;
+				directionalLight.shadow.camera.top = d;
+				directionalLight.shadow.camera.bottom = - d;
+
+				directionalLight.shadow.camera.near = 1;
+				directionalLight.shadow.camera.far = 4;
+
+				directionalLight.shadow.mapSize.width = 1024;
+				directionalLight.shadow.mapSize.height = 1024;
+
+				directionalLight.shadow.bias = - 0.002;
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			}
+
+			function animate() {
+				requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+			}
+    </script>
+  </body>
+</html>
